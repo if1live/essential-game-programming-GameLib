@@ -17,7 +17,7 @@ https://download.hanbit.co.kr/exam/1899/
 	* convert_encoding.py
 * UTF-8로 인코딩 변경후에 발생한 컴파일 에러 땜질
 	* 일본어 문자열을 영어로 바꿈
-* vcxproj에 <PlatformToolset>v143</PlatformToolset> 추가
+* vcxproj에 `<PlatformToolset>v143</PlatformToolset>` 추가
 	* convert_vcxproj.py
 	
 ## 실행 절차
@@ -35,5 +35,3 @@ git clone된 저장소의 경로를 `GAME_LIB_DIR` 환경변수로 등록하자.
 
 `src/GameLibs`에서 이에 대응되는 항목을 먼저 빌드해야된다.
 `src/GameLibs/2DGraphics1/GameLib.sln`을 빌드한다.
-
-
