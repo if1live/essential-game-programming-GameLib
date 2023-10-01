@@ -29,7 +29,7 @@ public:
 	void setSub( const Vector2&, float );
 	void setMul( const Vector2&, const Vector2& );
 	void setMul( const Vector2&, float );
-	///ƒ}ƒCƒiƒX‚É‚µ‚ÄŠi”[
+	///ãƒã‚¤ãƒŠã‚¹ã«ã—ã¦æ ¼ç´
 	void setNeg( const Vector2& );
 
 	/// this = a + b * c

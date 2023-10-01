@@ -23,23 +23,23 @@ Parent* Parent::instance(){
 Parent::Parent() : 
 mMode( MODE_NONE ),
 mChild( 0 ){
-	//Å‰‚Éì‚é‚Ì‚Íƒ^ƒCƒgƒ‹
+	//æœ€åˆã«ä½œã‚‹ã®ã¯ã‚¿ã‚¤ãƒˆãƒ«
 	mChild = new Title();
 }
 
 Parent::~Parent(){
-	//c‚Á‚Ä‚¢‚ê‚Î–•E
+	//æ®‹ã£ã¦ã„ã‚Œã°æŠ¹æ®º
 	SAFE_DELETE( mChild );
 }
 
 void Parent::update(){
 	Child* nextChild = mChild->update( this );
-	//‘JˆÚ”»’è
+	//é·ç§»åˆ¤å®š
 	if ( nextChild != mChild ){
 		SAFE_DELETE( mChild );
 		mChild = nextChild;
 	}
-	nextChild = 0; //”O‚Ì‚½‚ß
+	nextChild = 0; //å¿µã®ãŸã‚
 
 }
 

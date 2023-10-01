@@ -9,17 +9,17 @@ namespace GameLib{
 			const int N = 44100;
 			short wave[ N ];
 			if ( b % 3 == 0 ){
-				//‚Ì‚±‚¬‚è”g
+				//ã®ã“ãã‚Šæ³¢
 				for ( int i = 0; i < N; ++i ){
 					wave[ i ] = static_cast< short >( (i*200) % 20000 );
 				}
 			}else if ( b % 3 == 1 ){
-				//lŠp”g
+				//å››è§’æ³¢
 				for ( int i = 0; i < N; ++i ){
 					wave[ i ] = ( i % 100 < 50 ) ? 0 : 20000;
 				}
 			}else{
-				//OŠp”g
+				//ä¸‰è§’æ³¢
 				for ( int i = 0; i < N; ++i ){
 					int j = i % 100;
 					int w = ( j < 50 ) ? ( j*400 ) : ( 40000 - j*400 );

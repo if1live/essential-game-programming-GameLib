@@ -17,7 +17,7 @@ public:
 	~Batch();
 	void draw( const Matrix44& transform ) const;
 private:
-	void operator=( const Batch& ); //‘ã“ü••ˆó
+	void operator=( const Batch& ); //ä»£å…¥å°å°
 
 	const VertexBuffer* mVertexBuffer;
 	const IndexBuffer* mIndexBuffer;

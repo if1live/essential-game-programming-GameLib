@@ -18,13 +18,13 @@ Title::~Title(){
 }
 
 void Title::update( Parent* parent ){
-	//“ü—ÍŽæ“¾
+	//å…¥åŠ›å–å¾—
 	if ( Framework::instance().isKeyTriggered( ' ' ) ){
 		parent->moveTo( Parent::SEQ_STAGE_SELECT );
 	}
-	//•`‰æ
+	//æç”»
 	mImage->draw();
-	//Žš‚ðo‚·
+	//å­—ã‚’å‡ºã™
 	StringRenderer::instance()->draw( 0, 0, "TITLE: Nimotsu Kun." );
 	StringRenderer::instance()->draw( 0, 1, "PRESS SPACE KEY" );
 }

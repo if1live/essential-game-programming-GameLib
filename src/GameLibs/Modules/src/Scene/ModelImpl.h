@@ -38,7 +38,7 @@ public:
 	void draw(){
 		ASSERT( mBatch && "Model::draw() : no Batch specified!" );
 		
-		//ƒ[ƒ‹ƒhs—ñ‚ðì‚é
+		//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’ä½œã‚‹
 		Matrix34 w;
 		w.setTranslation( mPosition );
 		w.rotateY( mAngle.y );
@@ -46,7 +46,7 @@ public:
 		w.rotateZ( mAngle.z );
 		w.scale( mScale );
 		Graphics::Manager().setWorldMatrix( w );
-		//•`‰æ
+		//æç”»
 		mBatch->draw( mColor, mTransparency );
 	}
 	Batch::Impl* mBatch;

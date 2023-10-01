@@ -12,7 +12,7 @@ public:
 	~StageSelect();
 	void update( Parent* );
 private:
-	Image* mImage; //–ÊƒZƒŒ‰æ‘œ
+	Image* mImage; //é¢ã‚»ãƒ¬ç”»åƒ
 };
 
 } //namespace Sequence

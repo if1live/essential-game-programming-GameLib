@@ -7,30 +7,30 @@ class DynamicObject;
 class StaticObject{
 public:
 	enum Flag{
-		FLAG_WALL = ( 1 << 0 ), //ƒRƒ“ƒNƒŠ‚Å‚·
-		FLAG_BRICK = ( 1 << 1 ), //ƒŒƒ“ƒK‚Å‚·
-		FLAG_BOMB = ( 1 << 2 ), //”š’e‚Å‚·
-		FLAG_ITEM_BOMB = ( 1 << 3 ), //”š’eƒAƒCƒeƒ€
-		FLAG_ITEM_POWER = ( 1 << 4 ), //”š•—ƒAƒCƒeƒ€
-		FLAG_FIRE_X = ( 1 << 5 ), //‰¡•ûŒü‰Š
-		FLAG_FIRE_Y = ( 1 << 6 ), //c•ûŒü‰Š
-		FLAG_EXPLODING = ( 1 << 7 ), //”š”­’†
+		FLAG_WALL = ( 1 << 0 ), //ã‚³ãƒ³ã‚¯ãƒªã§ã™
+		FLAG_BRICK = ( 1 << 1 ), //ãƒ¬ãƒ³ã‚¬ã§ã™
+		FLAG_BOMB = ( 1 << 2 ), //çˆ†å¼¾ã§ã™
+		FLAG_ITEM_BOMB = ( 1 << 3 ), //çˆ†å¼¾ã‚¢ã‚¤ãƒ†ãƒ 
+		FLAG_ITEM_POWER = ( 1 << 4 ), //çˆ†é¢¨ã‚¢ã‚¤ãƒ†ãƒ 
+		FLAG_FIRE_X = ( 1 << 5 ), //æ¨ªæ–¹å‘ç‚Ž
+		FLAG_FIRE_Y = ( 1 << 6 ), //ç¸¦æ–¹å‘ç‚Ž
+		FLAG_EXPLODING = ( 1 << 7 ), //çˆ†ç™ºä¸­
 	};
 	StaticObject();
 
 	bool checkFlag( unsigned ) const;
 	void setFlag( unsigned );
 	void resetFlag( unsigned );
-	//°A•ÇA—ùŠ¢‚ð•`‰æ‚µA”š’e‚âƒAƒCƒeƒ€‚ª‚ ‚ê‚Î‚»‚ê‚à•`‰æ
+	//åºŠã€å£ã€ç…‰ç“¦ã‚’æç”»ã—ã€çˆ†å¼¾ã‚„ã‚¢ã‚¤ãƒ†ãƒ ãŒã‚ã‚Œã°ãã‚Œã‚‚æç”»
 	void draw( int x, int y, const Image* ) const;
-	//”š•—‚ð•`‰æ
+	//çˆ†é¢¨ã‚’æç”»
 	void drawExplosion( int x, int y, const Image* ) const ;
 
-	int mCount;	//‰½‚©‚ÌƒJƒEƒ“ƒg(”š’eÝ’uA”š”­AÄ‚©‚êŽn‚ß)
-	//”š’eê—p
-	DynamicObject* mBombOwner; //”š’e‚ÌŽ‚¿Žå
+	int mCount;	//ä½•ã‹ã®ã‚«ã‚¦ãƒ³ãƒˆ(çˆ†å¼¾è¨­ç½®ã€çˆ†ç™ºã€ç„¼ã‹ã‚Œå§‹ã‚)
+	//çˆ†å¼¾å°‚ç”¨
+	DynamicObject* mBombOwner; //çˆ†å¼¾ã®æŒã¡ä¸»
 private:
-	unsigned mFlags; //ƒtƒ‰ƒO
+	unsigned mFlags; //ãƒ•ãƒ©ã‚°
 };
 
 #endif

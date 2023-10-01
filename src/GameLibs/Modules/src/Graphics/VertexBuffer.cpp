@@ -35,7 +35,7 @@ void VertexBuffer::unlock( Vertex** p ){
 	*p = 0;
 }
 
-//NULLƒ|ƒCƒ“ƒ^‚©‚ç‚Ì•ÏŠ·
+//NULLãƒã‚¤ãƒ³ã‚¿ã‹ã‚‰ã®å¤‰æ›
 VertexBuffer::VertexBuffer( const Impl* ) : mImpl( 0 ){
 }
 

@@ -20,7 +20,7 @@ mClear( 0 ),
 mLoading( 0 ),
 mMenu( 0 ),
 mPlay( 0 ){
-	//Å‰‚Éƒ[ƒh
+	//æœ€åˆã«ãƒ­ãƒ¼ãƒ‰
 	mLoading = new Loading();
 }
 
@@ -42,15 +42,15 @@ void Parent::update( GrandParent* parent ){
 	}else if ( mPlay ){
 		mPlay->update( this );
 	}else{
-		HALT( "bakana!" ); //‚ ‚è‚¦‚È‚¢
+		HALT( "bakana!" ); //ã‚ã‚Šãˆãªã„
 	}
-	//‘JˆÚ”»’è
+	//é·ç§»åˆ¤å®š
 	switch ( mNext ){
 		case SEQ_STAGE_SELECT:
-			parent->moveTo( GrandParent::SEQ_STAGE_SELECT ); //ŠÛ“Š‚°
+			parent->moveTo( GrandParent::SEQ_STAGE_SELECT ); //ä¸¸æŠ•ã’
 			break;
 		case SEQ_TITLE:
-			parent->moveTo( GrandParent::SEQ_TITLE ); //ŠÛ“Š‚°
+			parent->moveTo( GrandParent::SEQ_TITLE ); //ä¸¸æŠ•ã’
 			break;
 		case SEQ_PLAY:
 			SAFE_DELETE( mLoading );
@@ -66,13 +66,13 @@ void Parent::update( GrandParent* parent ){
 			mMenu = new Game::Menu();
 			break;
 	}
-	mNext = SEQ_NONE; //‚±‚ê‚ğ–Y‚ê‚é‚Æ‚Ğ‚Ç‚¢‚±‚Æ‚É
+	mNext = SEQ_NONE; //ã“ã‚Œã‚’å¿˜ã‚Œã‚‹ã¨ã²ã©ã„ã“ã¨ã«
 }
 
 void Parent::startLoading(){
 	std::ostringstream oss;
 	oss << "data/stageData/" << mStageID << ".txt";
-	File file( oss.str().c_str() ); //‚±‚ê‚Åconst char*‚ªæ‚ê‚é
+	File file( oss.str().c_str() ); //ã“ã‚Œã§const char*ãŒå–ã‚Œã‚‹
 	mState = new State( file.data(), file.size() );
 }
 

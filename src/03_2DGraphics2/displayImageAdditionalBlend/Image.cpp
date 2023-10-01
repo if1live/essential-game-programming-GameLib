@@ -31,7 +31,7 @@ int Image::height() const {
 }
 
 
-//‰ÁŽZƒuƒŒƒ“ƒh
+//åŠ ç®—ãƒ–ãƒ¬ãƒ³ãƒ‰
 void Image::draw(
 int dstX, 
 int dstY, 
@@ -55,7 +55,7 @@ int height ) const {
 			unsigned r = srcR * srcA / 255 + dstR;
 			unsigned g = srcG * srcA / 255 + dstG;
 			unsigned b = srcB * srcA / 255 + dstB;
-			//255‚ð’´‚¦‚½‚ç255‚É
+			//255ã‚’è¶…ãˆãŸã‚‰255ã«
 			r = ( r > 0xff0000 ) ? 0xff0000 : r;
 			g = ( g > 0x00ff00 ) ? 0x00ff00 : g;
 			b = ( b > 0x0000ff ) ? 0x0000ff : b;

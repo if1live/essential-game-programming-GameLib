@@ -30,7 +30,7 @@ void StaticObject::draw( int x, int y, const Image* image ) const {
 		srcX = 48; 
 		srcY = 16;
 	}else if ( mFlags & FLAG_BRICK ){
-		if ( mFlags & ( FLAG_FIRE_X | FLAG_FIRE_Y ) ){ //Ä‚¯‚Ä‚é
+		if ( mFlags & ( FLAG_FIRE_X | FLAG_FIRE_Y ) ){ //ç„¼ã‘ã¦ã‚‹
 			srcX = 0; 
 			srcY = 48;
 		}else{
@@ -43,9 +43,9 @@ void StaticObject::draw( int x, int y, const Image* image ) const {
 		floor = true;
 	}
 	image->draw( x*16, y*16, srcX, srcY, 16, 16 );
-	//ƒIƒvƒVƒ‡ƒ“•`‰æ
+	//ã‚ªãƒ—ã‚·ãƒ§ãƒ³æç”»
 	if ( floor ){
-		srcX = -1; //”Ô•º
+		srcX = -1; //ç•ªå…µ
 		if ( ( mFlags & FLAG_BOMB ) && !( mFlags & FLAG_EXPLODING ) ){
 			srcX = 32;
 			srcY = 32;
@@ -65,7 +65,7 @@ void StaticObject::draw( int x, int y, const Image* image ) const {
 void StaticObject::drawExplosion( int x, int y, const Image* image ) const {
 	int srcX = -1;
 	int srcY = -1;
-	if ( !( mFlags & FLAG_WALL ) && !( mFlags & FLAG_BRICK ) ){ //•Ç‚Ìã‚É‚Í”š•—‚Í•`‚©‚È‚¢
+	if ( !( mFlags & FLAG_WALL ) && !( mFlags & FLAG_BRICK ) ){ //å£ã®ä¸Šã«ã¯çˆ†é¢¨ã¯æã‹ãªã„
 		if ( mFlags & FLAG_EXPLODING ){
 			srcX = 48;
 			srcY = 32;

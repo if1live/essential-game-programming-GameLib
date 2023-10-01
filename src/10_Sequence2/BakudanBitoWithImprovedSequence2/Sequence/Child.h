@@ -6,7 +6,7 @@ class Parent;
 
 class Child{
 public:
-	virtual ~Child(){} //‚È‚É‚à‚µ‚È‚¢‚Ì‚Å‚±‚ê‚Å‚¢‚¢
+	virtual ~Child(){} //ãªã«ã‚‚ã—ãªã„ã®ã§ã“ã‚Œã§ã„ã„
 	virtual Child* update( Parent* ) = 0;
 };
 

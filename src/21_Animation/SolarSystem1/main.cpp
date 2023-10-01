@@ -28,31 +28,31 @@ namespace GameLib{
 			gEarth = gDatabase->createModel( "cube" );
 			gMoon = gDatabase->createModel( "cube" );
 		}
-		//ƒJƒƒ‰‚Æƒ‰ƒCƒg‚ð“®‚©‚µ‚Ä‚Ý‚é
+		//ã‚«ãƒ¡ãƒ©ã¨ãƒ©ã‚¤ãƒˆã‚’å‹•ã‹ã—ã¦ã¿ã‚‹
 		gLightVector.x = sin( gCount ) * cos( gCount );
 		gLightVector.y = sin( gCount ) * sin( gCount );
 		gLightVector.z = cos( gCount );
-		//ƒrƒ…[s—ñA“§Ž‹•ÏŠ·s—ñ
+		//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã€é€è¦–å¤‰æ›è¡Œåˆ—
 		Matrix44 pm;
 		pm.setPerspectiveTransform( 45.0, width(), height(), 1.0, 10000.0 );
 		Matrix34 vm;
 		vm.setViewTransform( gEyePosition, Vector3( 0.0, 0.0, 0.0 ) );
 		pm *= vm;
 
-		//s—ñ¶¬ŠJŽn
+		//è¡Œåˆ—ç”Ÿæˆé–‹å§‹
 		Matrix34 w;
-		w.setTranslation( Vector3( 0.0, 0.0, 0.0 ) ); //‘¾—zŒn‚Ì’†S
-		w.rotateY( gCount * 100.0 / 365.0 ); //‘¾—zŒn‘S‘Ì‚Ì‰ñ“]=’n‹…Œö“]
+		w.setTranslation( Vector3( 0.0, 0.0, 0.0 ) ); //å¤ªé™½ç³»ã®ä¸­å¿ƒ
+		w.rotateY( gCount * 100.0 / 365.0 ); //å¤ªé™½ç³»å…¨ä½“ã®å›žè»¢=åœ°çƒå…¬è»¢
 		Matrix34 l1a;
-		l1a.setTranslation( Vector3( 10.0, 0.0, 0.0 ) ); //‘¾—z->’n‹…
+		l1a.setTranslation( Vector3( 10.0, 0.0, 0.0 ) ); //å¤ªé™½->åœ°çƒ
 		Matrix34 l1b0;
-		l1b0.setRotationY( gCount * 100.0 / 30.0 ); //ŒŽŒö“]
+		l1b0.setRotationY( gCount * 100.0 / 30.0 ); //æœˆå…¬è»¢
 		Matrix34 l1b1;
-		l1b1.setRotationY( gCount * 100.0 / 3.0 ); //’n‹…Ž©“]
+		l1b1.setRotationY( gCount * 100.0 / 3.0 ); //åœ°çƒè‡ªè»¢
 		Matrix34 l0;
-		l0.setTranslation( Vector3( 4.0, 0.0, 0.0 ) ); //’n‹…->ŒŽ
+		l0.setTranslation( Vector3( 4.0, 0.0, 0.0 ) ); //åœ°çƒ->æœˆ
 
-		//‘¾—z
+		//å¤ªé™½
 		Matrix44 pvwm;
 		pvwm.setMul( pm, w );
 		gSun->draw( pvwm, gLightVector, gLightColor, gAmbient );
@@ -60,13 +60,13 @@ namespace GameLib{
 		Matrix34 wL1a = w;
 		wL1a *= l1a;
 
-		//’n‹…
+		//åœ°çƒ
 		Matrix34 t = wL1a;
 		t *= l1b1;
 		pvwm.setMul( pm, t );
 		gEarth->draw( pvwm, gLightVector, gLightColor, gAmbient );
 		
-		//ŒŽ
+		//æœˆ
 		t = wL1a;
 		t *= l1b0;
 		t *= l0;

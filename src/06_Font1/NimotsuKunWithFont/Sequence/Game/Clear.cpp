@@ -20,16 +20,16 @@ Clear::~Clear(){
 }
 
 void Clear::update( Parent* parent ){
-	if ( mCount == 60 ){ //60ƒtƒŒ[ƒ€‚ÅˆÚ“®
+	if ( mCount == 60 ){ //60ãƒ•ãƒ¬ãƒ¼ãƒ ã§ç§»å‹•
 		parent->moveTo( Parent::SEQ_STAGE_SELECT );
 	}
 
-	//•`‰æ
-	//‚Ü‚¸ƒQ[ƒ€‰æ–Ê‚ð•`‰æ
+	//æç”»
+	//ã¾ãšã‚²ãƒ¼ãƒ ç”»é¢ã‚’æç”»
 	parent->state()->draw();
-	//ã‚Éj‚¢‚ÌƒƒbƒZ[ƒW‚ð•`‰æ
+	//ä¸Šã«ç¥ã„ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’æç”»
 	mImage->draw();
-	//ƒNƒŠƒA[‚ÆŽš‚ð•`‚­
+	//ã‚¯ãƒªã‚¢ãƒ¼ã¨å­—ã‚’æã
 	StringRenderer::instance()->draw( 0, 0, "CLEAR!" );
 
 	++mCount;

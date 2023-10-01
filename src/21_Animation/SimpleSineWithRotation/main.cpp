@@ -29,11 +29,11 @@ namespace GameLib{
 		gUpperModel->setPosition( Vector3( 0.0, 1.0, 0.0 ) );
 		double y = 4.0 + sin( gCount * 5.0 );
 		gLowerModel->setPosition( Vector3( 0.0, y, 0.0 ) );
-		//‰ñ“]‚µ‚Ä‚İ‚é
+		//å›è»¢ã—ã¦ã¿ã‚‹
 		gUpperModel->setAngle( Vector3( 0.0, 0.0, 45.0 ) );
 		gLowerModel->setAngle( Vector3( 0.0, 0.0, 45.0 ) );
 
-		//ƒJƒƒ‰‚Æƒ‰ƒCƒg‚ğ“®‚©‚µ‚Ä‚İ‚é
+		//ã‚«ãƒ¡ãƒ©ã¨ãƒ©ã‚¤ãƒˆã‚’å‹•ã‹ã—ã¦ã¿ã‚‹
 		gLightVector.x = sin( gCount ) * cos( gCount );
 		gLightVector.y = sin( gCount ) * sin( gCount );
 		gLightVector.z = cos( gCount );

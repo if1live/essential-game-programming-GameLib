@@ -58,7 +58,7 @@ public:
 			int dx = 0;
 			int dy = 0;
 			if ( ( pov & 0xffff ) != 0xffff ){
-				//8•ûŒü”»’è
+				//8æ–¹å‘åˆ¤å®š
 				if ( pov > 36000*15/16 ){
 					dx = 0;
 				}else if ( pov > 36000*9/16 ){
@@ -123,10 +123,10 @@ public:
 		return ANALOG_MAX;
 	}
 	int buttonNumber() const {
-		return BUTTON_MAX - 4; //ã‰º¶‰E‚ÍœŠO
+		return BUTTON_MAX - 4; //ä¸Šä¸‹å·¦å³ã¯é™¤å¤–
 	}
 	IDirectInputDevice8* mDevice;
-	static const int BUTTON_MAX = 128 + 4; //ã‰º¶‰E•ª
+	static const int BUTTON_MAX = 128 + 4; //ä¸Šä¸‹å·¦å³åˆ†
 	static const int ANALOG_MAX = 8;
 	bool mButtons[ 2 ][ BUTTON_MAX ];
 	int mAnalogs[ 8 ];

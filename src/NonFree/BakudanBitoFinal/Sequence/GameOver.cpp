@@ -16,10 +16,10 @@ GameOver::~GameOver(){
 }
 
 void GameOver::update( Parent* parent ){
-	if ( mCount == 60 ){ //1•b‘Ò‚Â 
+	if ( mCount == 60 ){ //1ç§’å¾…ã¤ 
 		parent->moveTo( Parent::NEXT_TITLE );
 	}
-	//•`‰æ
+	//æç”»
 	mImage->draw();
 
 	++mCount;

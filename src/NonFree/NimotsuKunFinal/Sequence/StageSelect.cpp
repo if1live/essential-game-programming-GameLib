@@ -19,20 +19,20 @@ StageSelect::~StageSelect(){
 }
 
 void StageSelect::update( Parent* parent ){
-	//“ü—Íæ“¾
+	//å…¥åŠ›å–å¾—
 	int stage = 0;
-	//“Y‚¦š‚ª‚¸‚ê‚é‚Æ–ï‰î‚È‚Ì‚Å0‚à“ü‚ê‚Ä‚¨‚­
+	//æ·»ãˆå­—ãŒãšã‚Œã‚‹ã¨å„ä»‹ãªã®ã§0ã‚‚å…¥ã‚Œã¦ãŠã
 	char numberChars[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 	for ( int i = 0; i < 10; ++i ){
 		if ( Framework::instance().isKeyTriggered( numberChars[ i ] ) ){
 			stage = i;
 		}
 	}
-	if ( stage != 0 ){ //‚±‚ê‚ÅŸ‚Ös‚­
+	if ( stage != 0 ){ //ã“ã‚Œã§æ¬¡ã¸è¡Œã
 		parent->setStageID( stage );
 		parent->moveTo( Parent::SEQ_GAME );
 	}
-	//•`‰æ
+	//æç”»
 	mImage->draw();
 }
 

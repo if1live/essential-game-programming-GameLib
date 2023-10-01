@@ -20,7 +20,7 @@ public:
 	Joystick joystick( int i = 0 ) const;
 	int joystickNumber() const;
 
-	//ˆÈ‰º’m‚ç‚È‚­‚Ä‚¢‚¢
+	//ä»¥ä¸‹çŸ¥ã‚‰ãªãã¦ã„ã„
 	static void create( void* windowHandle );
 	static void destroy();
 	void update( float pointerScale, const Math::Vector2& pointerOffset );

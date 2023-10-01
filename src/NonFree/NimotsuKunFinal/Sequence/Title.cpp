@@ -17,11 +17,11 @@ Title::~Title(){
 }
 
 void Title::update( Parent* parent ){
-	//“ü—Íæ“¾
+	//å…¥åŠ›å–å¾—
 	if ( Framework::instance().isKeyTriggered( ' ' ) ){
 		parent->moveTo( Parent::SEQ_STAGE_SELECT );
 	}
-	//•`‰æ
+	//æç”»
 	mImage->draw();
 }
 

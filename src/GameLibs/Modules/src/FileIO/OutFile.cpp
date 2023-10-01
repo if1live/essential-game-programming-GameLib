@@ -35,7 +35,7 @@ bool OutFile::isError() const {
 	return mImpl->isError();
 }
 
-//�ȉ���ԃR�[�h
+//以下定番コード
 OutFile::OutFile() : mImpl( 0 ){
 }
 

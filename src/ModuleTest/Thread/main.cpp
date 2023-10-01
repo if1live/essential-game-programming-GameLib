@@ -42,7 +42,7 @@ namespace GameLib{
 		for ( int i = 0; i < N; ++i ){
 			int j = n + i;
 			j = ( j >= N ) ? ( j - N ) : j;
-			//I‚í‚Á‚Ä‚é‚Ì‚ð’T‚·
+			//çµ‚ã‚ã£ã¦ã‚‹ã®ã‚’æŽ¢ã™
 			if ( !gThreads[ j ] || gThreads[ j ]->isFinished() ){
 				SAFE_DELETE( gThreads[ j ] );
 				gThreads[ j ] = new MyThread( gRandom.getInt( 0x1ffffff ) );

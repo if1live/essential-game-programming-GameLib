@@ -59,7 +59,7 @@ unsigned short InFile::getUnsignedShort( int p ) const {
 	return mImpl->getUnsignedShort( p );
 }
 
-//ˆÈ‰º’è”ÔƒR[ƒh
+//ä»¥ä¸‹å®šç•ªã‚³ãƒ¼ãƒ‰
 InFile::InFile() : mImpl( 0 ){
 }
 

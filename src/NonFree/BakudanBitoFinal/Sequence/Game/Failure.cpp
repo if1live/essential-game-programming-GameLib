@@ -17,17 +17,17 @@ Failure::~Failure(){
 }
 
 void Failure::update( Parent* parent ){
-	if ( mCount == 60 ){ //1•b‘Ò‚Â 
+	if ( mCount == 60 ){ //1ç§’å¾…ã¤ 
 		if ( parent->getLifeNumber() == 0 ){
 			parent->moveTo( Parent::NEXT_GAME_OVER ); 
 		}else{
 			parent->moveTo( Parent::NEXT_READY );
 		}
 	}
-	//•`‰æ
-	//‚Ü‚¸ƒQ[ƒ€‰æ–Ê‚ð•`‰æ
+	//æç”»
+	//ã¾ãšã‚²ãƒ¼ãƒ ç”»é¢ã‚’æç”»
 	parent->drawState();
-	//ã‚Éj‚¢‚ÌƒƒbƒZ[ƒW‚ð•`‰æ
+	//ä¸Šã«ç¥ã„ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’æç”»
 	mImage->draw();
 
 	++mCount;
