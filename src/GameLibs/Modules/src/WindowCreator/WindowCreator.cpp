@@ -290,8 +290,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	catch ( ... ){ //起動時の例外は無視できない。
 		MessageBoxA( 
 			windowHandle, 
-			"致命的な問題があり、起動できません。申し訳ありませんが終了いたします", 
-			"致命的エラー", 
+			// "致命的な問題があり、起動できません。申し訳ありませんが終了いたします", 
+			"There is a fatal problem and it cannot be started. We apologize for the inconvenience, but we have to close the service.",
+			// "致命的エラー", 
+			"fatal error",
 			MB_OK | MB_ICONERROR );
 		wc.requestEnd(); //終われ。
 		wc.update(); //中で終了処理
@@ -335,8 +337,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 				if ( e == EXCEPTION_EXIT ){ //終了要請例外の場合のみ終了
 					MessageBoxA( 
 						windowHandle, 
-						"致命的な問題があり、継続できません。申し訳ありませんが終了いたします", 
-						"致命的エラー", 
+						// "致命的な問題があり、継続できません。申し訳ありませんが終了いたします", 
+						"There is a fatal problem and we cannot continue. We apologize for the inconvenience, but we have to close.",
+						// "致命的エラー", 
+						"Fatal error",
 						MB_OK | MB_ICONERROR );
 				}
 			}
