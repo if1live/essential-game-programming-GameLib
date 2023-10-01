@@ -27,24 +27,24 @@ mTime( 0.0 ){
 	for ( int i = 0; i < mNodeNumber; ++i ){
 		Node& dst = mNodes[ i ];
 		const NodeTemplate* src = tmpl.node( i );
-		//ƒpƒ‰ƒ[ƒ^‚ğˆÚ‚·
+		//ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’ç§»ã™
 		dst.setTranslation( *src->translation() );
 		dst.setRotation( *src->rotation() );
 		dst.setScale( *src->scale() );
 		dst.setName( src->name()->c_str() );
 		dst.setBatch( src->batch() );
 
-		//[’·’j-ŒZ’íŒ`®‚©‚çq”z—ñŒ`®‚Ö‚Ì•ÏŠ·]
-		//q‚Ì”‚ğ”‚¦‚é
+		//[é•·ç”·-å…„å¼Ÿå½¢å¼ã‹ã‚‰å­é…åˆ—å½¢å¼ã¸ã®å¤‰æ›]
+		//å­ã®æ•°ã‚’æ•°ãˆã‚‹
 		int child = src->child();
 		int childNumber = 0;
 		while ( child >= 0 ){
 			++childNumber;
 			child = tmpl.node( child )->brother();
 		}
-		//q‚ğƒAƒƒP[ƒg
+		//å­ã‚’ã‚¢ãƒ­ã‚±ãƒ¼ãƒˆ
 		dst.setChildNumber( childNumber );
-		//q‚ğ[“U‚·‚é
+		//å­ã‚’å……å¡«ã™ã‚‹
 		child = src->child();
 		int j = 0;
 		while ( child >= 0 ){
@@ -71,7 +71,7 @@ const Vector3& ambient ) const {
 	wm.rotateZ( mAngle.z );
 	wm.scale( mScale );
 
-	//ªƒm[ƒh‚Ö“n‚·
+	//æ ¹ãƒãƒ¼ãƒ‰ã¸æ¸¡ã™
 	if ( mNodes ){
 		mNodes[ 0 ].draw(
 			pvm,
@@ -125,16 +125,16 @@ const Node* Tree::node( const char* name ) const {
 	return 0;
 }
 
-//ƒAƒjƒ[ƒVƒ‡ƒ“‚ğƒZƒbƒg‚·‚é
+//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 void Tree::setAnimation( const Animation* anim ){
 	for ( int i = 0; i < mNodeNumber; ++i ){
 		const AnimationNode* an = anim->node( mNodes[ i ].name()->c_str() );
-		mNodes[ i ].setAnimation( an ); //0‚Å‚à‹C‚É‚¹‚¸ƒZƒbƒgB‚Ş‚µ‚ë‚µ‚È‚¢‚Æ‚Ü‚¸‚¢B
+		mNodes[ i ].setAnimation( an ); //0ã§ã‚‚æ°—ã«ã›ãšã‚»ãƒƒãƒˆã€‚ã‚€ã—ã‚ã—ãªã„ã¨ã¾ãšã„ã€‚
 	}
-	mTime = 0.0; //Šª‚«–ß‚µ
+	mTime = 0.0; //æ™‚åˆ»å·»ãæˆ»ã—
 }
 
-//ƒAƒjƒ[ƒVƒ‡ƒ“ó‘Ô‚ğXV‚µA‚ğ1i‚ß‚éB
+//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³çŠ¶æ…‹ã‚’æ›´æ–°ã—ã€æ™‚åˆ»ã‚’1é€²ã‚ã‚‹ã€‚
 void Tree::update(){
 	for ( int i = 0; i < mNodeNumber; ++i ){
 		mNodes[ i ].update( mTime );

@@ -23,11 +23,11 @@ void SoundManager::destroy(){
 
 SoundManager::SoundManager() :
 mSePlayerPos( 0 ){
-	//�t�@�C�������X�g�����[�h�J�n�B
-	//�����ƍ��Ȃ�ɂ̓t�@�C�������X�g�͕ʃt�@�C���ɂ�����A
-	//�e�L�X�g�t�@�C���ɂ��ă��[�h�����肷�邱�ƂɂȂ�B
+	//ファイル名リストをロード開始。
+	//ちゃんと作るならにはファイル名リストは別ファイルにしたり、
+	//テキストファイルにしてロードしたりすることになる。
 
-	//�Ȃ��A����͎���Ȃ̂őS�������t�@�C��...
+	//なお、これは試作なので全部同じファイル...
 	const char* bgmFiles[] = {
 		"charara.wav", //BGM_TITLE
 		"charara.wav", //BGM_GAME
@@ -39,14 +39,14 @@ mSePlayerPos( 0 ){
 		"dokaan.wav", //SE_SELECTION
 		"dokaan.wav", //SE_SET_BOMB
 	};
-	std::ostringstream oss; //�����񍇐��p������X�g���[��
+	std::ostringstream oss; //文字列合成用文字列ストリーム
 	for ( int i = 0; i < BGM_MAX; ++i ){
-		oss.str( "" ); //������
+		oss.str( "" ); //初期化
 		oss << "data/sound/bgm/" << bgmFiles[ i ];
 		mBgmWaves[ i ] = Sound::Wave::create( oss.str().c_str() );
 	}
 	for ( int i = 0; i < SE_MAX; ++i ){
-		oss.str( "" ); //������
+		oss.str( "" ); //初期化
 		oss << "data/sound/se/" << seFiles[ i ];
 		mSeWaves[ i ] = Sound::Wave::create( oss.str().c_str() );
 	}
@@ -56,8 +56,8 @@ SoundManager::~SoundManager(){
 }
 
 bool SoundManager::isReady(){
-	//�S����Wave��true��Ԃ������ׂ�
-	//&&������Ă����ƈ�ł�false�Ȃ�false�ɂȂ�킯���B
+	//全部のWaveがtrueを返すか調べる
+	//&&を取っていくと一個でもfalseならfalseになるわけだ。
 	bool ret = true;
 	for ( int i = 0; i < BGM_MAX; ++i ){
 		ret = ret && mBgmWaves[ i ].isReady();
@@ -70,7 +70,7 @@ bool SoundManager::isReady(){
 
 void SoundManager::playBgm( Bgm bgm ){
 	mBgmPlayer = Sound::Player::create( mBgmWaves[ bgm ] );
-	mBgmPlayer.play( true ); //���[�v�Đ�
+	mBgmPlayer.play( true ); //ループ再生
 }
 
 void SoundManager::stopBgm(){
@@ -81,9 +81,9 @@ void SoundManager::stopBgm(){
 
 void SoundManager::playSe( Se se ){
 	mSePlayers[ mSePlayerPos ] = Sound::Player::create( mSeWaves[ se ] );
-	mSePlayers[ mSePlayerPos ].play(); //�Đ�
+	mSePlayers[ mSePlayerPos ].play(); //再生
 	++mSePlayerPos;
-	//�����߂�
+	//巻き戻し
 	if ( mSePlayerPos == SE_PLAYER_MAX ){
 		mSePlayerPos = 0;
 	}

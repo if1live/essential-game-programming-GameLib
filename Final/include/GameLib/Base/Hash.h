@@ -3,7 +3,7 @@
 
 namespace GameLib{
 
-//汎用ハッシュ計算クラス
+//豎守畑繝上ャ繧ｷ繝･險育ｮ励け繝ｩ繧ｹ
 template< class T > class Hash{
 public:
 	unsigned value( const T&, unsigned mod ) const;
@@ -11,7 +11,7 @@ public:
 };
 
 } //namespace GameLib
-#include "GameLib/Base/Impl/HashImpl.h" //中身はこの中
+#include "GameLib/Base/Impl/HashImpl.h" //荳ｭ霄ｫ縺ｯ縺薙�ｮ荳ｭ
 
 #endif
 

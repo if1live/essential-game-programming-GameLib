@@ -20,12 +20,12 @@ using namespace GameLib;
 using namespace GameLib::PseudoXml;
 using namespace GameLib::Math;
 using namespace std;
-//‚±‚¤‚¢‚¤•Ê–¼‚ÍŠ½Œ}‚³‚ê‚È‚¢‚ªAg—p•p“x‚ª‚‚·‚¬‚é‚Ì‚Åd•û‚È‚¢
+//ã“ã†ã„ã†åˆ¥åã¯æ­“è¿ã•ã‚Œãªã„ãŒã€ä½¿ç”¨é »åº¦ãŒé«˜ã™ãã‚‹ã®ã§ä»•æ–¹ãªã„
 typedef Element E;
 typedef Attribute A;
 typedef ConstElement CE;
 typedef ConstAttribute CA;
-//ƒNƒ‰ƒXƒŠƒXƒg
+//ã‚¯ãƒ©ã‚¹ãƒªã‚¹ãƒˆ
 class XFile;
 class Frame;
 class FrameTransformMatrix;
@@ -33,7 +33,7 @@ class Mesh;
 class MeshNormals;
 class MeshMaterialList;
 
-//ƒf[ƒ^Œ^
+//ãƒ‡ãƒ¼ã‚¿å‹
 //typedef Vector< int > Face;
 struct Face{
 	int& operator[]( int i ){ return mIndices[ i ]; }
@@ -83,14 +83,14 @@ struct Vertex{
 	Vector4 mColor;
 };
 struct MaterialIndex{
-	bool operator<( const MaterialIndex& a ) const {  //ƒ}ƒeƒŠƒAƒ‹”Ô†‚Åƒ\[ƒg‚·‚é‚½‚ß‚Ì<
+	bool operator<( const MaterialIndex& a ) const {  //ãƒãƒ†ãƒªã‚¢ãƒ«ç•ªå·ã§ã‚½ãƒ¼ãƒˆã™ã‚‹ãŸã‚ã®<
 		return ( mMaterial < a.mMaterial ); 
 	}
 	int mMaterial;
 	int mFace;
 };
 
-//•Ö—˜ŠÖ”
+//ä¾¿åˆ©é–¢æ•°
 void getVectorArray( Array< Vector3 >* dst, CE e );
 void getCoord2dArray( Array< Vector2 >* dst, CE e );
 void getIndexColorArray( Array< IndexColor >* dst, CE e );
@@ -110,16 +110,16 @@ template< class T > void release( Vector< T* >* a ){
 	}
 }
 
-//—áŠOƒNƒ‰ƒX
+//ä¾‹å¤–ã‚¯ãƒ©ã‚¹
 class DataStructureException{
 public:
 	DataStructureException(){ ASSERT( false ); }
 };
 
-//ƒR[ƒh–{‘Ì
+//ã‚³ãƒ¼ãƒ‰æœ¬ä½“
 class MeshMaterialList{
 public:
-	//ƒfƒtƒHƒ‹ƒg‚Ìƒ_ƒ~[‚ğì‚è‚Ü‚·B
+	//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ãƒ€ãƒŸãƒ¼ã‚’ä½œã‚Šã¾ã™ã€‚
 	MeshMaterialList( int vn ){
 		mIndices.setSize( vn );
 		for ( int i = 0; i < vn; ++i ){
@@ -144,8 +144,8 @@ public:
 			}else{
 				RefString name;
 				getName( &name, c );
-				if ( name == "faceIndexes" ){ //’¸“_æ“¾
-					dieIf( mIndices.size() > 0 ); //“ñŒÂ–Ú‚Í‚È‚¢
+				if ( name == "faceIndexes" ){ //é ‚ç‚¹å–å¾—
+					dieIf( mIndices.size() > 0 ); //äºŒå€‹ç›®ã¯ãªã„
 					mIndices.setSize( c.childNumber() );
 					for ( int j = 0; j < c.childNumber(); ++j ){
 						CE index = c.child( j );
@@ -155,9 +155,9 @@ public:
 				}
 			}
 		}
-		//ƒ}ƒeƒŠƒAƒ‹ƒCƒ“ƒfƒNƒX‚ğƒ}ƒeƒŠƒAƒ‹”Ô†‡‚Éƒ\[ƒg
+		//ãƒãƒ†ãƒªã‚¢ãƒ«ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹ã‚’ãƒãƒ†ãƒªã‚¢ãƒ«ç•ªå·é †ã«ã‚½ãƒ¼ãƒˆ
 		sort( &mIndices[ 0 ], &mIndices[ 0 ] + mIndices.size() );
-		//ƒOƒ‹[ƒv‚Ì‘å‚«‚³‚ÆƒIƒtƒZƒbƒg‚ğŒvZ‚µ‚Ä‹L˜^
+		//ã‚°ãƒ«ãƒ¼ãƒ—ã®å¤§ãã•ã¨ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚’è¨ˆç®—ã—ã¦è¨˜éŒ²
 		int matN = mMaterials.size();
 		mGroupSizes.setSize( matN );
 		for ( int i = 0;i < mGroupSizes.size(); ++i ){
@@ -187,11 +187,11 @@ public:
 			CE c = e.child( i );
 			RefString name;
 			getName( &name, c );
-			if ( name == "normals" ){ //–@üæ“¾
-				dieIf( mNormals.size() > 0 ); //“ñŒÂ‚Í‚Ë‚¦
+			if ( name == "normals" ){ //æ³•ç·šå–å¾—
+				dieIf( mNormals.size() > 0 ); //äºŒå€‹ã¯ã­ãˆ
 				getVectorArray( &mNormals, c );
-			}else if ( name == "faceNormals" ){ //OŠpŒ`æ“¾
-				dieIf( mFaces.size() > 0 ); //“ñŒÂ‚Í‚Ë‚¦
+			}else if ( name == "faceNormals" ){ //ä¸‰è§’å½¢å–å¾—
+				dieIf( mFaces.size() > 0 ); //äºŒå€‹ã¯ã­ãˆ
 				getMeshFaceArray( &mFaces, c );
 			}
 		}
@@ -222,7 +222,7 @@ public:
 					CE uvs = c.child( j );
 					RefString name;
 					getName( &name, uvs );
-					if ( name == "textureCoords" ){ //UVæ“¾
+					if ( name == "textureCoords" ){ //UVå–å¾—
 						getCoord2dArray( &mUVs, uvs );
 					}
 				}
@@ -232,7 +232,7 @@ public:
 					CE colors = c.child( j );
 					RefString name;
 					getName( &name, colors );
-					if ( name == "vertexColors" ){ //Fæ“¾
+					if ( name == "vertexColors" ){ //è‰²å–å¾—
 						getIndexColorArray( &mColors, colors );
 					}
 				}
@@ -240,26 +240,26 @@ public:
 				dieIf( mMeshMaterialList != 0 );
 				mMeshMaterialList = NEW MeshMaterialList( c );
 			}else if ( RefString( "VertexDuplicationIndices" ) == c.name() ){
-				; //–³‹
+				; //ç„¡è¦–
 			}else if ( RefString( "XSkinMeshHeader" ) == c.name() ){
-				; //–³‹
+				; //ç„¡è¦–
 			}else if ( RefString( "SkinWeights" ) == c.name() ){
-				; //–³‹
+				; //ç„¡è¦–
 			}else{
 				RefString name;
 				getName( &name, c );
-				if ( name == "vertices" ){ //’¸“_æ“¾
-					dieIf( mVertices.size() > 0 ); //“ñŒÂ–Ú‚Í‚È‚¢
+				if ( name == "vertices" ){ //é ‚ç‚¹å–å¾—
+					dieIf( mVertices.size() > 0 ); //äºŒå€‹ç›®ã¯ãªã„
 					getVectorArray( &mVertices, c );
-				}else if ( name == "faces" ){ //OŠpŒ`æ“¾
-					dieIf( mFaces.size() > 0 ); //“ñŒÂ–Ú‚Í‚È‚¢
+				}else if ( name == "faces" ){ //ä¸‰è§’å½¢å–å¾—
+					dieIf( mFaces.size() > 0 ); //äºŒå€‹ç›®ã¯ãªã„
 					getMeshFaceArray( &mFaces, c );
 				}else if ( name == "nFaces" ){
-					mOldFaceNumber = getInt( c ); //3ŠpŒ`‰»‚³‚ê‚é‘O‚Ì–Ê”
+					mOldFaceNumber = getInt( c ); //3è§’å½¢åŒ–ã•ã‚Œã‚‹å‰ã®é¢æ•°
 				}
 			}
 		}
-		if ( !mMeshMaterialList ){ //ƒ}ƒeƒŠƒAƒ‹‚Ë‚¦I‚»‚ê‚Í¢‚é‚Ì‚Å–³—–î—ì‚é
+		if ( !mMeshMaterialList ){ //ãƒãƒ†ãƒªã‚¢ãƒ«ã­ãˆï¼ãã‚Œã¯å›°ã‚‹ã®ã§ç„¡ç†çŸ¢ç†ä½œã‚‹
 			mMeshMaterialList = NEW MeshMaterialList( mVertices.size() );
 		}
 	}
@@ -268,17 +268,17 @@ public:
 		SAFE_DELETE( mMeshMaterialList );
 	}
 	int countElement(){
-		int matN = mMeshMaterialList->mMaterials.size(); //ƒ}ƒeƒŠƒAƒ‹”‚¾‚¯ƒoƒbƒ`‚ª‚Å‚«‚é
+		int matN = mMeshMaterialList->mMaterials.size(); //ãƒãƒ†ãƒªã‚¢ãƒ«æ•°ã ã‘ãƒãƒƒãƒãŒã§ãã‚‹
 		int textureN = 0;
 		for ( int i = 0; i < matN; ++i ){
 			if ( mMeshMaterialList->mMaterials[ i ].mTextureFilename.size() > 0 ){
-				++textureN; //–¼‘O‚Íƒtƒ@ƒCƒ‹–¼‚©‚ç¶¬‚·‚é
+				++textureN; //åå‰ã¯ãƒ•ã‚¡ã‚¤ãƒ«åã‹ã‚‰ç”Ÿæˆã™ã‚‹
 			}
 		}
-		return matN + textureN + 1 + 1; //vertexBuffer, IndexBuffer‚Å+2
+		return matN + textureN + 1 + 1; //vertexBuffer, IndexBufferã§+2
 	}
 	int toXml( E e, int uniqueId, multimap< Mesh*, string >* batchNameTable, int* elementPos ){
-		OStringStream oss; //Šeí•ÏŠ·—pstream
+		OStringStream oss; //å„ç¨®å¤‰æ›ç”¨stream
 		string meshName;
 		if ( mName.size() > 0 ){
 			meshName = mName;
@@ -289,11 +289,11 @@ public:
 			oss.clear();
 		}
 
-		//’¸“_ˆê‚¾‚¯‚Ç–@üˆá‚¤A‚İ‚½‚¢‚È‚Ì‚ª‚ ‚é‚Ì‚ÅA­X–Ê“|‚Èè‡‚ğ“¥‚ñ‚Å’¸“_‚ğ•¡»‚·‚éB
-		//1.ƒCƒ“ƒfƒNƒX”z—ñ‚ğ—pˆÓ
-		int newIn = mFaces.size() * 3; //‘ƒCƒ“ƒfƒNƒX”
+		//é ‚ç‚¹ä¸€ç·’ã ã‘ã©æ³•ç·šé•ã†ã€ã¿ãŸã„ãªã®ãŒã‚ã‚‹ã®ã§ã€å°‘ã€…é¢å€’ãªæ‰‹é †ã‚’è¸ã‚“ã§é ‚ç‚¹ã‚’è¤‡è£½ã™ã‚‹ã€‚
+		//1.ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹é…åˆ—ã‚’ç”¨æ„
+		int newIn = mFaces.size() * 3; //ç·ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹æ•°
 		Array< IndexPair > indexPairs( newIn );
-		//’¸“_‘¤‚Æ–@ü‘¤‚ÌƒCƒ“ƒfƒNƒX‚ğ‚½‚½‚«‚±‚ñ‚Å‰ñ‚é
+		//é ‚ç‚¹å´ã¨æ³•ç·šå´ã®ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹ã‚’ãŸãŸãã“ã‚“ã§å›ã‚‹
 		for ( int i = 0; i < mFaces.size(); ++i ){
 			for ( int j = 0; j < 3; ++j ){
 				int t = i * 3 + j;
@@ -303,18 +303,18 @@ public:
 				ip.mPosition = t;
 			}
 		}
-		//’¸“_ƒJƒ‰[‚Ì‘Î‰•\‚ğæ‚Éì‚Á‚Ä‚µ‚Ü‚¤B
+		//é ‚ç‚¹ã‚«ãƒ©ãƒ¼ã®å¯¾å¿œè¡¨ã‚’å…ˆã«ä½œã£ã¦ã—ã¾ã†ã€‚
 		int oldVn = mVertices.size();
 		Array< int > oldVertexToColors( oldVn, -1 );
 		int colorN = mColors.size();
 		for ( int i = 0; i < colorN; ++i ){
 			oldVertexToColors[ mColors[ i ].mIndex ] = i;
 		}
-		//ƒ\[ƒg‚µ‚¿‚Ü‚¤
+		//ã‚½ãƒ¼ãƒˆã—ã¡ã¾ã†
 		sort( &indexPairs[ 0 ], &indexPairs[ 0 ] + newIn );
-		//VƒCƒ“ƒfƒNƒX->V’¸“_”Ô†ƒe[ƒuƒ‹
+		//æ–°ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹->æ–°é ‚ç‚¹ç•ªå·ãƒ†ãƒ¼ãƒ–ãƒ«
 		Array< int > newIndexToNewVertices( newIn ); 
-		Array< Vertex > newVertices( newIn ); //’¸“_”z—ñ‚Í‰ßè‚É—pˆÓ‚µAŒã‚Åresize‚·‚é
+		Array< Vertex > newVertices( newIn ); //é ‚ç‚¹é…åˆ—ã¯éå‰°ã«ç”¨æ„ã—ã€å¾Œã§resizeã™ã‚‹
 		int prevV = -1;
 		int prevN = -1;
 		int newVertexPos = -1;
@@ -324,18 +324,18 @@ public:
 				++newVertexPos;
 				prevV = ip.mVertex;
 				prevN = ip.mNormal;
-				//’¸“_Ši”[‚µ‚Ü‚·B
+				//é ‚ç‚¹æ ¼ç´ã—ã¾ã™ã€‚
 				Vertex& v = newVertices[ newVertexPos ];
 				v.mPosition = mVertices[ ip.mVertex ];
 				if ( mMeshNormals ){
 					v.mNormal = mMeshNormals->mNormals[ ip.mNormal ];
 				}
 				if ( mUVs.size() > ip.mVertex ){
-					v.mUv = mUVs[ ip.mVertex ]; //ˆÊ’u‚Æ“Y‚¦š‚Í“¯‚¶
+					v.mUv = mUVs[ ip.mVertex ]; //ä½ç½®ã¨æ·»ãˆå­—ã¯åŒã˜
 				}
 				int colorIndex = oldVertexToColors[ ip.mVertex ];
 				if ( colorIndex != -1 ){
-					v.mColor = mColors[ colorIndex ].mColor; //’¸“_”Ô†‚©‚çF”Ô†‚Ö‚Æ•ÏŠ·‚ª•K—v
+					v.mColor = mColors[ colorIndex ].mColor; //é ‚ç‚¹ç•ªå·ã‹ã‚‰è‰²ç•ªå·ã¸ã¨å¤‰æ›ãŒå¿…è¦
 				}
 			}
 			newIndexToNewVertices[ ip.mPosition ] = newVertexPos;
@@ -343,23 +343,23 @@ public:
 		int newVn = newVertexPos + 1;
 		newVertices.setSize( newVn );
 
-		//.x“à‚Ì–Ê”Ô†‚©‚ç¡‰ñOŠpŒ`‰»‚µ‚½–Ê”Ô†‚Ö‚Ì•ÏŠ·ƒe[ƒuƒ‹‚ğ¶¬‚·‚éB
+		//.xå†…ã®é¢ç•ªå·ã‹ã‚‰ä»Šå›ä¸‰è§’å½¢åŒ–ã—ãŸé¢ç•ªå·ã¸ã®å¤‰æ›ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’ç”Ÿæˆã™ã‚‹ã€‚
 		int oldFaceN = mOldFaceNumber;
 		int newFaceN = mFaces.size();
-		//Œ³‚Ì–Ê‚Ì”‚¾‚¯””z—ñ‚ğ—pˆÓ
-		Array< int > oldToNewFaceCounts( oldFaceN, 0 ); //Œ³‚Ì–Ê‚Ì”‚Í‚±‚ê
+		//å…ƒã®é¢ã®æ•°ã ã‘æ•°é…åˆ—ã‚’ç”¨æ„
+		Array< int > oldToNewFaceCounts( oldFaceN, 0 ); //å…ƒã®é¢ã®æ•°ã¯ã“ã‚Œ
 		for ( int i = 0; i < newFaceN; ++i ){
 			++oldToNewFaceCounts[ mFaces[ i ].mFaceId ];
 		}
-		//ƒIƒtƒZƒbƒg•ÏŠ·
+		//ã‚ªãƒ•ã‚»ãƒƒãƒˆå¤‰æ›
 		int offset = 0;
-		Array< int > oldToNewFaceOffsets( oldFaceN ); //Œ³‚Ì–Ê‚Ì”‚Í‚±‚ê
+		Array< int > oldToNewFaceOffsets( oldFaceN ); //å…ƒã®é¢ã®æ•°ã¯ã“ã‚Œ
 		for ( int i = 0; i < oldFaceN; ++i ){
 			oldToNewFaceOffsets[ i ] = offset;
 			offset += oldToNewFaceCounts[ i ];
-			oldToNewFaceCounts[ i ] = 0; //ˆÊ’u‚Ég‚¤‚Ì‚Å‰Šú‰»
+			oldToNewFaceCounts[ i ] = 0; //ä½ç½®ã«ä½¿ã†ã®ã§åˆæœŸåŒ–
 		}
-		//”z—ñ‚É‚Ô‚Á‚±‚ñ‚Å‚Ü‚í‚é
+		//é…åˆ—ã«ã¶ã£ã“ã‚“ã§ã¾ã‚ã‚‹
 		Array< int > oldToNewFace( newFaceN );
 		for ( int i = 0; i < newFaceN; ++i ){
 			int t = mFaces[ i ].mFaceId;
@@ -367,11 +367,11 @@ public:
 			oldToNewFace[ o + oldToNewFaceCounts[ t ] ] = i;
 			++oldToNewFaceCounts[ t ];
 		}
-		//‚±‚ê‚Å–Ê”Ô†•ÏŠ·ƒe[ƒuƒ‹‚ªo—ˆ‚½
+		//ã“ã‚Œã§é¢ç•ªå·å¤‰æ›ãƒ†ãƒ¼ãƒ–ãƒ«ãŒå‡ºæ¥ãŸ
 
-		//ƒCƒ“ƒfƒNƒXƒoƒbƒtƒ@‚ğ¶¬‚·‚é
-		int matN = mMeshMaterialList->mMaterials.size(); //ƒ}ƒeƒŠƒAƒ‹”‚¾‚¯ƒoƒbƒ`‚ª‚Å‚«‚é
-		Array< Tank< Triangle > > ib( matN ); //Šg’£‚µ‚½‚¢‚Ì‚Å’†‚ÍTank
+		//ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆã™ã‚‹
+		int matN = mMeshMaterialList->mMaterials.size(); //ãƒãƒ†ãƒªã‚¢ãƒ«æ•°ã ã‘ãƒãƒƒãƒãŒã§ãã‚‹
+		Array< Tank< Triangle > > ib( matN ); //æ‹¡å¼µã—ãŸã„ã®ã§ä¸­ã¯Tank
 
 		offset = 0;
 		int ibSizeTotal = 0;
@@ -393,21 +393,21 @@ public:
 				}
 			}
 		}
-		//o‚¹‚é‘Ì¨‚ª®‚Á‚½
-		//ˆêˆÓ‚È–¼‘O‚ğ‚Â‚¯‚é
+		//å‡ºã›ã‚‹ä½“å‹¢ãŒæ•´ã£ãŸ
+		//ä¸€æ„ãªåå‰ã‚’ã¤ã‘ã‚‹
 		int textureN = 0;
 		int batchN = 0;
 		for ( int i = 0; i < matN; ++i ){
-			//ƒoƒbƒ`
-			if ( ib[ i ].size() > 0 ){ //g‚Á‚Ä‚éOŠpŒ`‚ª‚È‚¯‚ê‚Î–³—p
+			//ãƒãƒƒãƒ
+			if ( ib[ i ].size() > 0 ){ //ä½¿ã£ã¦ã‚‹ä¸‰è§’å½¢ãŒãªã‘ã‚Œã°ç„¡ç”¨
 				++batchN;
-				//ƒeƒNƒXƒ`ƒƒBƒoƒbƒ`‚ª‚È‚¢‚È‚ç‚â‚Í‚è‚¢‚ç‚È‚¢B
+				//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã€‚ãƒãƒƒãƒãŒãªã„ãªã‚‰ã‚„ã¯ã‚Šã„ã‚‰ãªã„ã€‚
 				if ( mMeshMaterialList->mMaterials[ i ].mTextureFilename.size() > 0 ){
-					++textureN; //–¼‘O‚Íƒtƒ@ƒCƒ‹–¼‚©‚ç¶¬‚·‚é
+					++textureN; //åå‰ã¯ãƒ•ã‚¡ã‚¤ãƒ«åã‹ã‚‰ç”Ÿæˆã™ã‚‹
 				}
 			}
 		}
-		//’¸“_ƒoƒbƒtƒ@
+		//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 		Element vbE = e.child( *elementPos );
 		++*elementPos;
 		vbE.setName( "VertexBuffer" );
@@ -422,9 +422,9 @@ public:
 		for ( int i = 0; i < newVn; ++i ){
 			Element vE = vbE.child( i );
 			vE.setName( "Vertex" );
-			//‘S’¸“_o‚·‚à‚Ì‚ğ‹á–¡‚·‚éB
+			//å…¨é ‚ç‚¹å‡ºã™ã‚‚ã®ã‚’åŸå‘³ã™ã‚‹ã€‚
 			const Vertex& v = newVertices[ i ];
-			//–@ü
+			//æ³•ç·š
 			bool writeNormal = ( ( v.mNormal.x != 0.f ) || ( v.mNormal.y != 0.f ) || ( v.mNormal.z != 0.f ) );
 			bool writeUv = ( ( v.mUv.x != 0.f ) || ( v.mUv.y != 0.f ) );
 			bool writeColor = ( ( v.mColor.x != 1.f ) || ( v.mColor.y != 1.f ) || ( v.mColor.z != 1.f ) || ( v.mColor.w != 1.f ) );
@@ -449,7 +449,7 @@ public:
 				++aPos;
 			}
 		}
-		//ƒCƒ“ƒfƒNƒXƒoƒbƒtƒ@
+		//ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡
 		Element ibE = e.child( *elementPos );
 		++*elementPos;
 		ibE.setName( "IndexBuffer" );
@@ -471,10 +471,10 @@ public:
 				ib[ i ].toNext();
 			}
 		}
-		//ƒoƒbƒ`s‚«‚Ü‚·
+		//ãƒãƒƒãƒè¡Œãã¾ã™
 		t = 0;
 		for ( int i = 0; i < matN; ++i ){
-			if ( ib[ i ].size() == 0 ){ //ˆêŒÂ‚àOŠpŒ`‚ª‚È‚¢‚Ì‚Å‚±‚Ìƒoƒbƒ`‚Ío‚³‚È‚¢B
+			if ( ib[ i ].size() == 0 ){ //ä¸€å€‹ã‚‚ä¸‰è§’å½¢ãŒãªã„ã®ã§ã“ã®ãƒãƒƒãƒã¯å‡ºã•ãªã„ã€‚
 				continue;
 			}
 			Element bE = e.child( *elementPos );
@@ -483,26 +483,26 @@ public:
 
 			const Material& mat = mMeshMaterialList->mMaterials[ i ];
 
-			//ƒoƒbƒ`–¼¶¬
+			//ãƒãƒƒãƒåç”Ÿæˆ
 			string batchName;
 			oss << meshName << '_';
-			//ƒ}ƒeƒŠƒAƒ‹‚ª–¼‘O‚ğ‚Á‚Ä‚¢‚ê‚Î‚»‚ê‚ğ‚­‚Á‚Â‚¯‚é
+			//ãƒãƒ†ãƒªã‚¢ãƒ«ãŒåå‰ã‚’æŒã£ã¦ã„ã‚Œã°ãã‚Œã‚’ãã£ã¤ã‘ã‚‹
 			if ( mat.mName.size() > 0 ){
 				oss << mat.mName;
-			}else{ //‚È‚¯‚ê‚Î“Y‚¦š‚Å‚à“ü‚ê‚Æ‚¯
+			}else{ //ãªã‘ã‚Œã°æ·»ãˆå­—ã§ã‚‚å…¥ã‚Œã¨ã‘
 				oss << i;
 			}
 			oss.get( &batchName );
 			oss.clear();
-			//Œã‚ÍƒeƒNƒXƒ`ƒƒ
+			//å¾Œã¯ãƒ†ã‚¯ã‚¹ãƒãƒ£
 			const string& texFilename = mat.mTextureFilename;
 			if ( texFilename.size() > 0 ){ //name,vb,ib,ibOffset,triangleNumber,diffuseColor,specularColor,phongExponent,texture
-				//ƒeƒNƒXƒ`ƒƒs‚«‚Ü‚·
+				//ãƒ†ã‚¯ã‚¹ãƒãƒ£è¡Œãã¾ã™
 				Element tE = e.child( *elementPos );
 				++*elementPos;
 				tE.setName( "Texture" );
 				tE.setAttributeNumber( 2 );
-				//–¼‘O‚Íƒtƒ@ƒCƒ‹–¼‚©‚çŠg’£q‚ÆƒpƒX‚ğœ‚¢‚½‚à‚Ì‚ğƒZƒbƒg
+				//åå‰ã¯ãƒ•ã‚¡ã‚¤ãƒ«åã‹ã‚‰æ‹¡å¼µå­ã¨ãƒ‘ã‚¹ã‚’é™¤ã„ãŸã‚‚ã®ã‚’ã‚»ãƒƒãƒˆ
 				RefString texName( texFilename.c_str() );
 				int periodPos = texName.rfind( '.' );
 				int slashPos = texName.rfind( '/' );
@@ -515,17 +515,17 @@ public:
 				texName.clamp( first, last );
 				tE.attribute( 0 ).set( "name", sizeof( "name" ), texName.get(), texName.size() );
 				tE.attribute( 1 ).set( "filename", texFilename.c_str() );
-				//ƒoƒbƒ`‚ÌƒeƒNƒXƒ`ƒƒQÆ–¼‚àƒZƒbƒg
+				//ãƒãƒƒãƒã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å‚ç…§åã‚‚ã‚»ãƒƒãƒˆ
 				bE.setAttributeNumber( 11 );
 				bE.attribute( 10 ).set( "texture", sizeof( "texture" ), texName.get(), texName.size() );
 			}else{
 				bE.setAttributeNumber( 10 );
 			}
-			batchNameTable->insert( make_pair( this, batchName ) ); //ƒoƒbƒ`–¼‘O•\‚É‚Ô‚Á‚±‚Ş
+			batchNameTable->insert( make_pair( this, batchName ) ); //ãƒãƒƒãƒåå‰è¡¨ã«ã¶ã£ã“ã‚€
 			bE.attribute( 0 ).set( "name", batchName.c_str() );
 			bE.attribute( 1 ).set( "vertexBuffer", vbName.c_str() );
 			bE.attribute( 2 ).set( "indexBuffer", ibName.c_str() );
-			bE.attribute( 3 ).set( "bufferOffset", t * 3 ); //OŠpŒ`‚È‚Ì‚Å~3
+			bE.attribute( 3 ).set( "bufferOffset", t * 3 ); //ä¸‰è§’å½¢ãªã®ã§Ã—3
 			bE.attribute( 4 ).set( "primitiveNumber", ib[ i ].size() );
 			bE.attribute( 5 ).set( "diffuseColor", &mat.mFaceColor.x, 3 );
 			bE.attribute( 6 ).set( "transparency", mat.mFaceColor.w );
@@ -551,19 +551,19 @@ class Frame{
 public:
 	Frame( CE e ){
 		mMatrix.setIdentity();
-		//–¼‘Oæ“¾
+		//åå‰å–å¾—
 		for ( int i = 0; i < e.attributeNumber(); ++i ){
 			CA a = e.attribute( i );
 			if ( RefString( "name" ) == a.name() ){
 				mName = a.value();
 			}
 		}
-		//q‹Ÿ‚É‚Â‚¢‚Ä
+		//å­ä¾›ã«ã¤ã„ã¦
 		for ( int i = 0; i < e.childNumber(); ++i ){
 			CE c = e.child( i );
 			if ( RefString( "FrameTransformMatrix" ) == c.name() ){
 				dieIf( c.childNumber() == 0 );
-				getMatrix( &mMatrix, c.child( 0 ) ); //Matrix4x4‚ğ“n‚·
+				getMatrix( &mMatrix, c.child( 0 ) ); //Matrix4x4ã‚’æ¸¡ã™
 			}else if ( RefString( "Mesh" ) == c.name() ){
 				mMeshes.push( NEW Mesh( c ) );
 			}else if ( RefString( "Frame" ) == c.name() ){
@@ -586,7 +586,7 @@ public:
 	int toXml( E e, int nodeId, multimap< Mesh*, string >* batchNameTable ){
 		typedef multimap< Mesh*, string > Table;
 		typedef Table::iterator It;
-		//©•ª‚ª‚ÂƒƒbƒVƒ…‚É‘®‚·‚éƒoƒbƒ`–¼‚ğæ‚Á‚Ä‚­‚é
+		//è‡ªåˆ†ãŒæŒã¤ãƒ¡ãƒƒã‚·ãƒ¥ã«å±ã™ã‚‹ãƒãƒƒãƒåã‚’å–ã£ã¦ãã‚‹
 		vector< string > batchNames;
 		for ( int i = 0; i < mMeshes.size(); ++i ){
 			pair< It, It > range = batchNameTable->equal_range( mMeshes[ i ] );
@@ -594,16 +594,16 @@ public:
 				batchNames.push_back( j->second );
 			}
 		}
-		//‚Ü‚¸©•ª‚Ìî•ñ‚ğƒZƒbƒg
+		//ã¾ãšè‡ªåˆ†ã®æƒ…å ±ã‚’ã‚»ãƒƒãƒˆ
 		e.setName( "Node" );
 		Matrix34 identity;
 		identity.setIdentity();
 		bool writeMatrix = ( identity != mMatrix );
 		int childNumber = ( writeMatrix ) ? 2 : 1;
 		int batchN = static_cast< int >( batchNames.size() );
-		childNumber += batchN; //ƒoƒbƒ`”‚ğ‘«‚·
+		childNumber += batchN; //ãƒãƒƒãƒæ•°ã‚’è¶³ã™
 
-		e.setAttributeNumber( childNumber ); //name‚ÆA‚ ‚ê‚Îtransform
+		e.setAttributeNumber( childNumber ); //nameã¨ã€ã‚ã‚Œã°transform
 
 		int aPos = 0;
 		if ( mName.size() > 0 ){
@@ -622,7 +622,7 @@ public:
 			e.attribute( aPos ).set( "batch", batchNames[ i ].c_str() );
 			++aPos;
 		}
-		//q‚Ìˆ—
+		//å­ã®å‡¦ç†
 		e.setChildNumber( mFrames.size() ) ;
 		for ( int i = 0; i < mFrames.size(); ++i ){
 			E c = e.child( i );
@@ -657,15 +657,15 @@ public:
 		for ( int i = 0; i < mFrames.size(); ++i ){
 			mFrames[ i ]->collectMesh( &meshes );
 		}
-		//ƒhƒLƒ…ƒƒ“ƒg[
+		//ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆãƒ¼
 		Document d = Document::create();
 		Element root = d.root();
 		root.setChildNumber( 1 );
 		Element graphicsContainer = root.child( 0 );
 		graphicsContainer.setName( "Container" );
-		//ƒƒbƒVƒ…ƒ|ƒCƒ“ƒ^->ƒoƒbƒ`–¼‚Ìmultimap‚ğì‚é
+		//ãƒ¡ãƒƒã‚·ãƒ¥ãƒã‚¤ãƒ³ã‚¿->ãƒãƒƒãƒåã®multimapã‚’ä½œã‚‹
 		multimap< Mesh*, string > batchNameTable;
-		//ƒGƒŒƒƒ“ƒgŠm•Û
+		//ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆç¢ºä¿
 		int elementN = 0;
 		for ( int i = 0; i < meshes.size(); ++i ){
 			elementN += meshes[ i ]->countElement();
@@ -673,21 +673,21 @@ public:
 		elementN += mFrames.size();
 		graphicsContainer.setChildNumber( elementN );
 
-		//ƒƒbƒVƒ…‚ÌXML•ÏŠ·
+		//ãƒ¡ãƒƒã‚·ãƒ¥ã®XMLå¤‰æ›
 		int elementPos = 0;
 		int id = 0;
 		for ( int i = 0; i < meshes.size(); ++i ){
 			id = meshes[ i ]->toXml( graphicsContainer, id, &batchNameTable, &elementPos );
 		}
-		//ŸBƒcƒŠ[o‚µ‚Ü‚·B
-		//ªŒ³‚ÌFrame‚ÍTree‚É‚·‚éB
+		//æ¬¡ã€‚ãƒ„ãƒªãƒ¼å‡ºã—ã¾ã™ã€‚
+		//æ ¹å…ƒã®Frameã¯Treeã«ã™ã‚‹ã€‚
 		for ( int i = 0; i < mFrames.size(); ++i ){
 			E tree = graphicsContainer.child( elementPos );
 			++elementPos;
 			tree.setName( "Tree" );
 			tree.setAttributeNumber( 1 );
 			tree.attribute( 0 ).set( "name", mFrames[ i ]->mName.c_str() );
-			tree.setChildNumber( 1 ); //ƒ‹[ƒgƒm[ƒh
+			tree.setChildNumber( 1 ); //ãƒ«ãƒ¼ãƒˆãƒãƒ¼ãƒ‰
 			E rootNode = tree.child( 0 );
 			mFrames[ i ]->toXml( rootNode, 0, &batchNameTable );
 		}
@@ -703,7 +703,7 @@ public:
 	Vector< Mesh* > mMeshes;
 };
 
-//•Ö—˜ŠÖ”
+//ä¾¿åˆ©é–¢æ•°
 void getVectorArray( Array< Vector3 >* dst, CE e ){
 	dst->setSize( e.childNumber() );
 	for ( int i = 0; i < e.childNumber(); ++i ){
@@ -758,26 +758,26 @@ void getCoord2dArray( Array< Vector2 >* dst, CE e ){
 }
 
 void getMeshFaceArray( Array< Face >* dst, CE e ){
-	//ˆê‰ñƒ^ƒ“ƒN‚É“ü‚ê‚Ü‚·
+	//ä¸€å›ã‚¿ãƒ³ã‚¯ã«å…¥ã‚Œã¾ã™
 	Tank< Face > tank;
-	Face face; //ƒeƒ“ƒ|ƒ‰ƒŠ
+	Face face; //ãƒ†ãƒ³ãƒãƒ©ãƒª
 	for ( int i = 0; i < e.childNumber(); ++i ){
 		CE meshFaceE = e.child( i );
 		for ( int j = 0; j < meshFaceE.childNumber(); ++j ){
 			CE indicesE = meshFaceE.child( j );
-			if ( RefString( "Array" ) == indicesE.name() ){ //”z—ñ‚È‚ç‚±‚¢‚Â‚¾B
+			if ( RefString( "Array" ) == indicesE.name() ){ //é…åˆ—ãªã‚‰ã“ã„ã¤ã ã€‚
 				face.mFaceId = i;
 				face.mIndices[ 0 ] = getInt( indicesE.child( 0 ) );
 				face.mIndices[ 1 ] = getInt( indicesE.child( 1 ) );
 				for ( int k = 2; k < indicesE.childNumber(); ++k ){
 					face.mIndices[ 2 ] = getInt( indicesE.child( k ) );
 					tank.add( face );
-					face.mIndices[ 1 ] = face.mIndices[ 2 ]; //‚¸‚ç‚µ‚ÄŸ‚Ö
+					face.mIndices[ 1 ] = face.mIndices[ 2 ]; //ãšã‚‰ã—ã¦æ¬¡ã¸
 				}
 			}
 		}
 	}
-	//”z—ñ‚ÖƒRƒs[
+	//é…åˆ—ã¸ã‚³ãƒ”ãƒ¼
 	if ( tank.size() > 0 ){
 		dst->setSize( tank.size() );
 		tank.copyTo( &( *dst )[ 0 ] );
@@ -858,14 +858,14 @@ void getIndexColor( IndexColor* dst, CE e ){
 }
 
 void getMaterial( Material* dst, CE e ){
-	//–¼‘Oæ“¾
+	//åå‰å–å¾—
 	for ( int i = 0; i < e.attributeNumber(); ++i ){
 		CA a = e.attribute( i );
 		if ( RefString( "name" ) == a.name() ){
 			dst->mName = a.value();
 		}
 	}
-	//‚Ü‚¾“ü‚ê‚Ä‚È‚¢‹L†
+	//ã¾ã å…¥ã‚Œã¦ãªã„è¨˜å·
 	dst->mFaceColor.x = -1e10f;
 	dst->mFaceColor.y = -1e10f;
 	dst->mFaceColor.z = -1e10f;
@@ -896,8 +896,8 @@ void getMaterial( Material* dst, CE e ){
 			}
 		}
 	}
-	//•s³’l‘Î‰
-	if ( dst->mPower <= 0.f ){ //0ˆÈ‰º‚Í•s³‚Å‚·B1‚É‚µ‚ÄAƒXƒyƒLƒ…ƒ‰F‚ğ0‚É‚µ‚Ü‚·B
+	//ä¸æ­£å€¤å¯¾å¿œ
+	if ( dst->mPower <= 0.f ){ //0ä»¥ä¸‹ã¯ä¸æ­£ã§ã™ã€‚1ã«ã—ã¦ã€ã‚¹ãƒšã‚­ãƒ¥ãƒ©è‰²ã‚’0ã«ã—ã¾ã™ã€‚
 		dst->mPower = 1.f;
 		dst->mSpecularColor.set( 0.f, 0.f, 0.f );
 	}
@@ -915,14 +915,14 @@ void getMaterial( Material* dst, CE e ){
 		( dst->mEmissiveColor.z == -1e10f ) );
 }
 
-//—áŠO“Š‚°‚Ü‚·Bassert‚Æˆá‚Á‚Ätrue‚È‚ç“Š‚°‚é
+//ä¾‹å¤–æŠ•ã’ã¾ã™ã€‚assertã¨é•ã£ã¦trueãªã‚‰æŠ•ã’ã‚‹
 void dieIf( bool f ){
 	if ( f ){
 		throw DataStructureException();
 	}
 }
 
-//value’l‚ğint‚Åæ‚Á‚Ä‚­‚é
+//valueå€¤ã‚’intã§å–ã£ã¦ãã‚‹
 int getInt( CE e ){
 	int r = 0;
 	bool found = false;
@@ -937,7 +937,7 @@ int getInt( CE e ){
 	return r;
 }
 
-//value’l‚ğfloat‚Åæ‚Á‚Ä‚­‚é
+//valueå€¤ã‚’floatã§å–ã£ã¦ãã‚‹
 float getFloat( CE e ){
 	float r = 0;
 	bool found = false;
@@ -966,7 +966,7 @@ const char* getString( CE e ){
 	return r;
 }
 
-//name’l‚ğæ“¾
+//nameå€¤ã‚’å–å¾—
 void getName( RefString* dst, CE e ){
 	bool found = false;
 	for ( int i = 0; i < e.attributeNumber(); ++i ){
@@ -981,33 +981,33 @@ void getName( RefString* dst, CE e ){
 
 void getMatrix( Matrix34* dst, CE e ){
 	dieIf( e.childNumber() == 0 ); 
-	e = e.child( 0 ); //Array‚ªo‚Ä‚­‚é
+	e = e.child( 0 ); //ArrayãŒå‡ºã¦ãã‚‹
 
 	dieIf( e.childNumber() < 16 );
-	for ( int i = 0; i < 4; ++i ){ //“]’u‚µ‚ÄŠi”[
+	for ( int i = 0; i < 4; ++i ){ //è»¢ç½®ã—ã¦æ ¼ç´
 		for ( int j = 0; j < 3; ++j ){
-			CE c = e.child( i * 4 + j ); //j==3‚Í0‚È‚Ì‚ÅƒXƒLƒbƒv
+			CE c = e.child( i * 4 + j ); //j==3ã¯0ãªã®ã§ã‚¹ã‚­ãƒƒãƒ—
 			float t = getFloat( c );
-			if ( -t == 0.f ){ //-0‚ğ+0‚É‚·‚éB
+			if ( -t == 0.f ){ //-0ã‚’+0ã«ã™ã‚‹ã€‚
 				t = 0.f;
 			}
 			( *dst )( j, i ) = t; 
 		}
 	}
-	//”O‚Ì‚½‚ßƒ`ƒFƒbƒN
+	//å¿µã®ãŸã‚ãƒã‚§ãƒƒã‚¯
 	dieIf( getFloat( e.child( 3 ) ) != 0.f );
 	dieIf( getFloat( e.child( 7 ) ) != 0.f );
 	dieIf( getFloat( e.child( 11 ) ) != 0.f );
 	dieIf( getFloat( e.child( 15 ) ) != 1.f );
 }
 
-//ªŒ³‚ÌŠÖ”
+//æ ¹å…ƒã®é–¢æ•°
 //#include <fstream>
 Document convert( ConstDocument src ){
 #if 0
 	string s;
 	src.convertToString( &s );
-	setlocale( LC_ALL, "" ); //‚±‚ê‚ª‚È‚¢‚Æ“ú–{Œêƒtƒ@ƒCƒ‹–¼‚ğó‚¯•t‚¯‚È‚¢
+	setlocale( LC_ALL, "" ); //ã“ã‚ŒãŒãªã„ã¨æ—¥æœ¬èªãƒ•ã‚¡ã‚¤ãƒ«åã‚’å—ã‘ä»˜ã‘ãªã„
 	ofstream out( "converted.txt", ofstream::binary );
 	out.write( s.c_str(), s.size() );
 	out.close();

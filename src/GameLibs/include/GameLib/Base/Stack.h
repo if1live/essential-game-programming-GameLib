@@ -3,37 +3,37 @@
 
 namespace GameLib{
 
-///‘f’¼‚ÈŒÅ’èƒTƒCƒYƒXƒ^ƒbƒN
+///ç´ ç›´ãªå›ºå®šã‚µã‚¤ã‚ºã‚¹ã‚¿ãƒƒã‚¯
 template< class T > class Stack{
 public:
-	///ƒfƒtƒHƒ‹ƒgBƒTƒCƒYAÅ‘å—e—Ê‚Í0B
+	///ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã€‚ã‚µã‚¤ã‚ºã€æœ€å¤§å®¹é‡ã¯0ã€‚
 	Stack();
-	///Å‘å—e—Ê‚ğw’èB
+	///æœ€å¤§å®¹é‡ã‚’æŒ‡å®šã€‚
 	explicit Stack( int capacity );
 	~Stack();
-	///ÄŠm•ÛB’†g‚ª‚ ‚éó‘Ô‚ÅŒÄ‚Ô‚ÆassertBclear()‚µ‚ëB
+	///å†ç¢ºä¿ã€‚ä¸­èº«ãŒã‚ã‚‹çŠ¶æ…‹ã§å‘¼ã¶ã¨assertã€‚clear()ã—ã‚ã€‚
 	void setCapacity( int size );
-	///Å‘å—e—Êæ“¾
+	///æœ€å¤§å®¹é‡å–å¾—
 	int capacity() const;
-	///Œ»İ‚Ì—v‘f”æ“¾
+	///ç¾åœ¨ã®è¦ç´ æ•°å–å¾—
 	int size() const;
-	///‘S‰ğ•ú
+	///å…¨è§£æ”¾
 	void clear();
-	///––”ö‚É’Ç‰Á
+	///æœ«å°¾ã«è¿½åŠ 
 	void push( const T& );
-	///––”ö‚É’Ç‰Á(ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^ŒÄ‚Ño‚µ)
+	///æœ«å°¾ã«è¿½åŠ (ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿å‘¼ã³å‡ºã—)
 	void push();
-	///––”ö‚ğíœ
+	///æœ«å°¾ã‚’å‰Šé™¤
 	void pop();
-	///––”ö‚ğíœ(Ì‚Ä‚é—v‘f‚ÌƒRƒs[‚ğó‚¯æ‚é)
+	///æœ«å°¾ã‚’å‰Šé™¤(æ¨ã¦ã‚‹è¦ç´ ã®ã‚³ãƒ”ãƒ¼ã‚’å—ã‘å–ã‚‹)
 	void pop( T* out );
-	///––”ö‚ğæ“¾(const)
+	///æœ«å°¾ã‚’å–å¾—(const)
 	const T* get() const;
-	///––”ö‚ğæ“¾(”ñconst)
+	///æœ«å°¾ã‚’å–å¾—(éconst)
 	T* get();
 private:
-	void operator=( const Stack& ); //‘ã“ü‹Ö~
-	Stack( const Stack& ); //ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‹Ö~
+	void operator=( const Stack& ); //ä»£å…¥ç¦æ­¢
+	Stack( const Stack& ); //ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ç¦æ­¢
 
 	T* mElements;
 	int mSize;
@@ -42,7 +42,7 @@ private:
 };
 
 } //namespace GameLib
-#include "GameLib/Base/Impl/StackImpl.h" //’†g‚Í‚±‚Ì’†
+#include "GameLib/Base/Impl/StackImpl.h" //ä¸­èº«ã¯ã“ã®ä¸­
 
 #endif
 

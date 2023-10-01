@@ -21,30 +21,30 @@ double yOffset,
 double rotation ){
 	double xf = static_cast< double >( x );
 	double yf = static_cast< double >( y );
-	//“Y‚¦š‚©‚çÀ•W‚É•ÏŠ·
+	//æ·»ãˆå­—ã‹ã‚‰åº§æ¨™ã«å¤‰æ›
 	xf += 0.5f;
 	yf += 0.5f;
-	//Œ´“_‚ğ‚¸‚ç‚·
+	//åŸç‚¹ã‚’ãšã‚‰ã™
 	xf -= xOffset;
 	yf -= yOffset;
-	//Šp“x‚Æ”¼Œa‚ğ‹‚ß‚é
+	//è§’åº¦ã¨åŠå¾„ã‚’æ±‚ã‚ã‚‹
 	double r = GameLib::sqrt( xf * xf + yf * yf );
 	double angle = GameLib::atan2( yf, xf );
-	//Šp“x‚Érotation‚ğ‰Á‚¦‚éB
+	//è§’åº¦ã«rotationã‚’åŠ ãˆã‚‹ã€‚
 	angle += rotation;
-	//ƒTƒCƒ“ƒRƒTƒCƒ“
+	//ã‚µã‚¤ãƒ³ã‚³ã‚µã‚¤ãƒ³
 	double sine = GameLib::sin( angle );
 	double cosine = GameLib::cos( angle );
-	//xf,yf‚ğŒvZ‚µ‚È‚¨‚µ
+	//xf,yfã‚’è¨ˆç®—ã—ãªãŠã—
 	xf = r * cosine;
 	yf = r * sine;
-	//Œ´“_‚ğŒ³‚É–ß‚·
+	//åŸç‚¹ã‚’å…ƒã«æˆ»ã™
 	xf += xOffset;
 	yf += yOffset;
-	//À•W‚©‚ç“Y‚¦š‚Ö
+	//åº§æ¨™ã‹ã‚‰æ·»ãˆå­—ã¸
 	xf -= 0.5;
 	yf -= 0.5;
-	//lÌŒÜ“ü‚µ‚Ä®”‰»
+	//å››æ¨äº”å…¥ã—ã¦æ•´æ•°åŒ–
 	*rx = round( xf );
 	*ry = round( yf );
 }
@@ -62,7 +62,7 @@ namespace GameLib{
 		unsigned* vram = videoMemory();
 		int ww = width(); //window width
 		int wh = height(); //window height
-		//ˆê’U‘S•”^‚Á•‚É
+		//ä¸€æ—¦å…¨éƒ¨çœŸã£é»’ã«
 		for ( int i = 0; i < ww * wh; ++i ){
 			vram[ i ] = 0;
 		}
@@ -74,10 +74,10 @@ namespace GameLib{
 		double rotation = static_cast< double >( gCount );
 		for ( int y = 0; y < ih; ++y ){
 			for ( int x = 0; x < iw; ++x ){
-				//‰ñ“]æ‚ğŒvZ
+				//å›è»¢å…ˆã‚’è¨ˆç®—
 				int rx, ry;
 				rotate( &rx, &ry, x, y, offsetX, offsetY, rotation );
-				//”ÍˆÍ“à‚È‚ç“\‚è•t‚¯
+				//ç¯„å›²å†…ãªã‚‰è²¼ã‚Šä»˜ã‘
 				if ( rx >= 0 && rx < ww && ry >= 0 && ry < wh ){
 					vram[ ry * ww + rx ] = gImage->pixel( x, y );
 				}

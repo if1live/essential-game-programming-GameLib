@@ -12,42 +12,42 @@ int main( int argc, char** argv ){
 	bool help = false;
 	vector< string > inFileNames;
 
-	//ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‰ğß
+	//ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³è§£é‡ˆ
 	for ( int i = 1; i < argc; ++i ){
-		if ( argv[ i ][ 0 ] == '-' ){ //-‚©‚ç‚Í‚¶‚Ü‚ê‚Î‚È‚É‚©‚ÌƒIƒvƒVƒ‡ƒ“
+		if ( argv[ i ][ 0 ] == '-' ){ //-ã‹ã‚‰ã¯ã˜ã¾ã‚Œã°ãªã«ã‹ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³
 			char c = argv[ i ][ 1 ];
-			if ( c == 'h' ){ //ƒwƒ‹ƒv
+			if ( c == 'h' ){ //ãƒ˜ãƒ«ãƒ—
 				help = true;
 			}
 		}else{
 			inFileNames.push_back( argv[ i ] );
 		}
 	}
-	//ƒtƒ@ƒCƒ‹ˆêŒÂ‚à‚Ë‚¦‚æ
+	//ãƒ•ã‚¡ã‚¤ãƒ«ä¸€å€‹ã‚‚ã­ãˆã‚ˆ
 	if ( inFileNames.size() == 0 ){
 		help = true;
 	}
-	//ƒwƒ‹ƒv•\¦‚µ‚ÄI‚í‚è
+	//ãƒ˜ãƒ«ãƒ—è¡¨ç¤ºã—ã¦çµ‚ã‚ã‚Š
 	if ( help ){
 		std::cout << "Usage: XFileConverter.exe [ -v ][ -h ] inputFiles..." << endl;
 		std::cout << "<Options>" << endl;
 		std::cout << "\t-v             : verbose mode." << endl;
 		std::cout << "\t-h             : display this help." << endl;
-#ifndef NDEBUG //‚±‚¤‚µ‚Ä‚¨‚­‚ÆƒfƒoƒO‚Ì‚µ‚©—ˆ‚È‚¢
-	while( true ){;} //visual studio‚©‚çÀs‚·‚é‚ÉƒRƒ“ƒ\[ƒ‹‚ğ—Ç‚­‚İ‚½‚¢‚Ì‚ÅB
+#ifndef NDEBUG //ã“ã†ã—ã¦ãŠãã¨ãƒ‡ãƒã‚°ã®æ™‚ã—ã‹æ¥ãªã„
+	while( true ){;} //visual studioã‹ã‚‰å®Ÿè¡Œã™ã‚‹æ™‚ã«ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã‚’è‰¯ãã¿ãŸã„ã®ã§ã€‚
 #endif
 		return 1;
 	}
-	//ˆ—n‚ß‚é‚æ[B
+	//å‡¦ç†å§‹ã‚ã‚‹ã‚ˆãƒ¼ã€‚
 	for ( unsigned i = 0; i < inFileNames.size(); ++i ){
-		setlocale( LC_ALL, "" ); //‚±‚ê‚ª‚È‚¢‚Æ“ú–{Œêƒtƒ@ƒCƒ‹–¼‚ğó‚¯•t‚¯‚È‚¢
+		setlocale( LC_ALL, "" ); //ã“ã‚ŒãŒãªã„ã¨æ—¥æœ¬èªãƒ•ã‚¡ã‚¤ãƒ«åã‚’å—ã‘ä»˜ã‘ãªã„
 		ifstream in( inFileNames[ i ].c_str(), ifstream::binary );
 		in.seekg( 0, ifstream::end );
 		int size = static_cast< int >( in.tellg() );
 		in.seekg( 0, ifstream::beg );
 		char* src = NEW char[ size + 1 ];
 		in.read( src, size );
-		src[ size ] = '\0'; //NULLI’[
+		src[ size ] = '\0'; //NULLçµ‚ç«¯
 		Document d = Document::create( src, size );
 
 		size_t pos = inFileNames[ i ].rfind( '.' );
@@ -57,12 +57,12 @@ int main( int argc, char** argv ){
 		Array< char > dst;
 		d.convertToBinary( &dst );
 
-		setlocale( LC_ALL, "" ); //‚±‚ê‚ª‚È‚¢‚Æ“ú–{Œêƒtƒ@ƒCƒ‹–¼‚ğó‚¯•t‚¯‚È‚¢
+		setlocale( LC_ALL, "" ); //ã“ã‚ŒãŒãªã„ã¨æ—¥æœ¬èªãƒ•ã‚¡ã‚¤ãƒ«åã‚’å—ã‘ä»˜ã‘ãªã„
 		ofstream out( inFileNames[ i ].c_str(), ofstream::binary );
 		out.write( &dst[ 0 ], dst.size() );
 	}
-#ifndef NDEBUG //‚±‚¤‚µ‚Ä‚¨‚­‚ÆƒfƒoƒO‚Ì‚µ‚©—ˆ‚È‚¢
-	while( true ){;} //visual studio‚©‚çÀs‚·‚é‚ÉƒRƒ“ƒ\[ƒ‹‚ğ—Ç‚­‚İ‚½‚¢‚Ì‚ÅB
+#ifndef NDEBUG //ã“ã†ã—ã¦ãŠãã¨ãƒ‡ãƒã‚°ã®æ™‚ã—ã‹æ¥ãªã„
+	while( true ){;} //visual studioã‹ã‚‰å®Ÿè¡Œã™ã‚‹æ™‚ã«ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã‚’è‰¯ãã¿ãŸã„ã®ã§ã€‚
 #endif
 	return 0;
 }

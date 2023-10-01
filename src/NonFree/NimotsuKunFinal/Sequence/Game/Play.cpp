@@ -10,28 +10,28 @@ using namespace GameLib;
 namespace Sequence{
 namespace Game{
 
-Play::Play(){ //‰½‚à‚µ‚È‚¢
+Play::Play(){ //ä½•ã‚‚ã—ãªã„
 }
 
-Play::~Play(){ //‰½‚à‚µ‚È‚¢
+Play::~Play(){ //ä½•ã‚‚ã—ãªã„
 }
 
-//ƒQ[ƒ€–{‘Ì
+//ã‚²ãƒ¼ãƒ æœ¬ä½“
 void Play::update( Parent* parent ){
 	State* state = parent->getState();
 
 	bool cleared = false;
-	//ƒƒCƒ“ƒ‹[ƒv
-	//ƒNƒŠƒAƒ`ƒFƒbƒN
+	//ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—
+	//ã‚¯ãƒªã‚¢ãƒã‚§ãƒƒã‚¯
 	if ( state->hasCleared() ){
 		cleared = true;
 	}
-	//“ü—Íæ“¾
-	//SPACE‰Ÿ‚³‚ê‚½‚çƒƒjƒ…[‚Ös‚­
+	//å…¥åŠ›å–å¾—
+	//SPACEæŠ¼ã•ã‚ŒãŸã‚‰ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã¸è¡Œã
 	Framework f = Framework::instance();
 	if ( f.isKeyTriggered( ' ' ) ){
 		parent->moveTo( Parent::SEQ_MENU );
-	}else{ //’ÊíXV
+	}else{ //é€šå¸¸æ›´æ–°
 		int dx = 0;
 		int dy = 0;
 		if ( f.isKeyOn( 'a' ) ){
@@ -43,15 +43,15 @@ void Play::update( Parent* parent ){
 		}else if ( f.isKeyOn( 'z' ) ){
 			dy += 1;
 		}
-		//XV
+		//æ›´æ–°
 		state->update( dx, dy );
 
-		//ƒNƒŠƒA‚µ‚½‚È‚çã‚Ö•ñ
+		//ã‚¯ãƒªã‚¢ã—ãŸãªã‚‰ä¸Šã¸å ±å‘Š
 		if ( cleared ){
 			parent->moveTo( Parent::SEQ_CLEAR );
 		}
 	}
-	//•`‰æ
+	//æç”»
 	state->draw();
 }
 

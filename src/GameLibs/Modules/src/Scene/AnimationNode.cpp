@@ -11,9 +11,9 @@ namespace GameLib{
 namespace Scene{
 	
 AnimationNode::AnimationNode( PseudoXml::ConstElement& e, Container::Impl& c ){
-	ASSERT( RefString( "Node" ) == e.name() ); //Node‚¾‚æ‚ËH
-	ASSERT( e.childNumber() > 0 ); //ƒJ[ƒuˆêŒÂ‚Í‚ ‚é‚æ‚ËH
-	//–¼‘Oæ“¾
+	ASSERT( RefString( "Node" ) == e.name() ); //Nodeã ã‚ˆã­ï¼Ÿ
+	ASSERT( e.childNumber() > 0 ); //ã‚«ãƒ¼ãƒ–ä¸€å€‹ã¯ã‚ã‚‹ã‚ˆã­ï¼Ÿ
+	//åå‰å–å¾—
 	int an = e.attributeNumber();
 	for ( int i = 0; i < an; ++i ){
 		ConstAttribute a = e.attribute( i );

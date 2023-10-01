@@ -12,7 +12,7 @@ namespace GameLib{
 namespace Scene{
 using namespace GameLib::Graphics;
 
-//BatchImpl.h‚É’u‚«‚½‚¢‚ªAƒRƒ“ƒeƒi‚ÉƒAƒNƒZƒX‚·‚éŠÖŒW‚Å‚¨‚¯‚¸A‚±‚±‚É’u‚­B
+//BatchImpl.hã«ç½®ããŸã„ãŒã€ã‚³ãƒ³ãƒ†ãƒŠã«ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹é–¢ä¿‚ã§ãŠã‘ãšã€ã“ã“ã«ç½®ãã€‚
 Batch::Impl::Impl( PseudoXml::ConstElement& e, Container::Impl& c ) : 
 mDiffuseColor( 1.f, 1.f, 1.f ),
 mSpecularColor( 1.f, 1.f, 1.f ),
@@ -27,7 +27,7 @@ mPrimitiveType( PRIMITIVE_TRIANGLE ),
 mLighting( true ),
 mName( 0 ),
 mContainer( &c ){
-	//–¼‘O‚â‚ç‚È‚É‚â‚ç‚ğ”²‚­
+	//åå‰ã‚„ã‚‰ãªã«ã‚„ã‚‰ã‚’æŠœã
 	int an = e.attributeNumber();
 	for ( int i = 0; i < an; ++i ){
 		ConstAttribute a = e.attribute( i );
@@ -82,14 +82,14 @@ mContainer( &c ){
 			}
 		}
 	}
-	//“§–¾“xİ’è‚ª‚³‚ê‚Ä‚¢‚é‚È‚çƒŠƒjƒA[‚Éã‘‚«
+	//é€æ˜åº¦è¨­å®šãŒã•ã‚Œã¦ã„ã‚‹ãªã‚‰ãƒªãƒ‹ã‚¢ãƒ¼ã«ä¸Šæ›¸ã
 	if ( mTransparency < 1.f && mBlendMode == BLEND_OPAQUE ){
 		mBlendMode = BLEND_LINEAR;
 	}
 	ASSERT( mVertexBuffer && "Batch : VertexBuffer not specified!" );
-	if ( mPrimitiveNumber == 0 ){ //ƒoƒbƒtƒ@‘Sˆæ‚ğg‚¤‚æ‚¤‚É‘‚«Š·‚¦‚é
+	if ( mPrimitiveNumber == 0 ){ //ãƒãƒƒãƒ•ã‚¡å…¨åŸŸã‚’ä½¿ã†ã‚ˆã†ã«æ›¸ãæ›ãˆã‚‹
 		int n = 0;
-		if ( mIndexBuffer ){ //ƒCƒ“ƒfƒNƒXƒoƒbƒtƒ@‚ª‚ ‚ê‚ÎƒCƒ“ƒfƒNƒX‚Å
+		if ( mIndexBuffer ){ //ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãŒã‚ã‚Œã°ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹ã§
 			n = mIndexBuffer.indexNumber();
 		}else{
 			n = mVertexBuffer.vertexNumber();

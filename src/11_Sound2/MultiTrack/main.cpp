@@ -1,10 +1,10 @@
 #include "GameLib/Framework.h"
 
-//Šy•ˆ’è‹`
+//æ¥½è­œå®šç¾©
 struct Note{
-	int mName; //ƒhƒŒƒ~B0‚ª65Hz‚ÌƒhB24‚ª‚¢‚í‚ä‚é^‚ñ’†‚ÌƒhB
-	int mLength; // 100•ª‚Ì1•b’PˆÊ
-	int mVolume; // 0‚©‚ç100
+	int mName; //ãƒ‰ãƒ¬ãƒŸã€‚0ãŒ65Hzã®ãƒ‰ã€‚24ãŒã„ã‚ã‚†ã‚‹çœŸã‚“ä¸­ã®ãƒ‰ã€‚
+	int mLength; // 100åˆ†ã®1ç§’å˜ä½
+	int mVolume; // 0ã‹ã‚‰100
 };
 
 const int C = 24;
@@ -20,9 +20,9 @@ const int A = 33;
 const int Ais = 34;
 const int H = 35;
 
-//‰EèŠy•ˆ
+//å³æ‰‹æ¥½è­œ
 const Note gTrack1[] = {
-	{ 0, 150, 0 }, //‹x•„
+	{ 0, 150, 0 }, //ä¼‘ç¬¦
 	{ D, 50, 15 },
 
 	{ G, 50, 17 },
@@ -72,9 +72,9 @@ const Note gTrack1[] = {
 	{ D+12, 100, 12 },
 };
 
-//¶èŠy•ˆ
+//å·¦æ‰‹æ¥½è­œ
 const Note gTrack2[] = {
-	{ 0, 200, 0 }, //‹x•„
+	{ 0, 200, 0 }, //ä¼‘ç¬¦
 
 	{ G-12, 100, 10 },
 	{ G, 100, 10 },
@@ -129,30 +129,30 @@ const Note gTrack2[] = {
 };
 
 void addSound( 
-short* data, //o—Í
-int waveWidth, //”g‚Ì•=‰¹—Ê
-int note, //‰¹”Ô†0‚ª261Hz‚ÌƒhB12‚Í522Hz‚ÌƒhB‚ÆŒ¾‚¤Š´‚¶‚Ì‰¹”Ô†
-int sampleNumber ){ //ƒf[ƒ^”
-	//ü”g”ƒe[ƒuƒ‹B2‚Ì12æª(1.05946”{)‚Ã‚Â‚³‚ê‚Ä‚¢‚­
+short* data, //å‡ºåŠ›
+int waveWidth, //æ³¢ã®å¹…=éŸ³é‡
+int note, //éŸ³ç•ªå·0ãŒ261Hzã®ãƒ‰ã€‚12ã¯522Hzã®ãƒ‰ã€‚ã¨è¨€ã†æ„Ÿã˜ã®éŸ³ç•ªå·
+int sampleNumber ){ //ãƒ‡ãƒ¼ã‚¿æ•°
+	//å‘¨æ³¢æ•°ãƒ†ãƒ¼ãƒ–ãƒ«ã€‚2ã®12ä¹—æ ¹(1.05946å€)ã¥ã¤ã•ã‚Œã¦ã„ã
 	int frequencyTable[] = {
 		261, 277, 293, 311, 329, 349, 370, 392, 415, 440, 466, 494,
 	};
-	int octave = note / 12; //ƒIƒNƒ^[ƒu‚ğŒˆ’èB‚±‚Ì”‚¾‚¯ü”g”2”{‚µ‚Ä‚â‚éB
-	int f = frequencyTable[ note % 12 ]; //•\‚ğˆø‚¢‚ÄƒhƒŒƒ~‚ğŒˆ‚ß‚é
+	int octave = note / 12; //ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–ã‚’æ±ºå®šã€‚ã“ã®æ•°ã ã‘å‘¨æ³¢æ•°2å€ã—ã¦ã‚„ã‚‹ã€‚
+	int f = frequencyTable[ note % 12 ]; //è¡¨ã‚’å¼•ã„ã¦ãƒ‰ãƒ¬ãƒŸã‚’æ±ºã‚ã‚‹
 
-	//2ƒIƒNƒ^[ƒu‰º‚É‚¸‚ç‚·
+	//2ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–ä¸‹ã«ãšã‚‰ã™
 	octave -= 2;
 	if ( octave >= 0 ){
-		f <<= octave; //octave‚ª2‚È‚ç4”{‚µ‚½‚¢‚ªA‚±‚ê‚Í¶ƒVƒtƒg2‚¾B
+		f <<= octave; //octaveãŒ2ãªã‚‰4å€ã—ãŸã„ãŒã€ã“ã‚Œã¯å·¦ã‚·ãƒ•ãƒˆ2ã ã€‚
 	}else{
 		f >>= -octave;
 	}
 
-	int m = waveWidth * f * 2 / 44100 ; //s‚Á‚Ä–ß‚é‚Ì‚Å”{
+	int m = waveWidth * f * 2 / 44100 ; //è¡Œã£ã¦æˆ»ã‚‹ã®ã§å€
 
-	//ˆÈ‰ºOŠp”g
-	int period = 44100 / f; //i‚ª‚¢‚­‚Â‚ÅŠª‚«–ß‚é‚©
-	//Œã‚Íƒf[ƒ^–„‚ß‚é‚¾‚¯
+	//ä»¥ä¸‹ä¸‰è§’æ³¢
+	int period = 44100 / f; //iãŒã„ãã¤ã§å·»ãæˆ»ã‚‹ã‹
+	//å¾Œã¯ãƒ‡ãƒ¼ã‚¿åŸ‹ã‚ã‚‹ã ã‘
 	for ( int i = 0; i < sampleNumber; ++i ){
 		int j = i % period;
 		int w = ( j < period / 2 ) ? ( j*m ) : ( 2*waveWidth - j*m );
@@ -166,22 +166,22 @@ bool gFirstFrame = true;
 namespace GameLib{
 	void Framework::update(){
 		sleep( 16 );
-		if ( gFirstFrame ){ //Å‰‚ÌƒtƒŒ[ƒ€‚µ‚©ˆ—‚µ‚È‚¢
+		if ( gFirstFrame ){ //æœ€åˆã®ãƒ•ãƒ¬ãƒ¼ãƒ ã—ã‹å‡¦ç†ã—ãªã„
 			gFirstFrame = false;
-			short* wave = new short[ 44100 * 60 ]; //‚Æ‚è‚ ‚¦‚¸1•ªB”z—ñ‚ª‘å‚«‚¢‚Ínew‚µ‚½•û‚ª‚¢‚¢B
+			short* wave = new short[ 44100 * 60 ]; //ã¨ã‚Šã‚ãˆãš1åˆ†ã€‚é…åˆ—ãŒå¤§ãã„æ™‚ã¯newã—ãŸæ–¹ãŒã„ã„ã€‚
 
-			//ˆê’U0‚ğ–„‚ß‚é
+			//ä¸€æ—¦0ã‚’åŸ‹ã‚ã‚‹
 			for ( int i = 0; i < 44100 * 60; ++i ){
 				wave[ i ] = 0;
 			}
 
-			//Šy•ˆ‚ğ‰ğß‚µ‚Ü‚·B
-			//1ƒgƒ‰ƒbƒN–Ú
+			//æ¥½è­œã‚’è§£é‡ˆã—ã¾ã™ã€‚
+			//1ãƒˆãƒ©ãƒƒã‚¯ç›®
 			int time = 0;
-			int noteNumber = sizeof( gTrack1 ) / sizeof( Note ); //‚±‚ê‚Å‰¹•„‚Ì”‚ªo‚Ü‚·
+			int noteNumber = sizeof( gTrack1 ) / sizeof( Note ); //ã“ã‚Œã§éŸ³ç¬¦ã®æ•°ãŒå‡ºã¾ã™
 			for ( int i = 0; i < noteNumber; ++i ){
 				const Note& n = gTrack1[ i ];
-				if ( n.mVolume > 0 ){ //–³‰¹‚È‚çˆ—”ò‚Î‚·
+				if ( n.mVolume > 0 ){ //ç„¡éŸ³ãªã‚‰å‡¦ç†é£›ã°ã™
 					addSound( 
 						wave + time, 
 						n.mVolume * 300,
@@ -190,12 +190,12 @@ namespace GameLib{
 				}
 				time += n.mLength * 441;
 			}
-			//2ƒgƒ‰ƒbƒN–Ú
+			//2ãƒˆãƒ©ãƒƒã‚¯ç›®
 			time = 0;
-			noteNumber = sizeof( gTrack2 ) / sizeof( Note ); //‚±‚ê‚Å‰¹•„‚Ì”‚ªo‚Ü‚·
+			noteNumber = sizeof( gTrack2 ) / sizeof( Note ); //ã“ã‚Œã§éŸ³ç¬¦ã®æ•°ãŒå‡ºã¾ã™
 			for ( int i = 0; i < noteNumber; ++i ){
 				const Note& n = gTrack2[ i ];
-				if ( n.mVolume > 0 ){ //–³‰¹‚È‚çˆ—”ò‚Î‚·
+				if ( n.mVolume > 0 ){ //ç„¡éŸ³ãªã‚‰å‡¦ç†é£›ã°ã™
 					addSound( 
 						wave + time, 
 						n.mVolume * 300,

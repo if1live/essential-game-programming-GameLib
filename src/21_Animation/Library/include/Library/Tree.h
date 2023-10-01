@@ -37,9 +37,9 @@ private:
 	Vector3 mPosition;
 	Vector3 mAngle;
 	Vector3 mScale;
-	Node* mNodes; //0”Ô‚ªª‚ÆŒˆ‚Ü‚Á‚Ä‚¢‚é‚Ì‚Åª‚ğw‚·ƒ|ƒCƒ“ƒ^‚Í•s—v
+	Node* mNodes; //0ç•ªãŒæ ¹ã¨æ±ºã¾ã£ã¦ã„ã‚‹ã®ã§æ ¹ã‚’æŒ‡ã™ãƒã‚¤ãƒ³ã‚¿ã¯ä¸è¦
 	int mNodeNumber;
-	double mTime; //ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì
+	double mTime; //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®æ™‚åˆ»
 };
 
 #endif

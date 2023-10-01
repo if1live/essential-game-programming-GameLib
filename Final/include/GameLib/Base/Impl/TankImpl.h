@@ -53,10 +53,10 @@ template< class T > inline void Tank< T >::clear(){
 }
 
 template< class T > inline void Tank< T >::add( const T& v ){
-	//ÉoÉPÉcÇ»ÇØÇÍÇŒçÏÇÈ
+	//„Éê„Ç±„ÉÑ„Å™„Åë„Çå„Å∞‰Ωú„Çã
 	if ( mLastPos == mBlockSize ){
 		mLastBlock->mNext = new Block;
-		if ( mLastBlock == &mHead ){//ç≈èâÇÃÉmÅ[ÉhÇ…ÉCÉeÉåÅ[É^ÉZÉbÉg
+		if ( mLastBlock == &mHead ){//ÊúÄÂàù„ÅÆ„Éé„Éº„Éâ„Å´„Ç§„ÉÜ„É¨„Éº„Çø„Çª„ÉÉ„Éà
 			mCurrentBlock = mLastBlock->mNext;
 			mCurrentPos = 0;
 		}
@@ -71,10 +71,10 @@ template< class T > inline void Tank< T >::add( const T& v ){
 }
 
 template< class T > inline T* Tank< T >::add(){
-	//ÉoÉPÉcÇ»ÇØÇÍÇŒçÏÇÈ
+	//„Éê„Ç±„ÉÑ„Å™„Åë„Çå„Å∞‰Ωú„Çã
 	if ( mLastPos == mBlockSize ){
 		mLastBlock->mNext = new Block;
-		if ( mLastBlock == &mHead ){//ç≈èâÇÃÉmÅ[ÉhÇ…ÉCÉeÉåÅ[É^ÉZÉbÉg
+		if ( mLastBlock == &mHead ){//ÊúÄÂàù„ÅÆ„Éé„Éº„Éâ„Å´„Ç§„ÉÜ„É¨„Éº„Çø„Çª„ÉÉ„Éà
 			mCurrentBlock = mLastBlock->mNext;
 			mCurrentPos = 0;
 		}
@@ -94,7 +94,7 @@ template< class T > inline void Tank< T >::toNext(){
 	if ( mCurrentBlock == mLastBlock ){
 		++mCurrentPos;
 		if ( mCurrentPos == mLastPos ){
-			mCurrentBlock = &mHead; //Ç®ÇµÇ‹Ç¢
+			mCurrentBlock = &mHead; //„Åä„Åó„Åæ„ÅÑ
 		}
 	}else{
 		++mCurrentPos;

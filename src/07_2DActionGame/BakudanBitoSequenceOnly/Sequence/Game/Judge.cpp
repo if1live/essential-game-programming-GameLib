@@ -22,36 +22,36 @@ void Judge::update( Parent* parent ){
 	Framework f = Framework::instance();;
 	if ( f.isKeyTriggered( 'w' ) ){
 		--mCursorPosistion;
-		if ( mCursorPosistion < 0 ){ //ƒ}ƒCƒiƒX‚ÍÅ‘å’l‚Éƒ‹[ƒv
+		if ( mCursorPosistion < 0 ){ //ãƒžã‚¤ãƒŠã‚¹ã¯æœ€å¤§å€¤ã«ãƒ«ãƒ¼ãƒ—
  			mCursorPosistion = 1;
 		}
 	}else if ( f.isKeyTriggered( 'z' ) ){
 		++mCursorPosistion;
-		if ( mCursorPosistion > 1 ){ //1‚ð‰z‚¦‚½‚ç0‚Éƒ‹[ƒv
+		if ( mCursorPosistion > 1 ){ //1ã‚’è¶ŠãˆãŸã‚‰0ã«ãƒ«ãƒ¼ãƒ—
 			mCursorPosistion = 0;
 		}
 	}else if ( f.isKeyTriggered( ' ' ) ){
 		if ( mCursorPosistion == 0 ){
-			//‘±‚¯‚ÄŸ•‰
+			//ç¶šã‘ã¦å‹è² 
 			parent->moveTo( Parent::NEXT_READY );
 		}else if ( mCursorPosistion == 1 ){
-			//ƒ^ƒCƒgƒ‹‚Ö
+			//ã‚¿ã‚¤ãƒˆãƒ«ã¸
 			parent->moveTo( Parent::NEXT_TITLE );
 		}
 	}
-	//•`‰æ
-	//‚Ü‚¸ƒQ[ƒ€‰æ–Ê
+	//æç”»
+	//ã¾ãšã‚²ãƒ¼ãƒ ç”»é¢
 	parent->state()->draw();
-	//ã‚Éd‚Ë‚é
+	//ä¸Šã«é‡ã­ã‚‹
 	mImage->draw();
 
-	//‚Ü‚¸‚Ç‚Á‚¿‚ªŸ‚Á‚½‚Ì‚©•\Ž¦
-	f.drawDebugString( 0, 0, "[¼®³Ê²¹¯Ã²]" );
-	f.drawDebugString( 0, 1, "1PÉ ¶Á!" );
-	//‚ß‚Ê[
-	f.drawDebugString( 1, 3, "ÏÀÞ ºÛ¼±³" );
-	f.drawDebugString( 1, 4, "ÔÒÃ À²ÄÙ ¶ÞÒÝ Í" );
-	//ƒJ[ƒ\ƒ‹‚ð‘‚­
+	//ã¾ãšã©ã£ã¡ãŒå‹ã£ãŸã®ã‹è¡¨ç¤º
+	f.drawDebugString( 0, 0, "[ï½¼ï½®ï½³ï¾Šï½²ï½¹ï½¯ï¾ƒï½²]" );
+	f.drawDebugString( 0, 1, "1Pï¾‰ ï½¶ï¾!" );
+	//ã‚ã¬ãƒ¼
+	f.drawDebugString( 1, 3, "ï¾ï¾€ï¾ž ï½ºï¾›ï½¼ï½±ï½³" );
+	f.drawDebugString( 1, 4, "ï¾”ï¾’ï¾ƒ ï¾€ï½²ï¾„ï¾™ ï½¶ï¾žï¾’ï¾ ï¾" );
+	//ã‚«ãƒ¼ã‚½ãƒ«ã‚’æ›¸ã
 	f.drawDebugString( 0, mCursorPosistion + 3, ">" );
 }
 

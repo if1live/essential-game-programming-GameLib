@@ -8,9 +8,9 @@ using namespace std;
 
 class File{
 public:
-	bool isReady() const; //ƒ[ƒhI‚í‚Á‚Ä‚éH
-	int getSize() const; //ƒtƒ@ƒCƒ‹ƒTƒCƒYæ“¾
-	const char* getData() const; //’†gæ“¾
+	bool isReady() const; //ãƒ­ãƒ¼ãƒ‰çµ‚ã‚ã£ã¦ã‚‹ï¼Ÿ
+	int getSize() const; //ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºå–å¾—
+	const char* getData() const; //ä¸­èº«å–å¾—
 private:
 	File( const char* filename );
 	~File();
@@ -32,16 +32,16 @@ public:
 	void update();
 private:
 	Loader();
-	Loader( const Loader& ); //••ˆó
+	Loader( const Loader& ); //å°å°
 	~Loader();
 
 	list< File* > mFiles;
 	
-	File* mCurrentFile; //¡ˆ—‚µ‚Ä‚¢‚éFile
-	ifstream* mStream; //“Ç‚ñ‚Å‚éƒtƒ@ƒCƒ‹
-	int mFileSize; //Œ»İ“Ç‚İ‚İ’†‚Ìƒtƒ@ƒCƒ‹‚ÌƒTƒCƒY
-	int mFilePosition; //Œ»İ“Ç‚İ‚İ’†‚Ìƒtƒ@ƒCƒ‹‚ÌêŠ
-	char* mData; //“Ç‚İ‚İ’†ƒoƒbƒtƒ@
+	File* mCurrentFile; //ä»Šå‡¦ç†ã—ã¦ã„ã‚‹File
+	ifstream* mStream; //èª­ã‚“ã§ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«
+	int mFileSize; //ç¾åœ¨èª­ã¿è¾¼ã¿ä¸­ã®ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚µã‚¤ã‚º
+	int mFilePosition; //ç¾åœ¨èª­ã¿è¾¼ã¿ä¸­ã®ãƒ•ã‚¡ã‚¤ãƒ«ã®å ´æ‰€
+	char* mData; //èª­ã¿è¾¼ã¿ä¸­ãƒãƒƒãƒ•ã‚¡
 	static const int READ_UNIT = 128 * 1024; //128KB
 
 	static Loader* mInstance;

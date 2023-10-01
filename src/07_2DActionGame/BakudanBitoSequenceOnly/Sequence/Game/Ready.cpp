@@ -24,17 +24,17 @@ void Ready::update( Parent* parent ){
 		parent->startLoading();
 		mStarted = true;
 	}
-	if ( mCount >= 120 ){ //2•bŒo‚Á‚½‚çPlay‚Ö
+	if ( mCount >= 120 ){ //2ç§’çµŒã£ãŸã‚‰Playã¸
 		parent->moveTo( Parent::NEXT_PLAY );
-	}else if ( mCount >= 60 ){ //Go‚ğ•\¦
+	}else if ( mCount >= 60 ){ //Goã‚’è¡¨ç¤º
 		Framework::instance().drawDebugString( 0, 1, "GO!" );
-	}else{ //Ready...‚ğ•\¦
+	}else{ //Ready...ã‚’è¡¨ç¤º
 		Framework::instance().drawDebugString( 0, 1, "Ready..." );
 	}
-	//•`‰æ
+	//æç”»
 	parent->state()->draw();
 	mImage->draw();
-	//š‚ğo‚·
+	//å­—ã‚’å‡ºã™
 	Framework::instance().drawDebugString( 0, 0, "[READY] : " );
 
 	++mCount;

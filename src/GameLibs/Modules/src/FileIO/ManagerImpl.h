@@ -36,7 +36,7 @@ public:
 		mSize( size ),
 		mId( id ),
 		mIsAuto( isAuto ){
-			//ŠÛ‚²‚ÆƒRƒs[
+			//ä¸¸ã”ã¨ã‚³ãƒ”ãƒ¼
 			mData = NEW char[ size ];
 			for ( int i = 0; i < size; ++i ){
 				mData[ i ] = data[ i ];
@@ -72,12 +72,12 @@ public:
 		LoadThread( ManagerImpl* manager ) : mManager( manager ){
 		}
 		~LoadThread(){
-			wait(); //I—¹‚ğ‘Ò‚Á‚Ä
-			mManager = 0; //•Ï”‚ğÌ‚Ä‚é
+			wait(); //çµ‚äº†ã‚’å¾…ã£ã¦
+			mManager = 0; //å¤‰æ•°ã‚’æ¨ã¦ã‚‹
 		}
 	private:
 		void operator()(){
-			//I—¹—v¿‚³‚ê‚È‚¢ŠÔ–³ŒÀƒ‹[ƒv
+			//çµ‚äº†è¦è«‹ã•ã‚Œãªã„é–“ç„¡é™ãƒ«ãƒ¼ãƒ—
 			while ( !mManager->isEndRequested() ){
 				mManager->update();
 			}
@@ -108,7 +108,7 @@ public:
 	mArchives( 0 ),
 	mArchiveNumber( 0 ),
 	mAccessMode( am ){
-		//ƒA[ƒJƒCƒuŠJ‚¯‚Ü‚·
+		//ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–é–‹ã‘ã¾ã™
 		if ( mAccessMode == Manager::MODE_ARCHIVE_FIRST || mAccessMode == Manager::MODE_DIRECT_FIRST ){
 			mArchiveNumber = archiveNumber + 1;
 		}else{
@@ -117,8 +117,8 @@ public:
 		mArchives = static_cast< Archive* >( OPERATOR_NEW( sizeof( Archive ) * mArchiveNumber ) );
 
 		if ( mAccessMode == Manager::MODE_DIRECT_FIRST ){
-			//Å‰‚Éƒ_ƒ~[‚ğ“ü‚ê‚é
-			new ( &mArchives[ 0 ] ) Archive( 0 ); //ƒ_ƒ~[B’¼Úƒtƒ@ƒCƒ‹“Ç‚İo‚µ
+			//æœ€åˆã«ãƒ€ãƒŸãƒ¼ã‚’å…¥ã‚Œã‚‹
+			new ( &mArchives[ 0 ] ) Archive( 0 ); //ãƒ€ãƒŸãƒ¼ã€‚ç›´æ¥ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿å‡ºã—
 			for ( int i = 0; i < archiveNumber; ++i ){
 				new ( &mArchives[ i + 1 ] ) Archive( archiveNames[ i ] );
 			}
@@ -127,7 +127,7 @@ public:
 				new ( &mArchives[ i ] ) Archive( archiveNames[ i ] );
 			}
 			if ( mAccessMode == Manager::MODE_ARCHIVE_FIRST ){
-				new ( &mArchives[ archiveNumber ] ) Archive( 0 ); //ƒ_ƒ~[B’¼Úƒtƒ@ƒCƒ‹“Ç‚İo‚µ
+				new ( &mArchives[ archiveNumber ] ) Archive( 0 ); //ãƒ€ãƒŸãƒ¼ã€‚ç›´æ¥ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿å‡ºã—
 			}
 		}
 		mMutex = Mutex::create();
@@ -146,25 +146,25 @@ public:
 			}
 		}
 		mEndFlag.set();
-		SAFE_DELETE( mThread ); //íœ
+		SAFE_DELETE( mThread ); //å‰Šé™¤
 
-		//ƒA[ƒJƒCƒuíœ
+		//ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–å‰Šé™¤
 		for ( int i = 0; i < mArchiveNumber; ++i ){
 			mArchives[ i ].~Archive();
 		}
 		OPERATOR_DELETE( mArchives );
 	}
 	InFile::Impl* createInFile( const char* filename ){
-		string fn( filename ); //string‚ÖˆÚA
+		string fn( filename ); //stringã¸ç§»æ¤
 
 		mMutex.lock();
-		//‚Ü‚¸map‚É‚ ‚é‚©Šm”F
+		//ã¾ãšmapã«ã‚ã‚‹ã‹ç¢ºèª
 		InIt it = mInFiles.find( fn );
-		if ( it == mInFiles.end() ){ //‚È‚¢‚Ì‚Åì‚é
+		if ( it == mInFiles.end() ){ //ãªã„ã®ã§ä½œã‚‹
 			InFile::Impl* f = NEW InFile::Impl();
 			it = mInFiles.insert( make_pair( fn, f ) ).first;
 			f->setIterator( it );
-			//ƒ[ƒh—v‹
+			//ãƒ­ãƒ¼ãƒ‰è¦æ±‚
 			mInRequests.push_back( fn );
 		}else{
 			it->second->refer();
@@ -174,10 +174,10 @@ public:
 	}
 	void destroyInFile( InFile::Impl* f ){
 		mMutex.lock();
-		//‚±‚¢‚Â‚ªÅŒã‚È‚çíœ
+		//ã“ã„ã¤ãŒæœ€å¾Œãªã‚‰å‰Šé™¤
 		f->release();
 		if ( f->referenceCount() == 0 ){
-			mLoadedSum -= f->size(); //‡Œv—e—ÊŒ¸­
+			mLoadedSum -= f->size(); //åˆè¨ˆå®¹é‡æ¸›å°‘
 			mInFiles.erase( f->iterator() );
 			SAFE_DELETE( f );
 		}
@@ -185,31 +185,31 @@ public:
 	}
 	OutFile::Impl* createOutFile( const char* filename, const char* data, int size ){
 		mMutex.lock();
-		//ƒnƒ“ƒhƒ‹¶¬
+		//ãƒãƒ³ãƒ‰ãƒ«ç”Ÿæˆ
 		OutFile::Impl* f = NEW OutFile::Impl( mOutRequestId );
 
-		//ƒŠƒNƒGƒXƒg¶¬
+		//ãƒªã‚¯ã‚¨ã‚¹ãƒˆç”Ÿæˆ
 		OutRequest* req = NEW OutRequest( filename, data, size, mOutRequestId, false );
-		//ƒnƒ“ƒhƒ‹AƒŠƒNƒGƒXƒg’Ç‰Á
+		//ãƒãƒ³ãƒ‰ãƒ«ã€ãƒªã‚¯ã‚¨ã‚¹ãƒˆè¿½åŠ 
 		mOutFiles.insert( make_pair( mOutRequestId, f ) );
 		mOutRequests.push_back( req );
-		++mOutRequestId; //Ÿ‚É”õ‚¦‚ÄƒCƒ“ƒNƒŠƒƒ“ƒg
+		++mOutRequestId; //æ¬¡ã«å‚™ãˆã¦ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 		mMutex.unlock();
 
 		return f;
 	}
 	void writeFile( const char* filename, const char* data, int size ){
 		mMutex.lock();
-		//ƒŠƒNƒGƒXƒg¶¬
+		//ãƒªã‚¯ã‚¨ã‚¹ãƒˆç”Ÿæˆ
 		OutRequest* req = NEW OutRequest( filename, data, size, mOutRequestId, true );
-		++mOutRequestId; //Ÿ‚É”õ‚¦‚ÄƒCƒ“ƒNƒŠƒƒ“ƒg
-		//ƒŠƒNƒGƒXƒg‚Ì‚İ’Ç‰Á
+		++mOutRequestId; //æ¬¡ã«å‚™ãˆã¦ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
+		//ãƒªã‚¯ã‚¨ã‚¹ãƒˆã®ã¿è¿½åŠ 
 		mOutRequests.push_back( req );
 		mMutex.unlock();
 	}
 	void destroyOutFile( OutFile::Impl* f ){
 		mMutex.lock();
-		//‚±‚¢‚Â‚ªÅŒã‚È‚çíœ
+		//ã“ã„ã¤ãŒæœ€å¾Œãªã‚‰å‰Šé™¤
 		if ( f->referenceCount() == 0 ){
 			OutIt it = mOutFiles.find( f->id() );
 			STRONG_ASSERT( it != mOutFiles.end() );
@@ -227,7 +227,7 @@ public:
 	}
 	void update(){
 		using namespace std;
-		//‚â‚é‚±‚Æ‚È‚¢‚È‚ç‚µ‚Î‚ç‚­Q‚Ä‚©‚çI‚í‚é
+		//ã‚„ã‚‹ã“ã¨ãªã„ãªã‚‰ã—ã°ã‚‰ãå¯ã¦ã‹ã‚‰çµ‚ã‚ã‚‹
 		if ( mInRequests.size() == 0 && mOutRequests.size() == 0 ){
 			Threading::sleep( 10 );
 			return;
@@ -237,20 +237,20 @@ public:
 	}
 	void read(){
 		ostringstream oss;
-		//ƒ[ƒh—v‹æ‚èo‚µ
+		//ãƒ­ãƒ¼ãƒ‰è¦æ±‚å–ã‚Šå‡ºã—
 		mMutex.lock();
-		if ( mInRequests.size() == 0 ){ //‚±‚±‚Å’²‚×‚È‚¢‚Æƒ_ƒ
+		if ( mInRequests.size() == 0 ){ //ã“ã“ã§èª¿ã¹ãªã„ã¨ãƒ€ãƒ¡
 			mMutex.unlock();
 			return;
 		}
-		string fn = mInRequests.front(); //Œ»•¨ƒRƒs[B‚·‚®ƒŠƒXƒg‚©‚çÁ‚µ‚½‚¢‚Ì‚Å
+		string fn = mInRequests.front(); //ç¾ç‰©ã‚³ãƒ”ãƒ¼ã€‚ã™ããƒªã‚¹ãƒˆã‹ã‚‰æ¶ˆã—ãŸã„ã®ã§
 		mInRequests.pop_front();
 		mMutex.unlock();
 
 		bool error = false;
-		bool notification = false; //ƒGƒ‰[‚ğƒnƒ“ƒhƒ‹‘¤‚Ö‹³‚¦‚é‚©H
+		bool notification = false; //ã‚¨ãƒ©ãƒ¼ã‚’ãƒãƒ³ãƒ‰ãƒ«å´ã¸æ•™ãˆã‚‹ã‹ï¼Ÿ
 
-		//ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“
+		//ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³
 		int archiveIndex = -1;
 		int entryIndex = -1;
 		ifstream* stream = 0;
@@ -259,7 +259,7 @@ public:
 		char* buffer = 0;
 		int size = 0;
 
-		if ( archiveIndex == -1 ){ //ƒtƒ@ƒCƒ‹‚ªŒ©‚Â‚©‚ç‚È‚¢
+		if ( archiveIndex == -1 ){ //ãƒ•ã‚¡ã‚¤ãƒ«ãŒè¦‹ã¤ã‹ã‚‰ãªã„
 			oss.str( "" );
 			oss << "FileIO : can't open file! ( " << fn.c_str() << " )";
 			cout << oss.str().c_str() << endl;
@@ -268,11 +268,11 @@ public:
 			}
 			error = notification = true;
 		}else{
-			//Ÿ‚Ì’iŠKBƒTƒCƒY‚ª³í‚©Œv‘ª‚µ‚Ü‚·B
+			//æ¬¡ã®æ®µéšã€‚ã‚µã‚¤ã‚ºãŒæ­£å¸¸ã‹è¨ˆæ¸¬ã—ã¾ã™ã€‚
 			streamsize readSize;
 			streamsize originalSize;
 			mArchives[ archiveIndex ].getFileSize( &readSize, &originalSize, entryIndex, stream );
-			if ( originalSize >= 0x80000000 ){ //int‚¶‚áŠi”[‚µ‚«‚ê‚Ë‚¦I
+			if ( originalSize >= 0x80000000 ){ //intã˜ã‚ƒæ ¼ç´ã—ãã‚Œã­ãˆï¼
 				oss.str( "" );
 				oss << "FileIO : file is too big! 2GB is maximum. ( " << fn.c_str() << " )";
 				cout << oss.str().c_str() << endl;
@@ -280,7 +280,7 @@ public:
 					HALT( "FileIO : file is too big! 2GB is maximum.");
 				}
 				error = notification = true;
-			}else if ( mLoadedSum + originalSize > mErrorLimit ){ //ŒÀŠE‚ğ’´‚¦‚½B
+			}else if ( mLoadedSum + originalSize > mErrorLimit ){ //é™ç•Œã‚’è¶…ãˆãŸã€‚
 				oss.str( "" );
 				oss << "FileIO : EXCEED ERROR LIMIT! this file is not loaded. ( " << fn.c_str() << " )";
 				cout << oss.str().c_str() << endl;
@@ -292,14 +292,14 @@ public:
 				cout << "FileIO : EXCEED WARNING LIMIT! ( " << fn.c_str() << " )" << endl;
 			}
 
-			//“Ç‚İn‚ß‚é‘O‚Éƒnƒ“ƒhƒ‹‚ª‚ ‚é‚Ì‚©ƒ`ƒFƒbƒN
-			//ƒnƒ“ƒhƒ‹‚¿‚á‚ñ‚Æ‚ ‚éH‚à‚¤ƒ[ƒhI‚í‚Á‚Ä‚½‚è‚µ‚È‚¢H
+			//èª­ã¿å§‹ã‚ã‚‹å‰ã«ãƒãƒ³ãƒ‰ãƒ«ãŒã‚ã‚‹ã®ã‹ãƒã‚§ãƒƒã‚¯
+			//ãƒãƒ³ãƒ‰ãƒ«ã¡ã‚ƒã‚“ã¨ã‚ã‚‹ï¼Ÿã‚‚ã†ãƒ­ãƒ¼ãƒ‰çµ‚ã‚ã£ã¦ãŸã‚Šã—ãªã„ï¼Ÿ
 			mMutex.lock();
 			InIt it = mInFiles.find( fn );
 			if ( it == mInFiles.end() ){ 
 				error = true;
 			}else{
-				if ( it->second->isFinished() ){ //”n­‚ÈI‚¨‚í‚Á‚Ä‚ñ‚¶‚á‚ñI
+				if ( it->second->isFinished() ){ //é¦¬é¹¿ãªï¼ãŠã‚ã£ã¦ã‚“ã˜ã‚ƒã‚“ï¼
 					error = true;
 				}
 			}
@@ -307,9 +307,9 @@ public:
 
 			if ( !error ){
 				size = static_cast< int >( readSize );
-				//ƒoƒbƒtƒ@Šm•Û
+				//ãƒãƒƒãƒ•ã‚¡ç¢ºä¿
 				mArchives[ archiveIndex ].allocate( &buffer, size, entryIndex );
-				//“Ç‚İ‚İ
+				//èª­ã¿è¾¼ã¿
 				bool readError = false;
 				mArchives[ archiveIndex ].read( 
 					&readError, 
@@ -317,7 +317,7 @@ public:
 					size,
 					entryIndex, 
 					stream );
-				if ( readError ){ //“Ç‚ß‚È‚¢B“r’†‚Åƒtƒ@ƒCƒ‹Á‚³‚ê‚é‚Æ‚©‚ÈB
+				if ( readError ){ //èª­ã‚ãªã„ã€‚é€”ä¸­ã§ãƒ•ã‚¡ã‚¤ãƒ«æ¶ˆã•ã‚Œã‚‹ã¨ã‹ãªã€‚
 					oss.str( "" );
 					oss << "FileIO : read error! can't read entire file! ( " << fn.c_str() << " )";
 					cout << oss.str().c_str() << endl;
@@ -327,39 +327,39 @@ public:
 					error = notification = true;
 				}
 				if ( !error ){
-					//“Ç‚İI‚í‚Á‚½
-					size = static_cast< int >( originalSize ); //‚³‚Á‚«‚Ü‚Åˆ³kŒãƒTƒCƒY‚¾‚Á‚½‚Ì‚Å
-					buffer[ size ] = '\0'; //ˆÀSİŒvB0I’[B
+					//èª­ã¿çµ‚ã‚ã£ãŸ
+					size = static_cast< int >( originalSize ); //ã•ã£ãã¾ã§åœ§ç¸®å¾Œã‚µã‚¤ã‚ºã ã£ãŸã®ã§
+					buffer[ size ] = '\0'; //å®‰å¿ƒè¨­è¨ˆã€‚0çµ‚ç«¯ã€‚
 				}
 			}
 			if ( stream ){
 				mArchives[ archiveIndex ].close( &stream );
 			}
 		}
-		//ÅIˆ—
+		//æœ€çµ‚å‡¦ç†
 		mMutex.lock();
-		InIt it = mInFiles.find( fn ); //‚±‚±‚Å‚à‚¤ˆê‰ñ‚ ‚é‚©Šm”FB
-		if ( it == mInFiles.end() ){ //‚È‚¢B
+		InIt it = mInFiles.find( fn ); //ã“ã“ã§ã‚‚ã†ä¸€å›ã‚ã‚‹ã‹ç¢ºèªã€‚
+		if ( it == mInFiles.end() ){ //ãªã„ã€‚
 			error = true;
 		}
 		if ( error ){
-			SAFE_DELETE_ARRAY( buffer ); //ƒoƒbƒtƒ@ŠJ•ú
+			SAFE_DELETE_ARRAY( buffer ); //ãƒãƒƒãƒ•ã‚¡é–‹æ”¾
 			if ( notification ){
 				if ( it != mInFiles.end() ){
-					it->second->setError(); //ƒGƒ‰[ƒtƒ‰ƒOİ’è
+					it->second->setError(); //ã‚¨ãƒ©ãƒ¼ãƒ•ãƒ©ã‚°è¨­å®š
 				}
 			}
-		}else{ //³íI—¹
+		}else{ //æ­£å¸¸çµ‚äº†
 			it->second->set( buffer, size );
-			mLoadedSum += size; //‡Œv—e—Ê’Ç‰Á
+			mLoadedSum += size; //åˆè¨ˆå®¹é‡è¿½åŠ 
 		}
 		mMutex.unlock();
 	}
 	void write(){
 		ostringstream oss;
-		//ƒŠƒNƒGƒXƒgæ‚èo‚µ
+		//ãƒªã‚¯ã‚¨ã‚¹ãƒˆå–ã‚Šå‡ºã—
 		mMutex.lock();
-		if ( mOutRequests.size() == 0 ){ //‚±‚±‚Å’²‚×‚È‚¢‚Æƒ_ƒ
+		if ( mOutRequests.size() == 0 ){ //ã“ã“ã§èª¿ã¹ãªã„ã¨ãƒ€ãƒ¡
 			mMutex.unlock();
 			return;
 		}
@@ -369,9 +369,9 @@ public:
 
 		bool isAuto = req->isAuto();
 		int id = req->id();
-		//ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“
+		//ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³
 		const char* fileName = req->fileName();
-		setlocale( LC_ALL, "" ); //‚±‚ê‚ª‚È‚¢‚Æ“ú–{Œêƒtƒ@ƒCƒ‹–¼‚ğó‚¯•t‚¯‚È‚¢
+		setlocale( LC_ALL, "" ); //ã“ã‚ŒãŒãªã„ã¨æ—¥æœ¬èªãƒ•ã‚¡ã‚¤ãƒ«åã‚’å—ã‘ä»˜ã‘ãªã„
 		ofstream out( fileName, ofstream::binary );
 		bool error = false;
 		if ( !out ){
@@ -383,7 +383,7 @@ public:
 			}
 			error = true;
 		}else{
-			//ƒf[ƒ^æ‚èo‚µ
+			//ãƒ‡ãƒ¼ã‚¿å–ã‚Šå‡ºã—
 			int size = req->size();
 			const char* data = req->data();
 			const char* readPos = data;
@@ -394,11 +394,11 @@ public:
 				out.write( readPos, writeSize );
 				readPos += writeSize;
 				rest -= writeSize;
-				STRONG_ASSERT( rest >= 0 ); //‚ ‚è‚¦‚ñ
+				STRONG_ASSERT( rest >= 0 ); //ã‚ã‚Šãˆã‚“
 				if ( rest == 0 ){
-					break; //³íI—¹
+					break; //æ­£å¸¸çµ‚äº†
 				}
-				//–{“–‚É‘‚¯‚Ä‚éH
+				//æœ¬å½“ã«æ›¸ã‘ã¦ã‚‹ï¼Ÿ
 				streamsize wroteSize = out.tellp();
 				if ( wroteSize != ( size - rest ) ){
 					oss.str( "" );
@@ -410,22 +410,22 @@ public:
 					error = true;
 					break;
 				}
-				//ƒnƒ“ƒhƒ‹íœƒ`ƒFƒbƒN(ƒnƒ“ƒhƒ‹‚ª‚ ‚é‚Í‚¸‚Ì‚¾‚¯)
+				//ãƒãƒ³ãƒ‰ãƒ«å‰Šé™¤ãƒã‚§ãƒƒã‚¯(ãƒãƒ³ãƒ‰ãƒ«ãŒã‚ã‚‹ã¯ãšã®æ™‚ã ã‘)
 				if ( !isAuto ){
 					mMutex.lock();
 					OutIt it = mOutFiles.find( id );
-					if ( it == mOutFiles.end() ){ //‚¤‚¨I‚à‚¤‚Ë‚¦I
+					if ( it == mOutFiles.end() ){ //ã†ãŠï¼ã‚‚ã†ã­ãˆï¼
 						error = true;
 					}
 					mMutex.unlock();
 				}
 			}
 		}
-		//Œ‹‰Ê’Ê’m
+		//çµæœé€šçŸ¥
 		if ( !isAuto ){
 			mMutex.lock();
 			OutIt it = mOutFiles.find( id );
-			if ( it != mOutFiles.end() ){ //‚¤‚¨I‚à‚¤‚Ë‚¦I
+			if ( it != mOutFiles.end() ){ //ã†ãŠï¼ã‚‚ã†ã­ãˆï¼
 				it->second->setFinished();
 				if ( error ){
 					it->second->setError();
@@ -433,7 +433,7 @@ public:
 			}
 			mMutex.unlock();
 		}
-		SAFE_DELETE( req ); //ƒŠƒNƒGƒXƒg”jŠü
+		SAFE_DELETE( req ); //ãƒªã‚¯ã‚¨ã‚¹ãƒˆç ´æ£„
 	}
 	bool isEndRequested() const {
 		return mEndFlag.isSet();
@@ -454,12 +454,12 @@ public:
 		for ( int i = 0; i < mArchiveNumber; ++i ){
 			*archiveIndex = i;
 			mArchives[ i ].open( streamOut, entryIndex, name );
-			if ( *streamOut ){ //‚İ‚Â‚©‚Á‚½B”²‚¯‚é
+			if ( *streamOut ){ //ã¿ã¤ã‹ã£ãŸã€‚æŠœã‘ã‚‹
 				break;
 			}
 		}
 		if ( !( *streamOut ) ){
-			*archiveIndex = -1; //‚Â‚¢‚É‚İ‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½B
+			*archiveIndex = -1; //ã¤ã„ã«ã¿ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸã€‚
 		}
 	}
 	Mutex mMutex;

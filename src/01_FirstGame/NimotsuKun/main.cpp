@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-//#•Ç _‹óŠÔ .ƒS[ƒ‹ oƒuƒƒbƒN pl
+//#å£ _ç©ºé–“ .ã‚´ãƒ¼ãƒ« oãƒ–ãƒ­ãƒƒã‚¯ päºº
 const char gStageData[] = "\
 ########\n\
 # .. p #\n\
@@ -23,55 +23,55 @@ enum Object{
 	OBJ_UNKNOWN,
 };
 
-//ŠÖ”ƒvƒƒgƒ^ƒCƒv
+//é–¢æ•°ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—
 void initialize( Object* state, int w, int h, const char* stageData );
 void draw( const Object* state, int w, int h );
 void update( Object* state, char input, int w, int h );
 bool checkClear( const Object* state, int w, int h );
 
 int main(){
-	//ˆêŸŒ³”z—ñ‚Å‚ ‚é——R‚Í–{•¶QÆ
-	Object* state = new Object[ gStageWidth * gStageHeight ]; //ó‘Ô”z—ñŠm•Û
+	//ä¸€æ¬¡å…ƒé…åˆ—ã§ã‚ã‚‹ç†ç”±ã¯æœ¬æ–‡å‚ç…§
+	Object* state = new Object[ gStageWidth * gStageHeight ]; //çŠ¶æ…‹é…åˆ—ç¢ºä¿
 
-	initialize( state, gStageWidth, gStageHeight, gStageData ); //ƒXƒe[ƒW‰Šú‰»
-	//ƒƒCƒ“ƒ‹[ƒv
+	initialize( state, gStageWidth, gStageHeight, gStageData ); //ã‚¹ãƒ†ãƒ¼ã‚¸åˆæœŸåŒ–
+	//ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—
 	while ( true ){
-		//‚Ü‚¸•`‰æ
+		//ã¾ãšæç”»
 		draw( state, gStageWidth, gStageHeight );
-		//ƒNƒŠƒAƒ`ƒFƒbƒN
+		//ã‚¯ãƒªã‚¢ãƒã‚§ãƒƒã‚¯
 		if ( checkClear(state, gStageWidth, gStageHeight ) ){
-			break; //ƒNƒŠƒAƒ`ƒFƒbƒN
+			break; //ã‚¯ãƒªã‚¢ãƒã‚§ãƒƒã‚¯
 		}
-		//“ü—Íæ“¾
-		cout << "a:left s:right w:up z:down. command?" << endl; //‘€ìà–¾
+		//å…¥åŠ›å–å¾—
+		cout << "a:left s:right w:up z:down. command?" << endl; //æ“ä½œèª¬æ˜
 		char input;
 		cin >> input;
-		//XV
+		//æ›´æ–°
 		update( state, input, gStageWidth, gStageHeight ); 	
 	}
-	//j‚¢‚ÌƒƒbƒZ[ƒW
+	//ç¥ã„ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 	cout << "Congratulation's! you won." << endl;
-	//Œãn––
+	//å¾Œå§‹æœ«
 	delete[] state;
 	state = 0;
 
-	//Visual Studio‚©‚çÀs‚·‚él‚Ì‚½‚ß‚É–³ŒÀƒ‹[ƒvBƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚©‚ç‚ÍCtrl-C‚ÅI‚¦‚Ä‚­‚¾‚³‚¢B
+	//Visual Studioã‹ã‚‰å®Ÿè¡Œã™ã‚‹äººã®ãŸã‚ã«ç„¡é™ãƒ«ãƒ¼ãƒ—ã€‚ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã‹ã‚‰ã¯Ctrl-Cã§çµ‚ãˆã¦ãã ã•ã„ã€‚
 	while( true ){
 		;
 	} 
 	return 0;
 }
 
-//---------------------ˆÈ‰ºŠÖ”’è‹`------------------------------------------
+//---------------------ä»¥ä¸‹é–¢æ•°å®šç¾©------------------------------------------
 
 
-//‚¢‚Â‚©g‚¤“ú‚à—ˆ‚é‚¾‚ë‚¤‚Æ‚‚³‚à“n‚·d—l‚É‚µ‚½‚ªAŒ»óg‚Á‚Ä‚¢‚È‚¢‚Ì‚Å–¼‘O‚¾‚¯(height)ƒRƒƒ“ƒgƒAƒEƒg‚µ‚Ä‚ ‚éB
+//ã„ã¤ã‹ä½¿ã†æ—¥ã‚‚æ¥ã‚‹ã ã‚ã†ã¨é«˜ã•ã‚‚æ¸¡ã™ä»•æ§˜ã«ã—ãŸãŒã€ç¾çŠ¶ä½¿ã£ã¦ã„ãªã„ã®ã§åå‰ã ã‘(height)ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã—ã¦ã‚ã‚‹ã€‚
 void initialize( Object* state, int width, int /* height */, const char* stageData ){	
-	const char* d = stageData; //“Ç‚İ‚İƒ|ƒCƒ“ƒ^
+	const char* d = stageData; //èª­ã¿è¾¼ã¿ãƒã‚¤ãƒ³ã‚¿
 	int x = 0;
 	int y = 0;
-	while ( *d != '\0' ){ //NULL•¶š‚Å‚È‚¢ŠÔ
-		Object t; //“Á‚ÉˆÓ–¡‚Í‚È‚¢‚ªg‚¤‰ñ”‚ª‘½‚¢•Ï”‚É„‚Í—Ç‚­t‚ğg‚¤Btemporary‚Ì—ªB‚½‚Ô‚ñ‚æ‚­‚È‚¢KŠµ‚¾‚ªA–³‘Ê‚É’·‚¢–¼‘O‚É‚µ‚Ä“Ç‚İ‚É‚­‚¢‚Ì‚à¢‚è•¨‚¾‚ë‚¤B
+	while ( *d != '\0' ){ //NULLæ–‡å­—ã§ãªã„é–“
+		Object t; //ç‰¹ã«æ„å‘³ã¯ãªã„ãŒä½¿ã†å›æ•°ãŒå¤šã„å¤‰æ•°ã«ç§ã¯è‰¯ãtã‚’ä½¿ã†ã€‚temporaryã®ç•¥ã€‚ãŸã¶ã‚“ã‚ˆããªã„ç¿’æ…£ã ãŒã€ç„¡é§„ã«é•·ã„åå‰ã«ã—ã¦èª­ã¿ã«ãã„ã®ã‚‚å›°ã‚Šç‰©ã ã‚ã†ã€‚
 		switch ( *d ){
 			case '#': t = OBJ_WALL; break;
 			case ' ': t = OBJ_SPACE; break;
@@ -80,19 +80,19 @@ void initialize( Object* state, int width, int /* height */, const char* stageDa
 			case '.': t = OBJ_GOAL; break;
 			case 'p': t = OBJ_MAN; break;
 			case 'P': t = OBJ_MAN_ON_GOAL; break;
-			case '\n': x = 0; ++y; t = OBJ_UNKNOWN; break; //‰üsˆ—
+			case '\n': x = 0; ++y; t = OBJ_UNKNOWN; break; //æ”¹è¡Œå‡¦ç†
 			default: t = OBJ_UNKNOWN; break;
 		}
 		++d;
-		if ( t != OBJ_UNKNOWN ){ //’m‚ç‚È‚¢•¶š‚È‚ç–³‹‚·‚é‚Ì‚Å‚±‚Ìif•¶‚ª‚ ‚é
-			state[ y*width + x ] = t; //‘‚«‚İ
+		if ( t != OBJ_UNKNOWN ){ //çŸ¥ã‚‰ãªã„æ–‡å­—ãªã‚‰ç„¡è¦–ã™ã‚‹ã®ã§ã“ã®ifæ–‡ãŒã‚ã‚‹
+			state[ y*width + x ] = t; //æ›¸ãè¾¼ã¿
 			++x;
 		}
 	}
 }
 
 void draw( const Object* state, int width, int height ){
-	const char font[] = {' ', '#', '.', 'o', 'O', 'p', 'P'}; //Object—ñ‹“‚Ì‡
+	const char font[] = {' ', '#', '.', 'o', 'O', 'p', 'P'}; //Objectåˆ—æŒ™ã®é †
 	for ( int y = 0; y < height; ++y ){
 		for ( int x=0; x < width; ++x ){
 			Object o = state[ y*width + x ];
@@ -102,54 +102,54 @@ void draw( const Object* state, int width, int height ){
 	}
 }
 
-//‘æˆêˆø”‚Í‚Ù‚©‚ÌŠÖ”‚Å‚Ístate‚Æ‚µ‚Ä‚¢‚é‚ªA‚ ‚Ü‚è‚É•p”É‚Ég‚¤‚Ì‚Å
-//’Z‚¢s‚ÅÏ‚Ü‚¹‚Ä‚¢‚éBw,h‚à‚»‚ê‚¼‚êwidth,height‚Å‚ ‚éB
+//ç¬¬ä¸€å¼•æ•°ã¯ã»ã‹ã®é–¢æ•°ã§ã¯stateã¨ã—ã¦ã„ã‚‹ãŒã€ã‚ã¾ã‚Šã«é »ç¹ã«ä½¿ã†ã®ã§
+//çŸ­ã„sã§æ¸ˆã¾ã›ã¦ã„ã‚‹ã€‚w,hã‚‚ãã‚Œãã‚Œwidth,heightã§ã‚ã‚‹ã€‚
 void update( Object* s, char input, int w, int h ){
-	//ˆÚ“®·•ª‚É•ÏŠ·(d‚Ídifference‚Å‚àdelta‚Å‚à‚¨D‚«‚È•û‚Ì—ª‚¾‚Æv‚Á‚Ä—~‚µ‚¢)
+	//ç§»å‹•å·®åˆ†ã«å¤‰æ›(dã¯differenceã§ã‚‚deltaã§ã‚‚ãŠå¥½ããªæ–¹ã®ç•¥ã ã¨æ€ã£ã¦æ¬²ã—ã„)
 	int dx = 0; 
 	int dy = 0;
 	switch ( input ){
-		case 'a': dx = -1; break; //¶
-		case 's': dx = 1; break; //‰E
-		case 'w': dy = -1; break; //ãBY‚Í‰º‚ªƒvƒ‰ƒX
-		case 'z': dy = 1; break; //‰ºB
+		case 'a': dx = -1; break; //å·¦
+		case 's': dx = 1; break; //å³
+		case 'w': dy = -1; break; //ä¸Šã€‚Yã¯ä¸‹ãŒãƒ—ãƒ©ã‚¹
+		case 'z': dy = 1; break; //ä¸‹ã€‚
 	}
-	//lÀ•W‚ğŒŸõ
+	//äººåº§æ¨™ã‚’æ¤œç´¢
 	int i = -1;
 	for ( i = 0; i < w * h; ++i ){
 		if ( s[ i ] == OBJ_MAN || s[ i ] == OBJ_MAN_ON_GOAL ){
 			break;
 		}
 	}
-	int x = i % w; //x‚Í•‚ÅŠ„‚Á‚½‚ ‚Ü‚è
-	int y = i / w; //y‚Í•‚ÅŠ„‚Á‚½¤
+	int x = i % w; //xã¯å¹…ã§å‰²ã£ãŸã‚ã¾ã‚Š
+	int y = i / w; //yã¯å¹…ã§å‰²ã£ãŸå•†
 
-	//ˆÚ“®
-	//ˆÚ“®ŒãÀ•W(t‚ÉˆÓ–¡‚Í‚È‚¢B‚²‚ß‚ñ‚È‚³‚¢)
+	//ç§»å‹•
+	//ç§»å‹•å¾Œåº§æ¨™(tã«æ„å‘³ã¯ãªã„ã€‚ã”ã‚ã‚“ãªã•ã„)
 	int tx = x + dx;
 	int ty = y + dy;
-	//À•W‚ÌÅ‘åÅ¬ƒ`ƒFƒbƒNBŠO‚ê‚Ä‚¢‚ê‚Î•s‹–‰Â
+	//åº§æ¨™ã®æœ€å¤§æœ€å°ãƒã‚§ãƒƒã‚¯ã€‚å¤–ã‚Œã¦ã„ã‚Œã°ä¸è¨±å¯
 	if ( tx < 0 || ty < 0 || tx >= w || ty >= h ){
 		return;
 	}
-	//A.‚»‚Ì•ûŒü‚ª‹ó”’‚Ü‚½‚ÍƒS[ƒ‹Bl‚ªˆÚ“®B
-	int p = y*w + x; //lˆÊ’u
-	int tp = ty*w + tx; //ƒ^[ƒQƒbƒgˆÊ’u(TargetPosition)
+	//A.ãã®æ–¹å‘ãŒç©ºç™½ã¾ãŸã¯ã‚´ãƒ¼ãƒ«ã€‚äººãŒç§»å‹•ã€‚
+	int p = y*w + x; //äººä½ç½®
+	int tp = ty*w + tx; //ã‚¿ãƒ¼ã‚²ãƒƒãƒˆä½ç½®(TargetPosition)
 	if ( s[ tp ] == OBJ_SPACE || s[ tp ] == OBJ_GOAL ){
-		s[ tp ] = ( s[ tp ] == OBJ_GOAL ) ? OBJ_MAN_ON_GOAL : OBJ_MAN; //ƒS[ƒ‹‚È‚çƒS[ƒ‹ã‚Ìl‚É
-		s[ p ] = ( s[ p ] == OBJ_MAN_ON_GOAL ) ? OBJ_GOAL : OBJ_SPACE; //‚à‚Æ‚à‚ÆƒS[ƒ‹ã‚È‚çƒS[ƒ‹‚É
-	//B.‚»‚Ì•ûŒü‚ª” B‚»‚Ì•ûŒü‚ÌŸ‚Ìƒ}ƒX‚ª‹ó”’‚Ü‚½‚ÍƒS[ƒ‹‚Å‚ ‚ê‚ÎˆÚ“®B
+		s[ tp ] = ( s[ tp ] == OBJ_GOAL ) ? OBJ_MAN_ON_GOAL : OBJ_MAN; //ã‚´ãƒ¼ãƒ«ãªã‚‰ã‚´ãƒ¼ãƒ«ä¸Šã®äººã«
+		s[ p ] = ( s[ p ] == OBJ_MAN_ON_GOAL ) ? OBJ_GOAL : OBJ_SPACE; //ã‚‚ã¨ã‚‚ã¨ã‚´ãƒ¼ãƒ«ä¸Šãªã‚‰ã‚´ãƒ¼ãƒ«ã«
+	//B.ãã®æ–¹å‘ãŒç®±ã€‚ãã®æ–¹å‘ã®æ¬¡ã®ãƒã‚¹ãŒç©ºç™½ã¾ãŸã¯ã‚´ãƒ¼ãƒ«ã§ã‚ã‚Œã°ç§»å‹•ã€‚
 	}else if ( s[ tp ] == OBJ_BLOCK || s[ tp ] == OBJ_BLOCK_ON_GOAL ){
-		//2ƒ}ƒXæ‚ª”ÍˆÍ“à‚©ƒ`ƒFƒbƒN
+		//2ãƒã‚¹å…ˆãŒç¯„å›²å†…ã‹ãƒã‚§ãƒƒã‚¯
 		int tx2 = tx + dx;
 		int ty2 = ty + dy; 
-		if ( tx2 < 0 || ty2 < 0 || tx2 >= w || ty2 >= h ){ //‰Ÿ‚¹‚È‚¢
+		if ( tx2 < 0 || ty2 < 0 || tx2 >= w || ty2 >= h ){ //æŠ¼ã›ãªã„
 			return;
 		}
 
-		int tp2 = ( ty + dy )*w + ( tx + dx ); //2ƒ}ƒXæ
+		int tp2 = ( ty + dy )*w + ( tx + dx ); //2ãƒã‚¹å…ˆ
 		if ( s[ tp2 ] == OBJ_SPACE || s[ tp2 ] == OBJ_GOAL ){
-			//‡Ÿ“ü‚ê‘Ö‚¦
+			//é †æ¬¡å…¥ã‚Œæ›¿ãˆ
 			s[ tp2 ] = ( s[ tp2 ] == OBJ_GOAL ) ? OBJ_BLOCK_ON_GOAL : OBJ_BLOCK;
 			s[ tp ] = ( s[ tp ] == OBJ_BLOCK_ON_GOAL ) ? OBJ_MAN_ON_GOAL : OBJ_MAN;
 			s[ p ] = ( s[ p ] == OBJ_MAN_ON_GOAL ) ? OBJ_GOAL : OBJ_SPACE;
@@ -157,7 +157,7 @@ void update( Object* s, char input, int w, int h ){
 	}
 }
 
-//ƒuƒƒbƒN‚Ì‚İ‚ª‚È‚¯‚ê‚ÎƒNƒŠƒA‚µ‚Ä‚¢‚éB
+//ãƒ–ãƒ­ãƒƒã‚¯ã®ã¿ãŒãªã‘ã‚Œã°ã‚¯ãƒªã‚¢ã—ã¦ã„ã‚‹ã€‚
 bool checkClear( const Object* s, int width, int height ){
 	for ( int i = 0; i < width*height; ++i ){
 		if ( s[ i ] == OBJ_BLOCK ){

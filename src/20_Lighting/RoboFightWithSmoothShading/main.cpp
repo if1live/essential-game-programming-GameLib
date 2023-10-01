@@ -13,7 +13,7 @@ Robo* gRobo[ 2 ];
 Stage* gStage;
 int gTime;
 bool gPlaying = false;
-const int TIME_LIMIT = 90; //90•b
+const int TIME_LIMIT = 90; //90ç§’
 
 Vector3 gLightVector;
 Vector3 gLightColor( 1.0, 0.6, 0.2 );
@@ -25,15 +25,15 @@ void drawRect( Vector2* p, unsigned c1, unsigned c2 ){
 	for ( int i = 0; i < 4; ++i ){
 		p4[ i ][ 0 ] = p[ i ].x;
 		p4[ i ][ 1 ] = p[ i ].y;
-		p4[ i ][ 2 ] = 0.0; //z‚Í0ŒÅ’è
-		p4[ i ][ 3 ] = 1.0; //w‚Í1ŒÅ’è
+		p4[ i ][ 2 ] = 0.0; //zã¯0å›ºå®š
+		p4[ i ][ 3 ] = 1.0; //wã¯1å›ºå®š
 	}
 	f.drawTriangle3DH( p4[ 0 ], p4[ 1 ], p4[ 2 ], 0, 0, 0, c1, c1, c2 );
 	f.drawTriangle3DH( p4[ 3 ], p4[ 1 ], p4[ 2 ], 0, 0, 0, c2, c1, c2 );
 }
 
 
-//ƒ†[ƒUÀ‘•ŠÖ”B’†g‚ÍmainLoop()‚É
+//ãƒ¦ãƒ¼ã‚¶å®Ÿè£…é–¢æ•°ã€‚ä¸­èº«ã¯mainLoop()ã«
 namespace GameLib{
 	void Framework::update(){
 		if ( !gStage ){
@@ -51,12 +51,12 @@ namespace GameLib{
 			gRobo[ 1 ]->update( gRobo[ 0 ] );
 			++gTime;
 		}
-		//ƒ‰ƒCƒg“®‚©‚µ‚Ä‚İ‚æ‚¤
+		//ãƒ©ã‚¤ãƒˆå‹•ã‹ã—ã¦ã¿ã‚ˆã†
 		gLightVector.x = sin( gTime ) * cos( gTime );
 		gLightVector.y = sin( gTime ) * sin( gTime );
 		gLightVector.z = cos( gTime );
 
-		//0”Ôƒƒ{‚©‚çƒJƒƒ‰s—ñƒQƒbƒg
+		//0ç•ªãƒ­ãƒœã‹ã‚‰ã‚«ãƒ¡ãƒ©è¡Œåˆ—ã‚²ãƒƒãƒˆ
 		Matrix44 pvm;
 		pvm.setPerspectiveTransform( 45.0, 
 			static_cast< double >( width() ),
@@ -64,21 +64,21 @@ namespace GameLib{
 			1.0,
 			10000.0 );
 		Matrix34 vm;
-		gRobo[ 0 ]->getViewMatrix( &vm ); //ƒrƒ…[s—ñ‚Íƒƒ{‚Éì‚Á‚Ä‚à‚ç‚¤
+		gRobo[ 0 ]->getViewMatrix( &vm ); //ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã¯ãƒ­ãƒœã«ä½œã£ã¦ã‚‚ã‚‰ã†
 		pvm *= vm; 
-		//•`‰æ
+		//æç”»
 		gStage->draw( pvm, gLightVector, gLightColor, gAmbient );
 		gRobo[ 0 ]->draw( pvm, gLightVector, gLightColor, gAmbient );
 		gRobo[ 1 ]->draw( pvm, gLightVector, gLightColor, gAmbient );
-		//ˆÈ‰ºƒtƒƒ“ƒgƒGƒ“ƒh•`‰æ
+		//ä»¥ä¸‹ãƒ•ãƒ­ãƒ³ãƒˆã‚¨ãƒ³ãƒ‰æç”»
 
-		//•K—v‚Èî•ñ‚ğ”²‚¢‚Ä
+		//å¿…è¦ãªæƒ…å ±ã‚’æŠœã„ã¦
 		int hp0 = gRobo[ 0 ]->hitPoint();
 		int hp1 = gRobo[ 1 ]->hitPoint();
 		int e0 = gRobo[ 0 ]->energy();
 		bool lockOn0 = gRobo[ 0 ]->isLockOn();
 
-		//ZƒeƒXƒg–³—pBƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒhON
+		//Zãƒ†ã‚¹ãƒˆç„¡ç”¨ã€‚ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰ON
 		enableDepthTest( false );
 		enableDepthWrite( false );
 		setBlendMode( BLEND_LINEAR );
@@ -86,7 +86,7 @@ namespace GameLib{
 		Vector2 p[ 4 ];
 		unsigned c1;
 		unsigned c2;
-		//‘Ì—Íƒo[”wŒi
+		//ä½“åŠ›ãƒãƒ¼èƒŒæ™¯
 		p[ 0 ].set( -0.9, 0.95 );
 		p[ 1 ].set( -0.9, 0.87 );
 		p[ 2 ].set( 0.1, 0.95 );
@@ -99,7 +99,7 @@ namespace GameLib{
 		p[ 3 ].set( 0.1, 0.82 );
 		c1 = c2 = 0xff806040;
 		drawRect( p, c1, c2 );
-		//‘Ì—Íƒo[–{‘Ì
+		//ä½“åŠ›ãƒãƒ¼æœ¬ä½“
 		double length = static_cast< float >( hp0 ) / static_cast< float >( Robo::mMaxHitPoint );
 		p[ 0 ].set( -0.9, 0.95 );
 		p[ 1 ].set( -0.9, 0.87 );
@@ -116,16 +116,16 @@ namespace GameLib{
 		c1 = 0xffff4422;
 		c2 = 0xffffcc88;
 		drawRect( p, c1, c2 );
-		//•ŠíƒGƒlƒ‹ƒM[
-		//”wŒi
+		//æ­¦å™¨ã‚¨ãƒãƒ«ã‚®ãƒ¼
+		//èƒŒæ™¯
 		p[ 0 ].set( -0.1, -0.7 );
 		p[ 1 ].set( -0.1, -0.8 );
 		p[ 2 ].set( 0.1, -0.7 );
 		p[ 3 ].set( 0.1, -0.8 );
 		c1 = c2 = 0x80404040;
 		drawRect( p, c1, c2 );
-		//–{‘Ì
-		setBlendMode( BLEND_ADDITIVE ); //‰ÁZ‚É‚µ‚Ä‚İ‚æ‚¤‚©‚È
+		//æœ¬ä½“
+		setBlendMode( BLEND_ADDITIVE ); //åŠ ç®—ã«ã—ã¦ã¿ã‚ˆã†ã‹ãª
 		length = 0.2 * static_cast< float >( e0 ) / static_cast< float >( Robo::mMaxEnergy );
 		p[ 0 ].set( -0.1, -0.7 );
 		p[ 1 ].set( -0.1, -0.8 );
@@ -135,31 +135,31 @@ namespace GameLib{
 		c2 = 0x80ffff00;
 		drawRect( p, c1, c2 );
 
-		//ƒŒ[ƒ_[
+		//ãƒ¬ãƒ¼ãƒ€ãƒ¼
 		setBlendMode( BLEND_LINEAR );
-		//”wŒi
+		//èƒŒæ™¯
 		p[ 0 ].set( 0.7, 0.7 );
 		p[ 1 ].set( 0.7, 0.9 );
 		p[ 2 ].set( 0.9, 0.7 );
 		p[ 3 ].set( 0.9, 0.9 );
 		c1 = c2 = 0x80404040;
 		drawRect( p, c1, c2 );
-		setBlendMode( BLEND_ADDITIVE ); //‰ÁZ‚É‚µ‚Ä‚İ‚æ‚¤‚©
-		//©•ª
+		setBlendMode( BLEND_ADDITIVE ); //åŠ ç®—ã«ã—ã¦ã¿ã‚ˆã†ã‹
+		//è‡ªåˆ†
 		Vector2 t;
 		t.set( gRobo[ 0 ]->position()->x, gRobo[ 0 ]->position()->z ); //x.z
-		t *= 0.002; //+-50‚ÌƒXƒe[ƒW‚ğ0.2‚Ì‘å‚«‚³‚Ék¬‚·‚é‚ñ‚¾‚©‚çA0.2/100‚Å0.002
-		t += Vector2( 0.8, 0.8 ); //(0.8,0.8)‚ª’†S‚È‚Ì‚¾‚©‚çA‚»‚ê‚ğ‘«‚·
+		t *= 0.002; //+-50ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’0.2ã®å¤§ãã•ã«ç¸®å°ã™ã‚‹ã‚“ã ã‹ã‚‰ã€0.2/100ã§0.002
+		t += Vector2( 0.8, 0.8 ); //(0.8,0.8)ãŒä¸­å¿ƒãªã®ã ã‹ã‚‰ã€ãã‚Œã‚’è¶³ã™
 		p[ 0 ].set( t.x - 0.005, t.y - 0.005 );
 		p[ 1 ].set( t.x - 0.005, t.y + 0.005 );
 		p[ 2 ].set( t.x + 0.005, t.y - 0.005 );
 		p[ 3 ].set( t.x + 0.005, t.y + 0.005 );
 		c1 = c2 = 0xcc0080ff;
 		drawRect( p, c1, c2 );
-		//“G
+		//æ•µ
 		t.set( gRobo[ 1 ]->position()->x, gRobo[ 1 ]->position()->z ); //x.z
-		t *= 0.002; //+-50‚ÌƒXƒe[ƒW‚ğ0.2‚Ì‘å‚«‚³‚Ék¬‚·‚é‚ñ‚¾‚©‚çA0.2/100‚Å0.002
-		t += Vector2( 0.8, 0.8 ); //(0.8,0.8)‚ª’†S‚È‚Ì‚¾‚©‚çA‚»‚ê‚ğ‘«‚·
+		t *= 0.002; //+-50ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’0.2ã®å¤§ãã•ã«ç¸®å°ã™ã‚‹ã‚“ã ã‹ã‚‰ã€0.2/100ã§0.002
+		t += Vector2( 0.8, 0.8 ); //(0.8,0.8)ãŒä¸­å¿ƒãªã®ã ã‹ã‚‰ã€ãã‚Œã‚’è¶³ã™
 		p[ 0 ].set( t.x - 0.005, t.y - 0.005 );
 		p[ 1 ].set( t.x - 0.005, t.y + 0.005 );
 		p[ 2 ].set( t.x + 0.005, t.y - 0.005 );
@@ -167,19 +167,19 @@ namespace GameLib{
 		c1 = c2 = 0xccff8000;
 		drawRect( p, c1, c2 );
 
-		//ƒƒbƒNƒIƒ“ƒ}[ƒN
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ãƒãƒ¼ã‚¯
 		if ( lockOn0 ){
-			setBlendMode( BLEND_ADDITIVE ); //‰ÁZ‚É‚µ‚Ä‚İ‚æ‚¤‚©‚È
-			//“Gƒƒ{‚ğÀ•W•ÏŠ·‚µ‚ÄƒXƒNƒŠ[ƒ“À•W‚É•ÏŠ·
+			setBlendMode( BLEND_ADDITIVE ); //åŠ ç®—ã«ã—ã¦ã¿ã‚ˆã†ã‹ãª
+			//æ•µãƒ­ãƒœã‚’åº§æ¨™å¤‰æ›ã—ã¦ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã«å¤‰æ›
 			Vector3 t = *gRobo[ 1 ]->position();
 			double p4[ 4 ];
 			pvm.multiply( p4, t );
-			//XYÀ•W‚Íw‚ÅŠ„‚ê‚Îo‚éB
+			//XYåº§æ¨™ã¯wã§å‰²ã‚Œã°å‡ºã‚‹ã€‚
 			double x = p4[ 0 ] / p4[ 3 ];
 			double y = p4[ 1 ] / p4[ 3 ];
-			//F‚ÍÔ‚©‚È‚ 
+			//è‰²ã¯èµ¤ã‹ãªã‚
 			c1 = c2 = 0x80ff0000;
-			//ü4–{‚Å‚â‚ë‚¤B
+			//ç·š4æœ¬ã§ã‚„ã‚ã†ã€‚
 			p[ 0 ].set( x - 0.01, y + 0.2 );
 			p[ 1 ].set( x - 0.01, y + 0.1 );
 			p[ 2 ].set( x + 0.01, y + 0.2 );
@@ -201,8 +201,8 @@ namespace GameLib{
 			p[ 3 ].set( x + 0.1, y + 0.01 );
 			drawRect( p, c1, c2 );
 		}
-		//ŠÔ§ŒÀ
-		setBlendMode( BLEND_LINEAR ); //‚à‚Ç‚µ‚Ä
+		//æ™‚é–“åˆ¶é™
+		setBlendMode( BLEND_LINEAR ); //ã‚‚ã©ã—ã¦
 		length = 1.9 * static_cast< double >( 60 * TIME_LIMIT - gTime ) / static_cast< double >( 60 * TIME_LIMIT );
 		p[ 0 ].set( -0.95, -0.95 );
 		p[ 1 ].set( -0.95, -0.9 );
@@ -214,7 +214,7 @@ namespace GameLib{
 		p[ 1 ].set( -0.95, -0.9 );
 		p[ 2 ].set( -0.95 + length, -0.95 );
 		p[ 3 ].set( -0.95 + length, -0.9 );
-		setBlendMode( BLEND_ADDITIVE ); //‰ÁZ?
+		setBlendMode( BLEND_ADDITIVE ); //åŠ ç®—?
 		c1 = 0x80ff8888;
 		c2 = 0x8088ffff;
 		drawRect( p, c1, c2 );
@@ -233,7 +233,7 @@ namespace GameLib{
 				gTime = 0;
 			}
 		}
-		//I—¹”»’è(ƒ}ƒEƒX‚Å~ƒ{ƒ^ƒ“‚ª’@‚©‚ê‚½‚©)
+		//çµ‚äº†åˆ¤å®š(ãƒã‚¦ã‚¹ã§Ã—ãƒœã‚¿ãƒ³ãŒå©ã‹ã‚ŒãŸã‹)
 		if ( isEndRequested() ){
 			if ( gStage ){
 				Pad::destroy();

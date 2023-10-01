@@ -20,13 +20,13 @@ namespace PseudoXml{
 namespace Scene{
 using namespace Math;
 
-//ƒcƒŠ[‚ÌŒ´Œ^Bƒ‰ƒCƒuƒ‰ƒŠ‚ÌŠO‚©‚ç‚ÍŒ©‚¦‚È‚¢‚Ì‚Å‚¢‚Â‚à‚ÌImpl‚Í‚È‚¢B
+//ãƒ„ãƒªãƒ¼ã®åŸå‹ã€‚ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®å¤–ã‹ã‚‰ã¯è¦‹ãˆãªã„ã®ã§ã„ã¤ã‚‚ã®Implã¯ãªã„ã€‚
 class TreeTemplate{
 public:
-	TreeTemplate( PseudoXml::ConstElement&, Container::Impl& ); //‚±‚ê‚Ícpp“àB
+	TreeTemplate( PseudoXml::ConstElement&, Container::Impl& ); //ã“ã‚Œã¯cppå†…ã€‚
 	~TreeTemplate(){
 		SAFE_DELETE_ARRAY( mNodes );
-		mName = 0; //ƒRƒ“ƒeƒi‚ª‚Á‚Ä‚¢‚é•¶š—ñ‚È‚Ì‚Å‚±‚±‚Å‚ÍQÆ‚ğ‚Í‚¸‚·‚¾‚¯
+		mName = 0; //ã‚³ãƒ³ãƒ†ãƒŠãŒæŒã£ã¦ã„ã‚‹æ–‡å­—åˆ—ãªã®ã§ã“ã“ã§ã¯å‚ç…§ã‚’ã¯ãšã™ã ã‘
 		mContainer = 0;
 	}
 	int nodeNumber() const { 
@@ -45,7 +45,7 @@ private:
 	int countNode( GameLib::PseudoXml::ConstElement&, int n );
 	int build( PseudoXml::ConstElement&, Container::Impl&, int nodePos );
 
-	NodeTemplate* mNodes; //0”Ô‚ªª‚ÆŒˆ‚Ü‚Á‚Ä‚¢‚é‚Ì‚Åª‚ğw‚·ƒ|ƒCƒ“ƒ^‚Í•s—v
+	NodeTemplate* mNodes; //0ç•ªãŒæ ¹ã¨æ±ºã¾ã£ã¦ã„ã‚‹ã®ã§æ ¹ã‚’æŒ‡ã™ãƒã‚¤ãƒ³ã‚¿ã¯ä¸è¦
 	int mNodeNumber;
 	const char* mName;
 	Container::Impl* mContainer;

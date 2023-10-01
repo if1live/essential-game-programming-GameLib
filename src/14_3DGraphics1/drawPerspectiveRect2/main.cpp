@@ -18,21 +18,21 @@ namespace GameLib{
 			{ 500.0, 1500.0, 2000.0 },
 		};
 
-		//x,y��640�������Ă���z�Ŋ���A(320,240)�𑫂��Bz��[1,10000]����[0,1]�ɔ͈͕ϊ�����B
+		//x,yに640をかけてからzで割り、(320,240)を足す。zを[1,10000]から[0,1]に範囲変換する。
 		for ( int i = 0; i < 4; ++i ){
-			//�ړ��ʔ��f
+			//移動量反映
 			p[ i ][ 0 ] += gXMove;
 			p[ i ][ 2 ] += gZMove;
-			//�g��Az����
+			//拡大、z割り
 			p[ i ][ 0 ] *= 640.0 / p[ i ][ 2 ];
 			p[ i ][ 1 ] *= 640.0 / p[ i ][ 2 ];
-			//���S���炵
+			//中心ずらし
 			p[ i ][ 0 ] += 320.f;
 			p[ i ][ 1 ] += 240.f;
-			//z�͈͕ϊ�
+			//z範囲変換
 			p[ i ][ 2 ] = ( 1.0/9999.0 ) * p[ i ][ 2 ] - ( 1.0/9999.0 );
 		}
-		//�l�p�`��`���B
+		//四角形を描く。
 		drawTriangle3D( p[ 0 ], p[ 1 ], p[ 2 ] );
 		drawTriangle3D( p[ 3 ], p[ 1 ], p[ 2 ] );
 
@@ -46,7 +46,7 @@ namespace GameLib{
 		}else if ( Input::Manager::instance().keyboard().isOn( 's' ) ){
 			gXMove += 25.f; 
 		}
-		//�\��
+		//表示
 		ostringstream oss;
 		oss << "[w-z] Z MOVEMENT: " << gZMove;
 		drawDebugString( 10, 0, oss.str().c_str() );

@@ -55,7 +55,7 @@ public:
 	int vertexCapacity,
 	int batchCapacity ) :
 	mVertexCapacity( vertexCapacity ),
-	mBatchCapacity( batchCapacity + 1 ),//ƒ_ƒ~[—p‚É+1
+	mBatchCapacity( batchCapacity + 1 ),//ãƒ€ãƒŸãƒ¼ç”¨ã«+1
 	mVertexPosition( 0 ),
 	mBatchPosition( 0 ),
 	mBatches( 0 ),
@@ -63,11 +63,11 @@ public:
 		ASSERT( mVertexCapacity > 0 && "can't specify ZERO capacity" );
 		ASSERT( mBatchCapacity > 0 && "can't specify ZERO capacity" );
 		mVertexBuffer = VertexBuffer::create( mVertexCapacity );
-		mLockedVertexBuffer = mVertexBuffer.lock(); //‰‰ñƒƒbƒN
+		mLockedVertexBuffer = mVertexBuffer.lock(); //åˆå›ãƒ­ãƒƒã‚¯
 
 		mBatches = NEW Batch[ mBatchCapacity ];
-		mBatches[ 0 ].mPrimitiveNumber = 0x7fffffff; //0”Ô‚Íƒ_ƒ~[ƒoƒbƒ`
-		mPreviousFrameId = Manager().frameId() - 1; //‰ß‚¬‹‚Á‚½’l‚É
+		mBatches[ 0 ].mPrimitiveNumber = 0x7fffffff; //0ç•ªã¯ãƒ€ãƒŸãƒ¼ãƒãƒƒãƒ
+		mPreviousFrameId = Manager().frameId() - 1; //éãå»ã£ãŸå€¤ã«
 	}
 	~Impl(){
 		SAFE_DELETE_ARRAY( mBatches );
@@ -77,7 +77,7 @@ public:
 	}
 	Batch* addBatch(){
 		ASSERT( mBatchPosition + 1 < mBatchCapacity );
-		mBatches[ mBatchPosition + 1 ] = mBatches[ mBatchPosition ]; //ƒRƒs[
+		mBatches[ mBatchPosition + 1 ] = mBatches[ mBatchPosition ]; //ã‚³ãƒ”ãƒ¼
 		++mBatchPosition;
 		Batch* b = &mBatches[ mBatchPosition  ];
 		b->mPrimitiveNumber = 0;
@@ -295,7 +295,7 @@ public:
 			}
 		}
 		b->mType = TYPE_RECTANGLE;
-		b->mPrimitiveNumber += 2; //OŠpŒ`“ñ‚Â‚Å‚ ‚é‚±‚Æ‚É’ˆÓ
+		b->mPrimitiveNumber += 2; //ä¸‰è§’å½¢äºŒã¤ã§ã‚ã‚‹ã“ã¨ã«æ³¨æ„
 
 		Vertex* v = mLockedVertexBuffer + mVertexPosition;
 
@@ -321,17 +321,17 @@ public:
 		mVertexPosition += 6;
 	}
 	void draw(){
-		//ƒtƒŒ[ƒ€IDƒ`ƒFƒbƒN
+		//ãƒ•ãƒ¬ãƒ¼ãƒ IDãƒã‚§ãƒƒã‚¯
 		unsigned fid = Manager().frameId();
 		ASSERT( mPreviousFrameId != fid && "PrimitiveRenderer::draw() : you can't draw() twice in a frame!" );
 		mPreviousFrameId = fid;
-		//’¸“_ƒoƒbƒtƒ@ƒAƒ“ƒƒbƒN
+		//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¢ãƒ³ãƒ­ãƒƒã‚¯
 		mVertexBuffer.unlock( &mLockedVertexBuffer );
-		//‚æ‚­‚Â‚©‚¤‚Ì‚Å•Ê–¼
+		//ã‚ˆãã¤ã‹ã†ã®ã§åˆ¥å
 		Manager m;
-		//’¸“_ƒoƒbƒtƒ@‚ğƒZƒbƒg
+		//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ã‚»ãƒƒãƒˆ
 		m.setVertexBuffer( mVertexBuffer );
-		//‰Šú’l‚ğƒZƒbƒg‚µ‚Ä‰ñ‚éB–³‘Ê‚Å‚Í‚ ‚é‚ªB
+		//åˆæœŸå€¤ã‚’ã‚»ãƒƒãƒˆã—ã¦å›ã‚‹ã€‚ç„¡é§„ã§ã¯ã‚ã‚‹ãŒã€‚
 		Matrix44 transform;
 		transform.setIdentity();
 		Matrix34 wm;
@@ -350,25 +350,25 @@ public:
 		m.setCullMode( cullMode );
 		m.setDiffuseColor( Vector3( 1.f, 1.f, 1.f ) );
 		m.setLightingMode( LIGHTING_NONE );
-		//ƒXƒNƒŠ[ƒ“À•W->ƒNƒŠƒbƒv‹óŠÔ•ÏŠ·s—ñ
+		//ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™->ã‚¯ãƒªãƒƒãƒ—ç©ºé–“å¤‰æ›è¡Œåˆ—
 		Matrix44 screenToClipTransform;
 		int width;
 		int height;
 		m.getViewport( 0, 0, &width, &height );
 		screenToClipTransform.setOrthogonalTransform(
 			0.f, static_cast< float >( width ), 
-			static_cast< float >( height ), 0.f, //‰ºAã‚Ì‡‚ÅA‰º‚Íheight,ã‚Í0‚Å‚ ‚é‚±‚Æ‚É’ˆÓ
+			static_cast< float >( height ), 0.f, //ä¸‹ã€ä¸Šã®é †ã§ã€ä¸‹ã¯height,ä¸Šã¯0ã§ã‚ã‚‹ã“ã¨ã«æ³¨æ„
 			0.f, 1.f );
-		//’PˆÊs—ñ
+		//å˜ä½è¡Œåˆ—
 		Matrix44 identityTransform;
 		identityTransform.setIdentity();
-		//“Á•Ê‚Ès—ñ‚ğ“ü‚ê‚½’¼Œã‚©
+		//ç‰¹åˆ¥ãªè¡Œåˆ—ã‚’å…¥ã‚ŒãŸç›´å¾Œã‹
 		bool specialTransform = false;
 
-		//ƒoƒbƒ`‚ğˆêŒÂ‚Ã‚Âˆ—‚µ‚Ä‚¢‚­Bƒ_ƒ~[‚Í–³‹‚·‚é‚Ì‚Å1”Ô‚©‚ç
+		//ãƒãƒƒãƒã‚’ä¸€å€‹ã¥ã¤å‡¦ç†ã—ã¦ã„ãã€‚ãƒ€ãƒŸãƒ¼ã¯ç„¡è¦–ã™ã‚‹ã®ã§1ç•ªã‹ã‚‰
 		for ( int i = 1; i <= mBatchPosition; ++i ){
 			Batch& b = mBatches[ i ];
-			//s—ñˆÈŠO‚ÌƒXƒe[ƒg‚ğ‚Ô‚Á‚±‚Ş
+			//è¡Œåˆ—ä»¥å¤–ã®ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ã¶ã£ã“ã‚€
 			if ( b.mDepthWrite != depthWrite ){
 				depthWrite = b.mDepthWrite;
 				m.enableDepthWrite( depthWrite );
@@ -389,25 +389,25 @@ public:
 				texture = b.mTexture;
 				m.setTexture( texture );
 			}
-			//s—ñ‚Ì‚İ­X“Áê
-			//‚Ü‚¸ˆá‚¤‚Ì‚ª“ü‚Á‚Ä‚¢‚ê‚ÎXV‚·‚é‚Ì‚Í“¯‚¶
+			//è¡Œåˆ—ã®ã¿å°‘ã€…ç‰¹æ®Š
+			//ã¾ãšé•ã†ã®ãŒå…¥ã£ã¦ã„ã‚Œã°æ›´æ–°ã™ã‚‹ã®ã¯åŒã˜
 			bool transformChanged = false;
 			if ( b.mTransform != transform ){
 				transform = b.mTransform;
 				transformChanged = true;
 			}
-			//‚±‚ê‚ğƒZƒbƒg‚·‚é‚©‚Ç‚¤‚©‚ÍƒvƒŠƒ~ƒeƒBƒuƒ^ƒCƒv‚É‚æ‚é
-			if ( b.mType == TYPE_RECTANGLE ){ //ƒNƒŠƒbƒv‹óŠÔ‰»s—ñ‚ğƒZƒbƒg
+			//ã“ã‚Œã‚’ã‚»ãƒƒãƒˆã™ã‚‹ã‹ã©ã†ã‹ã¯ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã‚¿ã‚¤ãƒ—ã«ã‚ˆã‚‹
+			if ( b.mType == TYPE_RECTANGLE ){ //ã‚¯ãƒªãƒƒãƒ—ç©ºé–“åŒ–è¡Œåˆ—ã‚’ã‚»ãƒƒãƒˆ
 				m.setProjectionViewMatrix( screenToClipTransform );
 				specialTransform = true;
 			}else if ( b.mType == TYPE_TRIANGLE_TRANSFORMED ){
 				m.setProjectionViewMatrix( identityTransform );
 				specialTransform = true;
-			}else if ( specialTransform || transformChanged ){ //ã‹L“ñ‚Â‚Ì’¼Œã‚©As—ñ‚ª•Ï‚í‚Á‚Ä‚¢‚ê‚ÎƒZƒbƒg
+			}else if ( specialTransform || transformChanged ){ //ä¸Šè¨˜äºŒã¤ã®ç›´å¾Œã‹ã€è¡Œåˆ—ãŒå¤‰ã‚ã£ã¦ã„ã‚Œã°ã‚»ãƒƒãƒˆ
 				m.setProjectionViewMatrix( transform );
 				specialTransform = false;
 			}
-			//•`‰æ
+			//æç”»
 			if ( b.mType != TYPE_UNKNOWN ){
 				PrimitiveType prim = PRIMITIVE_TRIANGLE;
 				switch ( b.mType ){
@@ -426,20 +426,20 @@ public:
 				}
 				m.draw( b.mStart, b.mPrimitiveNumber, prim );
 			}
-			//ƒoƒbƒ`‚ª‚Á‚Ä‚éƒeƒNƒXƒ`ƒƒƒnƒ“ƒhƒ‹‚ğ‘S•”Ì‚Ä‚é
+			//ãƒãƒƒãƒãŒæŒã£ã¦ã‚‹ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒ³ãƒ‰ãƒ«ã‚’å…¨éƒ¨æ¨ã¦ã‚‹
 			b.mTexture.release();
 		}
-		//’¸“_ƒoƒbƒtƒ@Ÿ‚Ì‚½‚ß‚ÉƒƒbƒN
-		m.setVertexBuffer( 0 ); //‚Í‚¸‚µ‚Ä
+		//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡æ¬¡ã®ãŸã‚ã«ãƒ­ãƒƒã‚¯
+		m.setVertexBuffer( 0 ); //ã¯ãšã—ã¦
 		mLockedVertexBuffer = mVertexBuffer.lock();
-		//Œã‚ÍŒãn––
+		//å¾Œã¯å¾Œå§‹æœ«
 		mVertexPosition = 0;
 		mBatchPosition = 0;
-		//ƒeƒNƒXƒ`ƒƒŒãn––(‚â‚ç‚È‚¢‚Æ”jŠü‚Å‚«‚Ê)
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£å¾Œå§‹æœ«(ã‚„ã‚‰ãªã„ã¨ç ´æ£„ã§ãã¬)
 		m.setTexture( 0 );
 	}
 private:
-	void operator=( const Impl& ); //‹Ö~
+	void operator=( const Impl& ); //ç¦æ­¢
 
 	const int mVertexCapacity;
 	const int mBatchCapacity;
@@ -502,7 +502,7 @@ const Vector4& p2,
 unsigned c0,
 unsigned c1,
 unsigned c2 ){
-	Vector2 t( 0.f, 0.f ); //ƒ_ƒ~[‚ÌUV
+	Vector2 t( 0.f, 0.f ); //ãƒ€ãƒŸãƒ¼ã®UV
 	mImpl->addTransformedTriangle( p0, p1, p2, t, t, t, c0, c1, c2 ); 
 }
 
@@ -526,7 +526,7 @@ const Vector3& p2,
 unsigned c0,
 unsigned c1,
 unsigned c2 ){
-	Vector2 t( 0.f, 0.f ); //ƒ_ƒ~[‚ÌUV
+	Vector2 t( 0.f, 0.f ); //ãƒ€ãƒŸãƒ¼ã®UV
 	mImpl->addTriangle( p0, p1, p2, t, t, t, c0, c1, c2 ); 
 }
 
@@ -545,7 +545,7 @@ const Vector3& p0,
 const Vector3& p1,
 unsigned c0,
 unsigned c1 ){
-	Vector2 t( 0.f, 0.f ); //ƒ_ƒ~[‚ÌUV
+	Vector2 t( 0.f, 0.f ); //ãƒ€ãƒŸãƒ¼ã®UV
 	mImpl->addLine( p0, p1, t, t, c0, c1 ); 
 }
 
@@ -559,7 +559,7 @@ unsigned c ){
 void PrimitiveRenderer::addPoint(
 const Vector3& p,
 unsigned c ){
-	Vector2 t( 0.f, 0.f ); //ƒ_ƒ~[‚ÌUV
+	Vector2 t( 0.f, 0.f ); //ãƒ€ãƒŸãƒ¼ã®UV
 	mImpl->addPoint( p, t, c ); 
 }
 

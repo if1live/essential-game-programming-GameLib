@@ -12,7 +12,7 @@ class Texture{
 public:
 	Texture( const PseudoXml::Element* );
 	~Texture();
-	void set() const; //�f�o�C�X�ɃZ�b�g
+	void set() const; //デバイスにセット
 	const string* name() const;
 private:
 	GameLib::Texture* mTexture;

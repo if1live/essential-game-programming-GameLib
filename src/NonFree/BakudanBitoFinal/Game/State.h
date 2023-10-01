@@ -3,34 +3,34 @@
 
 #include "Array2D.h"
 
-class Image; //éŒ¾‚¾‚¯‚µ‚Ä‚¨‚¯‚Î‚¢‚¢BƒCƒ“ƒNƒ‹[ƒh‚µ‚È‚­‚Ä‚¢‚¢B
+class Image; //å®£è¨€ã ã‘ã—ã¦ãŠã‘ã°ã„ã„ã€‚ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã—ãªãã¦ã„ã„ã€‚
 class StaticObject;
 class DynamicObject;
 
 class State{
 public:
-	//ƒXƒe[ƒW”Ô†‚ğ—^‚¦‚ÄƒRƒ“ƒXƒgƒ‰ƒNƒgB0‚¾‚Æ“ñl—p
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·ã‚’ä¸ãˆã¦ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ãƒˆã€‚0ã ã¨äºŒäººç”¨
 	static const int STAGE_ID_2PLAYERS = 0;
 	State( int stageID );
 	~State();
 	void update();
 	void draw() const;
-	//ŠO‚©‚çæ‚éî•ñ
+	//å¤–ã‹ã‚‰å–ã‚‹æƒ…å ±
 	bool hasCleared() const;
-	bool isAlive( int playerID ) const; //¶‚«‚Ä‚éH
+	bool isAlive( int playerID ) const; //ç”Ÿãã¦ã‚‹ï¼Ÿ
 private:
-	//‰Šİ’uBÀ•W‚Í”š’e‚ÌÀ•W
+	//ç‚è¨­ç½®ã€‚åº§æ¨™ã¯çˆ†å¼¾ã®åº§æ¨™
 	void setFire( int x, int y );
 
-	//“®‚©‚È‚¢ƒIƒuƒWƒFƒNƒg
+	//å‹•ã‹ãªã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	Array2D< StaticObject > mStaticObjects;
-	//“®‚­ƒIƒuƒWƒFƒNƒg
+	//å‹•ãã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	DynamicObject* mDynamicObjects;
 	int mDynamicObjectNumber;
 
 	int mStageID;
 
-	Image* mImage; //‰æ‘œ
+	Image* mImage; //ç”»åƒ
 };
 
 #endif

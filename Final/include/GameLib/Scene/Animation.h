@@ -4,7 +4,7 @@
 namespace GameLib{
 namespace Scene{
 
-///アニメーションデータ
+///繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ繝�繝ｼ繧ｿ
 class Animation{
 public:
 	Animation();

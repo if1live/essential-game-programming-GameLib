@@ -40,7 +40,7 @@ bool zBufferIsLinear ){
 	m22 = a;
 	m23 = b;
 	m32 = -1.f;
-	//c‚è‘S•”0
+	//æ®‹ã‚Šå…¨éƒ¨0
 	m01 = m02 = m03 = 0.f;
 	m10 = m12 = m13 = 0.f;
 	m20 = m21 = 0.f;
@@ -56,7 +56,7 @@ bool zBufferIsLinear ){
 a = -2/(x0-x1)
 b = 1 - x1*a
 
-Y‚à“¯‚¶
+Yã‚‚åŒã˜
 
 [z0, z1] -> [1, 0]
 1 = z0*a + b
@@ -82,7 +82,7 @@ float zMax ){
 	m22 = 1.f / ( zMin - zMax );
 	m23 = -zMax * m22;
 	m33 = 1.f;
-	//c‚è‚Íƒ[ƒ
+	//æ®‹ã‚Šã¯ã‚¼ãƒ­
 	m01 = m02 = m10 = m12 = m20 = m21 = 0.f;
 	m30 = m31 = m32 = 0.f;
 }
@@ -92,18 +92,18 @@ const Vector3& p,
 const Vector3& t,
 const Vector3& u ){
 	Vector3 x, y, z;
-	z.setSub( p, t ); //’‹“_‚©‚çƒJƒƒ‰ˆÊ’u‚Ö‚ÌƒxƒNƒ^‚ğZ²‚É
+	z.setSub( p, t ); //æ³¨è¦–ç‚¹ã‹ã‚‰ã‚«ãƒ¡ãƒ©ä½ç½®ã¸ã®ãƒ™ã‚¯ã‚¿ã‚’Zè»¸ã«
 	z.normalize();
-	x.setCross( u, z ); //ãƒxƒNƒ^‚ÆZ²‚ÌŠOÏ‚ğX²‚ÉBãƒxƒNƒ^‚ªãŒü‚«‚È‚ç¶Œü‚«‚ªX²ƒvƒ‰ƒXB
+	x.setCross( u, z ); //ä¸Šãƒ™ã‚¯ã‚¿ã¨Zè»¸ã®å¤–ç©ã‚’Xè»¸ã«ã€‚ä¸Šãƒ™ã‚¯ã‚¿ãŒä¸Šå‘ããªã‚‰å·¦å‘ããŒXè»¸ãƒ—ãƒ©ã‚¹ã€‚
 	x.normalize();
-	y.setCross( z, x ); //Z,X‚ÌŠOÏ‚ªY
+	y.setCross( z, x ); //Z,Xã®å¤–ç©ãŒY
 
-	//ˆÚ“®•ª‚Í¡ì‚Á‚½‰ñ“]s—ñ‚ÉƒJƒƒ‰À•W‚ğæZ‚µ‚Äƒ}ƒCƒiƒX‚É‚·‚ê‚Î‚¢‚¢B
+	//ç§»å‹•åˆ†ã¯ä»Šä½œã£ãŸå›è»¢è¡Œåˆ—ã«ã‚«ãƒ¡ãƒ©åº§æ¨™ã‚’ä¹—ç®—ã—ã¦ãƒã‚¤ãƒŠã‚¹ã«ã™ã‚Œã°ã„ã„ã€‚
 	float t03 = -( x.x * p.x + x.y * p.y + x.z * p.z );
 	float t13 = -( y.x * p.x + y.y * p.y + y.z * p.z );
 	float t23 = -( z.x * p.x + z.y * p.y + z.z * p.z );
 
-	//‚ ‚Æ‚Ís—ñæZ
+	//ã‚ã¨ã¯è¡Œåˆ—ä¹—ç®—
 	float tx = m00;
 	float ty = m01;
 	float tz = m02;

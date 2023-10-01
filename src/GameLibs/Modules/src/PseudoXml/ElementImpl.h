@@ -23,52 +23,52 @@ public:
 	mDocument( 0 ){
 	}
 	~Impl(){
-		//‘S•”Document‚ªÀ‘Ì‚ğ‚Á‚Ä‚¢‚é‚Ì‚Å‚±‚±‚Å‚Í‰½‚à‚µ‚È‚¢
+		//å…¨éƒ¨DocumentãŒå®Ÿä½“ã‚’æŒã£ã¦ã„ã‚‹ã®ã§ã“ã“ã§ã¯ä½•ã‚‚ã—ãªã„
 		mChildren = 0;
 		mAttributes = 0;
 		mName = 0;
 		mDocument = 0;
 	}
 	void build( Tag* tag, const char** p, const char* e ){
-		//‚±‚ê‚ÍÀ¿ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚È‚Ì‚ÅA“ñ“x–Ú‚ÌŒÄ‚Ño‚µ‚Í•s³
+		//ã“ã‚Œã¯å®Ÿè³ªã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãªã®ã§ã€äºŒåº¦ç›®ã®å‘¼ã³å‡ºã—ã¯ä¸æ­£
 		ASSERT( mAttributeNumber == 0 && mChildNumber == 0 );
-		//–¼‘O‚ğˆÚA
+		//åå‰ã‚’ç§»æ¤
 
 		mName = mDocument->allocateString( *tag->name() );
 
-		//ƒAƒgƒŠƒrƒ…[ƒg‚ğˆÚA
+		//ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆã‚’ç§»æ¤
 		mAttributeNumber = tag->attributeNumber();
 		mAttributes = mDocument->allocateAttribute( mAttributeNumber );
 		tag->giveAttributes( mAttributes );
 
-		//‹ó—v‘fƒ^ƒO‚È‚çq‚Í‚¢‚È‚¢‚Ì‚Å‚±‚±‚Å”²‚¯‚éB
+		//ç©ºè¦ç´ ã‚¿ã‚°ãªã‚‰å­ã¯ã„ãªã„ã®ã§ã“ã“ã§æŠœã‘ã‚‹ã€‚
 		if ( tag->type() == Tag::TYPE_BEGIN_END ){
 			return;
 		}
 
-		//ˆêqƒGƒŒƒƒ“ƒgƒŠƒXƒg
+		//ä¸€æ™‚å­ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆãƒªã‚¹ãƒˆ
 		Tank< Element::Impl > children;
-		//ƒ^ƒO’T‚·
+		//ã‚¿ã‚°æ¢ã™
 		while ( *p < e ){
-			if ( **p == '<' ){ //”­Œ©
-				++( *p ); //<‚ÌŸ‚ÖˆÚ“®
-				Tag tmpTag( p, e, mDocument ); //ƒ^ƒO‰ğß‚ğŠÛ“Š‚°
+			if ( **p == '<' ){ //ç™ºè¦‹
+				++( *p ); //<ã®æ¬¡ã¸ç§»å‹•
+				Tag tmpTag( p, e, mDocument ); //ã‚¿ã‚°è§£é‡ˆã‚’ä¸¸æŠ•ã’
 				Tag::Type type = tmpTag.type();
-				if ( type == Tag::TYPE_END ){ //I—¹ƒ^ƒO‚È‚çI‚í‚èB”²‚¯‚éB
-					break; //I‚í‚é
+				if ( type == Tag::TYPE_END ){ //çµ‚äº†ã‚¿ã‚°ãªã‚‰çµ‚ã‚ã‚Šã€‚æŠœã‘ã‚‹ã€‚
+					break; //çµ‚ã‚ã‚‹
 				}else if ( type == Tag::TYPE_COMMENT ){
-					; //‰½‚à‚µ‚È‚¢B
-				}else{ //ŠJnA‹ó—v‘f‚Ç‚¿‚ç‚Å‚à‚±‚Ìˆ—‚Í•K—v
-					Element::Impl* tmpE = children.add(); //q‚É’Ç‰Á
+					; //ä½•ã‚‚ã—ãªã„ã€‚
+				}else{ //é–‹å§‹ã€ç©ºè¦ç´ ã©ã¡ã‚‰ã§ã‚‚ã“ã®å‡¦ç†ã¯å¿…è¦
+					Element::Impl* tmpE = children.add(); //å­ã«è¿½åŠ 
 					tmpE->setDocument( mDocument );
 					tmpE->build( &tmpTag, p, e );
 					tmpE = 0;
 				}
 			}else{
-				++( *p ); //<‚ªo‚é‚Ü‚Å–³‹‚µ‚Ü‚­‚è
+				++( *p ); //<ãŒå‡ºã‚‹ã¾ã§ç„¡è¦–ã—ã¾ãã‚Š
 			}
 		}
-		//qƒGƒŒƒƒ“ƒg‚ğ–{Šm•Û
+		//å­ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆã‚’æœ¬ç¢ºä¿
 		mChildNumber = children.size();
 		mChildren = mDocument->allocateElement( mChildNumber );
 		children.copyTo( mChildren );
@@ -93,22 +93,22 @@ public:
 			mChildren[ i ].build( s, stringBuffer );
 		}
 	}
-	//’Pƒ‚ÉˆêŒÂ‚Ã‚ÂŒÄ‚ñ‚Ås‚­B
+	//å˜ç´”ã«ä¸€å€‹ã¥ã¤å‘¼ã‚“ã§è¡Œãã€‚
 	void convertToString( OStringStream* out, int indent ) const {
-		//ƒCƒ“ƒfƒ“ƒg‚Ì”‚¾‚¯ƒ^ƒu‚ğ‘‚­
+		//ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã®æ•°ã ã‘ã‚¿ãƒ–ã‚’æ›¸ã
 		for ( int i = 0; i < indent; ++i ){
 			*out << '\t';
 		}
-		//ƒ^ƒOŠJn‚ÆƒGƒŒƒƒ“ƒg–¼
+		//ã‚¿ã‚°é–‹å§‹ã¨ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆå
 		*out << '<' << mName;
-		//ƒAƒgƒŠƒrƒ…[ƒg‘‚«‚İ
-		//5ŒÂ‚ğ‹«‚Éo‚µ•û‚ğ•Ï‚¦‚é
+		//ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆæ›¸ãè¾¼ã¿
+		//5å€‹ã‚’å¢ƒã«å‡ºã—æ–¹ã‚’å¤‰ãˆã‚‹
 		int an = mAttributeNumber;
 		if ( an >= 5 ){
 			*out << "\r\n";
-			//‘½‚¢‚©‚ç‘S•”‰üs
+			//å¤šã„ã‹ã‚‰å…¨éƒ¨æ”¹è¡Œ
 			for ( int i = 0; i < an; ++i ){
-				//ƒCƒ“ƒfƒ“ƒg‚Ì”‚¾‚¯ƒ^ƒu‚ğ‘‚­
+				//ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã®æ•°ã ã‘ã‚¿ãƒ–ã‚’æ›¸ã
 				for ( int j = 0; j < indent; ++j ){
 					*out << '\t';
 				}
@@ -118,12 +118,12 @@ public:
 					*out << "=\"" << mAttributes[ i ].value() << '"';
 				}
 				if ( i != an - 1 ){
-					*out << "\r\n"; //ÅŒã‚Í‰üs‚µ‚È‚¢
+					*out << "\r\n"; //æœ€å¾Œã¯æ”¹è¡Œã—ãªã„
 				}
 			}
 		}else{
 			for ( int i = 0; i < an; ++i ){
-				*out << ' '; //ƒXƒy[ƒX
+				*out << ' '; //ã‚¹ãƒšãƒ¼ã‚¹
 				*out << mAttributes[ i ].name();
 				const char* value = mAttributes[ i ].value();
 				if ( value ){
@@ -131,22 +131,22 @@ public:
 				}
 			}
 		}
-		if ( mChildNumber > 0 ){ //q‚ª‚¢‚éê‡
-			*out << ">\r\n"; //ŠJnƒ^ƒOI‚í‚è
-			//q‚É—¬‚·
+		if ( mChildNumber > 0 ){ //å­ãŒã„ã‚‹å ´åˆ
+			*out << ">\r\n"; //é–‹å§‹ã‚¿ã‚°çµ‚ã‚ã‚Š
+			//å­ã«æµã™
 			for ( int i = 0; i < mChildNumber; ++i ){
-				//–¼‘O‚ªƒZƒbƒg‚³‚ê‚Ä‚¢‚ê‚ÎB
+				//åå‰ãŒã‚»ãƒƒãƒˆã•ã‚Œã¦ã„ã‚Œã°ã€‚
 				if ( mChildren[ i ].name() ){
 					mChildren[ i ].convertToString( out, indent + 1 );
 				}
 			}
-			//ƒCƒ“ƒfƒ“ƒg‚Ì”‚¾‚¯ƒ^ƒu‚ğ‘‚­
+			//ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã®æ•°ã ã‘ã‚¿ãƒ–ã‚’æ›¸ã
 			for ( int i = 0; i < indent; ++i ){
 				*out << '\t';
 			}
-			//I—¹ƒ^ƒO
+			//çµ‚äº†ã‚¿ã‚°
 			*out << "</" << mName << ">\r\n";
-		}else{ //q‚ª‚¢‚È‚¢‚È‚ç‹ó—v‘fƒ^ƒO‚Å‚æ‚©‚ë‚¤
+		}else{ //å­ãŒã„ãªã„ãªã‚‰ç©ºè¦ç´ ã‚¿ã‚°ã§ã‚ˆã‹ã‚ã†
 			*out << "/>\r\n";
 		}
 	}
@@ -200,10 +200,10 @@ public:
 			}
 			out->write( pos ); //Attribute::valueOffset
 		}
-		//q‚Ö
+		//å­ã¸
 		out->write( mChildNumber ); //childNumber
 		for ( int i = 0;i < mChildNumber; ++ i ){
-			if ( mChildren[ i ].name() ){ //–¼‘O‚ª‚ ‚é‚à‚Ì‚µ‚©o‚³‚È‚¢
+			if ( mChildren[ i ].name() ){ //åå‰ãŒã‚ã‚‹ã‚‚ã®ã—ã‹å‡ºã•ãªã„
 				mChildren[ i ].convertToBinary( out, stringBuffer, stringMap );
 			}
 		}

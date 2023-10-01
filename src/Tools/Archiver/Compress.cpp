@@ -4,7 +4,7 @@
 using namespace std;
 using namespace GameLib;
 
-//ˆ³k
+//åœ§ç¸®
 bool compress(
 int* writtenSize, 
 int* inplaceDecompressionBufferSize,
@@ -12,14 +12,14 @@ bool* compressed,
 ofstream* oStream, 
 ifstream* iStream,
 double threshold ){
-	//–{“–‚Í•ªŠ„“Ç‚İ‚µ‚È‚¢‚Æ‚Ü‚¸‚¢‚ª–Ê“|‚È‚Ì‚ÅˆêŠ‡
+	//æœ¬å½“ã¯åˆ†å‰²èª­ã¿ã—ãªã„ã¨ã¾ãšã„ãŒé¢å€’ãªã®ã§ä¸€æ‹¬
 	iStream->seekg( 0, ifstream::end );
 	int inSize = static_cast< int >( iStream->tellg() );
 	iStream->seekg( 0, ifstream::beg );
-	Array< char > inData( inSize + 1 ); //0ƒoƒCƒg‚Å‚à“®‚­‚æ‚¤‚ÉƒCƒ“ƒ`ƒL
+	Array< char > inData( inSize + 1 ); //0ãƒã‚¤ãƒˆã§ã‚‚å‹•ãã‚ˆã†ã«ã‚¤ãƒ³ãƒã‚­
 	iStream->read( &inData[ 0 ], inSize );
 
-	//‚¶‚á‚ ˆ³k‚·‚é‚æ[
+	//ã˜ã‚ƒã‚åœ§ç¸®ã™ã‚‹ã‚ˆãƒ¼
 	Array< char > outData;
 	Compressor::compress( 
 		&outData,
@@ -27,7 +27,7 @@ double threshold ){
 		&inData[ 0 ],
 		inSize );
 	int outSize = outData.size();
-//#ifndef NDEBUG //ˆ³k‚µ‚½‚à‚Ì‚ğ“WŠJ‚µ‚Ä‚¿‚á‚ñ‚ÆŒ³‚É–ß‚é‚©Šm‚©‚ß‚æ‚¤B
+//#ifndef NDEBUG //åœ§ç¸®ã—ãŸã‚‚ã®ã‚’å±•é–‹ã—ã¦ã¡ã‚ƒã‚“ã¨å…ƒã«æˆ»ã‚‹ã‹ç¢ºã‹ã‚ã‚ˆã†ã€‚
 	if ( outSize > 0 ){
 		{
 			Array< char > decompressed( inSize );
@@ -43,7 +43,7 @@ double threshold ){
 			}
 		}
 		{
-			//‚»‚Ìê“WŠJ‚ÌƒeƒXƒgBŒã‚ë‚É‹l‚ß‚éB
+			//ãã®å ´å±•é–‹ã®ãƒ†ã‚¹ãƒˆã€‚å¾Œã‚ã«è©°ã‚ã‚‹ã€‚
 			Array< char > decompressed( *inplaceDecompressionBufferSize );
 			int offset = *inplaceDecompressionBufferSize - outSize;
 			for ( int i = 0; i < outSize; ++i ){
@@ -62,11 +62,11 @@ double threshold ){
 		}
 	}
 //#endif
-	//‘‚«‚±‚İ
+	//æ›¸ãã“ã¿
 	double t = inSize;
 	t *= threshold;
 	t /= 100.0;
-	if ( outSize < t ){ //ˆ³kƒo[ƒWƒ‡ƒ“‚ğ‘‚«‚İ
+	if ( outSize < t ){ //åœ§ç¸®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚’æ›¸ãè¾¼ã¿
 		oStream->write( &outData[ 0 ], outSize );
 		*writtenSize = outSize;
 		*compressed = true;

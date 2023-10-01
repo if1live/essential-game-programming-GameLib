@@ -32,10 +32,10 @@ int gAnimationIndex = 0;
 
 void load( const char* filename ){
 	gAnimationIndex = 0;
-	gModels.clear(); //ƒ‚ƒfƒ‹‚ª‚ ‚ê‚Î”jŠü
-	gTrees.clear(); //ƒcƒŠ[‚ª‚ ‚ê‚Î”jŠü
-	gContainer = Container::create( filename ); //ƒ[ƒh‚µ‚È‚¨‚µ
-	while ( !gContainer.isReady() ){ //ƒ[ƒh‘Ò‚¿
+	gModels.clear(); //ãƒ¢ãƒ‡ãƒ«ãŒã‚ã‚Œã°ç ´æ£„
+	gTrees.clear(); //ãƒ„ãƒªãƒ¼ãŒã‚ã‚Œã°ç ´æ£„
+	gContainer = Container::create( filename ); //ãƒ­ãƒ¼ãƒ‰ã—ãªãŠã—
+	while ( !gContainer.isReady() ){ //ãƒ­ãƒ¼ãƒ‰å¾…ã¡
 		;
 	}
 
@@ -47,7 +47,7 @@ void load( const char* filename ){
 			gTrees[ i ].setAnimation( gContainer.animation( 0 ) );
 		}
 	}
-	if ( n == 0 ){ //ƒcƒŠ[‚ª‚ ‚ê‚Îƒ‚ƒfƒ‹‚Ío‚³‚È‚¢
+	if ( n == 0 ){ //ãƒ„ãƒªãƒ¼ãŒã‚ã‚Œã°ãƒ¢ãƒ‡ãƒ«ã¯å‡ºã•ãªã„
 		n = gContainer.batchNumber();
 		gModels.setSize( n );
 		for ( int i = 0; i < n; ++i ){
@@ -72,23 +72,23 @@ namespace GameLib{
 			}
 			gFirst = false;
 		}else{
-			//ƒhƒ‰ƒbƒOƒAƒ“ƒhƒhƒƒbƒv‚ğˆ—‚·‚é
+			//ãƒ‰ãƒ©ãƒƒã‚°ã‚¢ãƒ³ãƒ‰ãƒ‰ãƒ­ãƒƒãƒ—ã‚’å‡¦ç†ã™ã‚‹
 			int dropN = wc.droppedItemNumber();
 			if ( dropN > 0 ){
-				const char* filename = wc.droppedItem( 0 ); //0”ÔˆÈŠO–³‹
+				const char* filename = wc.droppedItem( 0 ); //0ç•ªä»¥å¤–ç„¡è¦–
 				load( filename );
-				wc.clearDroppedItem(); //‚±‚ê‚ğŒÄ‚Ô‚Æfilename‚à‚±‚í‚ê‚é‚Ì‚ÅÅŒã‚ÉB
+				wc.clearDroppedItem(); //ã“ã‚Œã‚’å‘¼ã¶ã¨filenameã‚‚ã“ã‚ã‚Œã‚‹ã®ã§æœ€å¾Œã«ã€‚
 			}
 		}
 		
-		//ƒJƒƒ‰“ü—Í”½‰f
+		//ã‚«ãƒ¡ãƒ©å…¥åŠ›åæ˜ 
 		Input::Manager im = Input::Manager::instance();
 		Input::Mouse mouse = im.mouse();
 		Input::Keyboard keyboard = im.keyboard();
 		if ( mouse.isOn( Input::Mouse::BUTTON_MIDDLE ) ){
 			Graphics::Manager().captureScreen( "capture.tga" );
 		}
-		//ƒrƒ…[s—ñ‚ğì‚ë‚¤
+		//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã‚’ä½œã‚ã†
 		Vector3 eyePosition = gEyeTarget;
 		eyePosition.z += gEyeDistance;
 
@@ -108,10 +108,10 @@ namespace GameLib{
 		if ( gContainer ){
 			float x = static_cast< float >( mouse.velocityX() );
 			float y = static_cast< float >( mouse.velocityY() );
-			if ( mouse.isOn( Input::Mouse::BUTTON_LEFT ) && mouse.isOn( Input::Mouse::BUTTON_RIGHT ) ){ //—¼ƒ{ƒ^ƒ“‚ÅZ‰ñ“]
+			if ( mouse.isOn( Input::Mouse::BUTTON_LEFT ) && mouse.isOn( Input::Mouse::BUTTON_RIGHT ) ){ //ä¸¡ãƒœã‚¿ãƒ³ã§Zå›è»¢
 				gAngleZ -= 0.2f * x;
 				gAngleZ -= 0.2f * y;
-			}else if ( mouse.isOn( Input::Mouse::BUTTON_LEFT ) ){ //¶ƒ{ƒ^ƒ“‰ñ“]
+			}else if ( mouse.isOn( Input::Mouse::BUTTON_LEFT ) ){ //å·¦ãƒœã‚¿ãƒ³å›è»¢
 				gAngleX -= 0.2f * y;
 				if ( gAngleX > 89.9f ){
 					gAngleX = 89.9f;
@@ -119,7 +119,7 @@ namespace GameLib{
 					gAngleX = -89.9f;
 				}
 				gAngleY -= 0.5f * x;
-			}else if ( mouse.isOn( Input::Mouse::BUTTON_RIGHT ) ){ //‰Eƒ{ƒ^ƒ“A’‹“_ˆÚ“®
+			}else if ( mouse.isOn( Input::Mouse::BUTTON_RIGHT ) ){ //å³ãƒœã‚¿ãƒ³ã€æ³¨è¦–ç‚¹ç§»å‹•
 				Vector3 xv( vm.m00, vm.m01, vm.m02 );
 				xv *= x;
 				Vector3 yv( vm.m10, vm.m11, vm.m12 );
@@ -134,14 +134,14 @@ namespace GameLib{
 				gEyeDistance *= 1.1f;
 			}
 		}
-		//“§‹•ÏŠ·s—ñ
+		//é€è¦–å¤‰æ›è¡Œåˆ—
 		Matrix44 pm;
 		pm.setPerspectiveTransform( 
 			60.f, 
 			static_cast< float >( width() ),
 			static_cast< float >( height() ),
 			gEyeDistance * 0.01f, gEyeDistance * 10.f );
-		//Ÿ‚ÉPV‚ğì‚é
+		//æ¬¡ã«PVã‚’ä½œã‚‹
 		pm *= vm;
 	
 		if ( keyboard.isOn( 'G' ) ){
@@ -149,16 +149,16 @@ namespace GameLib{
 			gEyeTarget = 0.f;
 		}
 
-		//ƒ‰ƒCƒg‚Å‚à‚¤‚²‚©‚»‚©
+		//ãƒ©ã‚¤ãƒˆã§ã‚‚ã†ã”ã‹ãã‹
 		Graphics::Manager gm = Graphics::Manager::instance(); 
 		gm.setProjectionViewMatrix( pm );
 		gm.setLightingMode( LIGHTING_PER_PIXEL );
 		gm.enableDepthTest( true );
 		gm.enableDepthWrite( true );
-		gm.setLightColor( 0, Vector3( 1.f, 1.f, 1.f ) ); //”’
-		gm.setLightColor( 1, Vector3( 1.f, 0.7f, 0.7f ) ); //Ô
-		gm.setLightColor( 2, Vector3( 0.7f, 1.f, 0.7f ) ); //—Î
-		gm.setLightColor( 3, Vector3( 0.7f, 0.7f, 1.f ) ); //Â
+		gm.setLightColor( 0, Vector3( 1.f, 1.f, 1.f ) ); //ç™½
+		gm.setLightColor( 1, Vector3( 1.f, 0.7f, 0.7f ) ); //èµ¤
+		gm.setLightColor( 2, Vector3( 0.7f, 1.f, 0.7f ) ); //ç·‘
+		gm.setLightColor( 3, Vector3( 0.7f, 0.7f, 1.f ) ); //é’
 		gm.setAmbientColor( Vector3( 0.2f, 0.2f, 0.2f ) );
 		gm.setEyePosition( eyePosition );
 		float t = gEyeDistance * 0.4f;
@@ -180,7 +180,7 @@ namespace GameLib{
 		for ( int i = 0; i < gModels.size(); ++i ){
 			gModels[ i ].draw();
 		}
-		//ƒAƒjƒØ‚è‘Ö‚¦
+		//ã‚¢ãƒ‹ãƒ¡åˆ‡ã‚Šæ›¿ãˆ
 		if ( keyboard.isTriggered( ' ' ) ){
 			if ( gContainer.animationNumber() > 0 ){
 				++gAnimationIndex;

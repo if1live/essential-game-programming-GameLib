@@ -34,7 +34,7 @@ namespace GameLib{
 	}
 }
 
-//ƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+//ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 void readFile( char** buffer, int* size, const char* filename ){
 	ifstream in( filename, ifstream::binary );
 	if ( !in ){
@@ -49,7 +49,7 @@ void readFile( char** buffer, int* size, const char* filename ){
 	}
 }
 
-//unsignedæ‚èo‚µ
+//unsignedå–ã‚Šå‡ºã—
 unsigned getUnsigned( const char* p ){
 	const unsigned char* up;
 	up = reinterpret_cast< const unsigned char* >( p );

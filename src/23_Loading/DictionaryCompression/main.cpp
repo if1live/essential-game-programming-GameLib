@@ -1,35 +1,35 @@
 #include <fstream>
 #include <iostream>
-#include <cassert> //�W����assert���g�����߁BGameLib����ASSERT�Ǝg�����͓����B
+#include <cassert> //標準のassertを使うため。GameLib内のASSERTと使い方は同じ。
 using namespace std;
 
 void compress( unsigned char* dataOut, int* sizeOut, const unsigned char* dataIn, int sizeIn );
 void decompress( unsigned char* dataOut, int* sizeOut, const unsigned char* dataIn, int sizeIn );
 
-//�R�}���h���C���̑��������t�@�C������
+//コマンドラインの第一引数がファイル名ね
 int main( int, char** argv ){
-	//�Ƃ肠�����ہX�ǂݍ��ށB
+	//とりあえず丸々読み込む。
 	ifstream in( argv[ 1 ], ifstream::binary ); 
-	//argv[1]���������Ȃ̂ɂ͊���Ă��炤�����Ȃ��B
-	//�v���W�F�N�g�̃v���p�e�B�́u�f�o�O�v�̂Ƃ���ŃR�}���h���C���������ݒ�ł���Btest.txt�Ə����Ă���͂����B
+	//argv[1]が第一引数なのには慣れてもらうしかない。
+	//プロジェクトのプロパティの「デバグ」のところでコマンドライン引数が設定できる。test.txtと書いてあるはずだ。
 	in.seekg( 0, ifstream::end );
 	int inSize = static_cast< int >( in.tellg() );
 	in.seekg( 0, ifstream::beg );
 	char* inData = new char[ inSize ];
 	in.read( inData, inSize );
 
-	//�������݃o�b�t�@���ہX�m�ہB
-	//���̖{�Ő������鎫�����k�͍ň��ł�127�������Ƃ�
-	//�u���ꂩ��127�������k���܂���v�Ƃ������邵���������Ȃ̂ŁA
-	//�t�@�C���T�C�Y��128/127�ɂ܂ł��������Ȃ��B
-	//�ň��P�[�X��������ł��̗e�ʂ��m�ۂ��Ă��܂��B
-	//�������AinSize * 128 / 127�Ɣn�������Ɍv�Z����ƁA*128��int�̌��E�𒴂����˂Ȃ��B
-	//�����ŁAinSize/127�𑫂����Ƃŏ�������B�܂��A���܂�̕�+1���邱�Ƃ��Y�ꂸ�ɁB
-	//�Ȃ��A���삪�����������͖{���ɂ�����z���ď������܂Ȃ����`�F�b�N���邱�ƁB���̂��߂�compress()�ɂ�outMaxSize���n�������������B
-	int outMaxSize = inSize + ( inSize / 127 ) + 1; //���܂�̕�+1��Y�ꂸ�ɁB
+	//書き込みバッファを丸々確保。
+	//この本で説明する辞書圧縮は最悪でも127文字ごとに
+	//「これから127文字圧縮しません」というしるしがつくだけなので、
+	//ファイルサイズは128/127にまでしか増えない。
+	//最悪ケースを見込んでこの容量を確保してしまう。
+	//ただし、inSize * 128 / 127と馬鹿正直に計算すると、*128でintの限界を超えかねない。
+	//そこで、inSize/127を足すことで処理する。また、あまりの分+1することも忘れずに。
+	//なお、動作が怪しいうちは本当にこれを越えて書き込まないかチェックすること。そのためにcompress()にはoutMaxSizeも渡した方がいい。
+	int outMaxSize = inSize + ( inSize / 127 ) + 1; //あまりの分+1を忘れずに。
 	char* outData = new char[ outMaxSize ];
 
-	//���Ⴀ���k�����[
+	//じゃあ圧縮するよー
 	int outSize;
 	compress( 
 		reinterpret_cast< unsigned char* >( outData ), 
@@ -37,11 +37,11 @@ int main( int, char** argv ){
 		reinterpret_cast< unsigned char* >( inData ), 
 		inSize );
 
-	//�T�C�Y�����܂Ō���܂���
+	//サイズここまで減りました
 	cout << "FileSize: " << inSize << " -> " << outSize << endl;
 
-	//���k�������̂�W�J���Ă����ƌ��ɖ߂邩�m���߂悤�B
-	char* outData2 = new char[ inSize ]; //�����ł����͂�����ˁH
+	//圧縮したものを展開してちゃんと元に戻るか確かめよう。
+	char* outData2 = new char[ inSize ]; //同じでいいはずだよね？
 	int outSize2;
 	decompress( 
 		reinterpret_cast< unsigned char* >( outData2 ), 
@@ -59,7 +59,7 @@ int main( int, char** argv ){
 #endif
 }
 
-//�悭�g���ő�ŏ�
+//よく使う最大最小
 int min( int a, int b ){
 	return ( a < b ) ? a : b;
 }
@@ -69,41 +69,41 @@ int max( int a, int b ){
 }
 
 void compress( unsigned char* dataOut, int* sizeOut, const unsigned char* dataIn, int sizeIn ){
-	int oPos = 0; //�������ݑ��̏������ވʒu
+	int oPos = 0; //書き込み側の書き込む位置
 	int i = 0;
-	int unmatchBegin = 0; //���v�̈�̊J�n�ʒu
+	int unmatchBegin = 0; //非一致領域の開始位置
 	while ( i < sizeIn ){
-		//�������猟��
+		//辞書から検索
 		int matchLength = 0;
 		int matchPos = 0;
-		//�����̐擪����T���Ă����Bj��i���z���Ȃ��B
-		//�����̐擪�B
-		int dicBegin = max( i - 255, 0 ); //0���O�ɂ͂Ȃ�Ȃ����Ƃɒ��ӁB������max()���g��
-		//�ő匟����
-		int maxL = min( 127, sizeIn - i ); //�t�@�C����������͌����ł��Ȃ��̂ŁAmaxL�𐧌�����B
-		for ( int j = dicBegin; j < i; ++j ){ //�Ȃ��A���̃��[�v�̒��g���v�Z�̑唼���߂Ă���B���������������邱�Ƃ��K�v�ɂȂ邪�A���\��ς��Ǝv���B
-			//��v���𒲂ׂ�
+		//辞書の先頭から探していく。jはiを越えない。
+		//辞書の先頭。
+		int dicBegin = max( i - 255, 0 ); //0より前にはなれないことに注意。だからmax()を使う
+		//最大検索長
+		int maxL = min( 127, sizeIn - i ); //ファイル末尾より後は検索できないので、maxLを制限する。
+		for ( int j = dicBegin; j < i; ++j ){ //なお、このループの中身が計算の大半を占めている。ここを高速化することが必要になるが、結構大変だと思う。
+			//一致長を調べる
 			int l = 0;
-			while ( l < maxL ){ //j<i�ŁAi+l<sizeIn�B����āAj+l<sizeIn�ŁA�͈͓��ɓ���B������j+l>=i�͂��肤��B�܂�A�������͂ݏo���Č������邱�Ƃ͂��肤��B�������A����ł������������̂��B�}��`���Ē��ׂ悤�B
-				//���̕������}�b�`���Ȃ���ΏI���
+			while ( l < maxL ){ //j<iで、i+l<sizeIn。よって、j+l<sizeInで、範囲内に入る。ここでj+l>=iはありうる。つまり、辞書をはみ出して検索することはありうる。しかし、それでも正しく動くのだ。図を描いて調べよう。
+				//次の文字がマッチしなければ終わる
 				if ( dataIn[ j + l ] != dataIn[ i + l ] ){
 					break;
 				}
-				++l; //1��������
+				++l; //1文字成長
 			}
-			//�O��蒷����v�����Ȃ�L�^�B�����ȃ}�b�`�̎d��������͂�������A�ő�̂��̂��L�^����B
+			//前より長く一致したなら記録。いろんなマッチの仕方があるはずだから、最大のものを記録する。
 			if ( matchLength < l ){
 				matchPos = j;
 				matchLength = l;
-				if ( matchLength == maxL ){ //��v�����ő�ɂȂ����炻���ŏI���B
+				if ( matchLength == maxL ){ //一致長が最大になったらそこで終わる。
 					break;
 				}
 			}
 		}
-		//��v��3�����ȏ゠��Έ��k���[�h�ŋL�^����B
+		//一致が3文字以上あれば圧縮モードで記録する。
 		if ( matchLength >= 3 ){
 			if ( unmatchBegin < i ){
-				//�񈳏k�w�b�_��������
+				//非圧縮ヘッダ書き込み
 				dataOut[ oPos ] = static_cast< unsigned char >( i - unmatchBegin );
 				++oPos;
 				for ( int j = unmatchBegin; j < i; ++j ){
@@ -111,16 +111,16 @@ void compress( unsigned char* dataOut, int* sizeOut, const unsigned char* dataIn
 					++oPos;
 				}
 			}
-			//���k�������L�^
-			dataOut[ oPos + 0 ] = static_cast< unsigned char >( 0x80 + matchLength ); //����
-			dataOut[ oPos + 1 ] = static_cast< unsigned char >( i - matchPos ); //�ꏊ
+			//圧縮部分を記録
+			dataOut[ oPos + 0 ] = static_cast< unsigned char >( 0x80 + matchLength ); //長さ
+			dataOut[ oPos + 1 ] = static_cast< unsigned char >( i - matchPos ); //場所
 			oPos += 2;
 			i += matchLength;
-			unmatchBegin = i; //���v�ʒu�͎�����
-		}else{ //�}�b�`���Ȃ������B�������݂͂܂Ƃ߂Ă��̂ŁA���͐i�߂邾��
+			unmatchBegin = i; //非一致位置は次から
+		}else{ //マッチしなかった。書き込みはまとめてやるので、今は進めるだけ
 			++i;
-			if ( i - unmatchBegin == 127 ){ //���E�����܂��Ă��܂����B��������
-				//�񈳏k�w�b�_��������
+			if ( i - unmatchBegin == 127 ){ //限界数溜まってしまった。書き込む
+				//非圧縮ヘッダ書き込み
 				dataOut[ oPos ] = static_cast< unsigned char >( i - unmatchBegin );
 				++oPos;
 				for ( int j = unmatchBegin; j < i; ++j ){
@@ -132,9 +132,9 @@ void compress( unsigned char* dataOut, int* sizeOut, const unsigned char* dataIn
 		}
 	}
 
-	//���v�ʒu���c���Ă���΍Ō�̏�������
+	//非一致位置が残っていれば最後の書き込み
 	if ( unmatchBegin < i ){
-		//�񈳏k�w�b�_��������
+		//非圧縮ヘッダ書き込み
 		dataOut[ oPos ] = static_cast< unsigned char >( i - unmatchBegin );
 		++oPos;
 		for ( int j = unmatchBegin; j < i; ++j ){
@@ -142,28 +142,28 @@ void compress( unsigned char* dataOut, int* sizeOut, const unsigned char* dataIn
 			++oPos;
 		}
 	}
-	*sizeOut = oPos; //�T�C�Y��������
+	*sizeOut = oPos; //サイズ書き込み
 }
 
-//�W�J�͂Ƃ��Ă��ȒP�ł��B
-//�ł��G���[�`�F�b�N�͂��ׂ��B�r���ŉ�ꂽ�t�@�C����ǂ񂾎��ɂ�����ƔF���ł���悤�ɂ��Ȃ��Ǝ��p�ɂ͂Ȃ�Ȃ��B
+//展開はとっても簡単です。
+//でもエラーチェックはすべき。途中で壊れたファイルを読んだ時にきちんと認識できるようにしないと実用にはならない。
 void decompress( unsigned char* dataOut, int* sizeOut, const unsigned char* dataIn, int sizeIn ){
 	int outPos = 0;
 	for ( int i = 0; i < sizeIn; ++i ){
 		int length;
-		if ( dataIn[ i ] & 0x80 ){ //���k���[�h
+		if ( dataIn[ i ] & 0x80 ){ //圧縮モード
 			length = dataIn[ i ] - 0x80;
 			int position = dataIn[ i + 1 ];
 			for ( int j = 0; j < length; ++j ){
-				dataOut[ outPos + j ] = dataOut[ outPos - position + j ]; //out����ڂ��̂��C����������������Ȃ����A���łɏ�����������out�͎����Ȃ̂ł���B
+				dataOut[ outPos + j ] = dataOut[ outPos - position + j ]; //outから移すのが気持ち悪いかもしれないが、すでに書いた部分のoutは辞書なのである。
 			}
-			i += 1; //1�o�C�g�]���ɐi�߂Ă��B
-		}else{ //�񈳏k���[�h
+			i += 1; //1バイト余分に進めてやる。
+		}else{ //非圧縮モード
 			length = dataIn[ i ];
 			for ( int j = 0; j < length; ++j ){
 				dataOut[ outPos + j ] = dataIn[ i + 1 + j ];
 			}
-			i += length; //�ق����Ă����Ă�1�͑������B���f�[�^rawLength�������i�߁A���̑O��1�o�C�g�͎��R�ɂ܂����悤
+			i += length; //ほうっておいても1は足される。生データrawLength分だけ進め、その前の1バイトは自然にまかせよう
 		}
 		outPos += length;
 	}

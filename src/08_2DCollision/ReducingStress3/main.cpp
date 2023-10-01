@@ -28,7 +28,7 @@ public:
 	int mHalfSize;
 };
 bool gFirstFrame = true;
-Square gPlayer; //©ƒLƒƒƒ‰‚Ì‚Â‚à‚è
+Square gPlayer; //è‡ªã‚­ãƒ£ãƒ©ã®ã¤ã‚‚ã‚Š
 Square gWall[ 5 ][ 5 ];
 
 namespace GameLib{
@@ -59,11 +59,11 @@ namespace GameLib{
 		}else if ( isKeyOn( 'z' ) ){
 			dy += 1;
 		}
-		//Õ“Ëˆ—
+		//è¡çªå‡¦ç†
 		unsigned color = 0xffff0000;
-		Square movedPlayerX = gPlayer; //XˆÚ“®
+		Square movedPlayerX = gPlayer; //Xç§»å‹•
 		movedPlayerX.mX += dx;
-		Square movedPlayerY = gPlayer; //YˆÚ“®
+		Square movedPlayerY = gPlayer; //Yç§»å‹•
 		movedPlayerY.mY += dy;
 		bool hitX = false;
 		bool hitY = false;
@@ -80,10 +80,10 @@ namespace GameLib{
 			}
 		}
 		if ( hitX && !hitY ){
-			gPlayer = movedPlayerY; //Y‚ÍƒI[ƒP[
+			gPlayer = movedPlayerY; //Yã¯ã‚ªãƒ¼ã‚±ãƒ¼
 		}else if ( !hitX && hitY ){ 
-			gPlayer = movedPlayerX; //X‚ÍƒI[ƒP[
-		}else{ //ƒ_ƒ‚Å‚·B•’Ê‚É‚â‚éB
+			gPlayer = movedPlayerX; //Xã¯ã‚ªãƒ¼ã‚±ãƒ¼
+		}else{ //ãƒ€ãƒ¡ã§ã™ã€‚æ™®é€šã«ã‚„ã‚‹ã€‚
 			gPlayer.mX += dx;
 			gPlayer.mY += dy;
 			bool hit = false;
@@ -100,13 +100,13 @@ namespace GameLib{
 				gPlayer.mY -= dy;
 			}
 		}
-		//•`‰æ
+		//æç”»
 		unsigned* vram = videoMemory();
-		//ˆê’UƒNƒŠƒA
+		//ä¸€æ—¦ã‚¯ãƒªã‚¢
 		for ( int i = 0; i < width() * height(); ++i ){
 			vram[ i ] = 0;
 		}
-		//“®‚©‚È‚¢‚Ù‚¤•`‰æ
+		//å‹•ã‹ãªã„ã»ã†æç”»
 		for ( int i = 0; i < 5; ++i ){
 			for ( int j = 0; j < 5; ++j ){
 				for ( int y = 0; y < 32; ++y ){
@@ -118,7 +118,7 @@ namespace GameLib{
 				}
 			}
 		}
-		//“®‚­‚Ù‚¤•`‰æ
+		//å‹•ãã»ã†æç”»
 		for ( int y = 0; y < 32; ++y ){
 			for ( int x = 0; x < 32; ++x ){
 				int tx = x + gPlayer.mX - 16;

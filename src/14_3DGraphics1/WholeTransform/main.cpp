@@ -15,22 +15,22 @@ int gCount;
 namespace GameLib{
 	void Framework::update(){
 		setFrameRate( 60 );
-		//Œ³‚Ì’¸“_”z—ñ
+		//å…ƒã®é ‚ç‚¹é…åˆ—
 		Vector3 p[ 4 ];
-		unsigned c[ 4 ]; //‚í‚©‚è‚â‚·‚¢‚æ‚¤‚ÉF
+		unsigned c[ 4 ]; //ã‚ã‹ã‚Šã‚„ã™ã„ã‚ˆã†ã«è‰²
 		p[ 0 ].set( -1000.0, 0.0, -1000.0 );
 		p[ 1 ].set( -1000.0, 0.0, 1000.0 );
 		p[ 2 ].set( 1000.0, 0.0, -1000.0 );
 		p[ 3 ].set( 1000.0, 0.0, 1000.0 );
-		c[ 0 ] = 0xffff0000; //Ô
-		c[ 1 ] = 0xff00ff00; //—Î
-		c[ 2 ] = 0xff0000ff; //Â
-		c[ 3 ] = 0xffffffff; //”’
+		c[ 0 ] = 0xffff0000; //èµ¤
+		c[ 1 ] = 0xff00ff00; //ç·‘
+		c[ 2 ] = 0xff0000ff; //é’
+		c[ 3 ] = 0xffffffff; //ç™½
 
-		//ƒ[ƒ‹ƒh•ÏŠ·(Z‰ñ“])
+		//ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›(Zå›è»¢)
 		Matrix34 wm;
 		wm.setRotationZ( gCount * 4.0 );
-		//ƒrƒ…[s—ñ‚ğì‚ë‚¤
+		//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã‚’ä½œã‚ã†
 		Vector3 eyePosition;
 		eyePosition.x = sin( gCount ) * 4000;
 		eyePosition.z = cos( gCount ) * 4000;
@@ -38,34 +38,34 @@ namespace GameLib{
 		Vector3 eyeTarget( 0.0, 0.0, 0.0 );
 		Matrix34 vm;
 		vm.setViewTransform( eyePosition, eyeTarget );
-		//“§‹•ÏŠ·s—ñ
+		//é€è¦–å¤‰æ›è¡Œåˆ—
 		Matrix44 pm;
 		pm.setPerspectiveTransform( 60.0, 640.0, 480.0, 1.0, 10000.0, gMultiplyWToZByHand );
-		//‚Ü‚¸VW‚ğì‚é
+		//ã¾ãšVWã‚’ä½œã‚‹
 		vm *= wm;
-		//Ÿ‚ÉPVW‚ğì‚é
+		//æ¬¡ã«PVWã‚’ä½œã‚‹
 		pm *= vm;
-		//s—ñ‚ÉƒxƒNƒ^‚ğ‚©‚¯‚Ä‰ñ‚é
+		//è¡Œåˆ—ã«ãƒ™ã‚¯ã‚¿ã‚’ã‹ã‘ã¦å›ã‚‹
 		double p4[ 4 ][ 4 ];
 		for ( int i = 0; i < 4; ++i ){
 			pm.multiply( p4[ i ], p[ i ] );
 		}
-		//è“®‚Åz *= w‚ğ‚·‚é‚È‚ç‚â‚é
+		//æ‰‹å‹•ã§z *= wã‚’ã™ã‚‹ãªã‚‰ã‚„ã‚‹
 		if ( gMultiplyWToZByHand ){
 			for ( int i = 0; i < 4; ++i ){
 				p4[ i ][ 2 ] *= p4[ i ][ 3 ];
 			}
 		}
-		//lŠpŒ`‚ğ•`‚­B
+		//å››è§’å½¢ã‚’æãã€‚
 		drawTriangle3DH( p4[ 0 ], p4[ 1 ], p4[ 2 ], 0, 0, 0, c[ 0 ], c[ 1 ], c[ 2 ] );
 		drawTriangle3DH( p4[ 3 ], p4[ 1 ], p4[ 2 ], 0, 0, 0, c[ 3 ], c[ 1 ], c[ 2 ] );
 
-		//Zƒoƒbƒtƒ@ƒ‚[ƒhØ‘Ö
+		//Zãƒãƒƒãƒ•ã‚¡ãƒ¢ãƒ¼ãƒ‰åˆ‡æ›¿
 		if ( Input::Manager::instance().keyboard().isTriggered( 'z' ) ){
 			gMultiplyWToZByHand = !gMultiplyWToZByHand;
 		}
 
-		//•\¦
+		//è¡¨ç¤º
 		if ( gMultiplyWToZByHand ){
 			drawDebugString( 0, 0, "Linear Z Buffer ( high precision )" );
 		}else{

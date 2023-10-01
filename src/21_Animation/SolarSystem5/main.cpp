@@ -25,19 +25,19 @@ namespace GameLib{
 			gSolarSystem = gDatabase->createTree( "solarSystem" );
 			gSolarSystem->setAnimation( gDatabase->animation( "solarSystem" ) );
 		}
-		//ƒJƒƒ‰‚Æƒ‰ƒCƒg‚ð“®‚©‚µ‚Ä‚Ý‚é
+		//ã‚«ãƒ¡ãƒ©ã¨ãƒ©ã‚¤ãƒˆã‚’å‹•ã‹ã—ã¦ã¿ã‚‹
 		gLightVector.x = sin( gCount ) * cos( gCount );
 		gLightVector.y = sin( gCount ) * sin( gCount );
 		gLightVector.z = cos( gCount );
-		//ƒrƒ…[s—ñA“§Ž‹•ÏŠ·s—ñ
+		//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã€é€è¦–å¤‰æ›è¡Œåˆ—
 		Matrix44 pm;
 		pm.setPerspectiveTransform( 45.0, width(), height(), 1.0, 10000.0 );
 		Matrix34 vm;
 		vm.setViewTransform( gEyePosition, Vector3( 0.0, 0.0, 0.0 ) );
 		pm *= vm;
 
-		//Šeƒm[ƒh‚É•ÏŠ·ƒZƒbƒg
-		gSolarSystem->update(); //‚â‚é‚±‚Æ‚Í‚±‚ê‚¾‚¯‚É‚È‚Á‚Ä‚µ‚Ü‚Á‚½B
+		//å„ãƒŽãƒ¼ãƒ‰ã«å¤‰æ›ã‚»ãƒƒãƒˆ
+		gSolarSystem->update(); //ã‚„ã‚‹ã“ã¨ã¯ã“ã‚Œã ã‘ã«ãªã£ã¦ã—ã¾ã£ãŸã€‚
 		gSolarSystem->draw(
 			pm,
 			gLightVector,

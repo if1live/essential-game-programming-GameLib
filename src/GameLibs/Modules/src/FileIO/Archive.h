@@ -17,22 +17,22 @@ public:
 	mStream( 0 ),
 	mDummy( false ){
 		if ( !name ){
-			mDummy = true; //ƒ_ƒ~[ƒA[ƒJƒCƒuB’¼Úƒtƒ@ƒCƒ‹‚©‚ç“Ç‚İ‚İ‚Ü‚·B
+			mDummy = true; //ãƒ€ãƒŸãƒ¼ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–ã€‚ç›´æ¥ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰èª­ã¿è¾¼ã¿ã¾ã™ã€‚
 			return;
 		}
-		//ƒtƒ@ƒCƒ‹‚ğŠJ‚¯‚Äƒƒ“ƒo‚É‚Á‚Ä‚¨‚­B
-		setlocale( LC_ALL, "" ); //‚±‚ê‚ª‚È‚¢‚Æ“ú–{Œêƒtƒ@ƒCƒ‹–¼‚ğó‚¯•t‚¯‚È‚¢
+		//ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã‘ã¦ãƒ¡ãƒ³ãƒã«æŒã£ã¦ãŠãã€‚
+		setlocale( LC_ALL, "" ); //ã“ã‚ŒãŒãªã„ã¨æ—¥æœ¬èªãƒ•ã‚¡ã‚¤ãƒ«åã‚’å—ã‘ä»˜ã‘ãªã„
 		mStream = NEW ifstream( name, ifstream::binary );
 		if ( !mStream->good() ){
 			cout << "can't open archive: " << name << endl;
 			SAFE_DELETE( mStream );
 			return;
 		}
-		//––”ö‚©‚ç4ƒoƒCƒg‘O‚ÖˆÚ“®
-		//ƒtƒ@ƒCƒ‹ƒTƒCƒY‚ğˆê‰ñ‘ª‚ë‚¤‚©BƒGƒ‰[ƒ`ƒFƒbƒN‚Ì‚½‚ß‚É‚ÈB
+		//æœ«å°¾ã‹ã‚‰4ãƒã‚¤ãƒˆå‰ã¸ç§»å‹•
+		//ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºã‚’ä¸€å›æ¸¬ã‚ã†ã‹ã€‚ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯ã®ãŸã‚ã«ãªã€‚
 		mStream->seekg( 0, ifstream::end );
 		streamsize fileSize = mStream->tellg();
-		if ( fileSize < 8 ){ //‚Ü‚¸‚ ‚è‚¦‚ñ
+		if ( fileSize < 8 ){ //ã¾ãšã‚ã‚Šãˆã‚“
 			cout << "archive size is illegal ( too small ): " << name << endl;
 			SAFE_DELETE( mStream );
 			return;
@@ -40,23 +40,23 @@ public:
 		mStream->seekg( -8, ifstream::end );
 		mBlockSize = getUnsigned();
 		streamsize tableBegin = getUnsigned() * mBlockSize;
-		//ƒe[ƒuƒ‹æ“ª‚ÖˆÚ“®
-		if ( tableBegin + 12 >= fileSize ){ //‚ ‚è‚¦‚ñ
+		//ãƒ†ãƒ¼ãƒ–ãƒ«å…ˆé ­ã¸ç§»å‹•
+		if ( tableBegin + 12 >= fileSize ){ //ã‚ã‚Šãˆã‚“
 			cout << "archive size is illegal ( wrong table ): " << name << endl;
 			SAFE_DELETE( mStream );
 			return;
 		}
 		mStream->seekg( tableBegin, ifstream::beg );
-		//4ƒoƒCƒg“Ç‚Ş‚Æƒtƒ@ƒCƒ‹”
+		//4ãƒã‚¤ãƒˆèª­ã‚€ã¨ãƒ•ã‚¡ã‚¤ãƒ«æ•°
 		mFileNumber = getUnsigned();
-		if ( fileSize < mFileNumber * 16 ){ //‚ ‚è‚¦‚ñ
+		if ( fileSize < mFileNumber * 16 ){ //ã‚ã‚Šãˆã‚“
 			cout << "archive size is illegal ( wrong file number ): " << name << endl;
 			SAFE_DELETE( mStream );
 			return;
 		}
-		//ƒnƒbƒVƒ…ƒ}ƒbƒvƒTƒCƒYŠm•Û
+		//ãƒãƒƒã‚·ãƒ¥ãƒãƒƒãƒ—ã‚µã‚¤ã‚ºç¢ºä¿
 		mEntries.setCapacity( mFileNumber );
-		//Œã‚Íƒ‹[ƒv‚Å‰ñ‚µ‚È‚ª‚ç“Ç‚ñ‚Å‚¢‚­B
+		//å¾Œã¯ãƒ«ãƒ¼ãƒ—ã§å›ã—ãªãŒã‚‰èª­ã‚“ã§ã„ãã€‚
 		for ( int i = 0; i < mFileNumber; ++i ){
 			Entry e;
 			e.mPosition = getUnsigned();
@@ -64,13 +64,13 @@ public:
 			e.mOriginalSize = getUnsigned();
 			e.mNecessaryBufferSize = getUnsigned();
 			int nameLength = getUnsigned();
-			//–¼‘O‚Íˆê’Uˆê”z—ñ‚É‚¢‚ê‚éB‚·‚®delete‚·‚é‚ªB
-			char* name = NEW char[ nameLength + 1 ]; //I’[NULL‚Å+1
+			//åå‰ã¯ä¸€æ—¦ä¸€æ™‚é…åˆ—ã«ã„ã‚Œã‚‹ã€‚ã™ãdeleteã™ã‚‹ãŒã€‚
+			char* name = NEW char[ nameLength + 1 ]; //çµ‚ç«¯NULLã§+1
 			mStream->read( name, nameLength );
-			name[ nameLength ] = '\0'; //I’[NULL
-			//mEntries‚Ímap< char*, Entry >
-			mEntries.add( name, e ); //map‚ÉŠi”[
-			//î•ñ‚ğ“f‚«o‚µ‚Ä‚İ‚æ‚¤B³‚µ‚¢‚©H
+			name[ nameLength ] = '\0'; //çµ‚ç«¯NULL
+			//mEntriesã¯map< char*, Entry >
+			mEntries.add( name, e ); //mapã«æ ¼ç´
+			//æƒ…å ±ã‚’åãå‡ºã—ã¦ã¿ã‚ˆã†ã€‚æ­£ã—ã„ã‹ï¼Ÿ
 			SAFE_DELETE_ARRAY( name );
 		}
 	}
@@ -83,17 +83,17 @@ public:
 	const char* name ){
 		if ( mDummy ){
 			*entryIndex = -1;
-			setlocale( LC_ALL, "" ); //‚±‚ê‚ª‚È‚¢‚Æ“ú–{Œêƒtƒ@ƒCƒ‹–¼‚ğó‚¯•t‚¯‚È‚¢
+			setlocale( LC_ALL, "" ); //ã“ã‚ŒãŒãªã„ã¨æ—¥æœ¬èªãƒ•ã‚¡ã‚¤ãƒ«åã‚’å—ã‘ä»˜ã‘ãªã„
 			*streamOut = NEW ifstream( name, ifstream::binary );
 			if ( !( ( *streamOut )->good() ) ){
-				SAFE_DELETE( *streamOut ); //‚È‚¢
+				SAFE_DELETE( *streamOut ); //ãªã„
 			}
 		}else{
-			if ( mFileNumber == 0 ){ //‚È‚¢ƒA[ƒJƒCƒu‚È‚çí‚ÉŒ©‚Â‚©‚ç‚È‚¢
+			if ( mFileNumber == 0 ){ //ãªã„ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–ãªã‚‰å¸¸ã«è¦‹ã¤ã‹ã‚‰ãªã„
 				*entryIndex = -1;
 				*streamOut = 0;
 			}else{
-				//ƒXƒ‰ƒbƒVƒ…‚ÆƒoƒbƒNƒXƒ‰ƒbƒVƒ…‚Ì—¼•û‚ğó‚¯•t‚¯‚é‚½‚ß‚ÉƒoƒbƒNƒXƒ‰ƒbƒVƒ…‰»
+				//ã‚¹ãƒ©ãƒƒã‚·ãƒ¥ã¨ãƒãƒƒã‚¯ã‚¹ãƒ©ãƒƒã‚·ãƒ¥ã®ä¸¡æ–¹ã‚’å—ã‘ä»˜ã‘ã‚‹ãŸã‚ã«ãƒãƒƒã‚¯ã‚¹ãƒ©ãƒƒã‚·ãƒ¥åŒ–
 				string tName = name;
 				for ( size_t i = 0; i < tName.size(); ++i ){
 					if ( tName[ i ] == '/' ){
@@ -131,11 +131,11 @@ public:
 	void allocate( char** dataOut, int size, int entryIndex ){
 		if ( mDummy ){
 			STRONG_ASSERT( entryIndex == -1 );
-			*dataOut = NEW char[ size + 1 ]; //eØİŒvNULLI’[B
+			*dataOut = NEW char[ size + 1 ]; //è¦ªåˆ‡è¨­è¨ˆNULLçµ‚ç«¯ã€‚
 		}else{
 			STRONG_ASSERT( entryIndex >= 0 );
 			const Entry& e = *mEntries.value( entryIndex );
-			int allocSize = max( e.mNecessaryBufferSize, e.mOriginalSize + 1 ); //“WŠJ‚É•K—v‚Èƒoƒbƒtƒ@ƒTƒCƒY‚ª‚ ‚é‚È‚ç‚»‚ê‚à‘‚­B
+			int allocSize = max( e.mNecessaryBufferSize, e.mOriginalSize + 1 ); //å±•é–‹ã«å¿…è¦ãªãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚ºãŒã‚ã‚‹ãªã‚‰ãã‚Œã‚‚æ›¸ãã€‚
 			*dataOut = NEW char[ allocSize ];
 		}
 	}
@@ -161,10 +161,10 @@ public:
 		}
 		int readOffset = 0;
 		if ( compressed ){
-			readOffset = necessaryBufferSize - size; //Œã‚ë‚Éƒ[ƒhB“WŠJ‚É—]•ª‚É•K—v‚Èê‡‚ª‚ ‚é‚Ì‚ÅoriginalSize‚Å‚Í‚È‚¢B
+			readOffset = necessaryBufferSize - size; //å¾Œã‚ã«ãƒ­ãƒ¼ãƒ‰ã€‚å±•é–‹ã«ä½™åˆ†ã«å¿…è¦ãªå ´åˆãŒã‚ã‚‹ã®ã§originalSizeã§ã¯ãªã„ã€‚
 		}
 		stream->read( data + readOffset, size );
-		if ( stream->gcount() != size ){ //ƒGƒ‰[‚©
+		if ( stream->gcount() != size ){ //ã‚¨ãƒ©ãƒ¼ã‹
 			*errorOut = true;
 			return;
 		}

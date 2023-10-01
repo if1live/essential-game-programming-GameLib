@@ -4,26 +4,26 @@
 namespace GameLib{
 namespace FileIO{
 
-///“Ç‚İ‚İƒtƒ@ƒCƒ‹ƒnƒ“ƒhƒ‹
+///èª­ã¿è¾¼ã¿ãƒ•ã‚¡ã‚¤ãƒ«ãƒãƒ³ãƒ‰ãƒ«
 class InFile{
 public:
-	///ƒtƒ@ƒCƒ‹ƒ[ƒh‚ğŠJn‚·‚é
+	///ãƒ•ã‚¡ã‚¤ãƒ«ãƒ­ãƒ¼ãƒ‰ã‚’é–‹å§‹ã™ã‚‹
 	static InFile create( const char* filename );
-	///ƒ[ƒh—e—ÊƒQƒbƒg
+	///ãƒ­ãƒ¼ãƒ‰å®¹é‡ã‚²ãƒƒãƒˆ
 	int size() const;
-	///ƒ[ƒh“à—eƒQƒbƒg
+	///ãƒ­ãƒ¼ãƒ‰å†…å®¹ã‚²ãƒƒãƒˆ
 	const char* data() const; 
-	///ƒ[ƒhI‚í‚Á‚½H
+	///ãƒ­ãƒ¼ãƒ‰çµ‚ã‚ã£ãŸï¼Ÿ
 	bool isFinished() const;
-	///ƒGƒ‰[o‚Ä‚Ü‚·H
+	///ã‚¨ãƒ©ãƒ¼å‡ºã¦ã¾ã™ï¼Ÿ
 	bool isError() const;
-	//’lƒQƒbƒgŠÖ”ŒQ
+	//å€¤ã‚²ãƒƒãƒˆé–¢æ•°ç¾¤
 	int getInt( int position ) const;
 	unsigned getUnsigned( int position ) const;
 	short getShort( int position ) const;
 	unsigned short getUnsignedShort( int position ) const;
 
-	//ˆÈ‰ºƒ†[ƒU‚ÍˆÓ¯‚µ‚È‚¢ŠÖ”ŒQ
+	//ä»¥ä¸‹ãƒ¦ãƒ¼ã‚¶ã¯æ„è­˜ã—ãªã„é–¢æ•°ç¾¤
 	InFile();
 	InFile( const InFile& );
 	~InFile();

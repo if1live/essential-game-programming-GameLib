@@ -10,12 +10,12 @@ public:
 		void setWidth( int width );
 		void setHeight( int height );
 		void setTitle( const char* title );
-		void forbidFullScreen( bool = true ); //‚±‚ê‚ğŒÄ‚ñ‚Å‚¨‚­‚Æalt-enter‚ª–³‹‚³‚ê‚é
+		void forbidFullScreen( bool = true ); //ã“ã‚Œã‚’å‘¼ã‚“ã§ãŠãã¨alt-enterãŒç„¡è¦–ã•ã‚Œã‚‹
 		void enableFullScreen( bool = true );
 		void enableDragAndDrop( bool = true );
 	};
 	WindowCreator();
-	//ƒ†[ƒUÀ‘•ŠÖ”
+	//ãƒ¦ãƒ¼ã‚¶å®Ÿè£…é–¢æ•°
 	void configure( Configuration* );
 	void start( void* windowHandle );
 	void update();
@@ -28,24 +28,24 @@ public:
 	bool isMinimized() const;
 	bool isActive() const;
 	void enableFullScreen( bool );
-	///ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“•¶š—ñæ“¾
+	///ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³æ–‡å­—åˆ—å–å¾—
 	const char* commandLineString() const;
-	///ƒhƒ‰ƒbƒOƒAƒ“ƒhƒhƒƒbƒv‚Í—LŒø‚Å‚·‚©H
+	///ãƒ‰ãƒ©ãƒƒã‚°ã‚¢ãƒ³ãƒ‰ãƒ‰ãƒ­ãƒƒãƒ—ã¯æœ‰åŠ¹ã§ã™ã‹ï¼Ÿ
 	bool isDragAndDropEnabled() const;
-	///ƒhƒ‰ƒbƒOƒAƒ“ƒhƒhƒƒbƒv”æ“¾
+	///ãƒ‰ãƒ©ãƒƒã‚°ã‚¢ãƒ³ãƒ‰ãƒ‰ãƒ­ãƒƒãƒ—æ•°å–å¾—
 	int droppedItemNumber() const;
-	///ƒhƒ‰ƒbƒOƒAƒ“ƒhƒhƒƒbƒvæ“¾
+	///ãƒ‰ãƒ©ãƒƒã‚°ã‚¢ãƒ³ãƒ‰ãƒ‰ãƒ­ãƒƒãƒ—å–å¾—
 	const char* droppedItem( int index ) const;
-	///ƒhƒ‰ƒbƒOƒAƒ“ƒhƒhƒƒbƒvƒNƒŠƒA
+	///ãƒ‰ãƒ©ãƒƒã‚°ã‚¢ãƒ³ãƒ‰ãƒ‰ãƒ­ãƒƒãƒ—ã‚¯ãƒªã‚¢
 	void clearDroppedItem();
-	///ƒ~ƒŠ•b’PˆÊ‚ğ•Ô‚·
+	///ãƒŸãƒªç§’å˜ä½æ™‚åˆ»ã‚’è¿”ã™
 	unsigned time() const;
 
 	static bool isMainThread();
 	static WindowCreator instance();
-	void requestEnd(); //I‚í‚è‚ğ—v‹‚·‚é
-	void end(); //I‚í‚è‚ğ’Ê’m‚·‚éB
-	bool isEndRequested() const; //I‚í‚è‚Í—v‹‚³‚ê‚Ä‚Ü‚·‚©
+	void requestEnd(); //çµ‚ã‚ã‚Šã‚’è¦æ±‚ã™ã‚‹
+	void end(); //çµ‚ã‚ã‚Šã‚’é€šçŸ¥ã™ã‚‹ã€‚
+	bool isEndRequested() const; //çµ‚ã‚ã‚Šã¯è¦æ±‚ã•ã‚Œã¦ã¾ã™ã‹
 	int getAndResetMouseWheel();
 };
 

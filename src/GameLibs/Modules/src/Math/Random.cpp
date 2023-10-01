@@ -5,7 +5,7 @@
 namespace GameLib{
 namespace Math{
 
-//XorShift–@
+//XorShiftæ³•
 class Random::Impl : public ReferenceType{
 public:
 	Impl( int seed ){
@@ -26,21 +26,21 @@ public:
 		return static_cast< int >( mW );
 	}
 	int getInt( int a ){
-		int x = getInt() & 0x7fffffff; //•„†ƒrƒbƒgØÌ‚ÄB¸“x‚Í—‚¿‚é‚ª‚±‚¤‚µ‚È‚¢‚Æ”ÍˆÍ‚É“ü‚ç‚È‚¢
+		int x = getInt() & 0x7fffffff; //ç¬¦å·ãƒ“ãƒƒãƒˆåˆ‡æ¨ã¦ã€‚ç²¾åº¦ã¯è½ã¡ã‚‹ãŒã“ã†ã—ãªã„ã¨ç¯„å›²ã«å…¥ã‚‰ãªã„
 		x %= a;
 		return x;
 	}
 	int getInt( int a, int b ){
-		int x = getInt() & 0x7fffffff; //•„†ƒrƒbƒgØÌ‚ÄB¸“x‚Í—‚¿‚é‚ª‚±‚¤‚µ‚È‚¢‚Æ”ÍˆÍ‚É“ü‚ç‚È‚¢
+		int x = getInt() & 0x7fffffff; //ç¬¦å·ãƒ“ãƒƒãƒˆåˆ‡æ¨ã¦ã€‚ç²¾åº¦ã¯è½ã¡ã‚‹ãŒã“ã†ã—ãªã„ã¨ç¯„å›²ã«å…¥ã‚‰ãªã„
 		x %= b - a;
 		x += a;
 		return x;
 	}
 	float getFloat(){
 		int x = getInt();
-		x = ( x & 0x007fffff ) | 0x3f800000; //w”•”‚ÉŒÅ’è‚Å127‚ğ‚Ô‚Á‚±‚Ş
-		float f = *reinterpret_cast< float* >( &x ); //–³—‚â‚èƒLƒƒƒXƒg
-		return f - 1.f; //ã‚Ìs‚Å1-2‚É‚È‚Á‚Ä‚¢‚é
+		x = ( x & 0x007fffff ) | 0x3f800000; //æŒ‡æ•°éƒ¨ã«å›ºå®šã§127ã‚’ã¶ã£ã“ã‚€
+		float f = *reinterpret_cast< float* >( &x ); //ç„¡ç†ã‚„ã‚Šã‚­ãƒ£ã‚¹ãƒˆ
+		return f - 1.f; //ä¸Šã®è¡Œã§1-2ã«ãªã£ã¦ã„ã‚‹
 	}
 	float getFloat( float a ){
 		float f = getFloat();

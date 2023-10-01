@@ -9,7 +9,7 @@
 #include "PseudoXml/Element.h"
 #include "PseudoXml/Attribute.h"
 #include "PseudoXml/Document.h"
-using namespace PseudoXml; //‚©‚Ô‚Á‚Ä‚È‚¢‚µusing‚µ‚¿‚á‚¦
+using namespace PseudoXml; //ã‹ã¶ã£ã¦ãªã„ã—usingã—ã¡ã‚ƒãˆ
 
 GraphicsDatabase::GraphicsDatabase( const Element* e ) : 
 mVertexBuffers( 0 ),
@@ -37,28 +37,28 @@ mBatchNumber( 0 ){
 }
 
 GraphicsDatabase::~GraphicsDatabase(){
-	//‚Ü‚¸ƒoƒbƒ`‚©‚çB
+	//ã¾ãšãƒãƒƒãƒã‹ã‚‰ã€‚
 	if ( mBatches ){
 		for ( int i = 0; i < mBatchNumber; ++i ){
 			SAFE_DELETE( mBatches[ i ] );
 		}
 		SAFE_DELETE_ARRAY( mBatches );
 	}
-	//ƒeƒNƒXƒ`ƒƒ
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	if ( mTextures ){
 		for ( int i = 0; i < mTextureNumber; ++i ){
 			SAFE_DELETE( mTextures[ i ] );
 		}
 		SAFE_DELETE_ARRAY( mTextures );
 	}
-	//ƒCƒ“ƒfƒNƒXƒoƒbƒtƒ@
+	//ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡
 	if ( mIndexBuffers ){
 		for ( int i = 0; i < mIndexBufferNumber; ++i ){
 			SAFE_DELETE( mIndexBuffers[ i ] );
 		}
 		SAFE_DELETE_ARRAY( mIndexBuffers );
 	}
-	//’¸“_ƒoƒbƒtƒ@
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 	if ( mVertexBuffers ){
 		for ( int i = 0; i < mVertexBufferNumber; ++i ){
 			SAFE_DELETE( mVertexBuffers[ i ] );
@@ -105,7 +105,7 @@ const Texture* GraphicsDatabase::texture( const char* name ) const {
 
 void GraphicsDatabase::createFromElement( const Element* e ){
 	int n = e->childNumber();
-	//‚Ü‚¸”‚ğ”‚¦‚é
+	//ã¾ãšæ•°ã‚’æ•°ãˆã‚‹
 	for ( int i = 0; i < n; ++i ){
 		const Element* child = e->child( i );
 		const string* name = child->name();
@@ -119,7 +119,7 @@ void GraphicsDatabase::createFromElement( const Element* e ){
 			++mBatchNumber;
 		}
 	}
-	//”z—ñŠm•Û
+	//é…åˆ—ç¢ºä¿
 	if ( mVertexBufferNumber > 0 ){
 		mVertexBuffers = new VertexBuffer*[ mVertexBufferNumber ];
 	}
@@ -132,13 +132,13 @@ void GraphicsDatabase::createFromElement( const Element* e ){
 	if ( mBatchNumber > 0 ){
 		mBatches = new Batch*[ mBatchNumber ];
 	}
-	//¡‰½ŒÂ–Ú‚É‘‚«‚ñ‚Å‚¢‚é‚©
+	//ä»Šä½•å€‹ç›®ã«æ›¸ãè¾¼ã‚“ã§ã„ã‚‹ã‹
 	int vertexBufferPos = 0;
 	int indexBufferPos = 0;
 	int texturePos = 0;
 	int batchPos = 0;
 
-	//‰½‚É‚àˆË‘¶‚µ‚Ä‚¢‚È‚¢O‚Â‚ğì‚é
+	//ä½•ã«ã‚‚ä¾å­˜ã—ã¦ã„ãªã„ä¸‰ã¤ã‚’ä½œã‚‹
 	for ( int i = 0; i < n; ++i ){
 		const Element* child = e->child( i );
 		const string* name = child->name();
@@ -153,7 +153,7 @@ void GraphicsDatabase::createFromElement( const Element* e ){
 			++texturePos;
 		}
 	}
-	//Batch‚Í‘¼‚ÉˆË‘¶‚µ‚Ä‚¢‚é‚Ì‚ÅŒã‚Å‚â‚é
+	//Batchã¯ä»–ã«ä¾å­˜ã—ã¦ã„ã‚‹ã®ã§å¾Œã§ã‚„ã‚‹
 	for ( int i = 0; i < n; ++i ){
 		const Element* child = e->child( i );
 		const string* name = child->name();

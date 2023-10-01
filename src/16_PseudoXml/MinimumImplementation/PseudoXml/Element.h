@@ -13,26 +13,26 @@ class Attribute;
 class Element{
 public:
 	Element();
-	Element( const char* name ); //–¼‘O‚©‚çƒRƒ“ƒXƒgƒ‰ƒNƒg
+	Element( const char* name ); //åå‰ã‹ã‚‰ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 	Element( Tag*, const char** readPointer, const char* end );
 	~Element();
-	//ƒAƒgƒŠƒrƒ…[ƒgƒQƒbƒgŒn
+	//ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆã‚²ãƒƒãƒˆç³»
 	int attributeNumber() const;
 	const Attribute* attribute( int i ) const;
 	Attribute* attribute( int i );
-	//ƒAƒgƒŠƒrƒ…[ƒgƒZƒbƒgŒn
+	//ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆã‚»ãƒƒãƒˆç³»
 	void setAttributeNumber( int );
-	//q‹ŸƒQƒbƒgŒn
+	//å­ä¾›ã‚²ãƒƒãƒˆç³»
 	int childNumber() const;
 	const Element* child( int i ) const;
 	Element* child( int i );
-	//q‹ŸƒZƒbƒgŒn
+	//å­ä¾›ã‚»ãƒƒãƒˆç³»
 	void setChildNumber( int );
-	//–¼‘OƒQƒbƒg
+	//åå‰ã‚²ãƒƒãƒˆ
 	const string* name() const;
-	//–¼‘O•ÏX
+	//åå‰å¤‰æ›´
 	void setName( const char* );
-	//•¶š—ñ‰»
+	//æ–‡å­—åˆ—åŒ–
 	void convertToString( string* out, int indent ) const;
 private:
 	vector< Attribute* > mAttributes;

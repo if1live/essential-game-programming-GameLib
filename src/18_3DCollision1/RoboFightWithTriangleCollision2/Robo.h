@@ -10,14 +10,14 @@ class Model;
 
 class Robo{
 public:
-	Robo( int id ); //”Ô†‚à‚ç‚¤B©•ª‚ª‰½”Ô‚©’m‚è‚½‚¢‚Ì‚ÅB
+	Robo( int id ); //ç•ªå·ã‚‚ã‚‰ã†ã€‚è‡ªåˆ†ãŒä½•ç•ªã‹çŸ¥ã‚ŠãŸã„ã®ã§ã€‚
 	~Robo();
 	void draw( const Matrix44& perspectiveViewMatrix ) const;
-	//“®‚­—\’è‚ğƒQƒbƒg
+	//å‹•ãäºˆå®šã‚’ã‚²ãƒƒãƒˆ
 	void getMove( 
 		Vector3* moveOut,
 		const Vector3& viewVector ) const;
-	//“®‚«•ûŒü‚ğ—^‚¦‚Ä¡ƒtƒŒ[ƒ€‚Ìˆ—‚ğ‚³‚¹‚é
+	//å‹•ãæ–¹å‘ã‚’ä¸ãˆã¦ä»Šãƒ•ãƒ¬ãƒ¼ãƒ ã®å‡¦ç†ã‚’ã•ã›ã‚‹
 	void update( 
 		const Vector3& move,
 		const Vector3& enemyPosition );

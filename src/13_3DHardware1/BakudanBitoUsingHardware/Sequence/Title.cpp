@@ -19,20 +19,20 @@ Title::~Title(){
 }
 
 void Title::update( Parent* parent ){
-	//“ü—Íæ“¾
+	//å…¥åŠ›å–å¾—
 	if ( Pad::isTriggered( Pad::U ) ){
 		--mCursorPosition;
-		if ( mCursorPosition < 0 ){ //ƒ}ƒCƒiƒX‚ÍÅ‘å’l‚Éƒ‹[ƒv
+		if ( mCursorPosition < 0 ){ //ãƒã‚¤ãƒŠã‚¹ã¯æœ€å¤§å€¤ã«ãƒ«ãƒ¼ãƒ—
  			mCursorPosition = 1;
 		}
-		//ƒJ[ƒ\ƒ‹‰¹
+		//ã‚«ãƒ¼ã‚½ãƒ«éŸ³
 		SoundManager::instance()->playSe( SoundManager::SE_CURSOR_MOVE );
 	}else if ( Pad::isTriggered( Pad::D ) ){
 		++mCursorPosition;
-		if ( mCursorPosition > 1 ){ //1‚ğ‰z‚¦‚½‚ç0‚Éƒ‹[ƒv
+		if ( mCursorPosition > 1 ){ //1ã‚’è¶ŠãˆãŸã‚‰0ã«ãƒ«ãƒ¼ãƒ—
 			mCursorPosition = 0;
 		}
-		//ƒJ[ƒ\ƒ‹‰¹
+		//ã‚«ãƒ¼ã‚½ãƒ«éŸ³
 		SoundManager::instance()->playSe( SoundManager::SE_CURSOR_MOVE );
 	}else if ( Pad::isTriggered( Pad::A ) ){
 		parent->moveTo( Parent::NEXT_GAME );
@@ -43,17 +43,17 @@ void Title::update( Parent* parent ){
 		}else{
 			HALT( "arienai" );
 		}
-		//Œˆ’è‰¹
+		//æ±ºå®šéŸ³
 		SoundManager::instance()->playSe( SoundManager::SE_SELECTION );
 	}
-	//•`‰æ
+	//æç”»
 	mImage->draw();
-	//š‚ğo‚·
+	//å­—ã‚’å‡ºã™
 	Framework f = Framework::instance();
-	f.drawDebugString( 0, 0, "[À²ÄÙ] : ÊŞ¸ÀŞİËŞÄ" );
-	f.drawDebugString( 1, 2, "ËÄØ ÃŞ ±¿ÌŞ" );
-	f.drawDebugString( 1, 3, "ÌÀØ ÃŞ ºÛ¼±³" );
-	//ƒJ[ƒ\ƒ‹‚ğ‘‚­
+	f.drawDebugString( 0, 0, "[ï¾€ï½²ï¾„ï¾™] : ï¾Šï¾ï½¸ï¾€ï¾ï¾ï¾‹ï¾ï¾„" );
+	f.drawDebugString( 1, 2, "ï¾‹ï¾„ï¾˜ ï¾ƒï¾ ï½±ï½¿ï¾Œï¾" );
+	f.drawDebugString( 1, 3, "ï¾Œï¾€ï¾˜ ï¾ƒï¾ ï½ºï¾›ï½¼ï½±ï½³" );
+	//ã‚«ãƒ¼ã‚½ãƒ«ã‚’æ›¸ã
 	f.drawDebugString( 0, mCursorPosition + 2, ">" );
 }
 

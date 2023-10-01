@@ -35,15 +35,15 @@ public:
 	void scale( const Vector3& );
 
 	void mul( Vector3* out, const Vector3& in ) const;
-	void mul33( Vector3* out, const Vector3& in ) const; //ˆÚ“®‚È‚µ
+	void mul33( Vector3* out, const Vector3& in ) const; //ç§»å‹•ãªã—
  	void operator*=( const Matrix34& );
 	void operator*=( const Matrix33& );
 	void setMul( const Matrix34&, const Matrix34& );
 	void setMul( const Matrix34&, const Matrix33& );
 
-	///Š®‘S‚Éˆê’v‚µ‚Ä‚¢‚é‚©ƒ`ƒFƒbƒN
+	///å®Œå…¨ã«ä¸€è‡´ã—ã¦ã„ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	bool operator==( const Matrix34& ) const;
-	///­‚µ‚Å‚àˆá‚¤‚Ì‚©‚ğƒ`ƒFƒbƒN
+	///å°‘ã—ã§ã‚‚é•ã†ã®ã‹ã‚’ãƒã‚§ãƒƒã‚¯
 	bool operator!=( const Matrix34& ) const;
 
 	float& operator()( int row, int col );
@@ -52,8 +52,8 @@ public:
 	void transpose33();
 	void setTransposed33( const Matrix34& );
 
-	void invert(); //‹ts—ñ
-	void setInverse( const Matrix34& ); //‹ts—ñ
+	void invert(); //é€†è¡Œåˆ—
+	void setInverse( const Matrix34& ); //é€†è¡Œåˆ—
 
 	float m00, m01, m02, m03;
 	float m10, m11, m12, m13;

@@ -9,12 +9,12 @@ namespace PseudoXml{
 class ElementData{
 public:
 	~ElementData(){
-		//‹ó‚Ì‚Í‚¸‚Å‚·
+		//ç©ºã®ã¯ãšã§ã™
 		assert( mAttributes.size() == 0 && mChildren.size() == 0 );
 	}
-	string mName; //ƒGƒŒƒƒ“ƒg–¼
-	list< Attribute* > mAttributes; //ƒAƒgƒŠƒrƒ…[ƒg
-	list< ElementData* > mChildren; //q‹Ÿƒf[ƒ^
+	string mName; //ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆå
+	list< Attribute* > mAttributes; //ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆ
+	list< ElementData* > mChildren; //å­ä¾›ãƒ‡ãƒ¼ã‚¿
 };
 
 Parser::Parser( const char* data, int size ) :
@@ -25,13 +25,13 @@ mInEndTag( false ){
 }
 
 Parser::~Parser(){
-	//‚±‚±‚É—ˆ‚é‚Æ‚«‚É‚Í‹ó‚É‚È‚Á‚Ä‚¢‚é‚Í‚¸
+	//ã“ã“ã«æ¥ã‚‹ã¨ãã«ã¯ç©ºã«ãªã£ã¦ã„ã‚‹ã¯ãš
 	assert( mElements.size() == 0 );
 }
 
 namespace {
-//a-z,A-Z,0-9,_‚Ì‚Ç‚ê‚©‚©‚ğ’²‚×‚éŠÖ”
-//‚í‚©‚è‚â‚·‚¢‚ª’x‚¢B‚‘¬‰»‚Ì•û–@‚ğŒŸ“¢‚µ‚Ä‚İ‚æ‚¤B
+//a-z,A-Z,0-9,_ã®ã©ã‚Œã‹ã‹ã‚’èª¿ã¹ã‚‹é–¢æ•°
+//ã‚ã‹ã‚Šã‚„ã™ã„ãŒé…ã„ã€‚é«˜é€ŸåŒ–ã®æ–¹æ³•ã‚’æ¤œè¨ã—ã¦ã¿ã‚ˆã†ã€‚
 bool static isNormalChar( char c ){
 	if ( c >= '0' && c <= '9' ){
 		return true;
@@ -50,131 +50,131 @@ bool static isNormalChar( char c ){
 
 } //namespace {}
 
-//ó‘Ô‘JˆÚ•\BÅ’áŒÀ‚È‚Ì‚ÅAƒGƒ‰[‚É‚ÍˆÙí‚È‚Ù‚ÇŠ°—e‚Èì‚è‚É‚È‚Á‚Ä‚¢‚éB
+//çŠ¶æ…‹é·ç§»è¡¨ã€‚æœ€ä½é™ãªã®ã§ã€ã‚¨ãƒ©ãƒ¼ã«ã¯ç•°å¸¸ãªã»ã©å¯›å®¹ãªä½œã‚Šã«ãªã£ã¦ã„ã‚‹ã€‚
 /*
-<ó‘Ô”Ô†ƒŠƒXƒg>
-0:‰Šúó‘Ô
-1:<‚Ìã
-2:ƒGƒŒƒƒ“ƒg–¼•¶š—ñ
-3:ƒGƒŒƒƒ“ƒg–¼‚ÌŒã‚Ì‹ó”’BƒAƒgƒŠƒrƒ…[ƒg‚ÌŠÔ‚Ì‹ó”’B
-4:ƒAƒgƒŠƒrƒ…[ƒg–¼
-5:=‚Ìã
-6:ƒAƒgƒŠƒrƒ…[ƒg’l(""‚Ì’†g)
-7:>‚Ìã
+<çŠ¶æ…‹ç•ªå·ãƒªã‚¹ãƒˆ>
+0:åˆæœŸçŠ¶æ…‹
+1:<ã®ä¸Š
+2:ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆåæ–‡å­—åˆ—
+3:ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆåã®å¾Œã®ç©ºç™½ã€‚ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆã®é–“ã®ç©ºç™½ã€‚
+4:ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆå
+5:=ã®ä¸Š
+6:ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆå€¤(""ã®ä¸­èº«)
+7:>ã®ä¸Š
 
-<ó‘Ô‘JˆÚƒŠƒXƒg>
-‹L†:
-c = [a-zA-Z0-9_] ‚Â‚Ü‚è•’Ê‚Ì•¶š
-s = ‘¼‚ÌğŒ‚Éˆø‚Á‚©‚©‚ç‚È‚¢c‚è‚Ì•¶š
+<çŠ¶æ…‹é·ç§»ãƒªã‚¹ãƒˆ>
+è¨˜å·:
+c = [a-zA-Z0-9_] ã¤ã¾ã‚Šæ™®é€šã®æ–‡å­—
+s = ä»–ã®æ¡ä»¶ã«å¼•ã£ã‹ã‹ã‚‰ãªã„æ®‹ã‚Šã®æ–‡å­—
 
-0,<,1 ŠJn
-1,/,1 I—¹ƒ^ƒOƒtƒ‰ƒO—§‚Ä‚é
-1,s,2 ƒGƒŒƒƒ“ƒg–¼•¶š—ñÅ‰‚Ìˆê•¶š
-2,c,2 ƒGƒŒƒƒ“ƒg–¼•¶š—ñ‚É’Ç‰Á
+0,<,1 é–‹å§‹
+1,/,1 çµ‚äº†ã‚¿ã‚°ãƒ•ãƒ©ã‚°ç«‹ã¦ã‚‹
+1,s,2 ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆåæ–‡å­—åˆ—æœ€åˆã®ä¸€æ–‡å­—
+2,c,2 ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆåæ–‡å­—åˆ—ã«è¿½åŠ 
 2,>,7
-2,s,3 ƒGƒŒƒƒ“ƒg–¼Šm’è
+2,s,3 ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆåç¢ºå®š
 3,>,7
-3,c,4 ƒAƒgƒŠƒrƒ…[ƒg–¼Å‰‚Ìˆê•¶š
-3,s,3 “Ç‚İ”ò‚Î‚·
-4,=,5 =”­Œ©BƒAƒgƒŠƒrƒ…[ƒg–¼Šm’è
-4,s,4 ƒAƒgƒŠƒrƒ…[ƒg–¼‚É’Ç‰Á
-5,",6 ƒ_ƒuƒ‹ƒNƒHƒeƒCƒVƒ‡ƒ“”­Œ©BƒAƒgƒŠƒrƒ…[ƒg’l‚ÉˆÚs
-5,s,5 “Ç‚İ”ò‚Î‚·
-6,",3 ƒAƒgƒŠƒrƒ…[ƒg’lŠm’èBƒAƒgƒŠƒrƒ…[ƒg‚ğƒŠƒXƒg‚É’Ç‰ÁB
-6,s,6 ƒAƒgƒŠƒrƒ…[ƒg’l•¶š—ñ‚É’Ç‰Á
-7,c,0 ‰½‚ª—ˆ‚Ä‚àŸ‚Í0Bƒ^ƒO‚ªŠ®¬‚µ‚½‚Ì‚Å‚±‚±‚Å‚¢‚ë‚¢‚ë‚·‚éB
+3,c,4 ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆåæœ€åˆã®ä¸€æ–‡å­—
+3,s,3 èª­ã¿é£›ã°ã™
+4,=,5 =ç™ºè¦‹ã€‚ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆåç¢ºå®š
+4,s,4 ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆåã«è¿½åŠ 
+5,",6 ãƒ€ãƒ–ãƒ«ã‚¯ã‚©ãƒ†ã‚¤ã‚·ãƒ§ãƒ³ç™ºè¦‹ã€‚ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆå€¤ã«ç§»è¡Œ
+5,s,5 èª­ã¿é£›ã°ã™
+6,",3 ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆå€¤ç¢ºå®šã€‚ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆã‚’ãƒªã‚¹ãƒˆã«è¿½åŠ ã€‚
+6,s,6 ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆå€¤æ–‡å­—åˆ—ã«è¿½åŠ 
+7,c,0 ä½•ãŒæ¥ã¦ã‚‚æ¬¡ã¯0ã€‚ã‚¿ã‚°ãŒå®Œæˆã—ãŸã®ã§ã“ã“ã§ã„ã‚ã„ã‚ã™ã‚‹ã€‚
 */
 Element* Parser::build(){
-	//ƒAƒgƒŠƒrƒ…[ƒg‚Ì–¼‘O‚Æ’l‚Ìˆê“I‚ÈŠi”[êŠ
+	//ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆã®åå‰ã¨å€¤ã®ä¸€æ™‚çš„ãªæ ¼ç´å ´æ‰€
 	string name;
 	string value;
 	
-	//ƒ_ƒ~[e
+	//ãƒ€ãƒŸãƒ¼è¦ª
 	ElementData* parent = new ElementData;
-	parent->mName = "<ROOT>"; //“Á•Êˆµ‚¢‚ÌªŒ³ƒGƒŒƒƒ“ƒg
-	elements.push_back( parent ); //ªŒ³ƒZƒbƒg
+	parent->mName = "<ROOT>"; //ç‰¹åˆ¥æ‰±ã„ã®æ ¹å…ƒã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆ
+	elements.push_back( parent ); //æ ¹å…ƒã‚»ãƒƒãƒˆ
 
-	//‚±‚ê‚©‚çì‚éƒGƒŒƒƒ“ƒg
+	//ã“ã‚Œã‹ã‚‰ä½œã‚‹ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆ
 	ElementData* child = new ElementData;
 
-	//I—¹ƒ^ƒO‚Å‚·‚©H
+	//çµ‚äº†ã‚¿ã‚°ã§ã™ã‹ï¼Ÿ
 	bool isEndTag = false;
 
 	for ( int i = 0; i < mDataSize; ++i ){
 		char c = mData[ i ];
-		//ƒ‚[ƒh‚Å•ªŠò
+		//ãƒ¢ãƒ¼ãƒ‰ã§åˆ†å²
 		switch ( mMode ){
-			case 0: //‰Šúó‘Ô
+			case 0: //åˆæœŸçŠ¶æ…‹
 				switch ( c ){
 					case '<': mMode = 1; break;
-					default: break; //‰½‚à‚µ‚È‚¢
+					default: break; //ä½•ã‚‚ã—ãªã„
 				}
 				break;
-			case 1: //<‚Ìã
+			case 1: //<ã®ä¸Š
 				switch ( c ){
-					case '/': mInEndTag = true; break; //I—¹ƒ^ƒO‚Å‚µ‚½
-					default: child->mName += c; mMode = 2; break; //ƒGƒŒƒƒ“ƒg–¼“Ë“ü
+					case '/': mInEndTag = true; break; //çµ‚äº†ã‚¿ã‚°ã§ã—ãŸ
+					default: child->mName += c; mMode = 2; break; //ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆåçªå…¥
 				}
 				break;
-			case 2: //ƒGƒŒƒƒ“ƒg–¼
+			case 2: //ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆå
 				if ( c == '>' ){
 					mMode = 7;
 				}else if ( isNormalChar( c ) ){
 					child->mName += c;
 				}else{
-					mMode = 3; //ƒGƒŒƒƒ“ƒg–¼‚ğ”²‚¯‚é
+					mMode = 3; //ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆåã‚’æŠœã‘ã‚‹
 				}
 				break;
-			case 3: //ƒGƒŒƒƒ“ƒg–¼‚ÌŒã‚Ì‹ó”’
+			case 3: //ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆåã®å¾Œã®ç©ºç™½
 				if ( c == '>' ){
 					mMode = 7;
 				}else if ( isNormalChar( c ) ){
-					name += c; //ƒAƒgƒŠƒrƒ…[ƒg–¼’Ç‰Á
+					name += c; //ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆåè¿½åŠ 
 					mMode = 4;
 				}else{
-					; //‰½‚à‚µ‚È‚¢
+					; //ä½•ã‚‚ã—ãªã„
 				}
 				break;
-			case 4: //ƒAƒgƒŠƒrƒ…[ƒg–¼
+			case 4: //ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆå
 				switch ( c ){
 					case '=': mMode = 5; break;
 					default: name += c; break;
 				}
 				break;
-			case 5: //=‚Ìã
+			case 5: //=ã®ä¸Š
 				switch ( c ){
 					case '"': mMode = 6; break;
-					default: break; //‰½‚à‚µ‚È‚¢
+					default: break; //ä½•ã‚‚ã—ãªã„
 				}
 				break;
-			case 6: //ƒAƒgƒŠƒrƒ…[ƒg’l
+			case 6: //ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆå€¤
 				switch ( c ){
 					case '"': 
-						mMode = 3; //ƒGƒŒƒƒ“ƒg–¼‚ÌŒã‚Ì‹ó”’
-						//ƒAƒgƒŠƒrƒ…[ƒg’Ç‰Á
+						mMode = 3; //ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆåã®å¾Œã®ç©ºç™½
+						//ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆè¿½åŠ 
 						child->mAttributes.push_back( new Attribute( name.c_str(), value.c_str() ) );
-						//–¼‘O‚Æ’l‚ğ‰Šú‰»
+						//åå‰ã¨å€¤ã‚’åˆæœŸåŒ–
 						name.clear();
 						value.clear();
 						break;
 					default: value += c; break;
 				}
 				break;
-			case 7: //>‚ÌãBƒ^ƒOŠ®¬
-				if ( mInEndTag ){ //I—¹ƒ^ƒO‚È‚Ì‚ÅAElementƒŠƒXƒg‚ğˆê’i–ß‚·
+			case 7: //>ã®ä¸Šã€‚ã‚¿ã‚°å®Œæˆ
+				if ( mInEndTag ){ //çµ‚äº†ã‚¿ã‚°ãªã®ã§ã€Elementãƒªã‚¹ãƒˆã‚’ä¸€æ®µæˆ»ã™
 					elements.pop_back();
-					parent = elements.back(); //ÅŒã‚Ì‚ªŸ‚Ìe‚Å‚·B
+					parent = elements.back(); //æœ€å¾Œã®ãŒæ¬¡ã®è¦ªã§ã™ã€‚
 					mInEndTag = false;
-				}else{ //ŠJnƒ^ƒO‚È‚Ì‚ÅƒGƒŒƒƒ“ƒg‚ğ¡‚Ìq‹Ÿ‚É’Ç‰Á
+				}else{ //é–‹å§‹ã‚¿ã‚°ãªã®ã§ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆã‚’ä»Šã®å­ä¾›ã«è¿½åŠ 
 					parent->mChildren.push_back( child );
-					parent = child; //V‚µ‚¢e‚Í‚±‚Ìl‚Å‚·B
-					child = new ElementData; //V‚µ‚¢‚Ì‚ğì‚Á‚Ä€”õ
+					parent = child; //æ–°ã—ã„è¦ªã¯ã“ã®äººã§ã™ã€‚
+					child = new ElementData; //æ–°ã—ã„ã®ã‚’ä½œã£ã¦æº–å‚™
 				}
-				mMode = 0; //–â“š–³—p‚Å0‚Ö
+				mMode = 0; //å•ç­”ç„¡ç”¨ã§0ã¸
 				break;
 		}
 	}
-	//‚ß‚Å‚½‚­Ş—¿‚ª‚»‚ë‚Á‚½‚Ì‚ÅAElement‚ğì‚Á‚Ä‚¢‚«‚Ü‚·B
+	//ã‚ã§ãŸãææ–™ãŒãã‚ã£ãŸã®ã§ã€Elementã‚’ä½œã£ã¦ã„ãã¾ã™ã€‚
 	Element* root = new Element;
 	ElementData* rootData = elements.front();
 	root->setName( rootData->mName );
@@ -183,7 +183,7 @@ Element* Parser::build(){
 	for ( list< Attributes* >::iterator i = rootData->mAttributes.begin(); i != rootData->mAttributes.end(); ++i ){
 		root->setAttribute( j, *i );
 		++j;
-		*i = 0; //ŠÇ—‚ğˆÚ‚·
+		*i = 0; //ç®¡ç†ã‚’ç§»ã™
 	}
 	root->setChildNumber( rootData->mChildren.size() );
 

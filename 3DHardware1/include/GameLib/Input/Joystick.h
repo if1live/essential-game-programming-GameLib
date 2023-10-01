@@ -14,12 +14,12 @@ public:
 	};
 
 	int analogNumber() const;
-	int analog( int ) const; //ƒAƒiƒƒOƒXƒeƒBƒbƒN’læ“¾
-	//ã‰º¶‰E‚Íã‚Ì—ñ‹“‚Åæ‚ê‚Ü‚·B‚Ù‚©‚Ìƒ{ƒ^ƒ“‚Í0‚©‚ç‚Ì”š‚ÅB
+	int analog( int ) const; //ã‚¢ãƒŠãƒ­ã‚°ã‚¹ãƒ†ã‚£ãƒƒã‚¯å€¤å–å¾—
+	//ä¸Šä¸‹å·¦å³ã¯ä¸Šã®åˆ—æŒ™ã§å–ã‚Œã¾ã™ã€‚ã»ã‹ã®ãƒœã‚¿ãƒ³ã¯0ã‹ã‚‰ã®æ•°å­—ã§ã€‚
 	bool isOn( int ) const;
 	bool isTriggered( int ) const;
 	int buttonNumber() const;
-	//—LŒø‚©H
+	//æœ‰åŠ¹ã‹ï¼Ÿ
 	bool isEnabled() const;
 
 	Joystick();

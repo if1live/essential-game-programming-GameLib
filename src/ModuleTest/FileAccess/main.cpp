@@ -15,10 +15,10 @@ Math::Random gRandom;
 
 namespace GameLib{
 	void Framework::configure( Configuration* c ){
-		//ƒA[ƒJƒCƒuƒAƒNƒZƒXB•¡”ƒA[ƒJƒCƒu‚ÌƒeƒXƒg
+		//ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–ã‚¢ã‚¯ã‚»ã‚¹ã€‚è¤‡æ•°ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–ã®ãƒ†ã‚¹ãƒˆ
 		c->setArchiveNumber( 2 );
 		c->setArchiveName( 0, "data1.bin" );
-		c->setArchiveName( 1, "data2.bin" ); //‘¶Ý‚µ‚Ä‚¢‚È‚­‚Ä‚à‚©‚Ü‚í‚È‚¢B
+		c->setArchiveName( 1, "data2.bin" ); //å­˜åœ¨ã—ã¦ã„ãªãã¦ã‚‚ã‹ã¾ã‚ãªã„ã€‚
 		c->setLoadMode( LOAD_ARCHIVE_FIRST );
 	}
 	void Framework::update(){
@@ -41,7 +41,7 @@ namespace GameLib{
 				gIn[ i ] = FileIO::InFile::create( oss.str().c_str() );
 				cout << "READ:" << oss.str().c_str() << endl;
 			}
-			//o—Íƒnƒ“ƒhƒ‹‚ª¶‚«‚Ä‚¢‚ê‚ÎI—¹‚ðƒ`ƒFƒbƒNBI‚í‚Á‚Ä‚¢‚ê‚Îíœ
+			//å‡ºåŠ›ãƒãƒ³ãƒ‰ãƒ«ãŒç”Ÿãã¦ã„ã‚Œã°çµ‚äº†ã‚’ãƒã‚§ãƒƒã‚¯ã€‚çµ‚ã‚ã£ã¦ã„ã‚Œã°å‰Šé™¤
 			if ( gOut[ i ] ){
 				if ( gOut[ i ].isFinished() ){
 					gOut[ i ].release();
@@ -59,7 +59,7 @@ namespace GameLib{
 				cout << "WRITE: " << oss.str().c_str() << endl;
 			}
 		}
-		//‚½‚Ü‚Éƒnƒ“ƒhƒ‹‚È‚µ‘‚«ž‚Ý
+		//ãŸã¾ã«ãƒãƒ³ãƒ‰ãƒ«ãªã—æ›¸ãè¾¼ã¿
 		if ( gRandom.getInt( 0, 1000 ) == 0 ){
 			int size = gRandom.getInt( 0, N );
 			char* buffer = NEW char[ size ];
@@ -70,12 +70,12 @@ namespace GameLib{
 			cout << "write request without handle." << endl;
 			delete[] buffer;
 		}
-		//I—¹ˆ—(ƒƒ‚ƒŠƒŠ[ƒNA”j‰ó“™‚ð’²‚×‚æ‚¤)
+		//çµ‚äº†å‡¦ç†(ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯ã€ç ´å£Šç­‰ã‚’èª¿ã¹ã‚ˆã†)
 		if ( isEndRequested() ){
 			for ( int i = 0; i < N; ++i ){
 				gIn[ i ].release();
 				while ( gOut[ i ] && !gOut[ i ].isFinished() ){
-					; //‘‚«ž‚Ý‘Ò‚¿
+					; //æ›¸ãè¾¼ã¿å¾…ã¡
 				}
 				gOut[ i ].release();
 			}

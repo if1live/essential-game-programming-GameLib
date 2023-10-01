@@ -5,17 +5,17 @@ class List{
 public:
 	explicit List( int capacity );
 	~List();
-	//––”ö’Ç‰ÁB‚Ç‚±‚É‘«‚µ‚½‚©‚ğ•Ô‚·B
+	//æœ«å°¾è¿½åŠ ã€‚ã©ã“ã«è¶³ã—ãŸã‹ã‚’è¿”ã™ã€‚
 	int addTail( int value );
-	//w’èêŠ‚ğíœ
+	//æŒ‡å®šå ´æ‰€ã‚’å‰Šé™¤
 	void remove( int position );
-	///’læ“¾
+	///å€¤å–å¾—
 	int value( int position ) const;
-	//––’[‚©‚Ç‚¤‚©‚ÍisEnd()‚ÅŠm”F‚¹‚æ
+	//æœ«ç«¯ã‹ã©ã†ã‹ã¯isEnd()ã§ç¢ºèªã›ã‚ˆ
 	int next( int position ) const;
-	//æ“ªæ“¾
+	//å…ˆé ­å–å¾—
 	int first() const;
-	//position‚ª––’[‚©”»’èB
+	//positionãŒæœ«ç«¯ã‹åˆ¤å®šã€‚
 	bool isEnd( int position ) const;
 private:
 	struct Node{
@@ -23,30 +23,30 @@ private:
 		int mPrev;
 		int mValue;
 	};
-	List( const List& ); //ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‹Ö~
-	void operator=( const List& ); //‘ã“ü‹Ö~
+	List( const List& ); //ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ç¦æ­¢
+	void operator=( const List& ); //ä»£å…¥ç¦æ­¢
 
 	Node* mNodes;
-	int* mEmptyStack; //‚±‚ê‚Å‚Ç‚±‚ª‹ó‚¢‚Ä‚¢‚é‚©‚ªO(1)‚Å‚í‚©‚é
+	int* mEmptyStack; //ã“ã‚Œã§ã©ã“ãŒç©ºã„ã¦ã„ã‚‹ã‹ãŒO(1)ã§ã‚ã‹ã‚‹
 	int mStackTop;
-	const int mCapacity; //ƒRƒ“ƒXƒgƒ‰ƒNƒg‚µ‚½‚ç‚¢‚¶‚ç‚È‚¢‚Ì‚Åconst
+	const int mCapacity; //ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ãƒˆã—ãŸã‚‰ã„ã˜ã‚‰ãªã„ã®ã§const
 };
 
-//cpp‚ğì‚é‚Ì‚ª–Ê“|‚È‚Ì‚Å‚±‚±‚É‘‚¢‚Ä‚µ‚Ü‚¤B‘¬“x‚àã‚ª‚é‚µ‚¢‚¢‚¾‚ë‚¤B
+//cppã‚’ä½œã‚‹ã®ãŒé¢å€’ãªã®ã§ã“ã“ã«æ›¸ã„ã¦ã—ã¾ã†ã€‚é€Ÿåº¦ã‚‚ä¸ŠãŒã‚‹ã—ã„ã„ã ã‚ã†ã€‚
 
-//æ“ª‚Æ––”ö‚ª“Á•Êˆµ‚¢‚³‚ê‚È‚¢‚æ‚¤‚É‚¿‚å‚Á‚ÆH•v‚ğ‚µ‚Ä‚¢‚éB
-//mNodes[ mCapacity ]‚Íƒ_ƒ~[ƒm[ƒh‚¾Bæ“ª‚Æ––”ö‚É‚±‚Ìƒ_ƒ~[‚ª‚ ‚é‚¨‚©‚°‚Å‚¢‚ë‚¢‚ëŠy‚È‚Ì‚Å‚ ‚éB
+//å…ˆé ­ã¨æœ«å°¾ãŒç‰¹åˆ¥æ‰±ã„ã•ã‚Œãªã„ã‚ˆã†ã«ã¡ã‚‡ã£ã¨å·¥å¤«ã‚’ã—ã¦ã„ã‚‹ã€‚
+//mNodes[ mCapacity ]ã¯ãƒ€ãƒŸãƒ¼ãƒãƒ¼ãƒ‰ã ã€‚å…ˆé ­ã¨æœ«å°¾ã«ã“ã®ãƒ€ãƒŸãƒ¼ãŒã‚ã‚‹ãŠã‹ã’ã§ã„ã‚ã„ã‚æ¥½ãªã®ã§ã‚ã‚‹ã€‚
 inline List::List( int capacity ) : 
 mNodes( 0 ),
 mEmptyStack( 0 ),
 mCapacity( capacity ){
-	mNodes = new Node[ mCapacity + 1 ]; //ÅŒã‚Éƒ_ƒ~[ƒm[ƒhB‚¾‚©‚ç+1
+	mNodes = new Node[ mCapacity + 1 ]; //æœ€å¾Œã«ãƒ€ãƒŸãƒ¼ãƒãƒ¼ãƒ‰ã€‚ã ã‹ã‚‰+1
 	mEmptyStack = new int[ mCapacity ];
 	for ( int i = 0; i < mCapacity; ++i ){
-		mEmptyStack[ i ] = i; //‹ó‚¢‚Ä‚é”Ô†‚ğŠi”[BÅ‰‚¾‚©‚ç‘S•”‚ÈB
+		mEmptyStack[ i ] = i; //ç©ºã„ã¦ã‚‹ç•ªå·ã‚’æ ¼ç´ã€‚æœ€åˆã ã‹ã‚‰å…¨éƒ¨ãªã€‚
 	}
-	mStackTop = mCapacity - 1; //Å‰‚Éæ‚èo‚·‚Ì‚Í––”ö
-	//ƒ_ƒ~[ƒm[ƒhİ’èB
+	mStackTop = mCapacity - 1; //æœ€åˆã«å–ã‚Šå‡ºã™ã®ã¯æœ«å°¾
+	//ãƒ€ãƒŸãƒ¼ãƒãƒ¼ãƒ‰è¨­å®šã€‚
 	mNodes[ mCapacity ].mNext = mNodes[ mCapacity ].mPrev = mCapacity;
 }
 
@@ -56,30 +56,30 @@ inline List::~List(){
 }
 
 inline int List::addTail( int v ){
-	//‹ó‚«êŠ‚ğæ“¾
+	//ç©ºãå ´æ‰€ã‚’å–å¾—
 	int newPos = mEmptyStack[ mStackTop ];
 	--mStackTop;
 
-	mNodes[ newPos ].mValue = v; //’l‚ğ“ü‚ê‚ÄA
-	mNodes[ newPos ].mNext = mCapacity; //Ÿ‚Íƒ_ƒ~[ƒm[ƒh
-	int oldTail = mNodes[ mCapacity ].mPrev; //‘O‚Ì––”ö‚Íƒ_ƒ~[‚Ì‘O‚É‚¢‚½
-	mNodes[ newPos ].mPrev = oldTail; //V‚µ‚¢––”ö‚Ì‘O‚ÉŒÃ‚¢––”ö‚ğ“ü‚ê‚é
+	mNodes[ newPos ].mValue = v; //å€¤ã‚’å…¥ã‚Œã¦ã€
+	mNodes[ newPos ].mNext = mCapacity; //æ¬¡ã¯ãƒ€ãƒŸãƒ¼ãƒãƒ¼ãƒ‰
+	int oldTail = mNodes[ mCapacity ].mPrev; //å‰ã®æœ«å°¾ã¯ãƒ€ãƒŸãƒ¼ã®å‰ã«ã„ãŸ
+	mNodes[ newPos ].mPrev = oldTail; //æ–°ã—ã„æœ«å°¾ã®å‰ã«å¤ã„æœ«å°¾ã‚’å…¥ã‚Œã‚‹
 
-	mNodes[ oldTail ].mNext = newPos; //ŒÃ‚¢––”ö‚ÌŸ‚ª©•ª
-	mNodes[ mCapacity ].mPrev = newPos; //ƒ_ƒ~[‚Ì‘O‚ª©•ª
-	return newPos; //‘«‚µ‚½êŠ‚ğ•Ô‚·
+	mNodes[ oldTail ].mNext = newPos; //å¤ã„æœ«å°¾ã®æ¬¡ãŒè‡ªåˆ†
+	mNodes[ mCapacity ].mPrev = newPos; //ãƒ€ãƒŸãƒ¼ã®å‰ãŒè‡ªåˆ†
+	return newPos; //è¶³ã—ãŸå ´æ‰€ã‚’è¿”ã™
 }
 
 inline void List::remove( int position ){
-	Node* cur = &mNodes[ position ]; //©•ª
-	Node* nxt = &mNodes[ cur->mNext ]; //Ÿ
-	Node* prev = &mNodes[ cur->mPrev ]; //‘O
-	//‘O‚Ì“z‚ÌŸ‚ğAŸ‚É‚·‚éB
+	Node* cur = &mNodes[ position ]; //è‡ªåˆ†
+	Node* nxt = &mNodes[ cur->mNext ]; //æ¬¡
+	Node* prev = &mNodes[ cur->mPrev ]; //å‰
+	//å‰ã®å¥´ã®æ¬¡ã‚’ã€æ¬¡ã«ã™ã‚‹ã€‚
 	prev->mNext = cur->mNext;
-	//Ÿ‚Ì“z‚Ì‘O‚ğA‘O‚É‚·‚éB
+	//æ¬¡ã®å¥´ã®å‰ã‚’ã€å‰ã«ã™ã‚‹ã€‚
 	nxt->mPrev = cur->mPrev;
 
-	//‹ó‚«”Ô†ƒŠƒXƒg‚É’Ç‰Á
+	//ç©ºãç•ªå·ãƒªã‚¹ãƒˆã«è¿½åŠ 
 	++mStackTop;
 	mEmptyStack[ mStackTop ] = position;
 }
@@ -93,12 +93,12 @@ inline int List::next( int position ) const {
 }
 
 inline int List::first() const {
-	//ƒ_ƒ~[‚ÌŸ‚ªæ“ª‚È‚Ì‚¾‚æ
+	//ãƒ€ãƒŸãƒ¼ã®æ¬¡ãŒå…ˆé ­ãªã®ã ã‚ˆ
 	return mNodes[ mCapacity ].mNext;
 }
 
 inline bool List::isEnd( int position ) const {
-	//ÅŒã‚Ü‚Ås‚¯‚ÎmCapacityA‚Â‚Ü‚èƒ_ƒ~[‚É‚È‚éB
+	//æœ€å¾Œã¾ã§è¡Œã‘ã°mCapacityã€ã¤ã¾ã‚Šãƒ€ãƒŸãƒ¼ã«ãªã‚‹ã€‚
 	return ( position == mCapacity );
 }
 

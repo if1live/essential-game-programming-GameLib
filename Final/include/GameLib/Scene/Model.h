@@ -13,22 +13,22 @@ namespace Scene{
 using namespace Math;
 class Batch;
 
-///•`‰æƒCƒ“ƒXƒ^ƒ“ƒX
+///æç”»ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 /*!
-s—ñ‚ğ“n‚µ‚Ädraw‚·‚ê‚ÎŠG‚ªo‚é‚ªA“®‚©‚µ‚½‚èF‚ğ•Ï‚¦‚½‚è‚à‚Å‚«‚éB
+è¡Œåˆ—ã‚’æ¸¡ã—ã¦drawã™ã‚Œã°çµµãŒå‡ºã‚‹ãŒã€å‹•ã‹ã—ãŸã‚Šè‰²ã‚’å¤‰ãˆãŸã‚Šã‚‚ã§ãã‚‹ã€‚
 */
 class Model{
 public:
-	///•`‰æ
+	///æç”»
 	void draw() const;
 
 	const Vector3* position() const;
-	const Vector3* angle() const; //’PˆÊ‚Í“x
+	const Vector3* angle() const; //å˜ä½ã¯åº¦
 	const Vector3* scale() const;
 	const Vector3* color() const;
 	float transparency() const;
 	void setPosition( const Vector3& );
-	void setAngle( const Vector3& ); //’PˆÊ‚Í“x
+	void setAngle( const Vector3& ); //å˜ä½ã¯åº¦
 	void setScale( const Vector3& );
 	void setColor( const Vector3& );
 	void setTransparency( float );
@@ -48,7 +48,7 @@ private:
 	Impl* mImpl;
 };
 
-//const”Å
+//constç‰ˆ
 class ConstModel{
 public:
 	void draw() const;
@@ -58,7 +58,7 @@ public:
 	const Vector3* color() const;
 	float transparency() const;
 
-	//ˆÈ‰º’m‚ç‚È‚­‚Ä‚¢‚¢
+	//ä»¥ä¸‹çŸ¥ã‚‰ãªãã¦ã„ã„
 	ConstModel();
 	ConstModel( const Model& );
 	~ConstModel();

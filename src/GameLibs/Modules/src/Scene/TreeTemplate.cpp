@@ -21,8 +21,8 @@ mNodes( 0 ),
 mNodeNumber( 0 ),
 mName( 0 ),
 mContainer( &container ){
-	ASSERT( e.childNumber() == 1 && "Tree must have 1 root node. this data is invalid. " ); //ƒ‹[ƒgƒm[ƒh‚ÍˆêŒÂ‚µ‚©‚È‚¢‚æ‚ËH‚Â‚¤‚©AˆêŒÂ‚Í‚ ‚é‚æ‚ËH
-	//–¼‘Oæ“¾
+	ASSERT( e.childNumber() == 1 && "Tree must have 1 root node. this data is invalid. " ); //ãƒ«ãƒ¼ãƒˆãƒãƒ¼ãƒ‰ã¯ä¸€å€‹ã—ã‹ãªã„ã‚ˆã­ï¼Ÿã¤ã†ã‹ã€ä¸€å€‹ã¯ã‚ã‚‹ã‚ˆã­ï¼Ÿ
+	//åå‰å–å¾—
 	int an = e.attributeNumber();
 	for ( int i = 0; i < an; ++i ){
 		ConstAttribute a = e.attribute( i );
@@ -31,17 +31,17 @@ mContainer( &container ){
 			mName = container.allocateString( value );
 		}
 	}
-	//‚Ü‚¸ƒm[ƒh‚ğ”‚¦‚æ‚¤
-	ConstElement root = e.child( 0 ); //Å‰‚Ìq‚ªƒ‹[ƒg
+	//ã¾ãšãƒãƒ¼ãƒ‰ã‚’æ•°ãˆã‚ˆã†
+	ConstElement root = e.child( 0 ); //æœ€åˆã®å­ãŒãƒ«ãƒ¼ãƒˆ
 	mNodeNumber = countNode( root, 0 );
 	mNodes = NEW NodeTemplate[ mNodeNumber ];
-	//ŠK‘w‚ğ\’z
+	//éšå±¤ã‚’æ§‹ç¯‰
 	build( root, container, 0 );
 }
 
-//Ä‹A
+//å†å¸°
 int TreeTemplate::countNode( ConstElement& e, int n ){
-	++n; //©•ª‚Ì•ªƒvƒ‰ƒX
+	++n; //è‡ªåˆ†ã®åˆ†ãƒ—ãƒ©ã‚¹
 	int cn = e.childNumber();
 	for ( int i = 0; i < cn; ++i ){
 		ConstElement c = e.child( i );
@@ -51,8 +51,8 @@ int TreeTemplate::countNode( ConstElement& e, int n ){
 }
 
 int TreeTemplate::build( ConstElement& e, Container::Impl& container, int nodePos ){
-	//©•ª‚Ìî•ñ‚ğ“ü‚ê‚Ü‚·
-	bool hasTransform = false; //s—ñ‚ğ‚Á‚Ä‚¢‚ê‚Îs—ñ‚ğ—Dæ
+	//è‡ªåˆ†ã®æƒ…å ±ã‚’å…¥ã‚Œã¾ã™
+	bool hasTransform = false; //è¡Œåˆ—ã‚’æŒã£ã¦ã„ã‚Œã°è¡Œåˆ—ã‚’å„ªå…ˆ
 	Vector3 translation( 0.f, 0.f, 0.f );
 	Vector3 rotation( 0.f, 0.f, 0.f );
 	Vector3 scale( 1.f, 1.f, 1.f );
@@ -87,15 +87,15 @@ int TreeTemplate::build( ConstElement& e, Container::Impl& container, int nodePo
 		node.mTransform.scale( scale );
 	}
 	++nodePos;
-	ASSERT( nodePos <= mNodeNumber );  //‚ ‚è‚¦‚Ë‚¦
-	//q‹Ÿ‚Ìî•ñ‚ğ“ü‚ê‚Ü‚·
+	ASSERT( nodePos <= mNodeNumber );  //ã‚ã‚Šãˆã­ãˆ
+	//å­ä¾›ã®æƒ…å ±ã‚’å…¥ã‚Œã¾ã™
 	int cn = e.childNumber();
 	int elder = -1;
 	for ( int i = 0; i < cn; ++i ){
 		ConstElement c = e.child( i );
-		if ( i == 0 ){ //0Å‰‚Ìq‚È‚ç©•ª‚ÉƒZƒbƒg
+		if ( i == 0 ){ //0æœ€åˆã®å­ãªã‚‰è‡ªåˆ†ã«ã‚»ãƒƒãƒˆ
 			node.mChild = nodePos;
-		}else{ //‚»‚êˆÈŠO‚È‚ç‘O‚Ìq‚É
+		}else{ //ãã‚Œä»¥å¤–ãªã‚‰å‰ã®å­ã«
 			mNodes[ elder ].mBrother = nodePos;
 		}
 		elder = nodePos;

@@ -36,12 +36,12 @@ public:
 	Curve( PseudoXml::ConstElement& e ) :
 	mKeys( 0 ),
 	mKeyNumber( 0 ),
-	mType( TYPE_UNKNOWN ), //“K“–
+	mType( TYPE_UNKNOWN ), //é©å½“
 	mInterporation( INTERPORATION_NONE ){
-		ASSERT( RefString( "Curve" ) == e.name() ); //Curve‚¾‚æ‚ËH
-		ASSERT( e.childNumber() > 0 ); //ƒf[ƒ^ˆêŒÂ‚Í‚ ‚é‚æ‚ËH
-		//–¼‘Oæ“¾
-		bool isRot = false; //ƒtƒ@ƒCƒ‹‚Í“x‚È‚Ì‚ÅAƒ‰ƒWƒAƒ“‚É’¼‚·B
+		ASSERT( RefString( "Curve" ) == e.name() ); //Curveã ã‚ˆã­ï¼Ÿ
+		ASSERT( e.childNumber() > 0 ); //ãƒ‡ãƒ¼ã‚¿ä¸€å€‹ã¯ã‚ã‚‹ã‚ˆã­ï¼Ÿ
+		//åå‰å–å¾—
+		bool isRot = false; //ãƒ•ã‚¡ã‚¤ãƒ«ã¯åº¦ãªã®ã§ã€ãƒ©ã‚¸ã‚¢ãƒ³ã«ç›´ã™ã€‚
 		int an = e.attributeNumber();
 		for ( int i = 0; i < an; ++i ){
 			ConstAttribute a = e.attribute( i );
@@ -103,22 +103,22 @@ public:
 				}else if ( name == "slope" ){
 					mKeys[ i ].mRightSlope = mKeys[ i ].mLeftSlope = v;
 				}else{
-					ASSERT( false ); //‚ ‚è‚¦‚ñ
+					ASSERT( false ); //ã‚ã‚Šãˆã‚“
 				}
 			}
 		}
 	}
 	~Curve(){
-		mName = 0; //ƒRƒ“ƒeƒi‚ª‚Á‚Ä‚¢‚é‚Ì‚ÅQÆ‚ğŠO‚·‚¾‚¯
+		mName = 0; //ã‚³ãƒ³ãƒ†ãƒŠãŒæŒã£ã¦ã„ã‚‹ã®ã§å‚ç…§ã‚’å¤–ã™ã ã‘
 		for ( int i = 0; i < mKeyNumber; ++i ){
 			mKeys[ i ].~Key();
 		}
 		OPERATOR_DELETE( mKeys );
 	}
 	float operator()( float t ) const {
-		//ƒ‹[ƒvˆ—‚ğ‚·‚éBÅŒã‚Ìƒf[ƒ^‚Ì‚ªüŠú‚Æl‚¦‚éB‚±‚ê‚ÅzŠÂ‚·‚é‚ËB
-		//a‚©‚ç‰½‰ñb‚ªˆø‚¯‚é‚©‚ğŒvZ‚·‚é‚É‚ÍAa -= toInt(a/b) * b‚Å‹‚Ü‚éBtoInt‚Í®”‚ÉØ‚èÌ‚Ä‚éŠÖ”‚Æ‚µ‚æ‚¤BƒLƒƒƒXƒg‚ğ‚¤‚Ü‚­‚Â‚©‚¦‚Îo—ˆ‚éB
-		float quot = t / mKeys[ mKeyNumber - 1 ].mTime; //Š„‚Á‚½‚à‚Ì‚ğ®”‚É’¼‚·‚Æ¤‚Ì®”‚ªo‚é
+		//ãƒ«ãƒ¼ãƒ—å‡¦ç†ã‚’ã™ã‚‹ã€‚æœ€å¾Œã®ãƒ‡ãƒ¼ã‚¿ã®æ™‚åˆ»ãŒå‘¨æœŸã¨è€ƒãˆã‚‹ã€‚ã“ã‚Œã§å¾ªç’°ã™ã‚‹ã­ã€‚
+		//aã‹ã‚‰ä½•å›bãŒå¼•ã‘ã‚‹ã‹ã‚’è¨ˆç®—ã™ã‚‹ã«ã¯ã€a -= toInt(a/b) * bã§æ±‚ã¾ã‚‹ã€‚toIntã¯æ•´æ•°ã«åˆ‡ã‚Šæ¨ã¦ã‚‹é–¢æ•°ã¨ã—ã‚ˆã†ã€‚ã‚­ãƒ£ã‚¹ãƒˆã‚’ã†ã¾ãã¤ã‹ãˆã°å‡ºæ¥ã‚‹ã€‚
+		float quot = t / mKeys[ mKeyNumber - 1 ].mTime; //å‰²ã£ãŸã‚‚ã®ã‚’æ•´æ•°ã«ç›´ã™ã¨å•†ã®æ•´æ•°ãŒå‡ºã‚‹
 		int quotInt = static_cast< int >( quot ); 
 		t -= static_cast< float >( quotInt ) * mKeys[ mKeyNumber - 1 ].mTime;
 
@@ -130,7 +130,7 @@ public:
 				}
 				last = i;
 			}
-			//t‚ğ‰z‚¦‚È‚¢Å¬‚Ìtime‚ğ‚Âƒf[ƒ^‚ğg‚¤(•âŠÔ‚È‚µ)
+			//tã‚’è¶Šãˆãªã„æœ€å°ã®timeã‚’æŒã¤ãƒ‡ãƒ¼ã‚¿ã‚’ä½¿ã†(è£œé–“ãªã—)
 			return mKeys[ last ].mValue;
 		}else if ( mInterporation == INTERPORATION_LINEAR ){
 			int begin = 0;
@@ -141,16 +141,16 @@ public:
 				}
 				begin = end;
 			}
-			if ( end >= mKeyNumber ){ //‚ ‚Ó‚ê–h~BÅŒã‚Ì’l•Ô‚µ‚Ä‚â‚ê
+			if ( end >= mKeyNumber ){ //ã‚ãµã‚Œé˜²æ­¢ã€‚æœ€å¾Œã®å€¤è¿”ã—ã¦ã‚„ã‚Œ
 				return mKeys[ mKeyNumber - 1 ].mValue;
 			}
 			float t0 = mKeys[ begin ].mTime;
 			float t1 = mKeys[ end ].mTime;
 			float p0 = mKeys[ begin ].mValue;
 			float p1 = mKeys[ end ].mValue;
-			//•Ï”•ÏŠ·
+			//å¤‰æ•°å¤‰æ›
 			t = ( t - t0 ) / ( t1 - t0 );
-			//üŒ`•âŠÔ
+			//ç·šå½¢è£œé–“
 			return p0 + ( p1 - p0 ) * t;
 		}else if ( mInterporation == INTERPORATION_CUBIC ){
 			int begin = 0;
@@ -161,21 +161,21 @@ public:
 				}
 				begin = end;
 			}
-			if ( end >= mKeyNumber ){ //‚ ‚Ó‚ê–h~BÅŒã‚Ì’l•Ô‚µ‚Ä‚â‚ê
+			if ( end >= mKeyNumber ){ //ã‚ãµã‚Œé˜²æ­¢ã€‚æœ€å¾Œã®å€¤è¿”ã—ã¦ã‚„ã‚Œ
 				return mKeys[ mKeyNumber - 1 ].mValue;
 			}
 			float t0 = mKeys[ begin ].mTime;
 			float t1 = mKeys[ end ].mTime;
 			float p0 = mKeys[ begin ].mValue;
 			float p1 = mKeys[ end ].mValue;
-			float v0 = mKeys[ begin ].mRightSlope; //n“_‚Ì‰EŒX‚«
-			float v1 = mKeys[ end ].mLeftSlope; //I“_‚Ì¶ŒX‚«
-			//•Ï”•ÏŠ·
+			float v0 = mKeys[ begin ].mRightSlope; //å§‹ç‚¹ã®å³å‚¾ã
+			float v1 = mKeys[ end ].mLeftSlope; //çµ‚ç‚¹ã®å·¦å‚¾ã
+			//å¤‰æ•°å¤‰æ›
 			t = ( t - t0 ) / ( t1 - t0 );
-			//at^3 + bt^2 + c + d‚ÅŒvZBc=v0Ad=p0‚¾B
+			//at^3 + bt^2 + c + dã§è¨ˆç®—ã€‚c=v0ã€d=p0ã ã€‚
 			float a = 2.f * ( p0 - p1 ) + ( v0 + v1 );
 			float b = 3.f * ( p1 - p0 ) - ( 2.f * v0 ) - v1;
-			//üŒ`•âŠÔ
+			//ç·šå½¢è£œé–“
 			float r = a; //a
 			r *= t; //at
 			r += b; //at+b
@@ -185,7 +185,7 @@ public:
 			r += p0; //at^3+bt^2+ct+d
 			return r;
 		}else{
-			ASSERT( false ); //‚ ‚è‚¦‚ñ
+			ASSERT( false ); //ã‚ã‚Šãˆã‚“
 			return 0.0;
 		}
 	}
@@ -194,9 +194,9 @@ public:
 	}
 private:
 	enum Interporation{
-		INTERPORATION_NONE, //•âŠÔ‚È‚µ
-		INTERPORATION_LINEAR, //üŒ`
-		INTERPORATION_CUBIC, //3Ÿ
+		INTERPORATION_NONE, //è£œé–“ãªã—
+		INTERPORATION_LINEAR, //ç·šå½¢
+		INTERPORATION_CUBIC, //3æ¬¡
 	};
 	Key* mKeys;
 	int mKeyNumber;

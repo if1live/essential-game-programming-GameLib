@@ -16,46 +16,46 @@ namespace GameLib{
 	void Framework::update(){
 		setFrameRate( 60 );
 
-		//���̒��_�z��
+		//元の頂点配列
 		Vector3 p[ 4 ];
 		p[ 0 ].set( -1000.0, 0.0, -1000.0 );
 		p[ 1 ].set( -1000.0, 0.0, 1000.0 );
 		p[ 2 ].set( 1000.0, 0.0, -1000.0 );
 		p[ 3 ].set( 1000.0, 0.0, 1000.0 );
-		//�s�����낤
-		//�Ƃ肠����3���œK���ɉ񂵂Ă��炿����Ɖ��Ɉړ�������B���₷���悤�ɁB
-		//�s��쐬�͋t���Ȃ̂ŁA�ŏ��͈ړ�����B
+		//行列を作ろう
+		//とりあえず3軸で適当に回してからちょっと奥に移動させる。見やすいように。
+		//行列作成は逆順なので、最初は移動から。
 		Matrix34 m;
 		m.setTranslation( Vector3( 0.0, -100.0, -3000.0 ) );
 		m.rotateZ( gCount );
 		m.rotateY( gCount );
 		m.rotateX( gCount );
-		//�s��Ƀx�N�^�������ĉ��
+		//行列にベクタをかけて回る
 		for ( int i = 0; i < 4; ++i ){
 			m.multiply( &p[ i ], p[ i ] );
 		}
 
-		//�j�A�N���b�v�ƃt�@�[�N���b�v
+		//ニアクリップとファークリップ
 		const double nearClip = 1.0;
 		const double farClip = 10000.0;
-		//�j�A�ƃt�@�[����Z�͈͕ϊ��̎������
+		//ニアとファーからZ範囲変換の式を作る
 		const double zConvA = 1.0 / ( nearClip - farClip ); //1/(n-f)
 		const double zConvB = nearClip * zConvA; //n/(n-f)
 
-		//�n�[�h�E�F�A�ɓn������������B4������
+		//ハードウェアに渡す準備をする。4次元化
 		double p4[ 4 ][ 4 ];
 		for ( int i = 0; i < 4; ++i ){
 			p4[ i ][ 0 ] = p[ i ].x;
-			//y��640/480�������ďc����𒲐�
+			//yに640/480をかけて縦横比を調整
 			p4[ i ][ 1 ] = p[ i ].y * 640.0 / 480.0;
-			//w�ɔ͈͕ϊ��O��z���u�}�C�i�X�ɂ��āv�i�[�BZ������O�������Ƃ��̃}�C�i�X���K�v�B
+			//wに範囲変換前のzを「マイナスにして」格納。Z軸が手前向きだとこのマイナスが必要。
 			p4[ i ][ 3 ] = -p[ i ].z;
-			//z�͈͕ϊ�
-			p4[ i ][ 2 ] = zConvA * p[ i ].z + zConvB; //�͈͕ϊ���Z���̌�����
-			//z��w�������Ă����B
+			//z範囲変換
+			p4[ i ][ 2 ] = zConvA * p[ i ].z + zConvB; //範囲変換もZ軸の向きを
+			//zにwをかけておく。
 			p4[ i ][ 2 ] *= p4[ i ][ 3 ];
 		}
-		//�l�p�`��`���B
+		//四角形を描く。
 		drawTriangle3DH( p4[ 0 ], p4[ 1 ], p4[ 2 ] );
 		drawTriangle3DH( p4[ 3 ], p4[ 1 ], p4[ 2 ] );
 

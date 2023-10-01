@@ -8,35 +8,35 @@ class Texture;
 class Framework{
 public:
 	Framework();
-	///ƒ†[ƒU’è‹`ŠÖ”B‚±‚ê‚ğ‘‚­B
+	///ãƒ¦ãƒ¼ã‚¶å®šç¾©é–¢æ•°ã€‚ã“ã‚Œã‚’æ›¸ãã€‚
 	void update();
-	///ƒCƒ“ƒXƒ^ƒ“ƒXæ“¾
+	///ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 	static Framework instance();
-	///‰æ–Ê•æ“¾
+	///ç”»é¢å¹…å–å¾—
 	int width() const;
-	///‰æ–Ê‚‚³æ“¾
+	///ç”»é¢é«˜ã•å–å¾—
 	int height() const;
-	///Framework‚ÉI—¹–½—ß‚ğo‚·
+	///Frameworkã«çµ‚äº†å‘½ä»¤ã‚’å‡ºã™
 	void requestEnd();
-	///Framework‚ÉI—¹–½—ß‚ªo‚Ä‚¢‚é‚©’²‚×‚é
+	///Frameworkã«çµ‚äº†å‘½ä»¤ãŒå‡ºã¦ã„ã‚‹ã‹èª¿ã¹ã‚‹
 	bool isEndRequested() const;
-	///‚ğæ“¾‚·‚é(ƒ~ƒŠ•b’PˆÊ)
+	///æ™‚åˆ»ã‚’å–å¾—ã™ã‚‹(ãƒŸãƒªç§’å˜ä½)
 	unsigned time() const;
-	///ƒtƒŒ[ƒ€ƒŒ[ƒgæ“¾
+	///ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆå–å¾—
 	int frameRate() const;
-	///ƒtƒŒ[ƒ€ƒŒ[ƒgİ’è(“à•”‚Å‘Ò‚¿ƒ‹[ƒv‚ğ‰ñ‚µ‚Ä‚­‚ê‚é)
+	///ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆè¨­å®š(å†…éƒ¨ã§å¾…ã¡ãƒ«ãƒ¼ãƒ—ã‚’å›ã—ã¦ãã‚Œã‚‹)
 	void setFrameRate( int );
-	///’¼‘OƒtƒŒ[ƒ€ŠÔæ“¾(ƒ~ƒŠ•b’PˆÊ)
+	///ç›´å‰ãƒ•ãƒ¬ãƒ¼ãƒ æ™‚é–“å–å¾—(ãƒŸãƒªç§’å˜ä½)
 	int previousFrameInterval() const;
-	///ƒ‰ƒ“ƒ_ƒ€”ƒQƒbƒg
+	///ãƒ©ãƒ³ãƒ€ãƒ æ•°ã‚²ãƒƒãƒˆ
 	int getRandom( int max = 0 );
-	//•¶š‚ğ‘‚­
+	//æ–‡å­—ã‚’æ›¸ã
 	void drawDebugString( 
-		int column, //—ñ(x)
-		int row, //s(y)
+		int column, //åˆ—(x)
+		int row, //è¡Œ(y)
 		const char* string, 
 		unsigned color = 0xffffffff );
-	///OŠpŒ`‚ğ•`‚­B“¯ŸÀ•W‚Å—^‚¦‚é‚Ì‚ÅAp‚Í4—v‘fBt‚Í2—v‘fB
+	///ä¸‰è§’å½¢ã‚’æãã€‚åŒæ¬¡åº§æ¨™ã§ä¸ãˆã‚‹ã®ã§ã€pã¯4è¦ç´ ã€‚tã¯2è¦ç´ ã€‚
 	void drawTriangle3DH(
 		const double* p0,
 		const double* p1,
@@ -47,17 +47,17 @@ public:
 		unsigned c0 = 0xffffffff,
 		unsigned c1 = 0xffffffff,
 		unsigned c2 = 0xffffffff );
-	//ƒeƒNƒXƒ`ƒƒ‚ğì‚é
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ä½œã‚‹
 	void createTexture(
 		Texture** textureOut,
 		const char* filename );
-	//ƒeƒNƒXƒ`ƒƒ‚ğ”jŠü‚·‚é
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ç ´æ£„ã™ã‚‹
 	void destroyTexture( Texture** );
-	//ƒeƒNƒXƒ`ƒƒ‚ğƒZƒbƒg‚·‚é
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	void setTexture( const Texture* );
-	//ƒeƒNƒXƒ`ƒƒ‚ÌƒTƒCƒY‚ğ’²‚×‚é
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ã‚µã‚¤ã‚ºã‚’èª¿ã¹ã‚‹
 	void getTextureSizes( const Texture*, int* width, int* height, int* originalWidth, int* originalHeight );
-	//ƒuƒŒƒ“ƒhƒ‚[ƒh
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰
 	enum BlendMode{ 
 		BLEND_LINEAR,
 		BLEND_ADDITIVE,
@@ -67,7 +67,7 @@ public:
 	void enableDepthTest( bool );
 	void enableDepthWrite( bool );
 
-	//ˆÈ‰ºƒ‰ƒCƒuƒ‰ƒŠg—pÒ‚Í’m‚ç‚È‚­‚Ä‚¢‚¢
+	//ä»¥ä¸‹ãƒ©ã‚¤ãƒ–ãƒ©ãƒªä½¿ç”¨è€…ã¯çŸ¥ã‚‰ãªãã¦ã„ã„
 	void start( void* windowHandle );
 	void preUpdate();
 	void postUpdate();

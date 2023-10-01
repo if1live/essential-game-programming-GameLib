@@ -12,7 +12,7 @@
 #include "GameLib/Threading/Functions.h"
 #include "GameLib/Threading/Manager.h"
 
-//ƒTƒ“ƒvƒ‹ƒ‰ƒCƒuƒ‰ƒŠ—p
+//ã‚µãƒ³ãƒ—ãƒ«ãƒ©ã‚¤ãƒ–ãƒ©ãƒªç”¨
 //#include "GameLib/Input/Keyboard.h"
 #include "GameLib/Scene/PrimitiveRenderer.h"
 #include "GameLib/Math/Vector3.h"
@@ -26,7 +26,7 @@ using namespace std;
 
 namespace GameLib{
 
-namespace { //–³–¼
+namespace { //ç„¡å
 
 class Impl{
 public:
@@ -47,18 +47,18 @@ public:
 	mIdealFrameInterval( 0 ),
 	mEndRequested( false ),
 	mStarted( false ){
-		//—”‰Šú‰»
+		//ä¹±æ•°åˆæœŸåŒ–
 		mRandom = Random::create();
-		//cout‰Šú‰»
+		//coutåˆæœŸåŒ–
 		cout.begin();
-		//ƒtƒŒ[ƒ€—š—ğƒŠƒZƒbƒg
+		//ãƒ•ãƒ¬ãƒ¼ãƒ å±¥æ­´ãƒªã‚»ãƒƒãƒˆ
 		unsigned t = time();
 		for ( int i = 0; i < TIME_HISTORY_SIZE; ++i ){
 			mTimeHistory[ i ] = t;
 		}
 /*
 		mVideoMemoryWithPadding.setSize( mWidth * ( mHeight + 2 ) );
-		//0‰Šú‰»
+		//0åˆæœŸåŒ–
 		for ( int i = 0; i < mWidth * ( mHeight + 2 ); ++i ){
 			mVideoMemoryWithPadding[ i ] = 0;
 		}
@@ -69,7 +69,7 @@ public:
 */
 	}
 	~Impl(){
-//ƒTƒ“ƒvƒ‹Œn
+//ã‚µãƒ³ãƒ—ãƒ«ç³»
 		mPrimitiveRenderer.release();
 		for ( int i = 0; i < TEXTURE_NUMBER; ++i ){
 			mTextures[ i ].release();
@@ -85,35 +85,35 @@ public:
 		Sound::Manager::destroy();
 		FileIO::Manager::destroy();
 		Threading::Manager::destroy();
-		//coutI—¹
+		//coutçµ‚äº†
 		cout.end();
 	}
 	void start( void* windowHandle ){
-		//ƒXƒŒƒbƒhƒVƒXƒeƒ€‰Šú‰»
-		Threading::Manager::create( 5 ); //ÀŒ±‚µ‚½‚¢l‚Ì‚½‚ß‚É‘½‚ß‚Éæ‚Á‚Ä‚¨‚­B
-		//ƒtƒ@ƒCƒ‹ƒ[ƒ_‰Šú‰»
+		//ã‚¹ãƒ¬ãƒƒãƒ‰ã‚·ã‚¹ãƒ†ãƒ åˆæœŸåŒ–
+		Threading::Manager::create( 5 ); //å®Ÿé¨“ã—ãŸã„äººã®ãŸã‚ã«å¤šã‚ã«å–ã£ã¦ãŠãã€‚
+		//ãƒ•ã‚¡ã‚¤ãƒ«ãƒ­ãƒ¼ãƒ€åˆæœŸåŒ–
 		if ( mArchiveNumber > 0 ){
 			Array< const char* > names( mArchiveNumber );
 			for ( int i = 0; i < mArchiveNumber; ++i ){
 				names[ i ] = mArchiveNames[ i ].c_str();
 			}
 			FileIO::Manager::create( &names[ 0 ], mArchiveNumber, mLoadMode );
-			//ƒA[ƒJƒCƒu–¼”z—ñ‚Í•s—v‚È‚Ì‚Å”pŠü
+			//ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–åé…åˆ—ã¯ä¸è¦ãªã®ã§å»ƒæ£„
 			SAFE_DELETE_ARRAY( mArchiveNames );
 			mArchiveNumber = 0;
 		}else{
 			FileIO::Manager::create();
 		}
-		//‰¹‰Šú‰»
+		//éŸ³åˆæœŸåŒ–
 		Sound::Manager::create( windowHandle );
-		//“ü—Í‰Šú‰»
+		//å…¥åŠ›åˆæœŸåŒ–
 		Input::Manager::create( windowHandle );
-		//•`‰æ‰Šú‰»
+		//æç”»åˆæœŸåŒ–
 		Graphics::Manager::create( windowHandle, mWidth, mHeight, mFullScreen, mVSync, mAntiAlias );
-		//•¶š•`‰æ
-		//ƒAƒXƒL[•”•ª‚Ì•\(ƒAƒXƒL[(126-32+1=95•¶š+63•¶š‚Å158•¶š
+		//æ–‡å­—æç”»
+		//ã‚¢ã‚¹ã‚­ãƒ¼éƒ¨åˆ†ã®è¡¨(ã‚¢ã‚¹ã‚­ãƒ¼(126-32+1=95æ–‡å­—+63æ–‡å­—ã§158æ–‡å­—
 		Array< Scene::Font::BitmapChar > chars( 158 );
-		//ƒAƒXƒL[•”•ª[“U
+		//ã‚¢ã‚¹ã‚­ãƒ¼éƒ¨åˆ†å……å¡«
 		int pos = 0;
 		for ( int i = 0x20; i <= 0x7E; ++i ){
 			Scene::Font::BitmapChar& c = chars[ pos ];
@@ -125,7 +125,7 @@ public:
 			c.mHeight = 16;
 			++pos;
 		}
-		//”¼ŠpƒJƒi•”
+		//åŠè§’ã‚«ãƒŠéƒ¨
 		for ( int i = 0xA1; i <= 0xDF; ++i ){
 			Scene::Font::BitmapChar& c = chars[ pos ];
 			c.mCode = static_cast< unsigned short >( i );
@@ -142,12 +142,12 @@ public:
 		const char* fontDataArray[ 1 ];
 		fontDataArray[ 0 ] = gFontTga;
 		mDebugFont = Scene::Font::create( fontDataArray, &textureSize, 1, &( chars[ 0 ] ), 158 );
-		mDebugStringRenderer = Scene::StringRenderer::create( 2048, 128 ); //‚±‚ñ‚È‚à‚ñ‚Å‘«‚è‚é‚¾‚ë‚¤H
+		mDebugStringRenderer = Scene::StringRenderer::create( 2048, 128 ); //ã“ã‚“ãªã‚‚ã‚“ã§è¶³ã‚Šã‚‹ã ã‚ã†ï¼Ÿ
 		mDebugStringRenderer.setFont( mDebugFont );
-//2DƒŒƒCƒ„[
+//2Dãƒ¬ã‚¤ãƒ¤ãƒ¼
 //		m2dTexture = Graphics::Texture( mWidth, mHeight, false );
 		Graphics::Manager().setTextureFilter( Graphics::TEXTURE_FILTER_POINT );
-		mPrimitiveRenderer = Scene::PrimitiveRenderer::create( 100000, 10000 ); //‘å‰ßè
+		mPrimitiveRenderer = Scene::PrimitiveRenderer::create( 100000, 10000 ); //å¤§éå‰°
 
 		
 		mStarted = true;
@@ -163,11 +163,11 @@ public:
 		}
 		mPreviousFrameTime = currentTime;
 
-		//ƒtƒŒ[ƒ€ŠÔXV
+		//ãƒ•ãƒ¬ãƒ¼ãƒ æ™‚é–“æ›´æ–°
 		mPreviousFrameInterval = currentTime - mTimeHistory[ TIME_HISTORY_SIZE - 1 ];
 		unsigned frameIntervalSum = currentTime - mTimeHistory[ 0 ];
 		mFrameRate = TIME_HISTORY_SIZE * 1000 / frameIntervalSum;
-		//—š—ğXV
+		//å±¥æ­´æ›´æ–°
 		for ( int i = 0; i < TIME_HISTORY_SIZE - 1; ++i ){
 			mTimeHistory[ i ] = mTimeHistory[ i + 1 ]; 
 		}
@@ -178,43 +178,43 @@ public:
 		Vector2 pointerOffset;
 		Graphics::Manager().getPointerModifier( &pointerScale, &pointerOffset );
 		Input::Manager().update( pointerScale, pointerOffset );
-//ƒTƒ“ƒvƒ‹
+//ã‚µãƒ³ãƒ—ãƒ«
 		mPrimitiveRenderer.enableDepthTest( false );
 		mPrimitiveRenderer.enableDepthWrite( true );
 		mPrimitiveRenderer.setCullMode( Graphics::CULL_NONE );
 		mPrimitiveRenderer.setBlendMode( Graphics::BLEND_OPAQUE );
 	}
 	void postUpdate(){
-		//----2Dˆ—
+		//----2Då‡¦ç†
 /*
-		//”j‰óƒ`ƒFƒbƒN
+		//ç ´å£Šãƒã‚§ãƒƒã‚¯
 		for ( int i = 0; i < mWidth; ++i ){
 			STRONG_ASSERT( mVideoMemoryWithPadding[ i ] == MAGIC_NUMBER && "VRAM RANGE ERROR!" );
 			STRONG_ASSERT( mVideoMemoryWithPadding[ mWidth * ( mHeight + 1 ) + i ] == MAGIC_NUMBER && "VRAM RANGE ERROR!" );
 		}
-		//VRAMƒRƒs[
+		//VRAMã‚³ãƒ”ãƒ¼
 		unsigned* dst;
 		int pitch;
 		m2dTexture.lock( &dst, &pitch );
 		const unsigned* src = &mVideoMemoryWithPadding[ mWidth ];
 		for ( int y = 0; y < mHeight; ++y ){			
 			for ( int x = 0; x < mWidth; ++x ){
-				dst[ x ] = 0xff000000 | src[ x ]; //‹­§ƒAƒ‹ƒtƒ@ff
+				dst[ x ] = 0xff000000 | src[ x ]; //å¼·åˆ¶ã‚¢ãƒ«ãƒ•ã‚¡ff
 			}
 			src += mWidth;
 			dst += pitch / 4;
 		}
-		src = 0; //g‚¢I‚í‚è
+		src = 0; //ä½¿ã„çµ‚ã‚ã‚Š
 		m2dTexture.unlock( &dst );
 		Graphics::Manager::getInstance().blendToScreen( m2dTexture );
 */
 		mPrimitiveRenderer.draw();
 
-		//•¶š‡¬
+		//æ–‡å­—åˆæˆ
 		mDebugStringRenderer.draw();
 		Graphics::Manager().endDraw();
 	}
-//ƒTƒ“ƒvƒ‹ƒ‰ƒCƒuƒ‰ƒŠ—p
+//ã‚µãƒ³ãƒ—ãƒ«ãƒ©ã‚¤ãƒ–ãƒ©ãƒªç”¨
 	void setBlendMode( Framework::BlendMode a ){
 		Graphics::BlendMode b = Graphics::BLEND_OPAQUE;
 		switch ( a ){
@@ -235,7 +235,7 @@ public:
 	unsigned c0,
 	unsigned c1,
 	unsigned c2 ){
-		//float‚É’¼‚·
+		//floatã«ç›´ã™
 		Vector3 p[ 3 ];
 		Vector2 t[ 3 ];
 		
@@ -259,9 +259,9 @@ public:
 			t[ 2 ].x = static_cast< float >( t2[ 0 ] );
 			t[ 2 ].y = static_cast< float >( t2[ 1 ] );
 		}
-		//ƒNƒŠƒbƒvÀ•WŒn‚É•ÏŠ·
+		//ã‚¯ãƒªãƒƒãƒ—åº§æ¨™ç³»ã«å¤‰æ›
 		//[0, w ] -> [ -1, 1 ]
-		//[0, h ] -> [ 1, -1 ] //‹t
+		//[0, h ] -> [ 1, -1 ] //é€†
 		float sx = 2.f / static_cast< float >( mWidth );
 		float sy = -2.f / static_cast< float >( mHeight );
 		for ( int i = 0; i < 3; ++i ){
@@ -282,7 +282,7 @@ public:
 	unsigned c0,
 	unsigned c1,
 	unsigned c2 ){
-		//float‚É’¼‚·
+		//floatã«ç›´ã™
 		Vector3 p[ 3 ];
 		Vector2 t[ 3 ];
 		
@@ -304,9 +304,9 @@ public:
 			t[ 2 ].x = static_cast< float >( t2[ 0 ] );
 			t[ 2 ].y = static_cast< float >( t2[ 1 ] );
 		}
-		//ƒNƒŠƒbƒvÀ•WŒn‚É•ÏŠ·
+		//ã‚¯ãƒªãƒƒãƒ—åº§æ¨™ç³»ã«å¤‰æ›
 		//[0, w ] -> [ -1, 1 ]
-		//[0, h ] -> [ 1, -1 ] //‹t
+		//[0, h ] -> [ 1, -1 ] //é€†
 		float sx = 2.f / static_cast< float >( mWidth );
 		float sy = -2.f / static_cast< float >( mHeight );
 		for ( int i = 0; i < 3; ++i ){
@@ -327,7 +327,7 @@ public:
 	unsigned c0,
 	unsigned c1,
 	unsigned c2 ){
-		//float‚É’¼‚·
+		//floatã«ç›´ã™
 		Vector4 p[ 3 ];
 		Vector2 t[ 3 ];
 		
@@ -357,7 +357,7 @@ public:
 	const unsigned* src,
 	int sw,
 	int sh ){
-		//2™pƒ`ƒFƒbƒN
+		//2å†ªãƒã‚§ãƒƒã‚¯
 		bool dwOk = false;
 		bool dhOk = false;
 		for ( int i = 0; i < 32; ++i ){
@@ -369,7 +369,7 @@ public:
 			}
 		}
 		STRONG_ASSERT( dwOk && dhOk && "Texture size must be POWER OF 2" );
-		//‹ó‚«‚ğ’T‚·
+		//ç©ºãã‚’æ¢ã™
 		int newPos = -1;
 		for ( int i = 0; i < TEXTURE_NUMBER; ++i ){
 			if ( !mTextures[ i ] ){
@@ -388,13 +388,13 @@ public:
 			for ( int x = 0; x < xEnd; ++x ){
 				dst[ x ] = src[ x ];
 			}
-			for ( int x = xEnd; x < pitch / 4; ++x ){ //X‚ ‚Ü‚è‚Í^‚Á•
+			for ( int x = xEnd; x < pitch / 4; ++x ){ //Xã‚ã¾ã‚Šã¯çœŸã£é»’
 				dst[ x ] = 0;
 			}
 			dst += pitch / 4;
 			src += sw;
 		}
-		//Y‚ ‚Ü‚è‚ğ^‚Á•‚É
+		//Yã‚ã¾ã‚Šã‚’çœŸã£é»’ã«
 		for ( int y = yEnd; y < dh; ++y ){
 			for ( int x = 0; x < pitch / 4; ++x ){
 				dst[ x ] = 0;
@@ -416,7 +416,7 @@ public:
 //	Graphics::Texture m2dTexture;
 //	static const unsigned MAGIC_NUMBER = 0x12345678;
 	Scene::PrimitiveRenderer mPrimitiveRenderer;
-	static const int TEXTURE_NUMBER = 1024; //‚Ü‚³‚©\•ª‚¾‚ëB
+	static const int TEXTURE_NUMBER = 1024; //ã¾ã•ã‹ååˆ†ã ã‚ã€‚
 	Graphics::Texture mTextures[ TEXTURE_NUMBER ];
 
 	int mWidth;
@@ -447,7 +447,7 @@ Impl* gImpl = 0;
 } //namespace{}
 
 Framework::Framework(){
-	//•ÊƒXƒŒƒbƒh‚©‚ç‚ÌŒÄ‚Ño‚µ‚Í‹–‚³‚È‚¢
+	//åˆ¥ã‚¹ãƒ¬ãƒƒãƒ‰ã‹ã‚‰ã®å‘¼ã³å‡ºã—ã¯è¨±ã•ãªã„
 	STRONG_ASSERT( WindowCreator::isMainThread() && "you must call from MAIN thread" );
 }
 
@@ -525,17 +525,17 @@ void Framework::drawDebugString( int c, int r, const char* s, unsigned col ){
 }
 /*
 void Framework::enableFullScreen( bool f ){ 
-	if ( gImpl->mFullScreenForbidden ){ //‹Ö~‚³‚ê‚Ä‚¢‚é
+	if ( gImpl->mFullScreenForbidden ){ //ç¦æ­¢ã•ã‚Œã¦ã„ã‚‹
 		return;
 	}
 	WindowCreator wc = WindowCreator::getInstance();
 	Graphics::Manager gm = Graphics::Manager::getInstance();
 	if ( gImpl->mStarted ){
-		//’†“r•ÏX
+		//ä¸­é€”å¤‰æ›´
 		if ( gImpl->mFullScreen != f ){
-			//ã—¬‚Ö
+			//ä¸Šæµã¸
 			wc.enableFullScreen( f );
-			//‰º—¬‚Ö
+			//ä¸‹æµã¸
 			gm.enableFullScreen( f );
 		}
 	}
@@ -596,7 +596,7 @@ void Framework::Configuration::forbidFullScreen( bool f ){
 }
 */
 
-//ƒTƒ“ƒvƒ‹ƒ‰ƒCƒuƒ‰ƒŠ—pŠÖ”
+//ã‚µãƒ³ãƒ—ãƒ«ãƒ©ã‚¤ãƒ–ãƒ©ãƒªç”¨é–¢æ•°
 /*
 unsigned* Framework::getVideoMemory(){
 	return &gImpl->mVideoMemoryWithPadding[ gImpl->mWidth ];
@@ -662,7 +662,7 @@ unsigned c2 ){
 	gImpl->drawTriangle3DH( p0, p1, p2, t0, t1,t2, c0, c1, c2 );
 }
 
-class Texture{ //ƒeƒNƒXƒ`ƒƒƒ_ƒ~[ƒNƒ‰ƒX
+class Texture{ //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ€ãƒŸãƒ¼ã‚¯ãƒ©ã‚¹
 public:
 	Graphics::Texture mTexture;
 };
@@ -687,7 +687,7 @@ const char* filename ){
 	*tex = NEW Texture();
 	( *tex )->mTexture = Graphics::Texture::create( filename );
 	while ( !( *tex )->mTexture.isReady() ){
-		; //ƒ[ƒh‘Ò‚¿
+		; //ãƒ­ãƒ¼ãƒ‰å¾…ã¡
 	}
 }
 
@@ -734,10 +734,10 @@ void Framework::enableDepthWrite( bool f ){
 	gImpl->mPrimitiveRenderer.enableDepthWrite( f );
 }
 
-//WindowProcedure‚Ìƒ†[ƒUÀ‘•ŠÖ”
+//WindowProcedureã®ãƒ¦ãƒ¼ã‚¶å®Ÿè£…é–¢æ•°
 void WindowCreator::configure( Configuration* config ){
 	Framework::create();
-	//ƒ†[ƒUİ’è
+	//ãƒ¦ãƒ¼ã‚¶è¨­å®š
 	Framework f;
 //	Framework::Configuration fwConfig;
 //	f.configure( &fwConfig );
@@ -752,19 +752,19 @@ void WindowCreator::update(){
 	WindowCreator wc;
 	Graphics::Manager gm;
 	Framework f;
-	//WindowCreator‚Ìó‘ÔŸ‘æ‚Å‚¢‚ë‚¢‚ë‚·‚é
+	//WindowCreatorã®çŠ¶æ…‹æ¬¡ç¬¬ã§ã„ã‚ã„ã‚ã™ã‚‹
 	bool sleepFlag = false;
-	//Å¬‰»‚µ‚Ä‚¢‚ê‚ÎQ‚é
+	//æœ€å°åŒ–ã—ã¦ã„ã‚Œã°å¯ã‚‹
 	if ( wc.isMinimized() ){
 		sleepFlag = true;
 	}
-	//ƒfƒoƒCƒXƒƒXƒg‚±‚¢‚Ä‚¢‚é‚æ‚¤‚È‚ç•œ‹A‚ğ‚İ‚é‚ªAŠî–{“I‚ÉQ‚éB
+	//ãƒ‡ãƒã‚¤ã‚¹ãƒ­ã‚¹ãƒˆã“ã„ã¦ã„ã‚‹ã‚ˆã†ãªã‚‰å¾©å¸°ã‚’è©¦ã¿ã‚‹ãŒã€åŸºæœ¬çš„ã«å¯ã‚‹ã€‚
 /*
 	if ( !gm.canRender() ){
 		gm.restore();
 		sleepFlag = true;
 	}
-	//Window‚©‚çƒ‚[ƒhØ‘ÖƒVƒOƒiƒ‹
+	//Windowã‹ã‚‰ãƒ¢ãƒ¼ãƒ‰åˆ‡æ›¿ã‚·ã‚°ãƒŠãƒ«
 	bool wcFullScreen = wc.isFullScreen();
 	if ( f.isFullScreen() != wcFullScreen ){
 		f.enableFullScreen( wcFullScreen );
@@ -773,20 +773,20 @@ void WindowCreator::update(){
 	if ( !sleepFlag ){
 		f.preUpdate();
 	}
-	//ã—¬(~ƒ{ƒ^ƒ“‚Æ‚©)‚©‚çI—¹–½—ß‚ª—ˆ‚Ä‚¢‚é‚©ƒ`ƒFƒbƒN
-	if ( isEndRequested() ){ //—ˆ‚Ä‚¢‚ê‚ÎFramework‚ÉI—¹–½—ß‚ğ“`’B
+	//ä¸Šæµ(Ã—ãƒœã‚¿ãƒ³ã¨ã‹)ã‹ã‚‰çµ‚äº†å‘½ä»¤ãŒæ¥ã¦ã„ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
+	if ( isEndRequested() ){ //æ¥ã¦ã„ã‚Œã°Frameworkã«çµ‚äº†å‘½ä»¤ã‚’ä¼é”
 		f.requestEnd();
 	}
 	if ( sleepFlag ){
-		Threading::sleep( 50 ); //50msQ‚é
+		Threading::sleep( 50 ); //50mså¯ã‚‹
 	}else{
 		f.update();
 		f.postUpdate();
 	}
-	//I—¹”»’è
+	//çµ‚äº†åˆ¤å®š
 	if ( f.isEndRequested() ){
 		Framework::destroy();
-		end(); //ã—¬‚É‚à’m‚ç‚¹‚ğ
+		end(); //ä¸Šæµã«ã‚‚çŸ¥ã‚‰ã›ã‚’
 	}
 }
 
@@ -802,11 +802,11 @@ StandardInput::StandardInput() : mPrevEnterOn( false ){
 }
 
 StandardInput& StandardInput::operator>>( char& a ){
-	a = '\0'; //‰Šú’l
+	a = '\0'; //åˆæœŸå€¤
 	Input::Keyboard kb = Input::Manager::getInstance().getKeyboard( 0 );
 	bool entered = false;
-	while ( true ){ //–³ŒÀƒ‹[ƒv
-		for ( int i = 0; i < 0x80; ++i ){ //ƒL[‘S•”Œ©‚é
+	while ( true ){ //ç„¡é™ãƒ«ãƒ¼ãƒ—
+		for ( int i = 0; i < 0x80; ++i ){ //ã‚­ãƒ¼å…¨éƒ¨è¦‹ã‚‹
 			if ( kb.isOn( i ) ){
 				a = static_cast< char >( i );
 				entered = true;
@@ -821,7 +821,7 @@ StandardInput& StandardInput::operator>>( char& a ){
 		Vector2 pointerOffset;
 		Graphics::Manager::getInstance().getPointerModifier( &pointerScale, &pointerOffset );
 		Input::Manager::getInstance().update( pointerScale, pointerOffset );
-		//ƒEƒBƒ“ƒhƒE‚©‚çI—¹—v¿‚ğó‚¯‚Ä‚¢‚é‚æ‚¤‚È‚ç”²‚¯‚é
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‹ã‚‰çµ‚äº†è¦è«‹ã‚’å—ã‘ã¦ã„ã‚‹ã‚ˆã†ãªã‚‰æŠœã‘ã‚‹
 		bool altF4 = kb.isOn( Input::Keyboard::KEY_ALT ) && kb.isOn( Input::Keyboard::KEY_F4 );
 		if ( altF4 ){
 			Framework::getInstance().requestEnd();

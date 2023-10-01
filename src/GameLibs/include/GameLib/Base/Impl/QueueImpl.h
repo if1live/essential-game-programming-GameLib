@@ -22,7 +22,7 @@ mFront( 0 ){
 		return;
 	}
 	mCapacity = capacity;
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ñ‚½‚­‚È‚¢‚Ì‚Å¶new
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å‘¼ã³ãŸããªã„ã®ã§ç”Ÿnew
 	mElements = static_cast< T* >( OPERATOR_NEW( sizeof( T ) * mCapacity ) );
 }
 
@@ -35,7 +35,7 @@ template< class T > inline Queue< T >::~Queue(){
 
 template< class T > inline void Queue< T >::setCapacity( int capacity ){
 	ASSERT( mSize == 0 && "NOT EMPTY!. you must call clear()." );
-	//ˆê’U‰ğ•ú
+	//ä¸€æ—¦è§£æ”¾
 	if ( mElements ){
 		clear();
 		OPERATOR_DELETE( mElements );
@@ -45,8 +45,8 @@ template< class T > inline void Queue< T >::setCapacity( int capacity ){
 		return;
 	}
 	mCapacity = capacity;
-	//ÄŠm•Û
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ñ‚½‚­‚È‚¢‚Ì‚Å¶new
+	//å†ç¢ºä¿
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å‘¼ã³ãŸããªã„ã®ã§ç”Ÿnew
 	mElements = static_cast< T* >( OPERATOR_NEW( sizeof( T ) * mCapacity ) );
 }
 
@@ -62,12 +62,12 @@ template< class T > inline void Queue< T >::clear(){
 	int back = mFront + mSize - 1;
 	if ( back < mCapacity ){
 		for ( int i = mFront; i <= back; ++i ){
-			mElements[ i ].~T(); //–¾¦“I‚ÉƒfƒXƒgƒ‰ƒNƒg
+			mElements[ i ].~T(); //æ˜ç¤ºçš„ã«ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 		}
 	}else{
 		//front->last
 		for ( int i = mFront; i < mCapacity; ++i ){
-			mElements[ i ].~T(); //–¾¦“I‚ÉƒfƒXƒgƒ‰ƒNƒg
+			mElements[ i ].~T(); //æ˜ç¤ºçš„ã«ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 		}
 		//0->back
 		for ( int i = 0; i <= back; ++i ){
@@ -101,7 +101,7 @@ template< class T > inline T* Queue< T >::pushBack(){
 
 template< class T > inline void Queue< T >::popFront(){
 	ASSERT( mSize > 0 );
-	mElements[ mFront ].~T(); //–¾¦“IƒfƒXƒgƒ‰ƒNƒg
+	mElements[ mFront ].~T(); //æ˜ç¤ºçš„ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 	++mFront;
 	if ( mFront == mCapacity ){
 		mFront = 0;
@@ -112,7 +112,7 @@ template< class T > inline void Queue< T >::popFront(){
 template< class T > inline void Queue< T >::popFront( T* o ){
 	ASSERT( mSize > 0 );
 	o = mElements[ mFront ];
-	mElements[ mFront ].~T(); //–¾¦“IƒfƒXƒgƒ‰ƒNƒg
+	mElements[ mFront ].~T(); //æ˜ç¤ºçš„ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 	++mFront;
 	if ( mFront == mCapacity ){
 		mFront = 0;

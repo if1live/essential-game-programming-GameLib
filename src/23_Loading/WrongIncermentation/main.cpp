@@ -3,10 +3,10 @@
 #include <sstream>
 using namespace GameLib::Threading;
 
-//‘«‚·•Ï”
+//è¶³ã™å¤‰æ•°
 int gCount;
 
-//ŠÖ”ƒNƒ‰ƒX
+//é–¢æ•°ã‚¯ãƒ©ã‚¹
 class IncrementThread : public Thread{
 public:
 	IncrementThread(){
@@ -15,7 +15,7 @@ public:
 	~IncrementThread(){
 		wait();
 	}
-	//100–œ‰ñƒCƒ“ƒNƒŠƒƒ“ƒg
+	//100ä¸‡å›ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 	void operator()(){
 		for ( int i = 0; i < 1000*1000; ++i ){
 			gCount += 2;
@@ -30,7 +30,7 @@ namespace GameLib{
 		{
 			IncrementThread t0;
 			IncrementThread t1;
-		} //‚±‚±‚ÅƒXƒŒƒbƒhƒfƒXƒgƒ‰ƒNƒg
+		} //ã“ã“ã§ã‚¹ãƒ¬ãƒƒãƒ‰ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 		std::ostringstream o;
 		o << gCount;
 		drawDebugString( 0, 0, o.str().c_str() );

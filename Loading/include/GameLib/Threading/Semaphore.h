@@ -4,14 +4,14 @@
 namespace GameLib{
 namespace Threading{
 
-///Œˆ‚Ü‚Á‚½l”‚¾‚¯“¯‚ÉƒƒbƒN‚Å‚«‚éMutexB
+///æ±ºã¾ã£ãŸäººæ•°ã ã‘åŒæ™‚ã«ãƒ­ãƒƒã‚¯ã§ãã‚‹Mutexã€‚
 class Semaphore{
 public:
-	///ˆø”‚Ì‰Šú’l‚Å¶¬BmaxCount‚Í0‚¾‚ÆstartCount‚É‚È‚éB
+	///å¼•æ•°ã®åˆæœŸå€¤ã§ç”Ÿæˆã€‚maxCountã¯0ã ã¨startCountã«ãªã‚‹ã€‚
 	static Semaphore create( int startCount, int maxCount = 0 );
-	///ƒJƒEƒ“ƒg‚ğ1Œ¸‚ç‚»‚¤‚Æ‚·‚éB‚·‚Å‚É0‚¾‚Æ–°‚ç‚³‚ê‚éB
+	///ã‚«ã‚¦ãƒ³ãƒˆã‚’1æ¸›ã‚‰ãã†ã¨ã™ã‚‹ã€‚ã™ã§ã«0ã ã¨çœ ã‚‰ã•ã‚Œã‚‹ã€‚
 	void decrease();
-	///ƒJƒEƒ“ƒg‚ğ‘‚â‚·Bˆø”‚ğÈ—ª‚·‚ê‚Î1‚Ã‚ÂB
+	///ã‚«ã‚¦ãƒ³ãƒˆã‚’å¢—ã‚„ã™ã€‚å¼•æ•°ã‚’çœç•¥ã™ã‚Œã°1ã¥ã¤ã€‚
 	void increase( int value = 1 );
 
 	Semaphore();

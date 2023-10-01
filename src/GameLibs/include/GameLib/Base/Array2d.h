@@ -3,34 +3,34 @@
 
 namespace GameLib{
 
-///“ñŸŒ³”z—ñ
+///äºŒæ¬¡å…ƒé…åˆ—
 template< class T > class Array2d{
 public:
-	///ƒfƒtƒHƒ‹ƒgBƒTƒCƒY‚Í0B
+	///ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã€‚ã‚µã‚¤ã‚ºã¯0ã€‚
 	Array2d();
-	///‰ŠúƒTƒCƒYB‘S—v‘f‚ÍƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^‚Å‰Šú‰»‚³‚ê‚éB
+	///åˆæœŸã‚µã‚¤ã‚ºã€‚å…¨è¦ç´ ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã§åˆæœŸåŒ–ã•ã‚Œã‚‹ã€‚
 	Array2d( int size0, int size1 );
 	~Array2d();
-	///Œã‚©‚çŠm•ÛB’†g‚ª‚ ‚é‚ÆASSERT()‚·‚éBˆê’Uclear()‚·‚é‚±‚ÆB
+	///å¾Œã‹ã‚‰ç¢ºä¿ã€‚ä¸­èº«ãŒã‚ã‚‹ã¨ASSERT()ã™ã‚‹ã€‚ä¸€æ—¦clear()ã™ã‚‹ã“ã¨ã€‚
 	void setSize( int size0, int size1 );
-	///ƒTƒCƒYæ“¾
+	///ã‚µã‚¤ã‚ºå–å¾—
 	int size( int index ) const;
-	///‘S‰ğ•ú
+	///å…¨è§£æ”¾
 	void clear();
-	///“Y‚¦š(const)
+	///æ·»ãˆå­—(const)
 	const T& operator()( int i, int j ) const;
-	///“Y‚¦š(”ñconst)
+	///æ·»ãˆå­—(éconst)
 	T& operator()( int i, int j );
 private:
-	void operator=( const Array2d& ); //‘ã“ü‹Ö~
-	Array2d( const Array2d& ); //ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‹Ö~
+	void operator=( const Array2d& ); //ä»£å…¥ç¦æ­¢
+	Array2d( const Array2d& ); //ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ç¦æ­¢
 
 	T* mElements;
 	int mSize[ 2 ];
 };
 
 } //namespace GameLib
-#include "GameLib/Base/Impl/Array2dImpl.h" //’†g‚Í‚±‚Ì’†
+#include "GameLib/Base/Impl/Array2dImpl.h" //ä¸­èº«ã¯ã“ã®ä¸­
 
 #endif
 

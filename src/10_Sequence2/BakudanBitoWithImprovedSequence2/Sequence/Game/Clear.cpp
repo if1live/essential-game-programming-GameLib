@@ -20,20 +20,20 @@ Clear::~Clear(){
 
 Child* Clear::update( Parent* parent ){
 	Child* next = this;
-	if ( mCount == 60 ){ //1•b‘Ò‚Â 
-		if ( parent->hasFinalStageCleared() ){ //ÅI–Ê‚ğƒNƒŠƒA‚µ‚½‚È‚çƒGƒ“ƒfƒBƒ“ƒO‚Ö
+	if ( mCount == 60 ){ //1ç§’å¾…ã¤ 
+		if ( parent->hasFinalStageCleared() ){ //æœ€çµ‚é¢ã‚’ã‚¯ãƒªã‚¢ã—ãŸãªã‚‰ã‚¨ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã¸
 			parent->moveTo( Parent::NEXT_ENDING ); 
 		}else{
 			next = new Ready;
 		}
 	}
-	//•`‰æ
-	//‚Ü‚¸ƒQ[ƒ€‰æ–Ê‚ğ•`‰æ
+	//æç”»
+	//ã¾ãšã‚²ãƒ¼ãƒ ç”»é¢ã‚’æç”»
 	parent->drawState();
-	//ã‚Éj‚¢‚ÌƒƒbƒZ[ƒW‚ğ•`‰æ
+	//ä¸Šã«ç¥ã„ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’æç”»
 	mImage->draw();
-	//ƒNƒŠƒA[‚Æš‚ğ•`‚­
-	Framework::instance().drawDebugString( 0, 0, "¸Ø±°!" );
+	//ã‚¯ãƒªã‚¢ãƒ¼ã¨å­—ã‚’æã
+	Framework::instance().drawDebugString( 0, 0, "ï½¸ï¾˜ï½±ï½°!" );
 
 	++mCount;
 

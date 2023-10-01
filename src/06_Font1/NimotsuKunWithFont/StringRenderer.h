@@ -3,22 +3,22 @@
 
 class Image;
 
-//•¶š—ñ•`‰æƒNƒ‰ƒX
-//ƒVƒ“ƒOƒ‹ƒgƒ“ƒpƒ^[ƒ“‚ÌƒTƒ“ƒvƒ‹‚Å‚à‚ ‚éB
+//æ–‡å­—åˆ—æç”»ã‚¯ãƒ©ã‚¹
+//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ã‚µãƒ³ãƒ—ãƒ«ã§ã‚‚ã‚ã‚‹ã€‚
 class StringRenderer{
 public:
 	static StringRenderer* instance();
-	//•`‰æŠÖ”BƒfƒtƒHƒ‹ƒg”’
+	//æç”»é–¢æ•°ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆç™½
 	void draw( int x, int y, const char* string, unsigned color = 0xffffff ) const;
-	static void create( const char* fontFileName ); //‚±‚ê‚ğŒÄ‚ñ‚Å‰Šú‰»
-	static void destroy(); //‚±‚ê‚ğŒÄ‚ñ‚ÅI—¹
+	static void create( const char* fontFileName ); //ã“ã‚Œã‚’å‘¼ã‚“ã§åˆæœŸåŒ–
+	static void destroy(); //ã“ã‚Œã‚’å‘¼ã‚“ã§çµ‚äº†
 private:
-	StringRenderer( const char* fontFileName ); //ƒvƒ‰ƒCƒx[ƒg‚É‚·‚éB
-	StringRenderer( StringRenderer& ); //ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^–•EBcpp‚É’†g‚ğì‚ç‚È‚¢B
-	~StringRenderer(); //ƒvƒ‰ƒCƒx[ƒg‚É‚·‚éB
+	StringRenderer( const char* fontFileName ); //ãƒ—ãƒ©ã‚¤ãƒ™ãƒ¼ãƒˆã«ã™ã‚‹ã€‚
+	StringRenderer( StringRenderer& ); //ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿æŠ¹æ®ºã€‚cppã«ä¸­èº«ã‚’ä½œã‚‰ãªã„ã€‚
+	~StringRenderer(); //ãƒ—ãƒ©ã‚¤ãƒ™ãƒ¼ãƒˆã«ã™ã‚‹ã€‚
 
 	Image* mImage;
-	static StringRenderer* mInstance; //—Bˆê‚ÌƒCƒ“ƒXƒ^ƒ“ƒX
+	static StringRenderer* mInstance; //å”¯ä¸€ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 };
 
 #endif

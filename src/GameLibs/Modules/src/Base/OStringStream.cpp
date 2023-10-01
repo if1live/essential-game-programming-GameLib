@@ -20,7 +20,7 @@ public:
 	}
 	void setPrecision( int a ){
 		if ( a > 17 ){ 
-			a = 17; //���E��17�Bdouble��10�i���x�����ꂭ�炢�ɂȂ�
+			a = 17; //限界は17。doubleの10進精度がこれくらいになる
 		}else if ( a < 1 ){
 			a = 1;
 		}
@@ -37,7 +37,7 @@ public:
 			mBuffer.add( s[ i ] );
 		}
 	}
-	void add( float a ){ //���Ăǂ�����Ă�낤�B
+	void add( float a ){ //さてどうやってやろう。
 		char s[ 16 ];
 		int c = toString( s, a, mPrecision );
 		ASSERT( c <= 16 );
@@ -112,13 +112,13 @@ public:
 	}
 	void add( char a ){
 		if ( ( a == '\n' ) || ( a == '\t' ) ){
-			mBuffer.add( a ); //�ϊ�����(�󔒕���)
+			mBuffer.add( a ); //変換せず(空白文字)
 		}else if ( a >= 0x20 && a <= 0x7e ){
-			mBuffer.add( a ); //�ϊ�����
+			mBuffer.add( a ); //変換せず
 		}else{
 			mBuffer.add( '%' );
 			char s[ 2 ];
-			int c = toString16( s, a ); //16�i��
+			int c = toString16( s, a ); //16進で
 			ASSERT( c <= 2 );
 			for ( int i = 0; i < c; ++i ){
 				mBuffer.add( s[ i ] );
@@ -144,7 +144,7 @@ public:
 		if ( mBuffer.size() > 0 ){
 			mBuffer.copyTo( &( *a )[ 0 ] );
 		}
-		( *a )[ mBuffer.size() ] = '\0'; //NULL�I�[
+		( *a )[ mBuffer.size() ] = '\0'; //NULL終端
 	}
 	void clear(){
 		mBuffer.clear();
@@ -260,7 +260,7 @@ void OStringStream::get( string* a ) const {
 	if ( mImpl->size() > 0 ){
 		Array< char > t;
 		mImpl->get( &t );
-		*a = string( &t[ 0 ], t.size() - 1 ); //ArraySize��NULL�I�[�������̂ň����Ă��
+		*a = string( &t[ 0 ], t.size() - 1 ); //ArraySizeはNULL終端分多いので引いてやる
 	}
 }
 

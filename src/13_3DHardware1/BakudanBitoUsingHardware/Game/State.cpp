@@ -10,19 +10,19 @@ using namespace GameLib;
 
 namespace {
 
-//ƒ}ƒbƒv‚ÌL‚³
+//ãƒãƒƒãƒ—ã®åºƒã•
 static const int WIDTH = 19;
 static const int HEIGHT = 15;
-//”š’eƒpƒ‰ƒ[ƒ^
-static const int EXPLOSION_TIME = 180; //3•b
-static const int EXPLOSION_LIFE = 60; //1•b
+//çˆ†å¼¾ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
+static const int EXPLOSION_TIME = 180; //3ç§’
+static const int EXPLOSION_LIFE = 60; //1ç§’
 
-//“K“–ƒXƒe[ƒWƒf[ƒ^
+//é©å½“ã‚¹ãƒ†ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿
 struct StageData{
-	int mEnemyNumber; //“G‚Ì”
-	int mBrickRate; //—ùŠ¢—¦(ƒp[ƒZƒ“ƒg)
-	int mItemPowerNumber; //”š•—ƒAƒCƒeƒ€‚Ì”
-	int mItemBombNumber; //”š’eƒAƒCƒeƒ€‚Ì”
+	int mEnemyNumber; //æ•µã®æ•°
+	int mBrickRate; //ç…‰ç“¦ç‡(ãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆ)
+	int mItemPowerNumber; //çˆ†é¢¨ã‚¢ã‚¤ãƒ†ãƒ ã®æ•°
+	int mItemBombNumber; //çˆ†å¼¾ã‚¢ã‚¤ãƒ†ãƒ ã®æ•°
 };
 
 static StageData gStageData[] = {
@@ -38,17 +38,17 @@ mImage( 0 ),
 mDynamicObjects( 0 ),
 mDynamicObjectNumber( 0 ),
 mStageID( stageID ){
-	Framework f = Framework::instance(); //Œã‚Å‰½“x‚©g‚¤‚Ì‚Å
+	Framework f = Framework::instance(); //å¾Œã§ä½•åº¦ã‹ä½¿ã†ã®ã§
 	mStaticObjects.setSize( WIDTH, HEIGHT );
 
 	mImage = new Image( "data/image/bakudanBitoImage.dds" );
 
 	const StageData& stageData = gStageData[ mStageID ];
-	int n = HEIGHT * WIDTH; //ƒ}ƒX–Ú‚Ì”
+	int n = HEIGHT * WIDTH; //ãƒã‚¹ç›®ã®æ•°
 
-	//—ùŠ¢‚ÌƒuƒƒbƒN‚ğ‹L˜^B
+	//ç…‰ç“¦ã®ãƒ–ãƒ­ãƒƒã‚¯ã‚’è¨˜éŒ²ã€‚
 	unsigned* brickList = new unsigned[ n ];
-	int brickNumber = 0; //–{“–‚ÉƒŒƒ“ƒK‚É‚È‚Á‚½”‚ğƒJƒEƒ“ƒg
+	int brickNumber = 0; //æœ¬å½“ã«ãƒ¬ãƒ³ã‚¬ã«ãªã£ãŸæ•°ã‚’ã‚«ã‚¦ãƒ³ãƒˆ
 	unsigned* floorList = new unsigned[ n ];
 	int floorNumber = 0;
 
@@ -57,16 +57,16 @@ mStageID( stageID ){
 			StaticObject& o = mStaticObjects( x, y );
 			if ( x == 0 || y == 0 || ( x == WIDTH-1 ) || ( y == HEIGHT-1 ) ){
 				o.setFlag( StaticObject::FLAG_WALL );
-			}else if ( ( x % 2 == 0 ) && ( y % 2 == 0 ) ){ //ƒRƒ“ƒNƒŠ[ƒg
+			}else if ( ( x % 2 == 0 ) && ( y % 2 == 0 ) ){ //ã‚³ãƒ³ã‚¯ãƒªãƒ¼ãƒˆ
 				o.setFlag( StaticObject::FLAG_WALL );
 			}else if ( y + x < 4 ){
-				//¶ã3ƒ}ƒX‚Í°
+				//å·¦ä¸Š3ãƒã‚¹ã¯åºŠ
 			}else if ( ( stageID == 0 ) && ( y + x > ( WIDTH + HEIGHT - 6 ) ) ){
-				; //“ñl—p‚È‚ç‰E‰º3ƒ}ƒX‚à‹ó‚¯‚éB
-			}else{ //c‚è‚Í—ùŠ¢‚©°B100–ÊƒTƒCƒRƒ‚ğU‚Á‚ÄŒˆ‚ß‚é
+				; //äºŒäººç”¨ãªã‚‰å³ä¸‹3ãƒã‚¹ã‚‚ç©ºã‘ã‚‹ã€‚
+			}else{ //æ®‹ã‚Šã¯ç…‰ç“¦ã‹åºŠã€‚100é¢ã‚µã‚¤ã‚³ãƒ­ã‚’æŒ¯ã£ã¦æ±ºã‚ã‚‹
 				if ( f.getRandom( 100 ) < stageData.mBrickRate  ){
 					o.setFlag( StaticObject::FLAG_BRICK );
-					//—ùŠ¢‚¾‚Á‚½‚ç‹L˜^‚µ‚Ä‚¨‚­B
+					//ç…‰ç“¦ã ã£ãŸã‚‰è¨˜éŒ²ã—ã¦ãŠãã€‚
 					brickList[ brickNumber ] = ( x << 16 ) + y;
 					++brickNumber;
 				}else{
@@ -76,12 +76,12 @@ mStageID( stageID ){
 			}
 		}
 	}
-	//—ùŠ¢‚ÉƒAƒCƒeƒ€‚ğd‚Ş
+	//ç…‰ç“¦ã«ã‚¢ã‚¤ãƒ†ãƒ ã‚’ä»•è¾¼ã‚€
 	int powerNumber = stageData.mItemPowerNumber;
 	int bombNumber = stageData.mItemBombNumber;
-	//‚â‚è•û‚ÍA—ùŠ¢ƒŠƒXƒg‚Ìi”Ô–Ú‚ğ“K“–‚È‚à‚Ì‚Ææ‚è‘Ö‚¦‚ÄA‚»‚±‚ÉƒAƒCƒeƒ€‚ğ“ü‚ê‚éB
+	//ã‚„ã‚Šæ–¹ã¯ã€ç…‰ç“¦ãƒªã‚¹ãƒˆã®iç•ªç›®ã‚’é©å½“ãªã‚‚ã®ã¨å–ã‚Šæ›¿ãˆã¦ã€ãã“ã«ã‚¢ã‚¤ãƒ†ãƒ ã‚’å…¥ã‚Œã‚‹ã€‚
 	for ( int i = 0; i < powerNumber + bombNumber; ++i ){
- 		int swapped = f.getRandom( brickNumber - 1 - i ) + i; //©•ª‚©A©•ª‚æ‚èŒã‚ë‚Ææ‚è‘Ö‚¦‚éB‚Å‚È‚¢‚Æ‚·‚Å‚É“ü‚ê‚½ƒ}ƒX‚ª‚à‚¤ˆê‰ño‚Ä‚«‚Ä‚µ‚Ü‚¤B
+ 		int swapped = f.getRandom( brickNumber - 1 - i ) + i; //è‡ªåˆ†ã‹ã€è‡ªåˆ†ã‚ˆã‚Šå¾Œã‚ã¨å–ã‚Šæ›¿ãˆã‚‹ã€‚ã§ãªã„ã¨ã™ã§ã«å…¥ã‚ŒãŸãƒã‚¹ãŒã‚‚ã†ä¸€å›å‡ºã¦ãã¦ã—ã¾ã†ã€‚
 		unsigned t = brickList[ i ];
 		brickList[ i ] = brickList[ swapped ];
 		brickList[ swapped ] = t;
@@ -97,20 +97,20 @@ mStageID( stageID ){
 	}
 	SAFE_DELETE_ARRAY( brickList );
 
-	//“®“IƒIƒuƒWƒFƒNƒg‚ğŠm•Û
+	//å‹•çš„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç¢ºä¿
 	int playerNumber = ( mStageID == 0 ) ? 2 : 1;
 	int enemyNumber = stageData.mEnemyNumber;
 	mDynamicObjectNumber = playerNumber + enemyNumber;
 	mDynamicObjects = new DynamicObject[ mDynamicObjectNumber ];
 
-	//ƒvƒŒƒCƒ„[”z’u
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼é…ç½®
 	mDynamicObjects[ 0 ].set( 1, 1, DynamicObject::TYPE_PLAYER );
 	mDynamicObjects[ 0 ].mPlayerID = 0;
 	if ( mStageID == 0 ){
 		mDynamicObjects[ 1 ].set( WIDTH-2, HEIGHT-2, DynamicObject::TYPE_PLAYER );
 		mDynamicObjects[ 1 ].mPlayerID = 1;
 	}
-	//°‚É“G‚ğd‚ŞB‚â‚è•û‚ÍƒAƒCƒeƒ€‚Æ‚Ù‚Æ‚ñ‚Ç“¯‚¶
+	//åºŠã«æ•µã‚’ä»•è¾¼ã‚€ã€‚ã‚„ã‚Šæ–¹ã¯ã‚¢ã‚¤ãƒ†ãƒ ã¨ã»ã¨ã‚“ã©åŒã˜
 	for ( int i = 0; i < enemyNumber; ++i ){
  		int swapped = f.getRandom( floorNumber - 1 - i ) + i;
 		unsigned t = floorList[ i ];
@@ -130,17 +130,17 @@ State::~State(){
 }
 
 void State::draw() const {
-	//”wŒi•`‰æ
+	//èƒŒæ™¯æç”»
 	for ( int y = 0; y < HEIGHT; ++y ){
 		for ( int x = 0; x < WIDTH; ++x ){
 			mStaticObjects( x, y ).draw( x, y, mImage );
 		}
 	}
-	//‘OŒi•`‰æ
+	//å‰æ™¯æç”»
 	for ( int i = 0; i < mDynamicObjectNumber; ++i ){
 		mDynamicObjects[ i ].draw( mImage );
 	}
-	//”š•—•`‰æ
+	//çˆ†é¢¨æç”»
 	for ( int y = 0; y < HEIGHT; ++y ){
 		for ( int x = 0; x < WIDTH; ++x ){
 			mStaticObjects( x, y ).drawExplosion( x, y, mImage );
@@ -149,44 +149,44 @@ void State::draw() const {
 }
 
 void State::update(){
-	//”š’e‚Ìˆ—
+	//çˆ†å¼¾ã®å‡¦ç†
 	for ( int y = 0; y < HEIGHT; ++y ){
 		for ( int x = 0; x < WIDTH; ++x ){
 			StaticObject& o = mStaticObjects( x, y );
 			if ( o.checkFlag( StaticObject::FLAG_BOMB ) ){
-				//1.”š’e‚ÌƒJƒEƒ“ƒg‚ğXV
+				//1.çˆ†å¼¾ã®ã‚«ã‚¦ãƒ³ãƒˆã‚’æ›´æ–°
 				++o.mCount;
-				//2.”š”jŠJnAI—¹”»’è
-				if ( o.checkFlag( StaticObject::FLAG_EXPLODING ) ){ //Á‰Î”»’è
-					if ( o.mCount == EXPLOSION_LIFE ){ //”š”­I—¹‚É‚È‚Á‚½
+				//2.çˆ†ç ´é–‹å§‹ã€çµ‚äº†åˆ¤å®š
+				if ( o.checkFlag( StaticObject::FLAG_EXPLODING ) ){ //æ¶ˆç«åˆ¤å®š
+					if ( o.mCount == EXPLOSION_LIFE ){ //çˆ†ç™ºçµ‚äº†æ™‚åˆ»ã«ãªã£ãŸ
 						o.resetFlag( StaticObject::FLAG_EXPLODING | StaticObject::FLAG_BOMB );
 						o.mCount = 0;
 					}
-				}else{ //”š”j”»’è
-					if ( o.mCount == EXPLOSION_TIME ){ //”š”j‚É‚È‚Á‚½
+				}else{ //çˆ†ç ´åˆ¤å®š
+					if ( o.mCount == EXPLOSION_TIME ){ //çˆ†ç ´æ™‚åˆ»ã«ãªã£ãŸ
 						o.setFlag( StaticObject::FLAG_EXPLODING );
 						o.mCount = 0;
 						SoundManager::instance()->playSe( SoundManager::SE_EXPLOSION );
-					}else if ( o.checkFlag( StaticObject::FLAG_FIRE_X | StaticObject::FLAG_FIRE_Y ) ){ //—U”š
+					}else if ( o.checkFlag( StaticObject::FLAG_FIRE_X | StaticObject::FLAG_FIRE_Y ) ){ //èª˜çˆ†
 						o.setFlag( StaticObject::FLAG_EXPLODING );
 						o.mCount = 0;
 						SoundManager::instance()->playSe( SoundManager::SE_EXPLOSION );
 					}
 				}
-			}else if ( o.checkFlag( StaticObject::FLAG_BRICK ) ){ //ƒŒƒ“ƒK‚Ìê‡Ä‚¯—‚¿”»’è‚ª•K—v
-				if ( o.checkFlag( StaticObject::FLAG_FIRE_X | StaticObject::FLAG_FIRE_Y ) ){ //‰Î‚ª‚Â‚¢‚Ä‚¢‚é
-					++o.mCount; //‘O‚ÌƒtƒŒ[ƒ€‚Å‚Â‚¢‚½‰Î‚È‚Ì‚Å”»’è‘O‚ÉƒCƒ“ƒNƒŠƒƒ“ƒg
+			}else if ( o.checkFlag( StaticObject::FLAG_BRICK ) ){ //ãƒ¬ãƒ³ã‚¬ã®å ´åˆç„¼ã‘è½ã¡åˆ¤å®šãŒå¿…è¦
+				if ( o.checkFlag( StaticObject::FLAG_FIRE_X | StaticObject::FLAG_FIRE_Y ) ){ //ç«ãŒã¤ã„ã¦ã„ã‚‹
+					++o.mCount; //å‰ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã§ã¤ã„ãŸç«ãªã®ã§åˆ¤å®šå‰ã«ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 					if ( o.mCount == EXPLOSION_LIFE ){
 						o.mCount = 0;
-						o.resetFlag( StaticObject::FLAG_BRICK ); //Ä‚¯—‚¿‚½
+						o.resetFlag( StaticObject::FLAG_BRICK ); //ç„¼ã‘è½ã¡ãŸ
 					}
 				}
 			}
-			//3.”š•—‚Í–ˆƒtƒŒ[ƒ€’u‚«‚È‚¨‚·‚Ì‚ÅAˆê‰ñÁ‚·B
+			//3.çˆ†é¢¨ã¯æ¯ãƒ•ãƒ¬ãƒ¼ãƒ ç½®ããªãŠã™ã®ã§ã€ä¸€å›æ¶ˆã™ã€‚
 			o.resetFlag( StaticObject::FLAG_FIRE_X | StaticObject::FLAG_FIRE_Y );
 		}
 	}
-	//‰Šİ’u
+	//ç‚è¨­ç½®
 	for ( int y = 0; y < HEIGHT; ++y ){
 		for ( int x = 0; x < WIDTH; ++x ){
 			if ( mStaticObjects( x, y ).checkFlag( StaticObject::FLAG_EXPLODING ) ){
@@ -195,7 +195,7 @@ void State::update(){
 		}
 	}
 
-	//1P,2P‚Ìİ’u”š’e”‚ğƒJƒEƒ“ƒg
+	//1P,2Pã®è¨­ç½®çˆ†å¼¾æ•°ã‚’ã‚«ã‚¦ãƒ³ãƒˆ
 	int bombNumber[ 2 ];
 	bombNumber[ 0 ] = bombNumber[ 1 ] = 0;
 	for ( int y = 0; y < HEIGHT; ++y ){
@@ -206,24 +206,24 @@ void State::update(){
 			}
 		}
 	}
-	//ƒ_ƒCƒiƒ~ƒbƒNƒIƒuƒWƒFƒNƒg‚Åƒ‹[ƒv
+	//ãƒ€ã‚¤ãƒŠãƒŸãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ãƒ«ãƒ¼ãƒ—
 	for ( int i = 0; i < mDynamicObjectNumber; ++i ){
 		DynamicObject& o = mDynamicObjects[ i ];
-		if ( o.isDead() ){ //€‚ñ‚Å‚éBI‚í‚éB
+		if ( o.isDead() ){ //æ­»ã‚“ã§ã‚‹ã€‚çµ‚ã‚ã‚‹ã€‚
 			continue;
 		}
-		//’u‚¢‚½”š’e‚ÆÚG‚µ‚Ä‚¢‚é‚©ƒ`ƒFƒbƒN
+		//ç½®ã„ãŸçˆ†å¼¾ã¨æ¥è§¦ã—ã¦ã„ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 		for ( int j = 0; j < 2; ++j ){
-			if ( o.mLastBombX[ j ] >= 0 ){ //0ˆÈã‚È‚ç‰½‚©“ü‚Á‚Ä‚¢‚éB
+			if ( o.mLastBombX[ j ] >= 0 ){ //0ä»¥ä¸Šãªã‚‰ä½•ã‹å…¥ã£ã¦ã„ã‚‹ã€‚
 				if ( !o.isIntersectWall( o.mLastBombX[ j ], o.mLastBombY[ j ] ) ){
 					o.mLastBombX[ j ] = o.mLastBombY[ j ] = -1;
 				}
 			}
 		}
-		//Œ»İƒZƒ‹‚ğæ“¾
+		//ç¾åœ¨ã‚»ãƒ«ã‚’å–å¾—
 		int x, y;
 		o.getCell( &x, &y );
-		//‚±‚ê‚ğ’†S‚Æ‚·‚éƒZƒ‹‚Ì’†‚©‚ç•Ç‚ğ’T‚µ‚Ä”z—ñ‚ÉŠi”[
+		//ã“ã‚Œã‚’ä¸­å¿ƒã¨ã™ã‚‹ã‚»ãƒ«ã®ä¸­ã‹ã‚‰å£ã‚’æ¢ã—ã¦é…åˆ—ã«æ ¼ç´
 		int wallsX[ 9 ];
 		int wallsY[ 9 ];
 		int wallNumber = 0;
@@ -232,10 +232,10 @@ void State::update(){
 				int tx = x + i - 1;
 				int ty = y + j - 1;
 				const StaticObject& so = mStaticObjects( tx, ty );
-				if ( so.checkFlag( StaticObject::FLAG_WALL | StaticObject::FLAG_BRICK | StaticObject::FLAG_BOMB ) ){ //•Ç‚Å
+				if ( so.checkFlag( StaticObject::FLAG_WALL | StaticObject::FLAG_BRICK | StaticObject::FLAG_BOMB ) ){ //å£ã§
 					bool myBomb0 = ( o.mLastBombX[ 0 ] == tx ) && ( o.mLastBombY[ 0 ] == ty );
 					bool myBomb1 = ( o.mLastBombX[ 1 ] == tx ) && ( o.mLastBombY[ 1 ] == ty );
-					if ( !myBomb0 && !myBomb1 ){ //©•ª‚ª’u‚¢‚½”š’e‚¶‚á‚È‚¢
+					if ( !myBomb0 && !myBomb1 ){ //è‡ªåˆ†ãŒç½®ã„ãŸçˆ†å¼¾ã˜ã‚ƒãªã„
 						wallsX[ wallNumber ] = x + i - 1;
 						wallsY[ wallNumber ] = y + j - 1;
 						++wallNumber;
@@ -243,16 +243,16 @@ void State::update(){
 				}
 			}
 		}
-		//•ÇƒŠƒXƒg‚ğ“n‚µ‚ÄˆÚ“®ˆ—
+		//å£ãƒªã‚¹ãƒˆã‚’æ¸¡ã—ã¦ç§»å‹•å‡¦ç†
 		o.move( wallsX, wallsY, wallNumber );
-		//ˆÚ“®Œã‚ÌˆÊ’u‚ÅüˆÍ9ƒ}ƒX‚ÆÕ“Ë”»’è‚µ‚Ä‚¢‚ë‚¢‚ë‚È”½‰
+		//ç§»å‹•å¾Œã®ä½ç½®ã§å‘¨å›²9ãƒã‚¹ã¨è¡çªåˆ¤å®šã—ã¦ã„ã‚ã„ã‚ãªåå¿œ
 		for ( int i = 0; i < 3; ++i ){
 			for ( int j = 0; j < 3; ++j ){
 				StaticObject& so = mStaticObjects( x + i - 1, y + j - 1 );
-				if ( o.isIntersectWall( x + i - 1, y + j - 1 ) ){ //G‚Á‚Ä‚Ü‚·
+				if ( o.isIntersectWall( x + i - 1, y + j - 1 ) ){ //è§¦ã£ã¦ã¾ã™
 					if ( so.checkFlag( StaticObject::FLAG_FIRE_X | StaticObject::FLAG_FIRE_Y ) ){
-						o.die(); //Ä‚©‚ê‚½
-					}else if ( !so.checkFlag( StaticObject::FLAG_BRICK ) ){ //‚ ‚ç‚í‚É‚È‚Á‚Ä‚¢‚éƒAƒCƒeƒ€‚ª‚ ‚ê‚Î
+						o.die(); //ç„¼ã‹ã‚ŒãŸ
+					}else if ( !so.checkFlag( StaticObject::FLAG_BRICK ) ){ //ã‚ã‚‰ã‚ã«ãªã£ã¦ã„ã‚‹ã‚¢ã‚¤ãƒ†ãƒ ãŒã‚ã‚Œã°
 						if ( so.checkFlag( StaticObject::FLAG_ITEM_POWER ) ){
 							so.resetFlag( StaticObject::FLAG_ITEM_POWER );
 							++o.mBombPower;
@@ -264,18 +264,18 @@ void State::update(){
 				}
 			}
 		}
-		//ˆÚ“®ŒãƒZƒ‹”Ô†‚ğæ“¾
+		//ç§»å‹•å¾Œã‚»ãƒ«ç•ªå·ã‚’å–å¾—
 		o.getCell( &x, &y );
-		//”š’e‚ğ’u‚­
-		if ( o.hasBombButtonPressed() ){ //”š’eİ’uƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚¢‚Ä
-			if ( bombNumber[ o.mPlayerID ] < o.mBombNumber ){ //”š’eÅ‘å’l–¢–‚Å
+		//çˆ†å¼¾ã‚’ç½®ã
+		if ( o.hasBombButtonPressed() ){ //çˆ†å¼¾è¨­ç½®ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚Œã¦ã„ã¦
+			if ( bombNumber[ o.mPlayerID ] < o.mBombNumber ){ //çˆ†å¼¾æœ€å¤§å€¤æœªæº€ã§
 				StaticObject& so = mStaticObjects( x, y );
-				if ( !so.checkFlag( StaticObject::FLAG_BOMB ) ){ //”š’e‚ª‚È‚¢
+				if ( !so.checkFlag( StaticObject::FLAG_BOMB ) ){ //çˆ†å¼¾ãŒãªã„
 					so.setFlag( StaticObject::FLAG_BOMB );
 					so.mBombOwner = &o;
 					so.mCount = 0;
 
-					//’u‚¢‚½”š’eˆÊ’u‚ğXV
+					//ç½®ã„ãŸçˆ†å¼¾ä½ç½®ã‚’æ›´æ–°
 					if ( o.mLastBombX[ 0 ] < 0 ){
 						o.mLastBombX[ 0 ] = x;
 						o.mLastBombY[ 0 ] = y;
@@ -288,7 +288,7 @@ void State::update(){
 			}
 		}
 	}
-	//ŸB“G‚ÆƒvƒŒƒCƒ„[‚ÌÚG”»’èB
+	//æ¬¡ã€‚æ•µã¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ¥è§¦åˆ¤å®šã€‚
 	for ( int i = 0; i < mDynamicObjectNumber; ++i ){
 		for ( int j = i + 1; j < mDynamicObjectNumber; ++j ){
 			mDynamicObjects[ i ].doCollisionReactionToDynamic( &mDynamicObjects[ j ] );
@@ -301,116 +301,116 @@ void State::setFire( int x, int y ){
 	int power = o.mBombOwner->mBombPower;
 	int end;
 	
-	//ƒ‹[ƒv“à‚Ìˆ—‚Í‚Ù‚Æ‚ñ‚Ç4ƒ‹[ƒv‚ÅˆêB
-	//‚â‚ë‚¤‚Æv‚¦‚Î‹¤’Ê‰»‚Í‚Å‚«‚éB‚µ‚©‚µA‚»‚ê‚É‚æ‚Á‚Ä‰½‚ğ‚â‚é‚Ì‚©‚í‚©‚è‚É‚­‚¢ŠÖ”‚ª‚Å‚«‚Ä‚µ‚Ü‚¤Œ‡“_‚à‚ ‚éB
-	//‚±‚±‚Å‚Í4‰ñ“¯‚¶‚à‚Ì‚ğ‘‚¢‚½B
+	//ãƒ«ãƒ¼ãƒ—å†…ã®å‡¦ç†ã¯ã»ã¨ã‚“ã©4ãƒ«ãƒ¼ãƒ—ã§ä¸€ç·’ã€‚
+	//ã‚„ã‚ã†ã¨æ€ãˆã°å…±é€šåŒ–ã¯ã§ãã‚‹ã€‚ã—ã‹ã—ã€ãã‚Œã«ã‚ˆã£ã¦ä½•ã‚’ã‚„ã‚‹ã®ã‹ã‚ã‹ã‚Šã«ãã„é–¢æ•°ãŒã§ãã¦ã—ã¾ã†æ¬ ç‚¹ã‚‚ã‚ã‚‹ã€‚
+	//ã“ã“ã§ã¯4å›åŒã˜ã‚‚ã®ã‚’æ›¸ã„ãŸã€‚
 
-	//¶
+	//å·¦
 	end = ( x - power < 0 ) ? 0 : ( x - power );
 	for ( int i = x - 1; i >= end; --i ){
 		StaticObject& to = mStaticObjects( i, y );
 		to.setFlag( StaticObject::FLAG_FIRE_X );
-		if ( to.checkFlag( StaticObject::FLAG_WALL | StaticObject::FLAG_BRICK | StaticObject::FLAG_BOMB ) ){ //‰½‚©’u‚¢‚Ä‚ ‚ê‚Î‰Î‚Í~‚Ü‚é
+		if ( to.checkFlag( StaticObject::FLAG_WALL | StaticObject::FLAG_BRICK | StaticObject::FLAG_BOMB ) ){ //ä½•ã‹ç½®ã„ã¦ã‚ã‚Œã°ç«ã¯æ­¢ã¾ã‚‹
 			break;
 		}else{
-			//‚à‚µƒAƒCƒeƒ€‚ª‚ ‚ê‚Î–•E
+			//ã‚‚ã—ã‚¢ã‚¤ãƒ†ãƒ ãŒã‚ã‚Œã°æŠ¹æ®º
 			to.resetFlag( StaticObject::FLAG_ITEM_BOMB | StaticObject::FLAG_ITEM_POWER );
 		}
 	}
-	//‰E
+	//å³
 	end = ( x + power >= WIDTH ) ? ( WIDTH - 1 ) : ( x + power );
 	for ( int i = x + 1; i <= end; ++i ){
 		StaticObject& to = mStaticObjects( i, y );
 		to.setFlag( StaticObject::FLAG_FIRE_X );
-		if ( to.checkFlag( StaticObject::FLAG_WALL | StaticObject::FLAG_BRICK | StaticObject::FLAG_BOMB ) ){ //‰½‚©’u‚¢‚Ä‚ ‚ê‚Î‰Î‚Í~‚Ü‚é
+		if ( to.checkFlag( StaticObject::FLAG_WALL | StaticObject::FLAG_BRICK | StaticObject::FLAG_BOMB ) ){ //ä½•ã‹ç½®ã„ã¦ã‚ã‚Œã°ç«ã¯æ­¢ã¾ã‚‹
 			break;
 		}else{
-			//‚à‚µƒAƒCƒeƒ€‚ª‚ ‚ê‚Î–•E
+			//ã‚‚ã—ã‚¢ã‚¤ãƒ†ãƒ ãŒã‚ã‚Œã°æŠ¹æ®º
 			to.resetFlag( StaticObject::FLAG_ITEM_BOMB | StaticObject::FLAG_ITEM_POWER );
 		}
 	}
-	//ã
+	//ä¸Š
 	end = ( y - power < 0 ) ? 0 : ( y - power );
 	for ( int i = y - 1; i >= end; --i ){
 		StaticObject& to = mStaticObjects( x, i );
 		to.setFlag( StaticObject::FLAG_FIRE_Y );
-		if ( to.checkFlag( StaticObject::FLAG_WALL | StaticObject::FLAG_BRICK | StaticObject::FLAG_BOMB ) ){ //‰½‚©’u‚¢‚Ä‚ ‚ê‚Î‰Î‚Í~‚Ü‚é
+		if ( to.checkFlag( StaticObject::FLAG_WALL | StaticObject::FLAG_BRICK | StaticObject::FLAG_BOMB ) ){ //ä½•ã‹ç½®ã„ã¦ã‚ã‚Œã°ç«ã¯æ­¢ã¾ã‚‹
 			break;
 		}else{
-			//‚à‚µƒAƒCƒeƒ€‚ª‚ ‚ê‚Î–•E
+			//ã‚‚ã—ã‚¢ã‚¤ãƒ†ãƒ ãŒã‚ã‚Œã°æŠ¹æ®º
 			to.resetFlag( StaticObject::FLAG_ITEM_BOMB | StaticObject::FLAG_ITEM_POWER );
 		}
 	}
-	//‰º
+	//ä¸‹
 	end = ( y + power >= HEIGHT ) ? ( HEIGHT - 1 ) : ( y + power );
 	for ( int i = y + 1; i <= end; ++i ){
 		StaticObject& to = mStaticObjects( x, i );
 		to.setFlag( StaticObject::FLAG_FIRE_Y );
-		if ( to.checkFlag( StaticObject::FLAG_WALL | StaticObject::FLAG_BRICK | StaticObject::FLAG_BOMB ) ){ //‰½‚©’u‚¢‚Ä‚ ‚ê‚Î‰Î‚Í~‚Ü‚é
+		if ( to.checkFlag( StaticObject::FLAG_WALL | StaticObject::FLAG_BRICK | StaticObject::FLAG_BOMB ) ){ //ä½•ã‹ç½®ã„ã¦ã‚ã‚Œã°ç«ã¯æ­¢ã¾ã‚‹
 			break;
 		}else{
-			//‚à‚µƒAƒCƒeƒ€‚ª‚ ‚ê‚Î–•E
+			//ã‚‚ã—ã‚¢ã‚¤ãƒ†ãƒ ãŒã‚ã‚Œã°æŠ¹æ®º
 			to.resetFlag( StaticObject::FLAG_ITEM_BOMB | StaticObject::FLAG_ITEM_POWER );
 		}
 	}
 
-	//[‚±‚±‚©‚ç‰º‚Í—‰ğ‚ª¢“ï]
+	//[ã“ã“ã‹ã‚‰ä¸‹ã¯ç†è§£ãŒå›°é›£]
 
-	//‚±‚±‚©‚ç‰º‚Í
-	//˜A½”š”­‚Ìƒ^ƒCƒ~ƒ“ƒOƒYƒŒ‚Ì‚½‚ß‚É—ùŠ¢‚ªÄ‚¯—‚¿‚éƒ^ƒCƒ~ƒ“ƒO‚ªƒYƒŒ‚Ä‚µ‚Ü‚¤–â‘è‚ğ‰ğŒˆ‚·‚é‚½‚ß‚É‚ ‚éB
-	//››  
-	//‚Æ‚ ‚Á‚Ä›‚ª”š’eA ‚ª—ùŠ¢‚Æ‚·‚éB‰E‚©‚ç‡‚É”š”­‚·‚é‚ÆA‚Ü‚¸
-	//›œ¡ 
-	//‚Æ‚È‚éBœ‚ª”š”­’†A¡‚ªÄ‚¯‚½—ùŠ¢B‚»‚ÌŒã˜A½‚µ‚Ä‚¢‚Á‚ÄA‚¢‚¸‚ê—ùŠ¢‚ªÄ‚¯—‚¿A
-	//œ@@ 
-	//‚Æ’†‰›“ñŒÂ‚ªÁ‚¦‚éB‚·‚é‚ÆA¶‚Ì”š•—‚ğÕ‚é‚à‚Ì‚ª‚È‚­‚È‚Á‚ÄA
-	//œ¨¨¡
-	//‚ÆÄ‚©‚ê‚Ä‚µ‚Ü‚¤‚Ì‚Å‚ ‚éB‚±‚ê‚ğ–h‚®‚É‚ÍA—ùŠ¢‚Í˜A½‚·‚é”š’e‚Ì’†‚ÅÅ‚à’x‚¢‚à‚Ì‚É‡‚í‚¹‚ÄÄ‚¯—‚¿‚Ë‚Î‚È‚ç‚È‚¢B
-	//‚»‚Ì‚½‚ß‚ÉA”š”­‚µ‚½‚Ä‚Ì”š•—‚ª“Í‚­”ÍˆÍ‚Ì—ùŠ¢‚ÌƒJƒEƒ“ƒg‚ğ0‚É‰Šú‰»‚µ‚Ä‚â‚é•K—v‚ª‚ ‚é‚Ì‚Å‚ ‚éB
-	//‚¢‚ë‚¢‚ë‚È‚â‚è•û‚ª‚ ‚é‚ªA”¼‚ÎƒRƒsƒy‚ÅÏ‚Ş‚±‚Ì‚â‚è•û‚ğÌ—p‚µ‚Ä‚İ‚½B
-	//‚Å‚àA–{“–‚Í”š”­ŠJn‚É”š•—‚Ì‹y‚Ôƒ}ƒX‚ğŒÅ’è‚·‚é•û–@‚Ì•û‚ª³‚µ‚¢B
-	//”š’eƒNƒ‰ƒX‚ğ•ÊŒÂ—pˆÓ‚µ‚ÄA©•ª‚ªÄ‚­ƒ}ƒX‚ÌƒŠƒXƒg‚ğ‚Â‚Ì‚ª‘f’¼‚¾‚ë‚¤B
-	//‚µ‚©‚µ‚»‚ê‚Í‘å‰ü‘¢‚É‚È‚Á‚Ä‚µ‚Ü‚¤‚Ì‚ÅAƒTƒ“ƒvƒ‹‚Æ‚µ‚Ä‚Í‚æ‚ë‚µ‚­‚È‚¢‚Æv‚¢A‚±‚¤‚µ‚Ä‚ ‚éB
+	//ã“ã“ã‹ã‚‰ä¸‹ã¯
+	//é€£é–çˆ†ç™ºã®ã‚¿ã‚¤ãƒŸãƒ³ã‚°ã‚ºãƒ¬ã®ãŸã‚ã«ç…‰ç“¦ãŒç„¼ã‘è½ã¡ã‚‹ã‚¿ã‚¤ãƒŸãƒ³ã‚°ãŒã‚ºãƒ¬ã¦ã—ã¾ã†å•é¡Œã‚’è§£æ±ºã™ã‚‹ãŸã‚ã«ã‚ã‚‹ã€‚
+	//â—‹â—‹â–¡â–¡
+	//ã¨ã‚ã£ã¦â—‹ãŒçˆ†å¼¾ã€â–¡ãŒç…‰ç“¦ã¨ã™ã‚‹ã€‚å³ã‹ã‚‰é †ã«çˆ†ç™ºã™ã‚‹ã¨ã€ã¾ãš
+	//â—‹â—â– â–¡
+	//ã¨ãªã‚‹ã€‚â—ãŒçˆ†ç™ºä¸­ã€â– ãŒç„¼ã‘ãŸç…‰ç“¦ã€‚ãã®å¾Œé€£é–ã—ã¦ã„ã£ã¦ã€ã„ãšã‚Œç…‰ç“¦ãŒç„¼ã‘è½ã¡ã€
+	//â—ã€€ã€€â–¡
+	//ã¨ä¸­å¤®äºŒå€‹ãŒæ¶ˆãˆã‚‹ã€‚ã™ã‚‹ã¨ã€å·¦ã®çˆ†é¢¨ã‚’é®ã‚‹ã‚‚ã®ãŒãªããªã£ã¦ã€
+	//â—â†’â†’â– 
+	//ã¨ç„¼ã‹ã‚Œã¦ã—ã¾ã†ã®ã§ã‚ã‚‹ã€‚ã“ã‚Œã‚’é˜²ãã«ã¯ã€ç…‰ç“¦ã¯é€£é–ã™ã‚‹çˆ†å¼¾ã®ä¸­ã§æœ€ã‚‚é…ã„ã‚‚ã®ã«åˆã‚ã›ã¦ç„¼ã‘è½ã¡ã­ã°ãªã‚‰ãªã„ã€‚
+	//ãã®ãŸã‚ã«ã€çˆ†ç™ºã—ãŸã¦ã®çˆ†é¢¨ãŒå±Šãç¯„å›²ã®ç…‰ç“¦ã®ã‚«ã‚¦ãƒ³ãƒˆã‚’0ã«åˆæœŸåŒ–ã—ã¦ã‚„ã‚‹å¿…è¦ãŒã‚ã‚‹ã®ã§ã‚ã‚‹ã€‚
+	//ã„ã‚ã„ã‚ãªã‚„ã‚Šæ–¹ãŒã‚ã‚‹ãŒã€åŠã°ã‚³ãƒ”ãƒšã§æ¸ˆã‚€ã“ã®ã‚„ã‚Šæ–¹ã‚’æ¡ç”¨ã—ã¦ã¿ãŸã€‚
+	//ã§ã‚‚ã€æœ¬å½“ã¯çˆ†ç™ºé–‹å§‹æ™‚ã«çˆ†é¢¨ã®åŠã¶ãƒã‚¹ã‚’å›ºå®šã™ã‚‹æ–¹æ³•ã®æ–¹ãŒæ­£ã—ã„ã€‚
+	//çˆ†å¼¾ã‚¯ãƒ©ã‚¹ã‚’åˆ¥å€‹ç”¨æ„ã—ã¦ã€è‡ªåˆ†ãŒç„¼ããƒã‚¹ã®ãƒªã‚¹ãƒˆã‚’æŒã¤ã®ãŒç´ ç›´ã ã‚ã†ã€‚
+	//ã—ã‹ã—ãã‚Œã¯å¤§æ”¹é€ ã«ãªã£ã¦ã—ã¾ã†ã®ã§ã€ã‚µãƒ³ãƒ—ãƒ«ã¨ã—ã¦ã¯ã‚ˆã‚ã—ããªã„ã¨æ€ã„ã€ã“ã†ã—ã¦ã‚ã‚‹ã€‚
 
-	//¶
+	//å·¦
 	end = ( x - power < 0 ) ? 0 : ( x - power );
 	for ( int i = x - 1; i >= end; --i ){
 		StaticObject& to = mStaticObjects( i, y );
-		if ( to.checkFlag( StaticObject::FLAG_WALL | StaticObject::FLAG_BRICK ) ){ //”š’e‚Í‘f’Ê‚è‚·‚éB‚Ç‚¤‚¹˜A½‚µ‚ÄÁ‚¦‚é‚©‚ç‚¾B
-			if ( ( o.mCount == 0 ) && to.checkFlag( StaticObject::FLAG_BRICK ) ){ //ƒŒƒ“ƒK‚È‚çÄ‚¯—‚¿ƒJƒEƒ“ƒgŠJn
+		if ( to.checkFlag( StaticObject::FLAG_WALL | StaticObject::FLAG_BRICK ) ){ //çˆ†å¼¾ã¯ç´ é€šã‚Šã™ã‚‹ã€‚ã©ã†ã›é€£é–ã—ã¦æ¶ˆãˆã‚‹ã‹ã‚‰ã ã€‚
+			if ( ( o.mCount == 0 ) && to.checkFlag( StaticObject::FLAG_BRICK ) ){ //ãƒ¬ãƒ³ã‚¬ãªã‚‰ç„¼ã‘è½ã¡ã‚«ã‚¦ãƒ³ãƒˆé–‹å§‹
 				to.mCount = 0;
 			}
 			break;
 		}
 	}
-	//‰E
+	//å³
 	end = ( x + power >= WIDTH ) ? ( WIDTH - 1 ) : ( x + power );
 	for ( int i = x + 1; i <= end; ++i ){
 		StaticObject& to = mStaticObjects( i, y );
 		if ( to.checkFlag( StaticObject::FLAG_WALL | StaticObject::FLAG_BRICK ) ){ 
-			if ( ( o.mCount == 0 ) && to.checkFlag( StaticObject::FLAG_BRICK ) ){ //ƒŒƒ“ƒK‚È‚çÄ‚¯—‚¿ƒJƒEƒ“ƒgŠJn
+			if ( ( o.mCount == 0 ) && to.checkFlag( StaticObject::FLAG_BRICK ) ){ //ãƒ¬ãƒ³ã‚¬ãªã‚‰ç„¼ã‘è½ã¡ã‚«ã‚¦ãƒ³ãƒˆé–‹å§‹
 				to.mCount = 0;
 			}
 			break;
 		}
 	}
-	//ã
+	//ä¸Š
 	end = ( y - power < 0 ) ? 0 : ( y - power );
 	for ( int i = y - 1; i >= end; --i ){
 		StaticObject& to = mStaticObjects( x, i );
 		if ( to.checkFlag( StaticObject::FLAG_WALL | StaticObject::FLAG_BRICK ) ){ 
-			if ( ( o.mCount == 0 ) && to.checkFlag( StaticObject::FLAG_BRICK ) ){ //ƒŒƒ“ƒK‚È‚çÄ‚¯—‚¿ƒJƒEƒ“ƒgŠJn
+			if ( ( o.mCount == 0 ) && to.checkFlag( StaticObject::FLAG_BRICK ) ){ //ãƒ¬ãƒ³ã‚¬ãªã‚‰ç„¼ã‘è½ã¡ã‚«ã‚¦ãƒ³ãƒˆé–‹å§‹
 				to.mCount = 0;
 			}
 			break;
 		}
 	}
-	//‰º
+	//ä¸‹
 	end = ( y + power >= HEIGHT ) ? ( HEIGHT - 1 ) : ( y + power );
 	for ( int i = y + 1; i <= end; ++i ){
 		StaticObject& to = mStaticObjects( x, i );
 		if ( to.checkFlag( StaticObject::FLAG_WALL | StaticObject::FLAG_BRICK ) ){
-			if ( ( o.mCount == 0 ) && to.checkFlag( StaticObject::FLAG_BRICK ) ){ //ƒŒƒ“ƒK‚È‚çÄ‚¯—‚¿ƒJƒEƒ“ƒgŠJn
+			if ( ( o.mCount == 0 ) && to.checkFlag( StaticObject::FLAG_BRICK ) ){ //ãƒ¬ãƒ³ã‚¬ãªã‚‰ç„¼ã‘è½ã¡ã‚«ã‚¦ãƒ³ãƒˆé–‹å§‹
 				to.mCount = 0;
 			}
 			break;
@@ -419,7 +419,7 @@ void State::setFire( int x, int y ){
 }
 
 bool State::hasCleared() const {
-	//“G‚ªc‚Á‚Ä‚¢‚È‚¯‚ê‚ÎƒNƒŠƒA
+	//æ•µãŒæ®‹ã£ã¦ã„ãªã‘ã‚Œã°ã‚¯ãƒªã‚¢
 	for ( int i = 0; i < mDynamicObjectNumber; ++i ){
 		if ( mDynamicObjects[ i ].isEnemy() ){
 			return false;
@@ -429,7 +429,7 @@ bool State::hasCleared() const {
 }
 
 bool State::isAlive( int playerID ) const {
-	//‚¢‚ê‚Î¶‚«‚Ä‚¢‚é
+	//ã„ã‚Œã°ç”Ÿãã¦ã„ã‚‹
 	for ( int i = 0; i < mDynamicObjectNumber; ++i ){
 		if ( mDynamicObjects[ i ].mType == DynamicObject::TYPE_PLAYER ){
 			if ( mDynamicObjects[ i ].mPlayerID == playerID ){

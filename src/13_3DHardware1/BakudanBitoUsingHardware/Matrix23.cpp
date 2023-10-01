@@ -41,34 +41,34 @@ void Matrix23::operator*=( const Matrix23& m ){
 }
 
 void Matrix23::multiply( Vector2* out, const Vector2& in ) const {
-	double tx = in.x; //out��in��������������Ȃ��̂ŁA�o�b�N�A�b�v
-	out->x = m00 * tx + m01 * in.y + m02; //����*x + ����*y + �E��*1
-	out->y = m10 * tx + m11 * in.y + m12; //����*x + ����*y + ����*1
+	double tx = in.x; //outとinが同じかもしれないので、バックアップ
+	out->x = m00 * tx + m01 * in.y + m02; //左上*x + 中上*y + 右上*1
+	out->y = m10 * tx + m11 * in.y + m12; //左下*x + 中下*y + 左下*1
 }
 
-//���ʂ̂Ȃ��ړ��s���Z�֐��̍���
+//無駄のない移動行列乗算関数の作り方
 /*
 a b c
 d e f
 
-��
+に
 
 1 0 tx
 0 1 ty
 
-���|����B3x3�Ɋg������΁A
+を掛ける。3x3に拡張すれば、
 
 a b c   1 0 tx
 d e f   0 1 ty
 0 0 1   0 0 1
 
-3�s�ڂ͂ǂ��ł������̂ŏ�2�s�����v�Z����ƁA
+3行目はどうでもいいので上2行だけ計算すると、
 
 a b (a*tx + b*ty + c)
 d e (d*tx + e*ty + f)
 
-�̂��Ƃ��B���ꂪ�����ł���B
-�܂�Am02��m12�����G��Ȃ��Ă���
+のことだ。これが答えである。
+つまり、m02とm12しか触らなくていい
 */
 
 void Matrix23::translate( const Vector2& a ){
@@ -76,29 +76,29 @@ void Matrix23::translate( const Vector2& a ){
 	m12 += m10 * a.x + m11 * a.y;
 }
 
-//���ʂ̂Ȃ��g��k���s���Z�̍���
+//無駄のない拡大縮小行列乗算の作り方
 /*
 a b c
 d e f
 
-��
+に
 
 sx 0 0
 0 sy 0
 
-���|����B
+を掛ける。
 
 a b c   sx 0  0
 d e f   0  sy 0
 0 0 1   0  0  1
 
-�̏�2�s���v�Z����΁A
+の上2行を計算すれば、
 
 a*sx b*sy c
 d*sx e*sy f
 
-���ꂪ�����ł���B
-m00,m01,m10,m11��4�v�f��G��΂���
+これが答えである。
+m00,m01,m10,m11の4要素を触ればいい
 */
 void Matrix23::scale( const Vector2& a ){
 	m00 *= a.x;
@@ -107,38 +107,38 @@ void Matrix23::scale( const Vector2& a ){
 	m11 *= a.y;
 }
 
-//���ʂ̂Ȃ���]�s���Z�̍���
+//無駄のない回転行列乗算の作り方
 /*
 a b c
 d e f
 
-��
+に
 
 p -q 0
 q p 0
 
-���|����Bp���R�T�C���ŁAq���T�C�����B
+を掛ける。pがコサインで、qがサインだ。
 
 a b c   p -q 0
 d e f   q  p 0
 0 0 1   0  0 1
 
-��2�s���v�Z����ƁA
+上2行を計算すると、
 
 (ap + bq) (-aq + bp) c
 (dp + eq) (-dq + ep) f
 
-m00,m01,m10,m11��4�v�f��G��΂���
+m00,m01,m10,m11の4要素を触ればいい
 */
 
 void Matrix23::rotate( double r ){
 	double c = cos( r );
 	double s = sin( r );
-	//m00�̓o�b�N�A�b�v�����܂��B��s�ڂ�m00���㏑�����Ă��܂��̂ŁB
+	//m00はバックアップを取ります。一行目でm00を上書きしてしまうので。
 	double t = m00;
 	m00 = t * c + m01 * s;
 	m01 = t * ( -s ) + m01 * c;
-	t = m10; //m10���o�b�N�A�b�v
+	t = m10; //m10をバックアップ
 	m10 = t * c + m11 * s;
 	m11 = t * ( -s ) + m11 * c;
 }

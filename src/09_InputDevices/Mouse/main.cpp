@@ -21,7 +21,7 @@ namespace GameLib{
 		oss << x << " " << y << " " << b0 << ":" << b1 << ":" << b2 << ":" << w;
 		drawDebugString( 0, 1, oss.str().c_str() );
 
-		//‚¾‚ñ‚¾‚ñÁ‚µ‚Ä‚­
+		//ã ã‚“ã ã‚“æ¶ˆã—ã¦ã
 		unsigned* vram = videoMemory();
 		for ( int i = 0; i < height(); ++i ){
 			for ( int j = 0; j < width(); ++j ){
@@ -32,7 +32,7 @@ namespace GameLib{
 				}
 			}
 		}
-		//ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ðo‚µ‚Ä‚Ý‚é‚æ
+		//ãƒžã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã‚’å‡ºã—ã¦ã¿ã‚‹ã‚ˆ
 		if ( x >= 0 && x < width() && y >= 0 && y < height() ){
 			vram[ y * width() + x ] = 0xffffffff;
 		}

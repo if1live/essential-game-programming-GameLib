@@ -25,7 +25,7 @@ namespace GameLib{
 			gUpperModel = gDatabase->createModel( "cube" );
 			gLowerModel = gDatabase->createModel( "cube" );
 		}
-		//ƒJƒƒ‰‚Æƒ‰ƒCƒg‚ğ“®‚©‚µ‚Ä‚İ‚é
+		//ã‚«ãƒ¡ãƒ©ã¨ãƒ©ã‚¤ãƒˆã‚’å‹•ã‹ã—ã¦ã¿ã‚‹
 		gLightVector.x = sin( gCount ) * cos( gCount );
 		gLightVector.y = sin( gCount ) * sin( gCount );
 		gLightVector.z = cos( gCount );
@@ -39,21 +39,21 @@ namespace GameLib{
 		vm.setViewTransform( gEyePosition, Vector3( 0.0, 0.0, 0.0 ) );
 		pm *= vm;
 
-		//s—ñ‚ğè“®‚Åì‚Á‚Ä‚¢‚­B
-		//‰º”¼g‚ª45“xŒX‚­
+		//è¡Œåˆ—ã‚’æ‰‹å‹•ã§ä½œã£ã¦ã„ãã€‚
+		//ä¸‹åŠèº«ãŒ45åº¦å‚¾ã
 		Matrix34 w;
 		w.setRotationZ( 45.0 );
-		//ã”¼g‚Í‰º”¼g‚©‚çY‚É‚¢‚­‚ç‚©ˆÚ“®
+		//ä¸ŠåŠèº«ã¯ä¸‹åŠèº«ã‹ã‚‰Yã«ã„ãã‚‰ã‹ç§»å‹•
 		double y = 4.0 + sin( gCount * 5.0 );
 		Matrix34 l;
 		l.setTranslation( Vector3( 0.0, y, 0.0 ) );
 
-		//‰º”¼g‚ğ•`‰æ
+		//ä¸‹åŠèº«ã‚’æç”»
 		Matrix44 pvwm;
 		pvwm.setMul( pm, w );
 		gUpperModel->draw( pvwm, gLightVector, gLightColor, gAmbient );
 
-		//ã”¼g‚ğ•`‰æ
+		//ä¸ŠåŠèº«ã‚’æç”»
 		Matrix34 t = w; 
 		t *= l; //w * l
 		pvwm.setMul( pm, t );

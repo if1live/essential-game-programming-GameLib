@@ -21,7 +21,7 @@ mDiffuseColor( 1.f, 1.f, 1.f ),
 mSpecularColor( 1.f, 1.f, 1.f ),
 mTransparency( 1.f ),
 mSpecularSharpness( 1.f ){
-	//–¼‘O‚â‚ç‚È‚É‚â‚ç‚ğ”²‚­
+	//åå‰ã‚„ã‚‰ãªã«ã‚„ã‚‰ã‚’æŠœã
 	int an = e.attributeNumber();
 	for ( int i = 0; i < an; ++i ){
 		Attribute a = e.attribute( i );
@@ -55,40 +55,40 @@ mSpecularSharpness( 1.f ){
 	}
 }
 
-//‰½‚à‚µ‚È‚­‚Ä‚¢‚¢
+//ä½•ã‚‚ã—ãªãã¦ã„ã„
 Batch::~Batch(){
 }
 
 void Batch::draw() const {
 	Graphics::Manager m = Graphics::Manager::instance();
-	//ƒeƒNƒXƒ`ƒƒƒZƒbƒg
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚»ãƒƒãƒˆ
 	if ( mTexture ){
 		mTexture->set();
 	}else{
-		m.setTexture( 0 ); //‹ó‚ÌƒeƒNƒXƒ`ƒƒ
+		m.setTexture( 0 ); //ç©ºã®ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	}
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhƒZƒbƒg
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰ã‚»ãƒƒãƒˆ
 	m.setBlendMode( mBlendMode );
-	//ƒuƒŒƒ“ƒhƒ‚[ƒh‚É‚æ‚Á‚ÄZƒoƒbƒtƒ@‘‚«‚İ‚Ìƒtƒ‰ƒO‚ğOn,Off
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰ã«ã‚ˆã£ã¦Zãƒãƒƒãƒ•ã‚¡æ›¸ãè¾¼ã¿ã®ãƒ•ãƒ©ã‚°ã‚’On,Off
 	if ( mBlendMode == Graphics::BLEND_OPAQUE ){
 		m.enableDepthWrite( true );
 	}else{
 		m.enableDepthWrite( false );
 	}
-	//ZƒeƒXƒg‚Í‚¢‚Â‚àOn
+	//Zãƒ†ã‚¹ãƒˆã¯ã„ã¤ã‚‚On
 	m.enableDepthTest( true );
-	//ƒJƒŠƒ“ƒO‚Í‚Æ‚è‚ ‚¦‚¸Off
+	//ã‚«ãƒªãƒ³ã‚°ã¯ã¨ã‚Šã‚ãˆãšOff
 	m.setCullMode( Graphics::CULL_NONE );
-	//Fƒpƒ‰ƒ[ƒ^
+	//è‰²ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 	m.setDiffuseColor( mDiffuseColor );
 	m.setSpecularColor( mSpecularColor );
 	m.setSpecularSharpness( mSpecularSharpness );
 	m.setTransparency( mTransparency );
 
-	//ƒf[ƒ^ƒZƒbƒg
+	//ãƒ‡ãƒ¼ã‚¿ã‚»ãƒƒãƒˆ
 	mVertexBuffer->set();
 	mIndexBuffer->set();
-	//•`‰æŠJn
+	//æç”»é–‹å§‹
 	m.drawIndexed( 0, mIndexBuffer->size() / 3, Graphics::PRIMITIVE_TRIANGLE );
 }
 

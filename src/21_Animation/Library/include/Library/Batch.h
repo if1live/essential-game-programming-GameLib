@@ -32,10 +32,10 @@ public:
 	void draw( 
 		const Matrix44& projectionViewMatrix, 
 		const Matrix34& worldMatrix,
-		const Vector3& lightVector, //ƒ‰ƒCƒg‚ÉŒü‚©‚¤ƒxƒNƒ^
-		const Vector3& lightColor, //ƒ‰ƒCƒg‚ÌF
-		const Vector3& ambient, //ŠÂ‹«Œõ
-		const Vector3& diffuseColor ) const; //ƒ‚ƒm‚ÌF
+		const Vector3& lightVector, //ãƒ©ã‚¤ãƒˆã«å‘ã‹ã†ãƒ™ã‚¯ã‚¿
+		const Vector3& lightColor, //ãƒ©ã‚¤ãƒˆã®è‰²
+		const Vector3& ambient, //ç’°å¢ƒå…‰
+		const Vector3& diffuseColor ) const; //ãƒ¢ãƒã®è‰²
 	const string* name() const;
 	const IndexBuffer* indexBuffer() const;
 	const VertexBuffer* vertexBuffer() const;

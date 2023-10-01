@@ -29,14 +29,14 @@ mSizes( sizes.size() ){
 
 CompositeArrayElement::~CompositeArrayElement(){}
 
-void CompositeArrayElement::setElement( int i, Element** e ){ //‚±‚Ì“Y‚¦š‚ÍˆêŸŒ³‰»‚µ‚½“Y‚¦š
+void CompositeArrayElement::setElement( int i, Element** e ){ //ã“ã®æ·»ãˆå­—ã¯ä¸€æ¬¡å…ƒåŒ–ã—ãŸæ·»ãˆå­—
 	mElements[ i ] = *e;
 	*e = 0;
 }
 
 
 void CompositeArrayElement::toString( OStringStream* o, int indent, const RefString& name ) const {
-	//ŠJnƒ^ƒO
+	//é–‹å§‹ã‚¿ã‚°
 	for ( int i = 0; i < indent; ++i ){
 		*o << '\t';
 	}
@@ -46,7 +46,7 @@ void CompositeArrayElement::toString( OStringStream* o, int indent, const RefStr
 		o->write( name.get(), name.size() );
 		*o << "\"";
 	}
-	//”z—ñƒTƒCƒYo—Í
+	//é…åˆ—ã‚µã‚¤ã‚ºå‡ºåŠ›
 	*o << " size=\"";
 	for ( int i = 0; i < mSizes.size(); ++i ){
 		*o << mSizes[ i ];
@@ -55,12 +55,12 @@ void CompositeArrayElement::toString( OStringStream* o, int indent, const RefStr
 		}
 	}
 	*o << "\">" << endl;
-	//’†g
-	RefString nullString; //”z—ñ‚ÌŠe—v‘f‚Í–¼‘O‚ğ‚½‚È‚¢
+	//ä¸­èº«
+	RefString nullString; //é…åˆ—ã®å„è¦ç´ ã¯åå‰ã‚’æŒãŸãªã„
 	for ( int i = 0; i < mElements.size(); ++i ){
 		mElements[ i ]->toString( o, indent+1, nullString );
 	}
-	//I—¹ƒ^ƒO
+	//çµ‚äº†ã‚¿ã‚°
 	for ( int i = 0; i < indent; ++i ){
 		*o << '\t';
 	}
@@ -80,12 +80,12 @@ mType( type ){
 
 PrimitiveArrayElement::~PrimitiveArrayElement(){}
 
-void PrimitiveArrayElement::setElement( int i, const RefString& e ){ //‚±‚Ì“Y‚¦š‚ÍˆêŸŒ³‰»‚µ‚½“Y‚¦š
+void PrimitiveArrayElement::setElement( int i, const RefString& e ){ //ã“ã®æ·»ãˆå­—ã¯ä¸€æ¬¡å…ƒåŒ–ã—ãŸæ·»ãˆå­—
 	mElements[ i ] = e;
 }
 
 void PrimitiveArrayElement::toString( OStringStream* o, int indent, const RefString& name ) const {
-	//ŠJnƒ^ƒO
+	//é–‹å§‹ã‚¿ã‚°
 	for ( int i = 0; i < indent; ++i ){
 		*o << '\t';
 	}
@@ -95,7 +95,7 @@ void PrimitiveArrayElement::toString( OStringStream* o, int indent, const RefStr
 		o->write( name.get(), name.size() );
 		*o << "\"";
 	}
-	//”z—ñƒTƒCƒYo—Í
+	//é…åˆ—ã‚µã‚¤ã‚ºå‡ºåŠ›
 	*o << " size=\"";
 	for ( int i = 0; i < mSizes.size(); ++i ){
 		*o << mSizes[ i ];
@@ -114,7 +114,7 @@ void PrimitiveArrayElement::toString( OStringStream* o, int indent, const RefStr
 		o->write( mElements[ i ].get(), mElements[ i ].size() );
 		*o << "\"/>" << endl;
 	}
-	//I—¹ƒ^ƒO
+	//çµ‚äº†ã‚¿ã‚°
 	for ( int i = 0; i < indent; ++i ){
 		*o << '\t';
 	}
@@ -136,7 +136,7 @@ CompositeElement::~CompositeElement(){
 	}
 }
 
-void CompositeElement::setChild( int i, const Child& c ){ //Š—LŒ ‚Í‚±‚Á‚¿‚ÉˆÚ‚é
+void CompositeElement::setChild( int i, const Child& c ){ //æ‰€æœ‰æ¨©ã¯ã“ã£ã¡ã«ç§»ã‚‹
 	mChildren[ i ] = c;
 }
 
@@ -149,7 +149,7 @@ int CompositeElement::childNumber() const {
 }
 
 void CompositeElement::toString( OStringStream* o, int indent, const RefString& name ) const {
-	//ŠJnƒ^ƒO
+	//é–‹å§‹ã‚¿ã‚°
 	for ( int i = 0; i < indent; ++i ){
 		*o << '\t';
 	}
@@ -167,17 +167,17 @@ void CompositeElement::toString( OStringStream* o, int indent, const RefString& 
 		*o << "\"";
 	}
 	*o << ">" << endl;
-	//’†g
+	//ä¸­èº«
 	for ( int i = 0; i < mChildren.size(); ++i ){
 		const Child& c = mChildren[ i ];
-		if ( c.mElement ){ //•¡‡Œ^
+		if ( c.mElement ){ //è¤‡åˆå‹
 			RefString nullString;
 			const RefString* name = mTemplate->getChildName( i );
-			if ( !name ){ //Šg’£•”•ª‚Í–³–¼‚È‚Ì‚Å‚±‚Ìˆ’u‚ª•K—v
+			if ( !name ){ //æ‹¡å¼µéƒ¨åˆ†ã¯ç„¡åãªã®ã§ã“ã®å‡¦ç½®ãŒå¿…è¦
 				name = &nullString;
 			}
 			c.mElement->toString( o, indent+1, *name );
-		}else{ //ƒvƒŠƒ~ƒeƒBƒu
+		}else{ //ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–
 			for ( int j = 0; j < indent + 1; ++j ){
 				*o << '\t';
 			}
@@ -193,7 +193,7 @@ void CompositeElement::toString( OStringStream* o, int indent, const RefString& 
 			*o << "\"/>" << endl;
 		}
 	}
-	//I—¹ƒ^ƒO
+	//çµ‚äº†ã‚¿ã‚°
 	for ( int i = 0; i < indent; ++i ){
 		*o << '\t';
 	}
@@ -209,7 +209,7 @@ ReferenceElement::~ReferenceElement(){
 }
 
 void ReferenceElement::toString( OStringStream* o, int indent, const RefString& ) const {
-	//ŠJnƒ^ƒO
+	//é–‹å§‹ã‚¿ã‚°
 	for ( int i = 0; i < indent; ++i ){
 		*o << '\t';
 	}

@@ -28,8 +28,8 @@ public:
 	int mHalfSize;
 };
 bool gFirstFrame = true;
-Square gPlayer; //©ƒLƒƒƒ‰‚Ì‚Â‚à‚è
-Square gWall; //•Ç
+Square gPlayer; //è‡ªã‚­ãƒ£ãƒ©ã®ã¤ã‚‚ã‚Š
+Square gWall; //å£
 
 namespace GameLib{
 	void Framework::update(){
@@ -39,7 +39,7 @@ namespace GameLib{
 			gPlayer.set( 16, 16, 16 );
 			gWall.set( 160, 120, 16 );
 		}
-		//ˆÚ“®—ÊƒQƒbƒg
+		//ç§»å‹•é‡ã‚²ãƒƒãƒˆ
 		int dx = 0;
 		int dy = 0;
 		if ( isKeyOn( 'a' ) ){
@@ -53,16 +53,16 @@ namespace GameLib{
 			dy = 7;
 		}
 		unsigned* vram = videoMemory();
-		//Õ“Ëˆ—(Å‘å4‰ñ)
+		//è¡çªå‡¦ç†(æœ€å¤§4å›)
 		unsigned color = 0xffff0000;
-		int numerator = 1; //•ªq
-		int denominator = 1; //•ª•ê
-		int testDx = dx; //‚±‚ê‚©‚ç‚·dx,dy
+		int numerator = 1; //åˆ†å­
+		int denominator = 1; //åˆ†æ¯
+		int testDx = dx; //ã“ã‚Œã‹ã‚‰è©¦ã™dx,dy
 		int testDy = dy;
-		int lastDx = 0; //‘åä•v‚¾‚Á‚½Å‘å‚Ìdx,dy
+		int lastDx = 0; //å¤§ä¸ˆå¤«ã ã£ãŸæœ€å¤§ã®dx,dy
 		int lastDy = 0;
 		for ( int i = 0; i < 4; ++i ){
-			Square tSquare; //ƒeƒ“ƒ|ƒ‰ƒŠ
+			Square tSquare; //ãƒ†ãƒ³ãƒãƒ©ãƒª
 			tSquare.set( gPlayer.mX + testDx, gPlayer.mY + testDy, gPlayer.mHalfSize );
 			numerator *= 2;
 			denominator *= 2;
@@ -71,22 +71,22 @@ namespace GameLib{
 				numerator -= 1;
 			}else{
 				numerator += 1;
-				lastDx = testDx; //XV
+				lastDx = testDx; //æ›´æ–°
 				lastDy = testDy;
 			}
 			testDx = dx * numerator / denominator;
 			testDy = dy * numerator / denominator;
 		}
-		//ˆÚ“®
+		//ç§»å‹•
 		gPlayer.mX += lastDx;
 		gPlayer.mY += lastDy;
 
-		//•`‰æ
-		//ˆê’UƒNƒŠƒA
+		//æç”»
+		//ä¸€æ—¦ã‚¯ãƒªã‚¢
 		for ( int i = 0; i < width() * height(); ++i ){
 			vram[ i ] = 0;
 		}
-		//“®‚©‚È‚¢‚Ù‚¤•`‰æ
+		//å‹•ã‹ãªã„ã»ã†æç”»
 		for ( int y = 0; y < 32; ++y ){
 			for ( int x = 0; x < 32; ++x ){
 				int tx = x + gWall.mX - 16;
@@ -94,7 +94,7 @@ namespace GameLib{
 				vram[ ty * width() + tx ] = 0xff0000ff; 
 			}
 		}
-		//“®‚­‚Ù‚¤•`‰æ
+		//å‹•ãã»ã†æç”»
 		for ( int y = 0; y < 32; ++y ){
 			for ( int x = 0; x < 32; ++x ){
 				int tx = x + gPlayer.mX - 16;

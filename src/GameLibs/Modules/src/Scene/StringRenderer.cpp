@@ -20,7 +20,7 @@ namespace Scene{
 using namespace GameLib::Math;
 using namespace GameLib::Graphics;
 
-//ƒ\[ƒg—p•Ö—˜ƒNƒ‰ƒX
+//ã‚½ãƒ¼ãƒˆç”¨ä¾¿åˆ©ã‚¯ãƒ©ã‚¹
 template< class T > struct PointerLess{
 	bool operator()( const T* a, const T* b ){
 		return ( *a < *b );
@@ -31,17 +31,17 @@ class StringRenderer::Impl : public ReferenceType{
 public:
 	Impl( int charCapacity, int requestCapacity ) :
 	mCharCapacity( charCapacity ),
-	mRequests( requestCapacity ){ //ƒŠƒNƒGƒXƒgŠm•Û
-		//TODO:ƒXƒe[ƒg•ÏX–½—ß‚ÌÅ‘å”‚Í‚Æ‚è‚ ‚¦‚¸•¶š”•ªB‰ßè‚·‚¬‚éB
+	mRequests( requestCapacity ){ //ãƒªã‚¯ã‚¨ã‚¹ãƒˆç¢ºä¿
+		//TODO:ã‚¹ãƒ†ãƒ¼ãƒˆå¤‰æ›´å‘½ä»¤ã®æœ€å¤§æ•°ã¯ã¨ã‚Šã‚ãˆãšæ–‡å­—æ•°åˆ†ã€‚éå‰°ã™ãã‚‹ã€‚
 		mPrimitiveRenderer = PrimitiveRenderer::create( charCapacity * 2, charCapacity + 4 );
-		//draw“ñ‰ñŒÄ‚Ô‚Ì‚É‘Îˆ‚·‚é‚½‚ß‚Ì•Ï”
-		mPreviousFrameId = Manager().frameId() - 1; //‰ß‚¬‹‚Á‚½’l‚É
+		//drawäºŒå›å‘¼ã¶ã®ã«å¯¾å‡¦ã™ã‚‹ãŸã‚ã®å¤‰æ•°
+		mPreviousFrameId = Manager().frameId() - 1; //éãå»ã£ãŸå€¤ã«
 	}
 	~Impl(){
 	}
 	void add( const Vector2& p, const char* s, unsigned c, bool wrap, float depth ){
 		STRONG_ASSERT( mCurrentFont && "Font hasn't been set." );
-		mRequests.push(); //‹óƒvƒbƒVƒ…
+		mRequests.push(); //ç©ºãƒ—ãƒƒã‚·ãƒ¥
 		Request& r = *mRequests.get();
 		r.mPosition = p;
 		r.mDepth = depth;
@@ -51,20 +51,20 @@ public:
 		r.mWrap = wrap;
 	}
 	void draw(){
-		//ƒtƒŒ[ƒ€IDƒ`ƒFƒbƒN
+		//ãƒ•ãƒ¬ãƒ¼ãƒ IDãƒã‚§ãƒƒã‚¯
 		unsigned fid = Manager().frameId();
 		STRONG_ASSERT( mPreviousFrameId != fid && "StringRenderer::draw() : you can't draw() twice in a frame!" );
 		mPreviousFrameId = fid;
 
-		if ( mRequests.size() == 0 ){ //‚â‚é‚±‚Æ‚È‚¢
+		if ( mRequests.size() == 0 ){ //ã‚„ã‚‹ã“ã¨ãªã„
 			return;
 		}
-		//TriangleRenderer‚É•W€ƒXƒe[ƒg‚ğ”­s
+		//TriangleRendererã«æ¨™æº–ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ç™ºè¡Œ
 		mPrimitiveRenderer.setBlendMode( Graphics::BLEND_LINEAR );
 		mPrimitiveRenderer.setCullMode( Graphics::CULL_NONE );
 		mPrimitiveRenderer.enableDepthTest( false );
 		mPrimitiveRenderer.enableDepthWrite( false );
-		//Œ»İ‚Ìƒrƒ…[ƒ|[ƒg‚ğæ“¾‚µ‚Äfloat‰»
+		//ç¾åœ¨ã®ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã‚’å–å¾—ã—ã¦floatåŒ–
 		Vector2 screenSize;
 		int tw, th;
 		Graphics::Manager().getViewport( 0, 0, &tw, &th );
@@ -72,109 +72,109 @@ public:
 			static_cast< float >( tw ),
 			static_cast< float >( th ) );
 
-		//•¶šƒoƒbƒtƒ@‚ğ—pˆÓ
+		//æ–‡å­—ãƒãƒƒãƒ•ã‚¡ã‚’ç”¨æ„
 		Array< Char > chars( mCharCapacity );
 		int charPosition = 0;
-		//ƒŠƒNƒGƒXƒg‚ğæ‚èo‚µ‚Äˆ—B
+		//ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚’å–ã‚Šå‡ºã—ã¦å‡¦ç†ã€‚
 		while ( mRequests.size() > 0 ){
 			Request& r = *mRequests.get();
 			Vector2 pos = r.mPosition;
 			float charHeight = static_cast< float >( r.mFont.charHeight() );
-			//ˆê•¶š‚Ã‚Âæ‚èo‚·Bunsigned char‚É‚·‚é•K—v‚ ‚è
+			//ä¸€æ–‡å­—ã¥ã¤å–ã‚Šå‡ºã™ã€‚unsigned charã«ã™ã‚‹å¿…è¦ã‚ã‚Š
 			int n = static_cast< int >( r.mString.size() );
 			const unsigned char* s = reinterpret_cast< const unsigned char* >( r.mString.c_str() );
 			for ( int i = 0; i < n; ++i ){
-				//Char€”õ
+				//Charæº–å‚™
 				int code = s[ i ];
-				//ShiftJis”ÍˆÍ‚©H
+				//ShiftJisç¯„å›²ã‹ï¼Ÿ
 				if ( ( code >= 0x81 && code <= 0x9F ) || ( code >= 0xE0 && code <= 0xFC ) ){
 					if ( ( i + 1 < n ) ){
 						code <<= 8;
-						code |= s[ i + 1 ]; //2ƒoƒCƒgƒR[ƒh
+						code |= s[ i + 1 ]; //2ãƒã‚¤ãƒˆã‚³ãƒ¼ãƒ‰
 						++i;
 					}
 				}
-				if ( code == '\n' ){ //‰üs•¶š‚Å‚·‚ÈB
+				if ( code == '\n' ){ //æ”¹è¡Œæ–‡å­—ã§ã™ãªã€‚
 					pos.x = r.mPosition.x;
 					pos.y += charHeight;
 					continue;
 				}
-				//•¶šƒQƒbƒg
+				//æ–‡å­—ã‚²ãƒƒãƒˆ
 				Char& c = chars[ charPosition ];
 				bool found = r.mFont.getChar( 
 					&c.mTexture,
 					&c.mUv0,
 					&c.mUv1,
 					code );
-				if ( found ){ //•¶š‚ ‚Á‚½
-					//Œ»İˆÊ’u‚ÉƒsƒNƒZƒ‹‚ğ‰Á‚¦‚Ä‚¢‚­B
+				if ( found ){ //æ–‡å­—ã‚ã£ãŸ
+					//ç¾åœ¨ä½ç½®ã«ãƒ”ã‚¯ã‚»ãƒ«ã‚’åŠ ãˆã¦ã„ãã€‚
 					c.mSize.setSub( c.mUv1, c.mUv0 );
-					//ƒeƒNƒXƒ`ƒƒ‚©‚ç•‚Æ‚‚³‚ğ‚à‚ç‚Á‚ÄAƒsƒNƒZƒ‹‚É’¼‚·”ä‚ğ‹‚ß‚éB
+					//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‹ã‚‰å¹…ã¨é«˜ã•ã‚’ã‚‚ã‚‰ã£ã¦ã€ãƒ”ã‚¯ã‚»ãƒ«ã«ç›´ã™æ¯”ã‚’æ±‚ã‚ã‚‹ã€‚
 					c.mSize.x *= static_cast< float >( c.mTexture.width() );
 					c.mSize.y *= static_cast< float >( c.mTexture.height() );
-				}else{ //•¶š‚È‚©‚Á‚½B“¤•…‚ğo‚·
-					c.mSize.set( charHeight, charHeight ); //³•ûŒ`
+				}else{ //æ–‡å­—ãªã‹ã£ãŸã€‚è±†è…ã‚’å‡ºã™
+					c.mSize.set( charHeight, charHeight ); //æ­£æ–¹å½¢
 				}
-				//ƒJƒŠƒ“ƒO‚ÆÜ‚è•Ô‚µŒvZ
-				//Ü‚è•Ô‚µƒAƒŠ‚Ì‚Í‚¿‚å‚Á‚Æ‚Å‚à‚Í‚İo‚·‚È‚çÜ‚è•Ô‚·B
+				//ã‚«ãƒªãƒ³ã‚°ã¨æŠ˜ã‚Šè¿”ã—è¨ˆç®—
+				//æŠ˜ã‚Šè¿”ã—ã‚¢ãƒªã®æ™‚ã¯ã¡ã‚‡ã£ã¨ã§ã‚‚ã¯ã¿å‡ºã™ãªã‚‰æŠ˜ã‚Šè¿”ã™ã€‚
 				if ( r.mWrap ){
 					if ( pos.x + c.mSize.x > screenSize.x ){
 						pos.x = r.mPosition.x;
 						pos.y += charHeight;
 					}
-				}else{ //Ü‚è•Ô‚µ‚È‚µ‚È‚çŠ®‘S‚É‚ ‚Ó‚ê‚½‚ÉØ‚èÌ‚Ä‚é
+				}else{ //æŠ˜ã‚Šè¿”ã—ãªã—ãªã‚‰å®Œå…¨ã«ã‚ãµã‚ŒãŸæ™‚ã«åˆ‡ã‚Šæ¨ã¦ã‚‹
 					if ( pos.x > screenSize.x ){
 						break;
 					}
 				}
-				//c‚ªŠ®‘S‚É‚ ‚Ó‚ê‚½ê‡‚Ì‚İI—¹B
+				//ç¸¦ãŒå®Œå…¨ã«ã‚ãµã‚ŒãŸå ´åˆã®ã¿çµ‚äº†ã€‚
 				if ( pos.y > screenSize.y ){
 					break;
 				}
-				//ƒGƒ“ƒgƒŠ’Ç‰Á
+				//ã‚¨ãƒ³ãƒˆãƒªè¿½åŠ 
 				c.mColor = r.mColor;
 				c.mPosition.set( pos.x, pos.y, r.mDepth );
 				++charPosition;
-				//•¶š‘—‚è
+				//æ–‡å­—é€ã‚Š
 				pos.x += c.mSize.x;
 			}
 			mRequests.pop();
 		}
-		if ( charPosition == 0 ){ //•¶š‚ª‚È‚¢
+		if ( charPosition == 0 ){ //æ–‡å­—ãŒãªã„
 			return;
 		}
-		//ˆ—Œã•¶šƒoƒbƒtƒ@‚ğZ‚ÆƒeƒNƒXƒ`ƒƒ‚Åƒ\[ƒg
+		//å‡¦ç†å¾Œæ–‡å­—ãƒãƒƒãƒ•ã‚¡ã‚’Zã¨ãƒ†ã‚¯ã‚¹ãƒãƒ£ã§ã‚½ãƒ¼ãƒˆ
 		Array< Char* > charPointers( charPosition );
 		for ( int i = 0; i < charPosition; ++i ){
 			charPointers[ i ] = &chars[ i ];
 		}
 		sort( &charPointers[ 0 ], &charPointers[ 0 ] + charPosition, PointerLess< Char >() );
-		//ƒ\[ƒg‚³‚ê‚½‡‚É•¶šƒoƒbƒtƒ@‚ğTriangleBuffer‚Éadd
+		//ã‚½ãƒ¼ãƒˆã•ã‚ŒãŸé †ã«æ–‡å­—ãƒãƒƒãƒ•ã‚¡ã‚’TriangleBufferã«add
 		Texture lastTexture;
 		for ( int i = 0; i < charPosition; ++i ){
 			Char& c = *charPointers[ i ];
-			//ƒeƒNƒXƒ`ƒƒ‚ª‘O‚Æˆá‚¦‚ÎƒZƒbƒg
+			//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãŒå‰ã¨é•ãˆã°ã‚»ãƒƒãƒˆ
 			if ( lastTexture != c.mTexture ){
 				mPrimitiveRenderer.setTexture( c.mTexture );
 				lastTexture = c.mTexture;
 			}
-			//’¸“_‚ğì‚Á‚ÄlŠpŒ`‚ğ•`‰æ
+			//é ‚ç‚¹ã‚’ä½œã£ã¦å››è§’å½¢ã‚’æç”»
 			Vector2 p[ 2 ];
-			p[ 0 ].set( c.mPosition.x, c.mPosition.y ); //¶ã“_
-			p[ 1 ].set( c.mPosition.x + c.mSize.x, c.mPosition.y + c.mSize.y ); //‰E‰º
-			//•`‰æ
-			if ( c.mTexture ){ //ƒeƒNƒXƒ`ƒƒ‚ ‚ê‚Î
+			p[ 0 ].set( c.mPosition.x, c.mPosition.y ); //å·¦ä¸Šç‚¹
+			p[ 1 ].set( c.mPosition.x + c.mSize.x, c.mPosition.y + c.mSize.y ); //å³ä¸‹
+			//æç”»
+			if ( c.mTexture ){ //ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚ã‚Œã°
 				mPrimitiveRenderer.addRectangle( 
 					p[ 0 ], p[ 1 ],
 					c.mUv0, c.mUv1,
 					c.mColor );
-			}else{ //‚Ë‚¦‚æB“¤•…o‚µ‚½‚ê
+			}else{ //ã­ãˆã‚ˆã€‚è±†è…å‡ºã—ãŸã‚Œ
 				mPrimitiveRenderer.addRectangle( 
 					p[ 0 ], p[ 1 ],
 					c.mColor );
 			}
 		}
-		//‘S•”I‚í‚Á‚½‚Ì‚ÅTriangleRenderer‚ğ•`‰æ
+		//å…¨éƒ¨çµ‚ã‚ã£ãŸã®ã§TriangleRendererã‚’æç”»
 		mPrimitiveRenderer.draw();
 	}
 	void setFont( Font& font ){
@@ -189,9 +189,9 @@ private:
 		Font mFont;
 		bool mWrap;
 	};
-	//•¶š\‘¢‘Ì
+	//æ–‡å­—æ§‹é€ ä½“
 	struct Char{
-		//Z‚ÆƒeƒNƒXƒ`ƒƒ‚Å”äŠrBZ‚Í‰œ‚ªæ
+		//Zã¨ãƒ†ã‚¯ã‚¹ãƒãƒ£ã§æ¯”è¼ƒã€‚Zã¯å¥¥ãŒå…ˆ
 		bool operator<( const Char& a ) const {
 			if ( mPosition.z > a.mPosition.z ){
 				return true;
@@ -203,11 +203,11 @@ private:
 				return false;
 			}
 		}
-		Vector3 mPosition; //¶ã“_
-		Vector2 mUv0; //¶ãUV
-		Vector2 mUv1; //‰E‰ºUV
+		Vector3 mPosition; //å·¦ä¸Šç‚¹
+		Vector2 mUv0; //å·¦ä¸ŠUV
+		Vector2 mUv1; //å³ä¸‹UV
 		Vector2 mSize;
-		Texture mTexture; //ƒeƒNƒXƒ`ƒƒ
+		Texture mTexture; //ãƒ†ã‚¯ã‚¹ãƒãƒ£
 		unsigned mColor;
 	};
 	int mCharCapacity;

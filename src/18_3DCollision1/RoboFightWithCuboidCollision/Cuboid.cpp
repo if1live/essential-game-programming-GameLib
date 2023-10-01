@@ -2,9 +2,9 @@
 #include "Cuboid.h"
 #include "Library/Vector3.h"
 
-namespace{ //‚±‚Ìcpp‚Å‚µ‚©Œ©‚¦‚È‚¢•Ï”
+namespace{ //ã“ã®cppã§ã—ã‹è¦‹ãˆãªã„å¤‰æ•°
 
-const double INTERNAL_UNIT = 1000.0; //“à•”’PˆÊ‚Í1000”{B1ƒ~ƒŠ’PˆÊB
+const double INTERNAL_UNIT = 1000.0; //å†…éƒ¨å˜ä½ã¯1000å€ã€‚1ãƒŸãƒªå˜ä½ã€‚
 
 } //namespace{}
 
@@ -44,25 +44,25 @@ bool Cuboid::isIntersect( const Cuboid& b ) const {
 }
 
 void Cuboid::restrictMove( Vector3* v, const Cuboid& a ) const {
-	//‚¢‚¶‚Á‚Ä‚¢‚¢ƒRƒs[‚ğ—pˆÓ
+	//ã„ã˜ã£ã¦ã„ã„ã‚³ãƒ”ãƒ¼ã‚’ç”¨æ„
 	Cuboid t = *this;
-	//ˆÚ“®ƒxƒNƒ^‚ğ“à•”’PˆÊ‚É•ÏŠ·B
+	//ç§»å‹•ãƒ™ã‚¯ã‚¿ã‚’å†…éƒ¨å˜ä½ã«å¤‰æ›ã€‚
 	int x = static_cast< int >( v->x * INTERNAL_UNIT );
 	int y = static_cast< int >( v->y * INTERNAL_UNIT );
 	int z = static_cast< int >( v->z * INTERNAL_UNIT );
-	//‚Ü‚¸XYZ‘S•”ˆÚ“®
+	//ã¾ãšXYZå…¨éƒ¨ç§»å‹•
 	t.mX += x;
 	t.mY += y;
 	t.mZ += z;
 	bool r = t.isIntersect( a );
 	if ( !r ){
-		//‚ ‚½‚ç‚È‚¢BˆÀS‚µ‚Ä“®‚¯B
+		//ã‚ãŸã‚‰ãªã„ã€‚å®‰å¿ƒã—ã¦å‹•ã‘ã€‚
 		return;
 	}
-	//“–‚½‚Á‚Ä‚µ‚Ü‚Á‚½BŸ‚É
-	//xy‚È‚ç‘åä•vAyz‚È‚ç‘åä•vAzx‚È‚ç‘åä•vA‚Ì3ƒpƒ^[ƒ“‚ğ‚·B
-	//xy‚Æzx—¼•û‚Å‘åä•v‚¾‚ªyz‚¾‚¯‚¾‚ßA‚Æ‚¢‚¤‚±‚Æ‚Í‚ ‚è‚¤‚é‚Ì‚¾‚ªA
-	//ˆµ‚¢‚æ‚¤‚ª‚È‚¢‚Ì‚Å‡”Ô‚ÉŠO‚ê‚½‚ç‚»‚ê‚ÅI‚í‚è‚É‚·‚éB
+	//å½“ãŸã£ã¦ã—ã¾ã£ãŸã€‚æ¬¡ã«
+	//xyãªã‚‰å¤§ä¸ˆå¤«ã€yzãªã‚‰å¤§ä¸ˆå¤«ã€zxãªã‚‰å¤§ä¸ˆå¤«ã€ã®3ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’è©¦ã™ã€‚
+	//xyã¨zxä¸¡æ–¹ã§å¤§ä¸ˆå¤«ã ãŒyzã ã‘ã ã‚ã€ã¨ã„ã†ã“ã¨ã¯ã‚ã‚Šã†ã‚‹ã®ã ãŒã€
+	//æ‰±ã„ã‚ˆã†ãŒãªã„ã®ã§é †ç•ªã«å¤–ã‚ŒãŸã‚‰ãã‚Œã§çµ‚ã‚ã‚Šã«ã™ã‚‹ã€‚
 	t.mZ -= z;
 	r = t.isIntersect( a ); //XY
 	if ( !r ){
@@ -83,7 +83,7 @@ void Cuboid::restrictMove( Vector3* v, const Cuboid& a ) const {
 		v->y = 0.0;
 		return;
 	}
-	//Œã‚Íxyzˆê•ûŒü‚¾‚¯ƒI[ƒP[‚Ìê‡‚ğ’T‚éB
+	//å¾Œã¯xyzä¸€æ–¹å‘ã ã‘ã‚ªãƒ¼ã‚±ãƒ¼ã®å ´åˆã‚’æ¢ã‚‹ã€‚
 	t.mZ -= z;
 	r = t.isIntersect( a ); //X
 	if ( !r ){
@@ -104,6 +104,6 @@ void Cuboid::restrictMove( Vector3* v, const Cuboid& a ) const {
 		v->x = v->y = 0.0;
 		return;
 	}
-	//‚±‚±‚Ü‚Å—ˆ‚Ä‚µ‚Ü‚Á‚½B‚Ç‚¤“®‚¢‚Ä‚à‘Ê–Ú‚¾B‘S•”Ì‚Ä‚éB
+	//ã“ã“ã¾ã§æ¥ã¦ã—ã¾ã£ãŸã€‚ã©ã†å‹•ã„ã¦ã‚‚é§„ç›®ã ã€‚å…¨éƒ¨æ¨ã¦ã‚‹ã€‚
 	v->set( 0.0, 0.0, 0.0 );
 }

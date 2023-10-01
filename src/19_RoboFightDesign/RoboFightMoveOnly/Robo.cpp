@@ -11,18 +11,18 @@
 using namespace GameLib;
 using namespace std;
 
-//�{���̓t�@�C���ɏo���񂾂�H
-const int Robo::mJumpUpTime = 20; //�㏸���Ă�������
-const int Robo::mJumpStayTime = 60; //�㏸�㉺�~�܂ł̎���
-const int Robo::mJumpFallTime = 40; //���~�ɂ����鎞��
-const int Robo::mMoveAccelEndCount = 30; //�����n�߂ĉ������I������܂ł̎���
-const double Robo::mMaxMoveSpeed = 0.5; //�ő�ړ����x
-const double Robo::mJumpHeight = 20.0; //�ő卂�x
-const int Robo::mCameraDelayCount = 50; //�W�����v�J�n�㉽�t���[���œG�̕���������
-const double Robo::mCameraDistanceZ = 10.0; //�����[�g����납��ʂ��H
-const double Robo::mCameraDistanceY = 4.0; //�����낵�
-const double Robo::mCameraTargetDistanceZ = 20.0; //�����_�͉����[�g����H
-const double Robo::mTurnSpeed = 1.0; //���񑬓x
+//本当はファイルに出すんだよ？
+const int Robo::mJumpUpTime = 20; //上昇していく時間
+const int Robo::mJumpStayTime = 60; //上昇後下降までの時間
+const int Robo::mJumpFallTime = 40; //下降にかかる時間
+const int Robo::mMoveAccelEndCount = 30; //歩き始めて加速が終了するまでの時間
+const double Robo::mMaxMoveSpeed = 0.5; //最大移動速度
+const double Robo::mJumpHeight = 20.0; //最大高度
+const int Robo::mCameraDelayCount = 50; //ジャンプ開始後何フレームで敵の方を向くか
+const double Robo::mCameraDistanceZ = 10.0; //何メートル後ろから写す？
+const double Robo::mCameraDistanceY = 4.0; //見下ろし具合
+const double Robo::mCameraTargetDistanceZ = 20.0; //注視点は何メートル先？
+const double Robo::mTurnSpeed = 1.0; //旋回速度
 
 Robo::Robo( int id ) : 
 mPosition( 0.0, 0.0, 0.0 ),
@@ -39,7 +39,7 @@ mMode( MODE_ON_LAND ){
 }
 
 Robo::~Robo(){
-	SAFE_DELETE( mModel ); //�g���Ă�������g���Ă��������
+	SAFE_DELETE( mModel ); //使っている方が使われている方より先
 	SAFE_DELETE( mDatabase );
 }
 
@@ -52,63 +52,63 @@ void Robo::setAngleY( double a ){
 }
 
 void Robo::update( const Vector3& enemyPos ){
-	//�p�x�͈͕␳
+	//角度範囲補正
 	if ( mAngleY > 180.0 ){
 		mAngleY -= 360.0;
 	}else if ( mAngleY < -180.0 ){
 		mAngleY += 360.0;
 	}
 	++mCount;
-	//�W�����v������Ă�H
+	//ジャンプ押されてる？
 	Pad* pad = Pad::instance();
 	bool inputJump = pad->isOn( Pad::JUMP, mId );
 	double t;
-	//�����͂Ɏ��������������Ă݂悤�B�R�[�h�̏d���������邪�u���b�N�P�ʂŌ���΃V���v���ɂȂ�B
-	//���ʂ̏������Ƃǂ��炪�ǂ�����ׂĂ݂悤�B
+	//字句解析に似た書き方をしてみよう。コードの重複が増えるがブロック単位で見ればシンプルになる。
+	//普通の書き方とどちらが良いか比べてみよう。
 	switch ( mMode ){
 		case MODE_JUMP_UP:
-			//�J��������肫���Ă��Ȃ��Ȃ�J������]�p��
+			//カメラが回りきっていないならカメラ回転継続
 			if ( mCameraCount < mCameraDelayCount ){
 				mAngleY += mAngleVelocityY;
 				++mCameraCount;
 			}
-			//�㏸
+			//上昇
 			t = mJumpHeight / static_cast< double >( mJumpUpTime );
 			mVelocity.y = t;
-			if ( !inputJump ){ //�W�����v���͂��Ȃ��̂ŉ��~�ɕω�
+			if ( !inputJump ){ //ジャンプ入力がないので下降に変化
 				mMode = MODE_JUMP_FALL;
 				mCount = 0;
-			}else if ( mCount >= mJumpUpTime ){ //�㏸�I��
+			}else if ( mCount >= mJumpUpTime ){ //上昇終了
 				mMode = MODE_JUMP_STAY; 
 				mCount = 0;
 			}
-			mVelocity.x = mVelocity.z = 0.0; //X,Z�ړ��𖕎E
+			mVelocity.x = mVelocity.z = 0.0; //X,Z移動を抹殺
 			break;
 		case MODE_JUMP_STAY:
-			//�J��������肫���Ă��Ȃ��Ȃ�J������]�p��
+			//カメラが回りきっていないならカメラ回転継続
 			if ( mCameraCount < mCameraDelayCount ){
 				mAngleY += mAngleVelocityY;
 				++mCameraCount;
 			}
 			mVelocity.y = 0.0;
-			if ( !inputJump ){ //�W�����v���͂��Ȃ��̂ŉ��~�ɕω�
+			if ( !inputJump ){ //ジャンプ入力がないので下降に変化
 				mMode = MODE_JUMP_FALL;
 				mCount = 0;
-			}else if ( mCount >= mJumpStayTime ){ //���~��
+			}else if ( mCount >= mJumpStayTime ){ //下降へ
 				mMode = MODE_JUMP_FALL;
 				mCount = 0;
 			}
 			break;
 		case MODE_JUMP_FALL:
-			//�J��������肫���Ă��Ȃ��Ȃ�J������]�p��
+			//カメラが回りきっていないならカメラ回転継続
 			if ( mCameraCount < mCameraDelayCount ){
 				mAngleY += mAngleVelocityY;
 				++mCameraCount;
 			}
-			//���~
+			//下降
 			t = mJumpHeight / static_cast< double >( mJumpFallTime );
 			mVelocity.y = -t;
-			//�ڒn����͍ŏI�I�ɂ͏Փˏ����ł��̂ł����ł͂��Ȃ��B
+			//接地判定は最終的には衝突処理でやるのでここではやらない。
 			break;
 		case MODE_ON_LAND:
 			if ( inputJump ){
@@ -116,12 +116,12 @@ void Robo::update( const Vector3& enemyPos ){
 				mCount = 0;
 				mCameraCount = 0;
 
-				//�G�̕��Ɍ�����B
+				//敵の方に向ける。
 				Vector3 dir;
-				dir.setSub( enemyPos, mPosition ); //��������G��
-				//Y���p�x��atan2( x, z )�B�������x�ɒ������ƁB
+				dir.setSub( enemyPos, mPosition ); //自分から敵へ
+				//Y軸角度はatan2( x, z )。ただし度に直すこと。
 				t = GameLib::atan2( dir.x, dir.z );
-				//180�x�ȏ㍷�������+-360�x���ċt��
+				//180度以上差があれば+-360度して逆回し
 				if ( t - mAngleY > 180.0 ){
 					t -= 360.0;
 				}else if ( mAngleY - t > 180.0 ){
@@ -129,14 +129,14 @@ void Robo::update( const Vector3& enemyPos ){
 				}
 				mAngleVelocityY = ( t - mAngleY ) / static_cast< double >( mCameraDelayCount );
 			}else if ( pad->isOn( Pad::TURN, mId ) ){
-				turn(); //�R�[�h�������Ȃ�̂Ŋ֐��ɔ�΂�
+				turn(); //コードが長くなるので関数に飛ばす
 			}else{
-				move(); //�R�[�h�������Ȃ�̂Ŋ֐��ɔ�΂�
+				move(); //コードが長くなるので関数に飛ばす
 			}
 			mVelocity.y = 0.0;
 			break;
 	}
-	//�������牺�͏Փˏ���������Ƃ��̌�ɂȂ�B
+	//ここから下は衝突処理が入るとその後になる。
 	mPosition += mVelocity;
 	if ( mPosition.y < 0.0 ){
 		mPosition.y = 0.0;
@@ -148,20 +148,20 @@ void Robo::turn(){
 	Pad* pad = Pad::instance();
 	if ( pad->isOn( Pad::LEFT, mId ) ){
 		mAngleY += mTurnSpeed;
-		if ( mAngleY > 180.0 ){ //-PI����PI�ɂ����߂�
+		if ( mAngleY > 180.0 ){ //-PIからPIにおさめる
 			mAngleY -= 360.0;
 		}
 	}
 	if ( pad->isOn( Pad::RIGHT, mId ) ){
 		mAngleY -= mTurnSpeed;
-		if ( mAngleY < -180.0 ){ //-PI����PI�ɂ����߂�
+		if ( mAngleY < -180.0 ){ //-PIからPIにおさめる
 			mAngleY += 360.0;
 		}
 	}
 }
 
 void Robo::move(){
-	//�ړ������B�܂����_���l�����Ȃ������x���o��
+	//移動処理。まず視点を考慮しない加速度を出す
 	Vector3 move( 0.0, 0.0, 0.0 );
 	Pad* pad = Pad::instance();
 	if ( pad->isOn( Pad::UP, mId ) ){
@@ -176,47 +176,47 @@ void Robo::move(){
 	if ( pad->isOn( Pad::RIGHT, mId ) ){
 		move.x = 1.0;
 	}
-	//�����������������ĉ�]
+	//視線方向を加味して回転
 	Matrix34 m;
 	m.setRotationY( mAngleY + 180.0 );
 	m.multiply( &move, move );
 
-	//���~�܂��Ă���Ȃ�b�͑����B�K���ɉ������Ă�邾����
+	//今止まっているなら話は早い。適当に加速してやるだけだ
 	if ( mVelocity.x == 0.0 && mVelocity.z == 0.0 ){
-		//�����ɂ����鎞�Ԃōő呬�x�������1�t���[��������̉����x���o��B
+		//加速にかかる時間で最大速度を割れば1フレームあたりの加速度が出る。
 		double accel = mMaxMoveSpeed / static_cast< double >( mMoveAccelEndCount );
 		mVelocity.setMul( move, accel );
-	}else{ //���łɓ����Ă���ꍇ
-		if ( move.x == 0.0 && move.z == 0.0 ){ //�ړ����[��
-			mVelocity.set( 0.0, 0.0, 0.0 ); //�ړ��͂Ƃ܂�B
+	}else{ //すでに動いている場合
+		if ( move.x == 0.0 && move.z == 0.0 ){ //移動がゼロ
+			mVelocity.set( 0.0, 0.0, 0.0 ); //移動はとまる。
 		}else{
-			//���łɓ����Ă���ꍇ���Ȃ�ʓ|�ł���B
-			//45�x���������]���������Ƀ[������������Ȃ����Ƃ����̂̓X�g���X���B
-			//������A�u���̑��x�ƕ���������Ȃ������������[�������蒼���v�ɂ���B
+			//すでに動いている場合かなり面倒である。
+			//45度だけ方向転換した時にゼロから加速しなおしというのはストレスだ。
+			//だから、「今の速度と方向が合わない成分だけをゼロからやり直し」にする。
 
-			//90�x�ȏ�̃^�[���Ȃ��U���x��0�ɂ���B
-			//�������������������Q�[�������邪�A���т��ѓ����������Ȃ犵���͎ז����낤�B
-			//90�x�ȏ�̃^�[���Ȃ猻���x�Ɖ����̓��ς��}�C�i�X�̂͂���
+			//90度以上のターンなら一旦速度を0にする。
+			//慣性が働く方がいいゲームもあるが、きびきび動かしたいなら慣性は邪魔だろう。
+			//90度以上のターンなら現速度と加速の内積がマイナスのはずだ
 			double dp = mVelocity.dot( move );
 			if ( dp <= 0.0 ){
 				mVelocity.set( 0.0, 0.0, 0.0 );
-			}else{ //90�x����
-				//���݂̈ړ����x�Ɛ����Ȑ����̂ݎ��o��
-				//���������́A�ړ������P�ʃx�N�^�Ƃ̓��ς��A�ړ������P�ʃx�N�^�ɂ�����΂����B
-				//�ړ��P�ʃx�N�^E�A�����x�x�N�^V�Ƃ��āA�V�������x�x�N�^V'���Ȃ킿���s������
+			}else{ //90度未満
+				//現在の移動速度と水平な成分のみ取り出す
+				//水平成分は、移動方向単位ベクタとの内積を、移動方向単位ベクタにかければいい。
+				//移動単位ベクタE、現速度ベクタVとして、新しい速度ベクタV'すなわち平行成分は
 				//V' = dot(V,E) * E
-				//���̎��AE�͈ړ��x�N�^M���g����E=M/|M|�Ə����邩��A
+				//この時、Eは移動ベクタMを使ってE=M/|M|と書けるから、
 				//V' = dot(V,M) * M / ( |M|^2 )
-				//�����A�P�ʃx�N�^�����ۂ̕�������������B|M|���|M|^2�̕����v�Z�͑����̂��B
+				//書け、単位ベクタを作る際の平方根を除ける。|M|より|M|^2の方が計算は速いのだ。
 				double moveSquareLength = move.x * move.x + move.z * move.z;
 				double dp = mVelocity.dot( move );
 				mVelocity.setMul( move, dp / moveSquareLength );
 			}
-			//������������B
-			//�ړ����x�͍ő呬�x/�������Ԃł���B
+			//加速を加える。
+			//移動速度は最大速度/加速時間である。
 			double accel = mMaxMoveSpeed / static_cast< double >( mMoveAccelEndCount );
 			mVelocity.madd( move, accel );
-			//�ő呬�x�ŃX�g�b�v
+			//最大速度でストップ
 			double speed = mVelocity.length();
 			if ( speed > mMaxMoveSpeed ){
 				mVelocity *= mMaxMoveSpeed / speed;
@@ -226,13 +226,13 @@ void Robo::move(){
 }
 
 void Robo::draw( const Matrix44& pvm ) const {
-	//���f���Ɉʒu�����Z�b�g
+	//モデルに位置情報をセット
 	mModel->setAngle( Vector3( 0.0, mAngleY, 0.0 ) );
 	mModel->setPosition( mPosition );
-	//�`��
+	//描画
 	mModel->draw( pvm );
 
-	//�f�o�O�\��
+	//デバグ表示
 	if ( mId == 0 ){
 		ostringstream oss;
 		oss << "VEL: " << mVelocity.x << " " << mVelocity.y << " " << mVelocity.z;
@@ -252,26 +252,26 @@ const Vector3* Robo::position() const {
 }
 
 void Robo::getViewMatrix( Matrix34* vm ) const {
-	//�܂����ʕ����x�N�^���쐬
+	//まず正面方向ベクタを作成
 	Vector3 d( 0.0, 0.0, 1.0 );
 	Matrix34 m;
 	m.setRotationY( mAngleY );
 	m.multiply( &d, d );
-	//������O����mCameraTargetDistanceZ�����L�΂�
+	//こいつを前方にmCameraTargetDistanceZだけ伸ばす
 	Vector3 t;
 	t.setMul( d, mCameraTargetDistanceZ );
-	//���{�������Ƃ���ɂ���Ȃ炿����Ɖ������Ă��B����̓p�����[�^�ɂȂ����̏�H�v�B
-	t.y -= mPosition.y * 0.12; //���̂ւ�̒������K��
-	//�����������mCameraDistacneZ�����L�΂�
+	//ロボが高いところにいるならちょっと下を見てやる。これはパラメータにないその場工夫。
+	t.y -= mPosition.y * 0.12; //このへんの調整も適当
+	//こいつを後方にmCameraDistacneZだけ伸ばす
 	Vector3 p;
 	p.setMul( d, -mCameraDistanceZ );
-	//Y��mCameraDistanceY���v���X
+	//YにmCameraDistanceYをプラス
 	p.y += mCameraDistanceY;
-	//���{�������Ƃ���ɂ���Ȃ炿����ƍ��ڂɂ��ĉ������Ă��B����̓p�����[�^�ɂȂ����̏�H�v�B
-	p.y += mPosition.y * 0.12; //���̂ւ�̒������K��
-	//���{���݈ʒu���v���X
+	//ロボが高いところにいるならちょっと高目にして下を見てやる。これはパラメータにないその場工夫。
+	p.y += mPosition.y * 0.12; //このへんの調整も適当
+	//ロボ現在位置をプラス
 	t += mPosition;
 	p += mPosition;
-	//�r���[�s��쐬
+	//ビュー行列作成
 	vm->setViewTransform( p, t );
 }

@@ -30,7 +30,7 @@ mJudge( 0 ){
 	}else{
 		mStageID = 0;
 	}
-	//Å‰‚ÍReady
+	//æœ€åˆã¯Ready
 	mReady = new Ready();
 }
 
@@ -58,15 +58,15 @@ void Parent::update( GrandParent* parent ){
 	}else if ( mJudge ){
 		mJudge->update( this );
 	}else{
-		HALT( "bakana!" ); //‚ ‚è‚¦‚È‚¢
+		HALT( "bakana!" ); //ã‚ã‚Šãˆãªã„
 	}
-	//‘JˆÚ”»’è
+	//é·ç§»åˆ¤å®š
 	switch ( mNextSequence ){
 		case NEXT_CLEAR:
 			STRONG_ASSERT( !mClear && !mReady && !mPause && mPlay && !mFailure && !mJudge );
 			SAFE_DELETE( mPlay );
 			mClear = new Clear();
-			++mStageID; //ŽŸ‚ÌƒXƒe[ƒW‚Ö
+			++mStageID; //æ¬¡ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã¸
 			break;
 		case NEXT_READY:
 			STRONG_ASSERT( !mReady && !mPause && !mPlay && ( mFailure || mClear ||  mJudge ) );
@@ -134,7 +134,7 @@ int Parent::lifeNumber() const {
 	return mLife;
 }
 
-//Parent::Mode‚ðParent::Mode‚É•ÏŠ·B‰º—¬ƒV[ƒPƒ“ƒX‚ÉParent‚ðŒ©‚¹‚È‚¢B
+//Parent::Modeã‚’Parent::Modeã«å¤‰æ›ã€‚ä¸‹æµã‚·ãƒ¼ã‚±ãƒ³ã‚¹ã«Parentã‚’è¦‹ã›ãªã„ã€‚
 Parent::Mode Parent::mode() const {
 	Mode r = MODE_NONE;
 	switch ( GrandParent::instance()->mode() ){

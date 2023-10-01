@@ -29,19 +29,19 @@ mNextSequence( NEXT_NONE ),
 mMode( MODE_NONE ),
 mChild( 0 ){
 	SoundManager::create();
-	//Å‰‚Éì‚é‚Ì‚Íƒ^ƒCƒgƒ‹
+	//æœ€åˆã«ä½œã‚‹ã®ã¯ã‚¿ã‚¤ãƒˆãƒ«
 	mChild = new Title();
 }
 
 Parent::~Parent(){
-	//c‚Á‚Ä‚¢‚ê‚Î–•E
+	//æ®‹ã£ã¦ã„ã‚Œã°æŠ¹æ®º
 	SAFE_DELETE( mChild );
 	SoundManager::destroy();
 }
 
 void Parent::update(){
 	mChild->update( this );
-	//‘JˆÚ”»’è
+	//é·ç§»åˆ¤å®š
 	switch ( mNextSequence ){
 		case NEXT_TITLE:
 			SAFE_DELETE( mChild );
@@ -59,11 +59,11 @@ void Parent::update(){
 			SAFE_DELETE( mChild );
 			mChild = new Ending();
 	}
-	mNextSequence = NEXT_NONE; //–ß‚·
+	mNextSequence = NEXT_NONE; //æˆ»ã™
 }
 
 void Parent::moveTo( NextSequence next ){
-	ASSERT( mNextSequence == NEXT_NONE ); //‚±‚êˆÈŠO‚ ‚è‚¦‚È‚¢
+	ASSERT( mNextSequence == NEXT_NONE ); //ã“ã‚Œä»¥å¤–ã‚ã‚Šãˆãªã„
 	mNextSequence = next;
 }
 

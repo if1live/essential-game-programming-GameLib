@@ -4,28 +4,28 @@
 namespace GameLib{
 namespace Threading{
 
-///�X���b�h���ۊ��
+///スレッド抽象基底
 /*!
-operator()()��p�ӂ����h�������A
-start()����Ύ��s���n�܂�B
+operator()()を用意した派生を作り、
+start()すれば実行が始まる。
 
-<���ӁI>
-�f�X�g���N�^���ĂԑO�ɂ�wait()���ĂԂ��AisFinished()��true��Ԃ��܂ŌĂԂ���
-�ǂ��炩���K�v�B�ǂ�������Ȃ��Ńf�X�g���N�g�����ASSERT����B
+<注意！>
+デストラクタを呼ぶ前にはwait()を呼ぶか、isFinished()がtrueを返すまで呼ぶかの
+どちらかが必要。どちらもやらないでデストラクトするとASSERTする。
 */
 class Thread{
 public:
-	///����������ō��
+	///これを自分で作る
 	virtual void operator()() = 0;
-	///���s�J�n�B���s���Ȃ�I����҂��čĎ��s�B
+	///実行開始。実行中なら終了を待って再実行。
 	void start();
-	///�I����҂�
+	///終了を待つ
 	void wait();
-	///�I�����������
+	///終わったか聞く
 	bool isFinished();
-	///���ڌĂт͂��Ȃ��R���X�g���N�^
+	///直接呼びはしないコンストラクタ
 	Thread();
-protected: //���͒���delete�ł��܂���B�h����delete���܂��傤�B
+protected: //基底は直接deleteできません。派生をdeleteしましょう。
 	~Thread();
 private:
 	class Impl;

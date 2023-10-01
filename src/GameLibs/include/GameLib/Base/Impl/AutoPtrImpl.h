@@ -34,7 +34,7 @@ template< class T > inline const T* AutoPtr< T >::operator->() const {
 	return mPointer; 
 }
 	
-//ƒ|ƒCƒ“ƒ^‚ğ‚»‚Ì‚Ü‚Ü•Ô‚·‚Æˆ«—p‚³‚ê‚é‹°‚ê‚ª‚ ‚é‚Ì‚ÅA”ñƒ[ƒ‚È‚ç0xffffffff‚ğ•Ô‚·B
+//ãƒã‚¤ãƒ³ã‚¿ã‚’ãã®ã¾ã¾è¿”ã™ã¨æ‚ªç”¨ã•ã‚Œã‚‹æã‚ŒãŒã‚ã‚‹ã®ã§ã€éã‚¼ãƒ­ãªã‚‰0xffffffffã‚’è¿”ã™ã€‚
 template< class T > inline AutoPtr< T >::operator void*() const {
 	return ( mPointer ) ? reinterpret_cast< void* >( ~0 ) : 0;
 }

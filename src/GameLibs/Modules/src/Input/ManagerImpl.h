@@ -40,7 +40,7 @@ public:
 		STRONG_ASSERT( hi );
 		hr = DirectInput8Create( hi, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&mDirectInput, 0);
 		STRONG_ASSERT( SUCCEEDED( hr ) );
-		//‚Ü‚¸”‚¦‚ÄŠm•Û
+		//ã¾ãšæ•°ãˆã¦ç¢ºä¿
 		hr = mDirectInput->EnumDevices( DI8DEVCLASS_ALL, countCallback, this, DIEDFL_ATTACHEDONLY );
 		STRONG_ASSERT( SUCCEEDED( hr ) );
 		if ( mJoystickNumber > 0 ){
@@ -48,12 +48,12 @@ public:
 		}
 		hr = mDirectInput->EnumDevices( DI8DEVCLASS_ALL, createCallback, this, DIEDFL_ATTACHEDONLY );
 		STRONG_ASSERT( SUCCEEDED( hr ) );
-		//ƒ}ƒEƒXƒ{ƒ^ƒ“‰Šú‰»
+		//ãƒã‚¦ã‚¹ãƒœã‚¿ãƒ³åˆæœŸåŒ–
 		for ( int i = 0; i < BUTTON_MAX; ++i ){
 			mButtons[ 0 ][ i ] = false;
 			mButtons[ 1 ][ i ] = false;
 		}
-		//ƒL[‰Šú‰»
+		//ã‚­ãƒ¼åˆæœŸåŒ–
 		for ( int i = 0; i < KEY_MAX; ++i ){
 			mKeys[ 0 ][ i ] = false;
 			mKeys[ 1 ][ i ] = false;
@@ -71,14 +71,14 @@ public:
 	void update( float pointerScale, const Vector2& pointerOffset ){
 		mDoubleBufferIndex = 1 - mDoubleBufferIndex;
 
-		//ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ğæ“¾‚µ‚ÄAˆÊ’u‚ğ•ÏŠ·‚µ‚Ä‚©‚çƒ}ƒEƒX‚ÉƒZƒbƒg
+		//ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã‚’å–å¾—ã—ã¦ã€ä½ç½®ã‚’å¤‰æ›ã—ã¦ã‹ã‚‰ãƒã‚¦ã‚¹ã«ã‚»ãƒƒãƒˆ
 		POINT pos;
 		GetCursorPos( &pos );
 		ScreenToClient( mWindowHandle, &pos );
 		Vector2 p(
 			static_cast< float >( pos.x ),
 			static_cast< float >( pos.y ) );
-		p += pointerOffset; //‹t•ÏŠ·‚¾‚©‚çˆÚ“®‚ªæ
+		p += pointerOffset; //é€†å¤‰æ›ã ã‹ã‚‰ç§»å‹•ãŒå…ˆ
 		p *= pointerScale;
 		int x = static_cast< int >( p.x + 0.5f );
 		int y = static_cast< int >( p.y + 0.5f );
@@ -88,23 +88,23 @@ public:
 		mY = y;
 
 		if ( WindowCreator().isActive() ){
-			//ƒL[ƒ{[ƒh
+			//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰
 			unsigned char keys[ KEY_MAX ];
 			GetKeyboardState( keys );
 			for ( int i = 0; i < KEY_MAX; ++i ){
 				mKeys[ mDoubleBufferIndex ][ i ] = ( ( keys[ i ] & 0x80 ) != 0 ) ? true : false;
 			}
-			//ƒ}ƒEƒX
+			//ãƒã‚¦ã‚¹
 			mButtons[ mDoubleBufferIndex ][ 0 ] = ( GetAsyncKeyState( VK_LBUTTON ) & 0xf000 ) ? true : false;
 			mButtons[ mDoubleBufferIndex ][ 1 ] = ( GetAsyncKeyState( VK_RBUTTON ) & 0xf000 ) ? true : false;
 			mButtons[ mDoubleBufferIndex ][ 2 ] = ( GetAsyncKeyState( VK_MBUTTON ) & 0xf000 ) ? true : false;
 			mWheel = WindowCreator().getAndResetMouseWheel();
 		}else{
-			//ƒL[ƒ{[ƒh
+			//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰
 			for ( int i = 0; i < KEY_MAX; ++i ){
 				mKeys[ mDoubleBufferIndex ][ i ] = false;
 			}
-			//ƒ}ƒEƒX
+			//ãƒã‚¦ã‚¹
 			for ( int i = 0; i < BUTTON_MAX; ++i ){
 				mButtons[ mDoubleBufferIndex ][ i ] = false;
 			}
@@ -140,7 +140,7 @@ public:
 	int mJoystickNumber;
 	Joystick::Impl* mJoysticks;
 
-	//ƒ}ƒEƒX
+	//ãƒã‚¦ã‚¹
 	int mX;
 	int mY;
 	int mVelocityX;
@@ -148,7 +148,7 @@ public:
 	int mWheel;
 private:
 	static BOOL CALLBACK countCallback( const DIDEVICEINSTANCE* instance, VOID* arg ){
-		int type = instance->dwDevType & 0xff; //‰ºˆÊƒoƒCƒg‚ªƒ^ƒCƒv
+		int type = instance->dwDevType & 0xff; //ä¸‹ä½ãƒã‚¤ãƒˆãŒã‚¿ã‚¤ãƒ—
 		ManagerImpl* self = static_cast< ManagerImpl* >( arg );
 		if ( type == DI8DEVTYPE_JOYSTICK ){
 			++( self->mJoystickNumber );
@@ -161,7 +161,7 @@ private:
 		return DIENUM_CONTINUE;
 	}
 	void createDevice( const DIDEVICEINSTANCE* instance ){
-		int type = instance->dwDevType & 0xff; //‰ºˆÊƒoƒCƒg‚ªƒ^ƒCƒv
+		int type = instance->dwDevType & 0xff; //ä¸‹ä½ãƒã‚¤ãƒˆãŒã‚¿ã‚¤ãƒ—
 		IDirectInputDevice8* device;
 		HRESULT hr = mDirectInput->CreateDevice( instance->guidInstance, &device, 0);
 		STRONG_ASSERT( SUCCEEDED( hr ) );
@@ -174,7 +174,7 @@ private:
 	static int convertKeyID( int a ){
 		typedef Keyboard K;
 		int r = 0;
-		if ( a >= 'a' && a <= 'z' ){ //‘å•¶š‚É•ÏŠ·
+		if ( a >= 'a' && a <= 'z' ){ //å¤§æ–‡å­—ã«å¤‰æ›
 			a = 'A' + ( a - 'a' );
 		}
 		bool isAlpha = ( a >= 'A' && a <= 'Z' );
@@ -225,22 +225,22 @@ private:
 		}
 		return r;
 	}
-	void operator=( const ManagerImpl& ); //‹Ö~
+	void operator=( const ManagerImpl& ); //ç¦æ­¢
 
 	int mEnumeratedJoystick;
 	IDirectInput8* mDirectInput;
 	const HWND mWindowHandle;
 	int mDoubleBufferIndex;
 
-	//ƒ}ƒEƒX
+	//ãƒã‚¦ã‚¹
 	static const int BUTTON_MAX = 3;
 	bool mButtons[ 2 ][ BUTTON_MAX ];
-	//ƒL[ƒ{[ƒh
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰
 	static const int KEY_MAX = 256;
 	bool mKeys[ 2 ][ KEY_MAX ];
 
 };
-extern ManagerImpl* gManagerImpl; //—BˆêƒCƒ“ƒXƒ^ƒ“ƒX
+extern ManagerImpl* gManagerImpl; //å”¯ä¸€ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 
 } //nemespace Input
 } //namespace GameLib

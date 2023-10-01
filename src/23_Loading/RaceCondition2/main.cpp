@@ -16,7 +16,7 @@ public:
 		mMutex.unlock();
 	}
 	bool get(){
-		//ˆêŒ©Šï–­‚ÉŒ©‚¦‚é‚¾‚ë‚¤‚ªA“Ç‚Ş‚àlock(),unlock()‚µ‚Ä‚¨‚­BƒLƒƒƒbƒVƒ…‚Ì–â‘è‚ÆAƒRƒ“ƒpƒCƒ‰‚Ì‚¨‚¹‚Á‚©‚¢‚ğ—}§‚·‚é‚½‚ß‚¾B
+		//ä¸€è¦‹å¥‡å¦™ã«è¦‹ãˆã‚‹ã ã‚ã†ãŒã€èª­ã‚€æ™‚ã‚‚lock(),unlock()ã—ã¦ãŠãã€‚ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã®å•é¡Œã¨ã€ã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ã®ãŠã›ã£ã‹ã„ã‚’æŠ‘åˆ¶ã™ã‚‹ãŸã‚ã ã€‚
 		mMutex.lock();
 		bool r = mBool;
 		mMutex.unlock();
@@ -31,19 +31,19 @@ int gX;
 Bool gWrite;
 Bool gRead;
 
-//ƒXƒŒƒbƒh‚ÅÀs‚·‚éŠÖ”‚ğ‚ÂƒNƒ‰ƒX
+//ã‚¹ãƒ¬ãƒƒãƒ‰ã§å®Ÿè¡Œã™ã‚‹é–¢æ•°ã‚’æŒã¤ã‚¯ãƒ©ã‚¹
 class MyThread : public Thread{
 public:
 	MyThread(){ start(); }
 	~MyThread(){ wait(); }
 	void operator()(){
 		for ( int i = 0; i < 100; ++i ){
-			while ( !gRead.get() ){ //“Ç‚Ü‚ê‚é‚Ì‚ğ‘Ò‚Â
+			while ( !gRead.get() ){ //èª­ã¾ã‚Œã‚‹ã®ã‚’å¾…ã¤
 				;
 			}
 			gX += 2;
-			gRead = false; //‚Ü‚¾“Ç‚Ü‚ê‚Ä‚È‚¢
-			gWrite = true; //‘‚«‚Ü‚µ‚½
+			gRead = false; //ã¾ã èª­ã¾ã‚Œã¦ãªã„
+			gWrite = true; //æ›¸ãã¾ã—ãŸ
 		}
 	}
 };
@@ -58,7 +58,7 @@ namespace GameLib{
 		MyThread t;
 
 		for ( int i = 0; i < 100; ++i ){
-			while ( !gWrite.get() ){ //‘‚©‚ê‚é‚Ì‚ğ‘Ò‚Â
+			while ( !gWrite.get() ){ //æ›¸ã‹ã‚Œã‚‹ã®ã‚’å¾…ã¤
 				;
 			}
 			o.str( "" );

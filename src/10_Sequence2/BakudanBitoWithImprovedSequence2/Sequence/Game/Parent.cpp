@@ -23,7 +23,7 @@ mChild( 0 ){
 	}else{
 		mStageID = 0;
 	}
-	//Å‰‚ÍReady
+	//æœ€åˆã¯Ready
 	mChild = new Ready();
 }
 
@@ -35,12 +35,12 @@ Parent::~Parent(){
 Sequence::Child* Parent::update( GrandParent* ){
 	Sequence::Child* next = this;
 	Sequence::Game::Child* nextChild = mChild->update( this );
-	//‘JˆÚ”»’è
+	//é·ç§»åˆ¤å®š
 	if ( nextChild != mChild ){
 		SAFE_DELETE( mChild );
 		mChild = nextChild;
 	}
-	nextChild = 0; //”O‚Ì‚½‚ß
+	nextChild = 0; //å¿µã®ãŸã‚
 
 	switch ( mNextSequence ){
 		case NEXT_ENDING:
@@ -75,7 +75,7 @@ int Parent::lifeNumber() const {
 	return mLife;
 }
 
-//Parent::Mode‚ðParent::Mode‚É•ÏŠ·B‰º—¬ƒV[ƒPƒ“ƒX‚ÉParent‚ðŒ©‚¹‚È‚¢B
+//Parent::Modeã‚’Parent::Modeã«å¤‰æ›ã€‚ä¸‹æµã‚·ãƒ¼ã‚±ãƒ³ã‚¹ã«Parentã‚’è¦‹ã›ãªã„ã€‚
 Parent::Mode Parent::mode() const {
 	Mode r = MODE_NONE;
 	switch ( GrandParent::instance()->mode() ){

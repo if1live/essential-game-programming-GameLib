@@ -4,32 +4,32 @@ using namespace std;
 int main(){
 	const int n = 2500 * 10000;
 	int* a = new int[ n ];
-	//“K“–‚Éƒ\[ƒg‚³‚ê‚½ƒf[ƒ^‚ğ¶¬
+	//é©å½“ã«ã‚½ãƒ¼ãƒˆã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ã‚’ç”Ÿæˆ
 	for ( int i = 0; i < n; ++i ){
 		a[ i ] = i * 5;
 	}
 	cout << "SEARCH BEGIN" << endl;
 
 	int loopCount = 0;
-	//’T‚·’l‚Í‚±‚ñ‚ÈŠ´‚¶‚Å
+	//æ¢ã™å€¤ã¯ã“ã‚“ãªæ„Ÿã˜ã§
 	int search = 89012345;
-	//Å‰‚ÌŒŸõ”ÍˆÍ
+	//æœ€åˆã®æ¤œç´¢ç¯„å›²
 	int first = 0;
 	int last = n - 1;
-	while ( last > first ){ //1ŒÂˆÈã‚ ‚é‚¤‚¿‚ÍŒJ‚è•Ô‚·
-		int middle = ( first + last ) / 2; //^‚ñ’†‚Ì“Y‚¦š
+	while ( last > first ){ //1å€‹ä»¥ä¸Šã‚ã‚‹ã†ã¡ã¯ç¹°ã‚Šè¿”ã™
+		int middle = ( first + last ) / 2; //çœŸã‚“ä¸­ã®æ·»ãˆå­—
 		cout << loopCount << "\t" << first << "-" << last << "\tmiddle=" << middle << "\trange=" << last-first << endl;
 		++loopCount;
 		int t = a[ middle ];
-		if ( t < search ){ //¬‚³‚¢BŒã‚ë‚É‚ ‚é
-			first = middle + 1; //æ“ª‚ğ’uŠ·
-		}else if ( t > search ){ //‘å‚«‚¢B‘O‚É‚ ‚éB
-			last = middle - 1; //––”ö‚ğ’uŠ·
+		if ( t < search ){ //å°ã•ã„ã€‚å¾Œã‚ã«ã‚ã‚‹
+			first = middle + 1; //å…ˆé ­ã‚’ç½®æ›
+		}else if ( t > search ){ //å¤§ãã„ã€‚å‰ã«ã‚ã‚‹ã€‚
+			last = middle - 1; //æœ«å°¾ã‚’ç½®æ›
 		}else{
 			first = last = middle;
 		}
 	}
-	//‚±‚±‚Ü‚Å‚­‚ê‚Îfirst == last‚¾B
+	//ã“ã“ã¾ã§ãã‚Œã°first == lastã ã€‚
 	if ( a[ first ] == search ){
 		cout << "Find! " << first << endl;
 	}else{
@@ -37,7 +37,7 @@ int main(){
 	}
 	delete[] a;
 
-	//–³ŒÀƒ‹[ƒv
+	//ç„¡é™ãƒ«ãƒ¼ãƒ—
 	while( true );
 
 

@@ -6,7 +6,7 @@
 #include "GameLib/Graphics/Manager.h"
 #include "GameLib/Math/Vector2.h"
 #include "GameLib/WindowCreator/WindowCreator.h"
-#include <map> //‚¢‚¸‚ê©ì‚ÉŠ·‚¦‚½‚¢...
+#include <map> //ã„ãšã‚Œè‡ªä½œã«æ›ãˆãŸã„...
 
 #include <windows.h>
 #undef min
@@ -19,15 +19,15 @@ using namespace std;
 using namespace GameLib::Graphics;
 using namespace GameLib::Math;
 
-namespace { //–³–¼
+namespace { //ç„¡å
 
-//Windows‚©‚çƒtƒHƒ“ƒgƒf[ƒ^‚ğæ“¾
+//Windowsã‹ã‚‰ãƒ•ã‚©ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 class FontImplOS : public Font::Impl{
 	struct Char;
 public:
 	FontImplOS(
 	const char* fontName,
-	int charHeightHint, //‚±‚ê‚É‚È‚é‚Æ‚ÍŒÀ‚ç‚È‚¢
+	int charHeightHint, //ã“ã‚Œã«ãªã‚‹ã¨ã¯é™ã‚‰ãªã„
 	bool bold,
 	bool italic,
 	bool proportional,
@@ -45,15 +45,15 @@ public:
 	mCurrentPage( 0 ),
 	mTextureWidth( textureWidth ),
 	mTextureHeight( textureHeight ){
-		//ƒeƒNƒXƒ`ƒƒ¶¬B‚Æ‚è‚ ‚¦‚¸ˆê–‡
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”Ÿæˆã€‚ã¨ã‚Šã‚ãˆãšä¸€æš
 		Texture t = Texture::create( mTextureWidth, mTextureHeight, false );
-		//ƒ}ƒbƒv‚ÉŠi”[
+		//ãƒãƒƒãƒ—ã«æ ¼ç´
 		mTextures.insert( make_pair( 0, t ) );
 
-		//ƒtƒHƒ“ƒg–¼‚ğUNICODE•ÏŠ·
+		//ãƒ•ã‚©ãƒ³ãƒˆåã‚’UNICODEå¤‰æ›
 		DWORD pitch = ( proportional ) ? VARIABLE_PITCH : FIXED_PITCH;
 
-		//ƒtƒHƒ“ƒg¶¬
+		//ãƒ•ã‚©ãƒ³ãƒˆç”Ÿæˆ
 		mFontHandle = CreateFontA(
 			charHeightHint,
 			0,
@@ -70,16 +70,16 @@ public:
 			pitch | FF_DONTCARE,
 			fontName );
 		ASSERT( mFontHandle );
-		//HDC¶¬
+		//HDCç”Ÿæˆ
 		mDeviceContextHandle = CreateCompatibleDC( NULL );
-		//ƒeƒLƒXƒgƒƒgƒŠƒNƒXæ“¾
-		//fontƒZƒbƒg
+		//ãƒ†ã‚­ã‚¹ãƒˆãƒ¡ãƒˆãƒªã‚¯ã‚¹å–å¾—
+		//fontã‚»ãƒƒãƒˆ
 		SelectObject( mDeviceContextHandle, mFontHandle );
-		//•¶š‚ÌƒƒgƒŠƒNƒX¶¬
+		//æ–‡å­—ã®ãƒ¡ãƒˆãƒªã‚¯ã‚¹ç”Ÿæˆ
 		TEXTMETRIC tm;
 		GetTextMetrics( mDeviceContextHandle, &tm );
-		mCharHeight = tm.tmHeight; //ÀÛ‚Ì’l‚Åã‘‚«B
-		mCharAscent = tm.tmAscent; //ƒx[ƒXƒ‰ƒCƒ“‚Ìã‚Ì¡–@‚ª•K—v
+		mCharHeight = tm.tmHeight; //å®Ÿéš›ã®å€¤ã§ä¸Šæ›¸ãã€‚
+		mCharAscent = tm.tmAscent; //ãƒ™ãƒ¼ã‚¹ãƒ©ã‚¤ãƒ³ã®ä¸Šã®å¯¸æ³•ãŒå¿…è¦
 	}
 	~FontImplOS(){
 		DeleteDC( mDeviceContextHandle );
@@ -93,7 +93,7 @@ public:
 	Vector2* uvTopLeft,
 	Vector2* uvBottomRight,
 	int code ){
-		//ƒR[ƒhƒe[ƒuƒ‹‚É‚ ‚ê‚Îg‚¤B
+		//ã‚³ãƒ¼ãƒ‰ãƒ†ãƒ¼ãƒ–ãƒ«ã«ã‚ã‚Œã°ä½¿ã†ã€‚
 		CharIt cit = mChars.find( static_cast< unsigned short >( code ) );
 		const Char* c = 0;
 		if ( cit != mChars.end() ){
@@ -117,10 +117,10 @@ public:
 		return true;
 	}
 	const Char* createGlyph( int code ){
-		//fontƒZƒbƒg
+		//fontã‚»ãƒƒãƒˆ
 		SelectObject( mDeviceContextHandle, mFontHandle );
 
-		GLYPHMETRICS gm; // î•ñ
+		GLYPHMETRICS gm; // æƒ…å ±
 		MAT2 mat = {
 			{ 0, 1 }, 
 			{ 0, 0 }, 
@@ -129,50 +129,50 @@ public:
 		};
 		DWORD size;
 		const UINT format = ( mAntiAliased ) ? GGO_GRAY8_BITMAP : GGO_BITMAP;
-		// ‚Ü‚¸‚Í•K—v‚Èƒoƒbƒtƒ@ƒTƒCƒY‚ğæ“¾
+		// ã¾ãšã¯å¿…è¦ãªãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚ºã‚’å–å¾—
 		size = GetGlyphOutlineA(
 			mDeviceContextHandle,
 			static_cast< UINT >( code ),
 			format,
 			&gm, 0, NULL, &mat );
-		//¡–@æ“¾
+		//å¯¸æ³•å–å¾—
 		int cellW = static_cast< int >( gm.gmCellIncX );
-		int cellH = static_cast< int >( mCharHeight ); //IncY‚Í–ğ—§‚½‚¸B
+		int cellH = static_cast< int >( mCharHeight ); //IncYã¯å½¹ç«‹ãŸãšã€‚
 		int glyphW = static_cast< int >( gm.gmBlackBoxX );
 		int glyphH = static_cast< int >( gm.gmBlackBoxY );
 		int glyphX = static_cast< int >( gm.gmptGlyphOrigin.x );
 		int glyphY = static_cast< int >( mCharAscent - gm.gmptGlyphOrigin.y );
-		if ( glyphW + glyphX > cellW ){ //‚ ‚è‚¦‚ñ‚ª‘Îˆ‚·‚é‚Ù‚©‚ ‚é‚Ü‚¢
+		if ( glyphW + glyphX > cellW ){ //ã‚ã‚Šãˆã‚“ãŒå¯¾å‡¦ã™ã‚‹ã»ã‹ã‚ã‚‹ã¾ã„
 			cellW = glyphW + glyphX;
 		}
-		if ( glyphH + glyphY > cellH ){ //‚ ‚è‚¦‚ñ‚ª‘Îˆ‚·‚é‚Ù‚©‚ ‚é‚Ü‚¢
+		if ( glyphH + glyphY > cellH ){ //ã‚ã‚Šãˆã‚“ãŒå¯¾å‡¦ã™ã‚‹ã»ã‹ã‚ã‚‹ã¾ã„
 			cellH = glyphH + glyphY;
 		}
-		//‘‚«‚İƒeƒNƒXƒ`ƒƒæ“¾
+		//æ›¸ãè¾¼ã¿ãƒ†ã‚¯ã‚¹ãƒãƒ£å–å¾—
 		TextureIt tit = mTextures.find( mCurrentPage );
 		ASSERT( tit != mTextures.end() );
 		Texture* tex = &( tit->second );
 		int tw = tex->width();
 		int th = tex->height();
-		//‰¡‚ ‚Ó‚ê‚Ü‚µ‚½I
+		//æ¨ªã‚ãµã‚Œã¾ã—ãŸï¼
 		if ( mCurrentX + cellW >= tw ){
 			mCurrentX = 0;
 			mCurrentY += mCurrentLineHeight;
 			mCurrentLineHeight = 0;
-			//c‚ ‚Ó‚ê‚Ü‚µ‚½I
+			//ç¸¦ã‚ãµã‚Œã¾ã—ãŸï¼
 			if ( mCurrentY + cellH >= th ){
 				mCurrentY = 0;
 				++mCurrentPage;
 				Texture t = Texture::create( mTextureWidth, mTextureHeight, false );
-				//ƒ}ƒbƒv‚ÉŠi”[
+				//ãƒãƒƒãƒ—ã«æ ¼ç´
 				mTextures.insert( make_pair( mCurrentPage, t ) );
-				//ƒeƒNƒXƒ`ƒƒæ‚è’¼‚µ
+				//ãƒ†ã‚¯ã‚¹ãƒãƒ£å–ã‚Šç›´ã—
 				TextureIt tit = mTextures.find( mCurrentPage );
 				ASSERT( tit != mTextures.end() );
 				tex = &( tit->second );
 			}
 		}
-		//ƒeƒNƒXƒ`ƒƒƒƒbƒN(•”•ªƒƒbƒN)
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ­ãƒƒã‚¯(éƒ¨åˆ†ãƒ­ãƒƒã‚¯)
 		unsigned* dst;
 		int dstPitch;
 		tex->lock( 
@@ -183,7 +183,7 @@ public:
 			cellW,
 			cellH );
 
-		if ( size == 0 ){ //ƒTƒCƒY•ª‚½‚¾0–„‚ß
+		if ( size == 0 ){ //ã‚µã‚¤ã‚ºåˆ†ãŸã 0åŸ‹ã‚
 			for ( int y = 0; y < cellH; ++y ){
 				for ( int x = 0; x < cellW; ++x ){
 					dst[ x ] = 0x00ffffff;
@@ -191,11 +191,11 @@ public:
 				dst += dstPitch / 4;
 			}
 		}else{
-			// ƒoƒbƒtƒ@‚ğŠm•Û
+			// ãƒãƒƒãƒ•ã‚¡ã‚’ç¢ºä¿
 			BYTE* data = NEW BYTE[ size ];
-			int srcPitch = ( glyphW + 3 ) & ~( 3 ); //4ƒoƒCƒgƒAƒ‰ƒCƒ“
+			int srcPitch = ( glyphW + 3 ) & ~( 3 ); //4ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³
 
-			// “ñ“x–Ú‚ÌŒÄ‚Ño‚µ‚ª–{•¨Bƒf[ƒ^æ“¾B
+			// äºŒåº¦ç›®ã®å‘¼ã³å‡ºã—ãŒæœ¬ç‰©ã€‚ãƒ‡ãƒ¼ã‚¿å–å¾—ã€‚
 			size = GetGlyphOutlineA(
 				mDeviceContextHandle,
 				static_cast< UINT >( code ),
@@ -203,13 +203,13 @@ public:
 				&gm, size, data, &mat );
 			ASSERT( size != GDI_ERROR );
 
-			//1bit‚Ì‚ª•s•Ö‚·‚¬‚é‚Ì‚ÅAƒoƒCƒg”z—ñ‚ÉƒRƒs[
-			if ( mAntiAliased ){ //ƒAƒ“ƒ`‚ª‚©‚©‚Á‚Ä‚é‚È‚ç64->255ŠK’²•ÏŠ·
+			//1bitã®æ™‚ãŒä¸ä¾¿ã™ãã‚‹ã®ã§ã€ãƒã‚¤ãƒˆé…åˆ—ã«ã‚³ãƒ”ãƒ¼
+			if ( mAntiAliased ){ //ã‚¢ãƒ³ãƒãŒã‹ã‹ã£ã¦ã‚‹ãªã‚‰64->255éšèª¿å¤‰æ›
 				for ( DWORD i = 0; i < size; ++i ){
 					data[ i ] = data[ i ] * 255 / 64;
 				}
 			}else{
-				BYTE* newData = NEW BYTE[ size * 8 ]; //8”{‚ ‚ê‚Î‘«‚è‚é‚¾‚ë
+				BYTE* newData = NEW BYTE[ size * 8 ]; //8å€ã‚ã‚Œã°è¶³ã‚Šã‚‹ã ã‚
 				const BYTE* src = data;
 				BYTE* dst = newData;
 				int srcPitch = ( ( ( glyphW + 7 ) / 8 ) + 3 ) & ( ~3 );
@@ -224,13 +224,13 @@ public:
 					dst += dstPitch;
 					src += srcPitch;
 				}
-				//‹Œ”z—ñ‚ğdelete l|
+				//æ—§é…åˆ—ã‚’delete l|
 				SAFE_DELETE_ARRAY( data );
-				//V”z—ñ‚É·‚µ‘Ö‚¦
+				//æ–°é…åˆ—ã«å·®ã—æ›¿ãˆ
 				data = newData;
 			}
 			BYTE* src = data;
-			//ã•”‹ó”’‚Ì“h‚è‚Â‚Ô‚µ
+			//ä¸Šéƒ¨ç©ºç™½ã®å¡—ã‚Šã¤ã¶ã—
 			int y = 0;
 			for ( ; y < glyphY; ++y ){
 				for ( int x = 0; x < cellW; ++x ){
@@ -238,26 +238,26 @@ public:
 				}
 				dst += dstPitch / 4;
 			}
-			//ƒOƒŠƒt–{‘ÌZ
+			//ã‚°ãƒªãƒ•æœ¬ä½“Z
 			for ( ; y < glyphY + glyphH; ++y ){
 				LONG x = 0;
-				//¶‘¤‹ó”’
+				//å·¦å´ç©ºç™½
 				for ( ; x < glyphX; ++x ){
 					dst[ x ] = 0x00ffffff;
 				}
-				//ƒOƒŠƒt–{‘Ì
+				//ã‚°ãƒªãƒ•æœ¬ä½“
 				for ( ; x < glyphX + glyphW; ++x ){
 					int a = src[ x - glyphX ];
 					dst[ x ] = ( a << 24 ) | 0xffffff;
 				}
-				//‰E‘¤‹ó”’
+				//å³å´ç©ºç™½
 				for ( ; x < cellW; ++x ){
 					dst[ x ] = 0x00ffffff;
 				}
 				dst += dstPitch / 4;
 				src += srcPitch;
 			}
-			//‰º•”‹ó”’‚Ì“h‚è‚Â‚Ô‚µ
+			//ä¸‹éƒ¨ç©ºç™½ã®å¡—ã‚Šã¤ã¶ã—
 			for ( ; y < cellH; ++y ){
 				for ( int x = 0; x < cellW; ++x ){
 					dst[ x ] = 0x00ffffff;
@@ -267,14 +267,14 @@ public:
 			SAFE_DELETE_ARRAY( data );
 		}
 		tex->unlock( &dst, 0 );
-		//ƒŠƒXƒg‚É’Ç‰Á
+		//ãƒªã‚¹ãƒˆã«è¿½åŠ 
 		Char c;
 		c.mTexturePage = static_cast< unsigned char >( mCurrentPage );
 		c.mWidth = static_cast< unsigned char >( cellW );
 		c.mHeight = static_cast< unsigned char >( cellH );
 		c.mX = static_cast< unsigned short >( mCurrentX );
 		c.mY = static_cast< unsigned short >( mCurrentY );
-		mCurrentX += cellW; //‘‚«‚İˆÊ’ui‚ß‚é
+		mCurrentX += cellW; //æ›¸ãè¾¼ã¿ä½ç½®é€²ã‚ã‚‹
 		if ( mCurrentLineHeight < cellH ){
 			mCurrentLineHeight = cellH;
 		}
@@ -286,14 +286,14 @@ public:
 		return mCharHeight;
 	}
 private:
-	void operator=( const FontImplOS& ); //‹Ö~
+	void operator=( const FontImplOS& ); //ç¦æ­¢
 
 	struct Char{
-		unsigned char mTexturePage; //ƒeƒNƒXƒ`ƒƒƒy[ƒW
-		unsigned char mHeight; //‚‚³î•ñ(ƒsƒNƒZƒ‹)
-		unsigned char mWidth; //•î•ñ(ƒsƒNƒZƒ‹)
-		unsigned short mX; //¶’[
-		unsigned short mY; //ã’[
+		unsigned char mTexturePage; //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒšãƒ¼ã‚¸
+		unsigned char mHeight; //é«˜ã•æƒ…å ±(ãƒ”ã‚¯ã‚»ãƒ«)
+		unsigned char mWidth; //å¹…æƒ…å ±(ãƒ”ã‚¯ã‚»ãƒ«)
+		unsigned short mX; //å·¦ç«¯
+		unsigned short mY; //ä¸Šç«¯
 	};
 	typedef map< unsigned short, Char > CharMap;
 	typedef CharMap::iterator CharIt;
@@ -301,16 +301,16 @@ private:
 	typedef TextureMap::iterator TextureIt;
 
 	int mCharHeight;
-	int mCharAscent; //TEXTMETRIX‚©‚çæ“¾
+	int mCharAscent; //TEXTMETRIXã‹ã‚‰å–å¾—
 	bool mAntiAliased;
 	HFONT mFontHandle;
 	HDC mDeviceContextHandle;
 	CharMap mChars;
 	TextureMap mTextures;
-	int mCurrentX; //Ÿ‚Ì•¶š‚Ì¶ãX
-	int mCurrentY; //Ÿ‚Ì•¶š‚Ì¶ãY
-	int mCurrentLineHeight; //Œ»İ‚Ìs‚ÌÅ‘å‚‚³
-	int mCurrentPage; //Œ»İ‘‚«‚İ’†‚ÌƒeƒNƒXƒ`ƒƒ”Ô†
+	int mCurrentX; //æ¬¡ã®æ–‡å­—ã®å·¦ä¸ŠX
+	int mCurrentY; //æ¬¡ã®æ–‡å­—ã®å·¦ä¸ŠY
+	int mCurrentLineHeight; //ç¾åœ¨ã®è¡Œã®æœ€å¤§é«˜ã•
+	int mCurrentPage; //ç¾åœ¨æ›¸ãè¾¼ã¿ä¸­ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ç•ªå·
 	const int mTextureWidth;
 	const int mTextureHeight;
 };

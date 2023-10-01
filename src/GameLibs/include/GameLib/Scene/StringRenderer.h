@@ -15,12 +15,12 @@ namespace Scene{
 
 class Font;
 
-///•¶š—ñ•`‰æƒNƒ‰ƒXB—Dæ“xw’è‚ ‚èB©“®‚Åƒ\[ƒg‚µ‚Ü‚·B
+///æ–‡å­—åˆ—æç”»ã‚¯ãƒ©ã‚¹ã€‚å„ªå…ˆåº¦æŒ‡å®šã‚ã‚Šã€‚è‡ªå‹•ã§ã‚½ãƒ¼ãƒˆã—ã¾ã™ã€‚
 class StringRenderer{
 public:
-	///Å‘å‡Œv•¶š”AÅ‘å—v‹”­s”‚ğw’èB’´‚¦‚é‚Æassert
+	///æœ€å¤§åˆè¨ˆæ–‡å­—æ•°ã€æœ€å¤§è¦æ±‚ç™ºè¡Œæ•°ã‚’æŒ‡å®šã€‚è¶…ãˆã‚‹ã¨assert
 	static StringRenderer create( int charCapacity, int requestCapacity );
-	///ƒsƒNƒZƒ‹À•W‚Åw’èBz‚¾‚¯float‚Å[0,1]‚Å‚ ‚é‚±‚Æ‚É’ˆÓ
+	///ãƒ”ã‚¯ã‚»ãƒ«åº§æ¨™ã§æŒ‡å®šã€‚zã ã‘floatã§[0,1]ã§ã‚ã‚‹ã“ã¨ã«æ³¨æ„
 	void add( 
 		int x, 
 		int y, 
@@ -28,19 +28,19 @@ public:
 		unsigned color = 0xffffffff, 
 		bool wrapAround = false,
 		float z = 0.f );
-	///ƒsƒNƒZƒ‹‚¾‚ªfloat‚ÅêŠ‚ğw’è(x=[0,w], y=[0,h], z=[0,1] )
+	///ãƒ”ã‚¯ã‚»ãƒ«ã ãŒfloatã§å ´æ‰€ã‚’æŒ‡å®š(x=[0,w], y=[0,h], z=[0,1] )
 	void add( 
 		const Vector2& position, 
 		const char* string, 
 		unsigned color = 0xffffffff, 
 		bool wrapAroung = false, 
 		float z = 0.f );
-	///—­‚ß‚ñ‚¾—v‹‚ğˆê‹“‚É•`‰æ
+	///æºœã‚è¾¼ã‚“ã è¦æ±‚ã‚’ä¸€æŒ™ã«æç”»
 	void draw();
-	///ƒtƒHƒ“ƒg‚ğƒZƒbƒgBÅ’áˆê‰ñ‚Í‚±‚ê‚ğ‚â‚ç‚È‚¢‚Æš‚Í‘‚¯‚È‚¢B
+	///ãƒ•ã‚©ãƒ³ãƒˆã‚’ã‚»ãƒƒãƒˆã€‚æœ€ä½ä¸€å›ã¯ã“ã‚Œã‚’ã‚„ã‚‰ãªã„ã¨å­—ã¯æ›¸ã‘ãªã„ã€‚
 	void setFont( Font& );
 
-	//ˆÈ‰ºˆÓ¯‚µ‚È‚­‚Ä‚¢‚¢
+	//ä»¥ä¸‹æ„è­˜ã—ãªãã¦ã„ã„
 	StringRenderer();
 	~StringRenderer();
 	StringRenderer( const StringRenderer& );

@@ -166,10 +166,10 @@ const int gPrimeNumberTableMaximum = 10000;
 
 } //namespace {}
 
-//˜aZ‚ÌŠJ•½‚ğ“ñi–@‚Ås‚¤BÅ‘å16‰ñ‚Ìƒ‹[ƒv‚ğ‰ñ‚µ‚Ä‚µ‚Ü‚¤
-//wikipedia‚Ì•MZ‚Ì€QÆ‚Ì‚±‚ÆB
+//å’Œç®—ã®é–‹å¹³ã‚’äºŒé€²æ³•ã§è¡Œã†ã€‚æœ€å¤§16å›ã®ãƒ«ãƒ¼ãƒ—ã‚’å›ã—ã¦ã—ã¾ã†
+//wikipediaã®ç­†ç®—ã®é …å‚ç…§ã®ã“ã¨ã€‚
 int sqrt( int n ){
-	//Å‘åŒ…‚ğ’²‚×‚é
+	//æœ€å¤§æ¡ã‚’èª¿ã¹ã‚‹
 	int start = 30;
 	while ( start > 0 ){
 		if ( ( n & ( 0x3 << start ) ) == 0 ){
@@ -177,52 +177,52 @@ int sqrt( int n ){
 		}
 		start -= 2;
 	}
-	start >>= 1; //2Œ…‚Ã‚Â‚É‚·‚é‚Ì‚Å”¼•ª‚É‚·‚é
+	start >>= 1; //2æ¡ã¥ã¤ã«ã™ã‚‹ã®ã§åŠåˆ†ã«ã™ã‚‹
 
 	int result = 0;
-	int t0 = 0; //Œ»İ‚Ì2Œ…
-	int t1 = 0; //˜e‚É‘‚©‚ê‚é”
+	int t0 = 0; //ç¾åœ¨ã®2æ¡
+	int t1 = 0; //è„‡ã«æ›¸ã‹ã‚Œã‚‹æ•°
 	for ( int i = start; i >= 0; --i ){
-		int shift = i * 2; //ƒVƒtƒgBÅ‰30BÅŒã0
-		t0 <<= 2; //‘O‚ÌŒ‹‰Ê‚ğ2ƒrƒbƒgƒVƒtƒg
-		t1 <<= 1; //‘O‚ÌŒ‹‰Ê‚ğ1ƒrƒbƒgƒVƒtƒg
+		int shift = i * 2; //ã‚·ãƒ•ãƒˆã€‚æœ€åˆ30ã€‚æœ€å¾Œ0
+		t0 <<= 2; //å‰ã®çµæœã‚’2ãƒ“ãƒƒãƒˆã‚·ãƒ•ãƒˆ
+		t1 <<= 1; //å‰ã®çµæœã‚’1ãƒ“ãƒƒãƒˆã‚·ãƒ•ãƒˆ
 		int mask = 0x3 << shift;
-		t0 += ( n & mask ) >> shift; //t‚É‚Í0...3‚ª“ü‚é
-		if ( t0 >= ( t1 + 1 ) ){ //t1x1‚ª“ü‚è‚«‚éBresult‚É1<<shift/2‚ğ’Ç‰Á
+		t0 += ( n & mask ) >> shift; //tã«ã¯0...3ãŒå…¥ã‚‹
+		if ( t0 >= ( t1 + 1 ) ){ //t1x1ãŒå…¥ã‚Šãã‚‹ã€‚resultã«1<<shift/2ã‚’è¿½åŠ 
 			result += 1 << i;
 			t0 -= t1 + 1;
-			t1 += 2; //1‚ª2‚Â
+			t1 += 2; //1ãŒ2ã¤
 		}
 	}
-	if ( t0 > 0 ){ //‚ ‚Ü‚è‚ª‚ ‚é‚Ì‚Å+1
+	if ( t0 > 0 ){ //ã‚ã¾ã‚ŠãŒã‚ã‚‹ã®ã§+1
 		++result;
 	}
 	return result;
 }
 
 bool isPrimeNumber( int n ){
-	if ( n < gPrimeNumberTableMaximum ){	//•\‚©‚ç“ñ•ªŒŸõB‚ ‚ê‚Îtrue
+	if ( n < gPrimeNumberTableMaximum ){	//è¡¨ã‹ã‚‰äºŒåˆ†æ¤œç´¢ã€‚ã‚ã‚Œã°true
 		int first = 0;
 		int last = gPrimeNumberTableSize - 1;
-		while ( last > first ){ //1ŒÂˆÈã‚ ‚é‚¤‚¿‚ÍŒJ‚è•Ô‚·
-			int middle = ( first + last ) / 2; //^‚ñ’†‚Ì“Y‚¦š
+		while ( last > first ){ //1å€‹ä»¥ä¸Šã‚ã‚‹ã†ã¡ã¯ç¹°ã‚Šè¿”ã™
+			int middle = ( first + last ) / 2; //çœŸã‚“ä¸­ã®æ·»ãˆå­—
 			int t = gPrimeNumbers[ middle ];
-			if ( t < n ){ //¬‚³‚¢BŒã‚ë‚É‚ ‚é
-				first = middle + 1; //æ“ª‚ğ’uŠ·
-			}else if ( t > n ){ //‘å‚«‚¢B‘O‚É‚ ‚éB
-				last = middle - 1; //––”ö‚ğ’uŠ·
+			if ( t < n ){ //å°ã•ã„ã€‚å¾Œã‚ã«ã‚ã‚‹
+				first = middle + 1; //å…ˆé ­ã‚’ç½®æ›
+			}else if ( t > n ){ //å¤§ãã„ã€‚å‰ã«ã‚ã‚‹ã€‚
+				last = middle - 1; //æœ«å°¾ã‚’ç½®æ›
 			}else{
 				first = last = middle;
 			}
 		}
-		return ( gPrimeNumbers[ first ] == n ); //ˆê’v‚·‚ê‚Îtrue
+		return ( gPrimeNumbers[ first ] == n ); //ä¸€è‡´ã™ã‚Œã°true
 	}else{
-		//2‚ÅŠ„‚ê‚é‚È‚ç‘f”‚¶‚á‚È‚¢
+		//2ã§å‰²ã‚Œã‚‹ãªã‚‰ç´ æ•°ã˜ã‚ƒãªã„
 		if ( ( n & 1 ) == 0 ){
 			return false;
 		}
-		//Œã‚Í”n­³’¼‚É’²‚×‚é‘¼‚È‚¢B
-		//Šï”‚È‚Ì‚ÅA‹ô”‚ÅŠ„‚ê‚é‚í‚¯‚à‚È‚­ƒ`ƒFƒbƒN‚Í–³—p
+		//å¾Œã¯é¦¬é¹¿æ­£ç›´ã«èª¿ã¹ã‚‹ä»–ãªã„ã€‚
+		//å¥‡æ•°ãªã®ã§ã€å¶æ•°ã§å‰²ã‚Œã‚‹ã‚ã‘ã‚‚ãªããƒã‚§ãƒƒã‚¯ã¯ç„¡ç”¨
 		int root = sqrt( n );
 		for ( int i = 3; i <= root; i += 2 ){
 			if ( ( n % i ) == 0 ){
@@ -234,27 +234,27 @@ bool isPrimeNumber( int n ){
 }
 
 int next( int n ){
-	if ( n < gPrimeNumbers[ gPrimeNumberTableSize - 1 ] ){ //•\‚©‚ç“ñ•ªŒŸõ
+	if ( n < gPrimeNumbers[ gPrimeNumberTableSize - 1 ] ){ //è¡¨ã‹ã‚‰äºŒåˆ†æ¤œç´¢
 		int first = 0;
 		int last = gPrimeNumberTableSize - 1;
-		while ( last > first ){ //1ŒÂˆÈã‚ ‚é‚¤‚¿‚ÍŒJ‚è•Ô‚·
-			int middle = ( first + last ) / 2; //^‚ñ’†‚Ì“Y‚¦š
+		while ( last > first ){ //1å€‹ä»¥ä¸Šã‚ã‚‹ã†ã¡ã¯ç¹°ã‚Šè¿”ã™
+			int middle = ( first + last ) / 2; //çœŸã‚“ä¸­ã®æ·»ãˆå­—
 			int t = gPrimeNumbers[ middle ];
-			if ( t < n ){ //¬‚³‚¢BŒã‚ë‚É‚ ‚é
-				first = middle + 1; //æ“ª‚ğ’uŠ·
-			}else if ( t > n ){ //‘å‚«‚¢B‘O‚É‚ ‚éB
-				last = middle - 1; //––”ö‚ğ’uŠ·
+			if ( t < n ){ //å°ã•ã„ã€‚å¾Œã‚ã«ã‚ã‚‹
+				first = middle + 1; //å…ˆé ­ã‚’ç½®æ›
+			}else if ( t > n ){ //å¤§ãã„ã€‚å‰ã«ã‚ã‚‹ã€‚
+				last = middle - 1; //æœ«å°¾ã‚’ç½®æ›
 			}else{
 				first = last = middle;
 			}
 		}
 		if ( n < gPrimeNumbers[ first ] ){
-			n = gPrimeNumbers[ first ]; //‘å‚«‚¯‚ê‚Î‚»‚ê‚ğ•Ô‚·B
-		}else{ //¬‚³‚¢‚©‚ç“™‚µ‚¯‚ê‚ÎŸ‚ğ•Ô‚·
-			n = gPrimeNumbers[ first + 1 ]; //ÅI—v‘fˆÈ‰º‚È‚Ì‚Å‚±‚ê‚Í”ÍˆÍ“àB
+			n = gPrimeNumbers[ first ]; //å¤§ãã‘ã‚Œã°ãã‚Œã‚’è¿”ã™ã€‚
+		}else{ //å°ã•ã„ã‹ã‚‰ç­‰ã—ã‘ã‚Œã°æ¬¡ã‚’è¿”ã™
+			n = gPrimeNumbers[ first + 1 ]; //æœ€çµ‚è¦ç´ ä»¥ä¸‹ãªã®ã§ã“ã‚Œã¯ç¯„å›²å†…ã€‚
 		}
 	}else{
-		//‚³‚ÄAn‚ª‹ô”‚È‚ç+1AŠï”‚È‚ç+2
+		//ã•ã¦ã€nãŒå¶æ•°ãªã‚‰+1ã€å¥‡æ•°ãªã‚‰+2
 		n += ( n & 1 ) ? 2 : 1;
 		int root = sqrt( n );
 		while ( true ){
@@ -264,7 +264,7 @@ int next( int n ){
 					break;
 				}
 			}
-			if ( i > root ){ //ÅŒã‚Ü‚Ås‚Á‚½B
+			if ( i > root ){ //æœ€å¾Œã¾ã§è¡Œã£ãŸã€‚
 				break;
 			}
 			n += 2;
@@ -277,31 +277,31 @@ int next( int n ){
 }
 
 int previous( int n ){
-	//—áŠO“I‚É3ˆÈ‰º‚ğˆ—
+	//ä¾‹å¤–çš„ã«3ä»¥ä¸‹ã‚’å‡¦ç†
 	if ( n <= 3 ){
 		return 2;
 	}
-	if ( n <= gPrimeNumberTableMaximum ){ //•\‚©‚ç“ñ•ªŒŸõ
+	if ( n <= gPrimeNumberTableMaximum ){ //è¡¨ã‹ã‚‰äºŒåˆ†æ¤œç´¢
 		int first = 0;
 		int last = gPrimeNumberTableSize - 1;
-		while ( last > first ){ //1ŒÂˆÈã‚ ‚é‚¤‚¿‚ÍŒJ‚è•Ô‚·
-			int middle = ( first + last ) / 2; //^‚ñ’†‚Ì“Y‚¦š
+		while ( last > first ){ //1å€‹ä»¥ä¸Šã‚ã‚‹ã†ã¡ã¯ç¹°ã‚Šè¿”ã™
+			int middle = ( first + last ) / 2; //çœŸã‚“ä¸­ã®æ·»ãˆå­—
 			int t = gPrimeNumbers[ middle ];
-			if ( t < n ){ //¬‚³‚¢BŒã‚ë‚É‚ ‚é
-				first = middle + 1; //æ“ª‚ğ’uŠ·
-			}else if ( t > n ){ //‘å‚«‚¢B‘O‚É‚ ‚éB
-				last = middle - 1; //––”ö‚ğ’uŠ·
+			if ( t < n ){ //å°ã•ã„ã€‚å¾Œã‚ã«ã‚ã‚‹
+				first = middle + 1; //å…ˆé ­ã‚’ç½®æ›
+			}else if ( t > n ){ //å¤§ãã„ã€‚å‰ã«ã‚ã‚‹ã€‚
+				last = middle - 1; //æœ«å°¾ã‚’ç½®æ›
 			}else{
 				first = last = middle;
 			}
 		}
-		if ( n > gPrimeNumbers[ first ] ){ //¬‚³‚¯‚ê‚Î‚»‚ê‚ğ•Ô‚·
+		if ( n > gPrimeNumbers[ first ] ){ //å°ã•ã‘ã‚Œã°ãã‚Œã‚’è¿”ã™
 			n = gPrimeNumbers[ first ];
-		}else{ //“¯‚¶‚©‘å‚«‚¢‚È‚çˆêŒÂ‘O‚ğ•Ô‚·B
-			n = gPrimeNumbers[ first - 1 ]; //n>=4‚È‚Ì‚Å”ÍˆÍŠO‚Í‚È‚¢B
+		}else{ //åŒã˜ã‹å¤§ãã„ãªã‚‰ä¸€å€‹å‰ã‚’è¿”ã™ã€‚
+			n = gPrimeNumbers[ first - 1 ]; //n>=4ãªã®ã§ç¯„å›²å¤–ã¯ãªã„ã€‚
 		}
 	}else{
-		//‚³‚ÄAn‚ª‹ô”‚È‚ç-1AŠï”‚È‚ç-2
+		//ã•ã¦ã€nãŒå¶æ•°ãªã‚‰-1ã€å¥‡æ•°ãªã‚‰-2
 		n -= ( n & 1 ) ? 2 : 1;
 		int root = sqrt( n );
 		while ( n > 3 ){
@@ -311,7 +311,7 @@ int previous( int n ){
 					break;
 				}
 			}
-			if ( i > root ){ //ÅŒã‚Ü‚Ås‚Á‚½B
+			if ( i > root ){ //æœ€å¾Œã¾ã§è¡Œã£ãŸã€‚
 				return n;
 			}
 			n -= 2;

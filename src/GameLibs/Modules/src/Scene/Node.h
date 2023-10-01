@@ -23,7 +23,7 @@ public:
 	mAnimation( 0 ){
 	}
 	~Node(){
-		mTemplate = 0; //’P‚È‚éŽQÆ
+		mTemplate = 0; //å˜ãªã‚‹å‚ç…§
 		mAnimation = 0;
 	}
 	void setChildren( Node** children, int childNumber ){
@@ -31,9 +31,9 @@ public:
 		mChildNumber = childNumber;
 	}
 	void draw( const Matrix34& parentMatrix, const Vector3& color, float transparency ) const {
-		//ƒ[ƒ‹ƒhs—ñ‚ðì‚é
+		//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’ä½œã‚‹
 		Matrix34 w = parentMatrix;
-		w.setMul( parentMatrix, mTemplate->mTransform ); //ƒfƒtƒHƒ‹ƒg‚ð‚©‚¯‚ÄA
+		w.setMul( parentMatrix, mTemplate->mTransform ); //ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚’ã‹ã‘ã¦ã€
 		w.translate( mTranslation );
 		w.rotateY( mRotation.y );
 		w.rotateX( mRotation.x );
@@ -41,9 +41,9 @@ public:
 		w.scale( mScale );
 
 		if ( mTemplate->mBatch ){
-			//ƒZƒbƒg
+			//ã‚»ãƒƒãƒˆ
 			Graphics::Manager().setWorldMatrix( w );
-			//•`‰æ
+			//æç”»
 			mTemplate->mBatch->draw( color, transparency );
 		}
 		for ( int i = 0; i < mChildNumber; ++i ){

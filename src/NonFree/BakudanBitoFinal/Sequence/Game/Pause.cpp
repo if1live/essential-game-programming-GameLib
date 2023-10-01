@@ -21,39 +21,39 @@ Pause::~Pause(){
 }
 
 void Pause::update( Parent* parent ){
-	//0:‚â‚è‚È‚¨‚µ
-	//1:–ÊƒZƒŒ‚Ö
-	//2:ƒ^ƒCƒgƒ‹‰æ–Ê‚Ö
-	//3:–ß‚é
+	//0:ã‚„ã‚ŠãªãŠã—
+	//1:é¢ã‚»ãƒ¬ã¸
+	//2:ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ã¸
+	//3:æˆ»ã‚‹
 	if ( Pad::isTriggered( Pad::U) ){
 		--mCursorPosition;
-		if ( mCursorPosition < 0 ){ //ƒ}ƒCƒiƒX‚ÍÅ‘å’l‚Éƒ‹[ƒv
+		if ( mCursorPosition < 0 ){ //ãƒã‚¤ãƒŠã‚¹ã¯æœ€å¤§å€¤ã«ãƒ«ãƒ¼ãƒ—
  			mCursorPosition = 1;
 		}
-		//ƒJ[ƒ\ƒ‹‰¹
+		//ã‚«ãƒ¼ã‚½ãƒ«éŸ³
 		SoundManager::instance()->playSe( SoundManager::SE_CURSOR_MOVE );
 	}else if ( Pad::isTriggered( Pad::D ) ){
 		++mCursorPosition;
-		if ( mCursorPosition > 1 ){ //1‚ğ‰z‚¦‚½‚ç0‚Éƒ‹[ƒv
+		if ( mCursorPosition > 1 ){ //1ã‚’è¶ŠãˆãŸã‚‰0ã«ãƒ«ãƒ¼ãƒ—
 			mCursorPosition = 0;
 		}
-		//ƒJ[ƒ\ƒ‹‰¹
+		//ã‚«ãƒ¼ã‚½ãƒ«éŸ³
 		SoundManager::instance()->playSe( SoundManager::SE_CURSOR_MOVE );
 	}else if ( Pad::isTriggered( Pad::A ) ){
-		if ( mCursorPosition == 0 ){ //ƒQ[ƒ€‚É–ß‚é
+		if ( mCursorPosition == 0 ){ //ã‚²ãƒ¼ãƒ ã«æˆ»ã‚‹
 			parent->moveTo( Parent::NEXT_PLAY );
-		}else if ( mCursorPosition == 1 ){ //ƒ^ƒCƒgƒ‹‚Ö–ß‚é
+		}else if ( mCursorPosition == 1 ){ //ã‚¿ã‚¤ãƒˆãƒ«ã¸æˆ»ã‚‹
 			parent->moveTo( Parent::NEXT_TITLE );
 		}
-		//Œˆ’è‰¹
+		//æ±ºå®šéŸ³
 		SoundManager::instance()->playSe( SoundManager::SE_SELECTION );
 	}
-	//•`‰æ
-	//‚Ü‚¸ƒQ[ƒ€‰æ–Ê
+	//æç”»
+	//ã¾ãšã‚²ãƒ¼ãƒ ç”»é¢
 	parent->drawState();
-	//ã‚Éd‚Ë‚é
+	//ä¸Šã«é‡ã­ã‚‹
 	mImage->draw();
-	//ƒJ[ƒ\ƒ‹‚ğ•`‚­
+	//ã‚«ãƒ¼ã‚½ãƒ«ã‚’æã
 	mCursorImage->draw( 180, 220 + mCursorPosition * 48, 0, 0, 32, 32 );
 }
 

@@ -14,8 +14,8 @@ public:
 	~Title();
 	void update( Parent* );
 private:
-	Image* mImage; //ƒ^ƒCƒgƒ‹‰æ–Ê‰æ‘œ
-	Image* mCursorImage; //ƒ^ƒCƒgƒ‹‰æ–Ê‰æ‘œ
+	Image* mImage; //ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ç”»åƒ
+	Image* mCursorImage; //ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ç”»åƒ
 	int mCursorPosition;
 };
 

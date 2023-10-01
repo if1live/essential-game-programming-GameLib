@@ -13,10 +13,10 @@ namespace GameLib{
 		if ( !Loader::instance() ){
 			Loader::create();
 		}
-		//ƒ[ƒ_Às
+		//ãƒ­ãƒ¼ãƒ€å®Ÿè¡Œ
 		Loader::instance()->update();
 
-		//ƒ[ƒhÏ‚İ‚È‚çíœ
+		//ãƒ­ãƒ¼ãƒ‰æ¸ˆã¿ãªã‚‰å‰Šé™¤
 		for ( int i = 0; i < 10; ++i ){
 			if ( gFiles[ i ] ){
 				if ( gFiles[ i ]->isReady() ){
@@ -26,15 +26,15 @@ namespace GameLib{
 			}
 		}
 		ostringstream oss;
-		//ƒ‰ƒ“ƒ_ƒ€‚ÈŠÔŠu‚Å
+		//ãƒ©ãƒ³ãƒ€ãƒ ãªé–“éš”ã§
 		if ( getRandom( 100 ) == 0 ){
-			//ƒ‰ƒ“ƒ_ƒ€‚È”ƒ[ƒhB
+			//ãƒ©ãƒ³ãƒ€ãƒ ãªæ•°ãƒ­ãƒ¼ãƒ‰ã€‚
 			int n = getRandom( 10 );
 			for ( int i = 0; i < 10; ++i ){
 				if ( n > 0 ){
 					if ( gFiles[ i ] == 0 ){
 						oss.str( "" );
-						Loader::instance()->createFile( &gFiles[ i ], "../data/robo.dds" ); //ƒvƒƒWƒFƒNƒgŠÔ‚Å‹¤—L‚µ‚Ä‚¢‚é
+						Loader::instance()->createFile( &gFiles[ i ], "../data/robo.dds" ); //ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆé–“ã§å…±æœ‰ã—ã¦ã„ã‚‹
 						cout << i << " th File created." << endl;
 					}
 				}
@@ -52,7 +52,7 @@ namespace GameLib{
 		c = ( previousFrame > 63 ) ? 0 : ( 255 - previousFrame * 4 );
 		drawDebugString( 0, 1, oss.str().c_str(), 0xffff0000 | ( c << 8 ) | c );
 
-		//~‚Ü‚Á‚Ä‚é‚Ì‚ğ‚í‚©‚è‚â‚·‚­‚·‚é•`‰æ
+		//æ­¢ã¾ã£ã¦ã‚‹ã®ã‚’ã‚ã‹ã‚Šã‚„ã™ãã™ã‚‹æç”»
 		double p[ 4 ][ 4 ];
 		p[ 0 ][ 2 ] = p[ 1 ][ 2 ] = p[ 2 ][ 2 ] = p[ 3 ][ 2 ] = 0.0;
 		p[ 0 ][ 3 ] = p[ 1 ][ 3 ] = p[ 2 ][ 3 ] = p[ 3 ][ 3 ] = 1.0;

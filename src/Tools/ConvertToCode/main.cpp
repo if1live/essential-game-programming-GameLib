@@ -10,7 +10,7 @@ void write( bool* succeeded, ofstream&, const char* inFileName );
 int main( int argc, const char** argv ){
 	vector< const char* > inFiles;
 	const char* outFile = 0;
-	//ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‰ðŽß
+	//ã‚³ãƒžãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³è§£é‡ˆ
 	for ( int i = 1; i < argc; ++i ){
 		const char* arg = argv[ i ];
 		if ( arg[ 0 ] == '-' ){
@@ -31,14 +31,14 @@ int main( int argc, const char** argv ){
 		displayHelp();
 		return 0;
 	}
-	//o—Íƒtƒ@ƒCƒ‹ŠJ‚¯‚é
-	setlocale( LC_ALL, "" ); //‚±‚ê‚ª‚È‚¢‚Æ“ú–{Œêƒtƒ@ƒCƒ‹–¼‚ðŽó‚¯•t‚¯‚È‚¢
+	//å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«é–‹ã‘ã‚‹
+	setlocale( LC_ALL, "" ); //ã“ã‚ŒãŒãªã„ã¨æ—¥æœ¬èªžãƒ•ã‚¡ã‚¤ãƒ«åã‚’å—ã‘ä»˜ã‘ãªã„
 	ofstream o( outFile, ofstream::binary );
 	if ( !o ){
 		cerr << "can't open output file." << endl;
 		return 1;
 	}
-	//“ü—Íƒtƒ@ƒCƒ‹ŠJ‚¯‚È‚ª‚ç“f‚«o‚·ˆ—–{‘Ì
+	//å…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«é–‹ã‘ãªãŒã‚‰åãå‡ºã™å‡¦ç†æœ¬ä½“
 	bool succeeded;
 	for ( unsigned i = 0; i < inFiles.size(); ++i ){
 		write( &succeeded, o, inFiles[ i ] );
@@ -51,13 +51,13 @@ int main( int argc, const char** argv ){
 }
 
 void write( bool* succeeded, ofstream& o, const char* inFileName ){
-	setlocale( LC_ALL, "" ); //‚±‚ê‚ª‚È‚¢‚Æ“ú–{Œêƒtƒ@ƒCƒ‹–¼‚ðŽó‚¯•t‚¯‚È‚¢
+	setlocale( LC_ALL, "" ); //ã“ã‚ŒãŒãªã„ã¨æ—¥æœ¬èªžãƒ•ã‚¡ã‚¤ãƒ«åã‚’å—ã‘ä»˜ã‘ãªã„
 	ifstream in( inFileName, ifstream::binary );
 	if ( !in ){
 		*succeeded = false;
 		return;
 	}
-	//ˆê‹C“Ç‚Ý
+	//ä¸€æ°—èª­ã¿
 	in.seekg( 0, ifstream::end );
 	streamsize s = in.tellg();
 	in.seekg( 0, ifstream::beg );
@@ -68,8 +68,8 @@ void write( bool* succeeded, ofstream& o, const char* inFileName ){
 		*succeeded = false;
 		return;
 	}
-	//•Ï”–¼‚Íƒtƒ@ƒCƒ‹–¼‚©‚ç¶¬B
-	//ƒXƒ‰ƒbƒVƒ…AƒoƒbƒNƒXƒ‰ƒbƒVƒ…AƒsƒŠƒIƒhA0x80ˆÈã‚Í–³Ž‹‚µ‚ÄŽŸ‚Ì•¶Žš‚ð‘å•¶Žš‚É•ÏŠ·
+	//å¤‰æ•°åã¯ãƒ•ã‚¡ã‚¤ãƒ«åã‹ã‚‰ç”Ÿæˆã€‚
+	//ã‚¹ãƒ©ãƒƒã‚·ãƒ¥ã€ãƒãƒƒã‚¯ã‚¹ãƒ©ãƒƒã‚·ãƒ¥ã€ãƒ”ãƒªã‚ªãƒ‰ã€0x80ä»¥ä¸Šã¯ç„¡è¦–ã—ã¦æ¬¡ã®æ–‡å­—ã‚’å¤§æ–‡å­—ã«å¤‰æ›
 	string name;
 	bool capital = true;
 	for ( unsigned i = 0; inFileName[ i ]; ++i ){
@@ -90,10 +90,10 @@ void write( bool* succeeded, ofstream& o, const char* inFileName ){
 			name += c;
 		}
 	}
-	//ƒwƒbƒ_‘‚«o‚µŠJŽn
+	//ãƒ˜ãƒƒãƒ€æ›¸ãå‡ºã—é–‹å§‹
 	o << "namespace {\n";
 	o << "const char g" << name << "[] = {\\\n";
-	//•¶Žšƒ‹[ƒv
+	//æ–‡å­—ãƒ«ãƒ¼ãƒ—
 	int rowCount = 0;
 	for ( streamsize i = 0; i < s; ++i ){
 		o << ( int )b[ i ] << ", ";
@@ -103,9 +103,9 @@ void write( bool* succeeded, ofstream& o, const char* inFileName ){
 			rowCount = 0;
 		}
 	}
-	//ÅŒã‚É‰üs‚ð•t‰Á
+	//æœ€å¾Œã«æ”¹è¡Œã‚’ä»˜åŠ 
 	o << '\\' << '\n';
-	//Š‡ŒÊ•Â‚¶
+	//æ‹¬å¼§é–‰ã˜
 	o << "};\n";
 	o << "} //anonymous namespace\n";
 	*succeeded = true;

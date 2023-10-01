@@ -6,7 +6,7 @@
 using namespace GameLib;
 
 static int powerOfTwo( int a ){
-	ASSERT( a < 0x40000000 ); //a‚ª0x40000000‚æ‚è‘å‚«‚¢‚ÆA–³ŒÀƒ‹[ƒv‚É‚È‚éB‚µ‚Ä‚İ‚æ‚¤B‚±‚ê‚ª“š‚¦B
+	ASSERT( a < 0x40000000 ); //aãŒ0x40000000ã‚ˆã‚Šå¤§ãã„ã¨ã€ç„¡é™ãƒ«ãƒ¼ãƒ—ã«ãªã‚‹ã€‚è©¦ã—ã¦ã¿ã‚ˆã†ã€‚ã“ã‚ŒãŒç­”ãˆã€‚
 	int r = 1;
 	while ( r < a ){
 		r *= 2;
@@ -23,13 +23,13 @@ mTexture( 0 ){
 	File f( filename );
 	mHeight = f.getUnsigned( 12 );
 	mWidth = f.getUnsigned( 16 );
-	//ˆêƒoƒbƒtƒ@‚ÉƒRƒs[Bchar*‚©‚ç’¼ÚcreateTexture‚ÍŠë‚È‚·‚¬‚éB
+	//ä¸€æ™‚ãƒãƒƒãƒ•ã‚¡ã«ã‚³ãƒ”ãƒ¼ã€‚char*ã‹ã‚‰ç›´æ¥createTextureã¯å±ãªã™ãã‚‹ã€‚
 	unsigned* buffer = new unsigned[ mWidth * mHeight ];
 	for ( int i = 0; i < mWidth * mHeight; ++i ){
 		buffer[ i ] = f.getUnsigned( 128 + i * 4 );
 	}
-	//createTexture‚µ‚Ü‚·B
-	//‚»‚Ì‚½‚ß‚ÉA2‚Ì™pæ(‚×‚«‚¶‚å‚¤)‚µ‚½‰ğ‘œ“x‚ğ‹‚ß‚é•K—v‚ª‚ ‚éB
+	//createTextureã—ã¾ã™ã€‚
+	//ãã®ãŸã‚ã«ã€2ã®å†ªä¹—(ã¹ãã˜ã‚‡ã†)ã—ãŸè§£åƒåº¦ã‚’æ±‚ã‚ã‚‹å¿…è¦ãŒã‚ã‚‹ã€‚
 	mTextureWidth = powerOfTwo( mWidth );
 	mTextureHeight = powerOfTwo( mHeight );
 
@@ -40,7 +40,7 @@ mTexture( 0 ){
 		buffer,
 		mWidth,
 		mHeight );
-	SAFE_DELETE_ARRAY( buffer ); //‚à‚¤‚¢‚ç‚È‚¢
+	SAFE_DELETE_ARRAY( buffer ); //ã‚‚ã†ã„ã‚‰ãªã„
 }
 
 Image::~Image(){
@@ -55,7 +55,7 @@ int Image::height() const {
 	return mHeight;
 }
 
-//ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒh•t‚«
+//ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰ä»˜ã
 void Image::draw(
 int dstX, 
 int dstY, 
@@ -63,17 +63,17 @@ int srcX,
 int srcY, 
 int width, 
 int height ) const {
-	//x,y‚Ì”ÍˆÍ‚ğŒvZ
+	//x,yã®ç¯„å›²ã‚’è¨ˆç®—
 	double x0 = static_cast< double >( dstX );
 	double y0 = static_cast< double >( dstY );
 	double x1 = x0 + static_cast< double >( width );
 	double y1 = y0 + static_cast< double >( height );
-	//ˆÚ“®Œã’¸“_
+	//ç§»å‹•å¾Œé ‚ç‚¹
 	Vector2 p0( x0, y0 );
 	Vector2 p1( x1, y0 );
 	Vector2 p2( x0, y1 );
 	Vector2 p3( x1, y1 );
-	//ƒeƒNƒXƒ`ƒƒÀ•W¶¬
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ç”Ÿæˆ
 	double rcpTw = 1.0 / static_cast< double >( mTextureWidth );
 	double rcpTh = 1.0 / static_cast< double >( mTextureHeight );
 	double u0 = static_cast< double >( srcX ) * rcpTw;
@@ -86,11 +86,11 @@ int height ) const {
 	Vector2 t3( u1, v1 );
 	
 	Framework f = Framework::instance();
-	//ƒeƒNƒXƒ`ƒƒƒZƒbƒg
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚»ãƒƒãƒˆ
 	f.setTexture( mTexture );
-	//üŒ`‡¬
+	//ç·šå½¢åˆæˆ
 	f.setBlendMode( Framework::BLEND_LINEAR );
-	//•`‰æ
+	//æç”»
 	f.drawTriangle2D( &p0.x, &p1.x, &p2.x, &t0.x, &t1.x, &t2.x );
 	f.drawTriangle2D( &p3.x, &p1.x, &p2.x, &t3.x, &t1.x, &t2.x );
 }

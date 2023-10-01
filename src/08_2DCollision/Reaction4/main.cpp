@@ -17,19 +17,19 @@ public:
 		int bt = b.mY - b.mHalfSize; //top B
 		int bb = b.mY + b.mHalfSize; //bottom B
 
-		bool hitX = ( al < br ) && ( ar > bl ); //¶‰E•ûŒü‚Å“–‚½‚è
-		bool hitY = ( at < bb ) && ( ab > bt ); //ã‰º•ûŒü‚Å“–‚½‚è
+		bool hitX = ( al < br ) && ( ar > bl ); //å·¦å³æ–¹å‘ã§å½“ãŸã‚Š
+		bool hitY = ( at < bb ) && ( ab > bt ); //ä¸Šä¸‹æ–¹å‘ã§å½“ãŸã‚Š
 
-		if ( hitX && hitY ){ //—¼•û‚Å“–‚½‚ç‚È‚¢‚Æˆ—‚Í‚µ‚È‚¢
-			int pl = ar - bl; //¶‚©‚ç‚Ì‚ß‚è‚±‚İ
-			int pr = br - al; //‰E‚©‚ç‚Ì‚ß‚è‚±‚İ
+		if ( hitX && hitY ){ //ä¸¡æ–¹ã§å½“ãŸã‚‰ãªã„ã¨å‡¦ç†ã¯ã—ãªã„
+			int pl = ar - bl; //å·¦ã‹ã‚‰ã®ã‚ã‚Šã“ã¿
+			int pr = br - al; //å³ã‹ã‚‰ã®ã‚ã‚Šã“ã¿
 			if ( pl < pr ){
 				mX -= pl;
 			}else{
 				mX += pr;
 			}
-			int pt = ab - bt; //ã‚©‚ç‚Ì‚ß‚è‚±‚İ
-			int pb = bb - at; //‰º‚©‚ç‚Ì‚ß‚è‚±‚İ
+			int pt = ab - bt; //ä¸Šã‹ã‚‰ã®ã‚ã‚Šã“ã¿
+			int pb = bb - at; //ä¸‹ã‹ã‚‰ã®ã‚ã‚Šã“ã¿
 			if ( pt < pb ){
 				mY -= pt;
 			}else{
@@ -45,8 +45,8 @@ public:
 	int mHalfSize;
 };
 bool gFirstFrame = true;
-Square gPlayer; //©ƒLƒƒƒ‰‚Ì‚Â‚à‚è
-Square gWall; //•Ç
+Square gPlayer; //è‡ªã‚­ãƒ£ãƒ©ã®ã¤ã‚‚ã‚Š
+Square gWall; //å£
 
 namespace GameLib{
 	void Framework::update(){
@@ -56,7 +56,7 @@ namespace GameLib{
 			gPlayer.set( 16, 16, 16 );
 			gWall.set( 160, 120, 16 );
 		}
-		//ˆÚ“®—ÊƒQƒbƒg
+		//ç§»å‹•é‡ã‚²ãƒƒãƒˆ
 		int dx = 0;
 		int dy = 0;
 		if ( isKeyOn( 'a' ) ){
@@ -70,20 +70,20 @@ namespace GameLib{
 			dy = 1;
 		}
 		unsigned* vram = videoMemory();
-		//ˆÚ“®
+		//ç§»å‹•
 		gPlayer.mX += dx;
 		gPlayer.mY += dy;
-		//Õ“Ëˆ—
+		//è¡çªå‡¦ç†
 		unsigned color = 0xffff0000;
 		if ( gPlayer.solvePenetration( gWall ) ){
 			color = 0xffffffff;
 		}
-		//•`‰æ
-		//ˆê’UƒNƒŠƒA
+		//æç”»
+		//ä¸€æ—¦ã‚¯ãƒªã‚¢
 		for ( int i = 0; i < width() * height(); ++i ){
 			vram[ i ] = 0;
 		}
-		//“®‚©‚È‚¢‚Ù‚¤•`‰æ
+		//å‹•ã‹ãªã„ã»ã†æç”»
 		for ( int y = 0; y < 32; ++y ){
 			for ( int x = 0; x < 32; ++x ){
 				int tx = x + gWall.mX - 16;
@@ -91,7 +91,7 @@ namespace GameLib{
 				vram[ ty * width() + tx ] = 0xff0000ff; 
 			}
 		}
-		//“®‚­‚Ù‚¤•`‰æ
+		//å‹•ãã»ã†æç”»
 		for ( int y = 0; y < 32; ++y ){
 			for ( int x = 0; x < 32; ++x ){
 				int tx = x + gPlayer.mX - 16;

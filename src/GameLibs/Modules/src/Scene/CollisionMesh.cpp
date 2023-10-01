@@ -13,18 +13,18 @@ using namespace GameLib;
 using namespace GameLib::PseudoXml;
 using namespace GameLib::Math;
 
-//#define STRONG_DEBUG //‚±‚Ìs‚ª¶‚«‚Ä‚¢‚é‚Æk-d tree‚Æ‘“–‚è‚ÌŒ‹‰Ê‚ªŠ®‘S‚Éˆê’v‚·‚é‚©‚ğ–ˆ‰ñŠm”F‚·‚éB
+//#define STRONG_DEBUG //ã“ã®è¡ŒãŒç”Ÿãã¦ã„ã‚‹ã¨k-d treeã¨ç·å½“ã‚Šã®çµæœãŒå®Œå…¨ã«ä¸€è‡´ã™ã‚‹ã‹ã‚’æ¯å›ç¢ºèªã™ã‚‹ã€‚
 int G;
 
 namespace{
 
-//˜A—§•û’ö®‚ğ‰ğ‚­ŠÖ”BƒNƒ‰[ƒƒ‹–@‚É‚Ä‰ğ‚­B
+//é€£ç«‹æ–¹ç¨‹å¼ã‚’è§£ãé–¢æ•°ã€‚ã‚¯ãƒ©ãƒ¼ãƒ¡ãƒ«æ³•ã«ã¦è§£ãã€‚
 //| ax bx cx | | ox | = | dx |
 //| ay by cy | | oy | = | dy |
 //| az bz cz | | oz | = | dz |
-//‚Æ‚¢‚¤Œ`‚Å3ŸŒ³ƒxƒNƒ^4‚Â‚ğó‚¯æ‚èA1‚Â‚É‰ğ‚ğ“ü‚ê‚Ä•Ô‚·Bo‚ª‹‚ß‚é‰ğ‚Å‚ ‚éB
-//‚½‚¾‚µAŒø—¦‰»‚Ì‚½‚ß‚ÉA‰ğ‚ªˆê‚Â‚Å‚«‚é“x‚É”»’è‚ğs‚Á‚ÄA”ÍˆÍŠO‚È‚ç‘¦À‚Éfalse‚ğ•Ô‚·
-//true‚ª•Ô‚é‚Ì‚Í“–‚½‚Á‚½‚¾‚¯‚Å‚ ‚éB
+//ã¨ã„ã†å½¢ã§3æ¬¡å…ƒãƒ™ã‚¯ã‚¿4ã¤ã‚’å—ã‘å–ã‚Šã€1ã¤ã«è§£ã‚’å…¥ã‚Œã¦è¿”ã™ã€‚oãŒæ±‚ã‚ã‚‹è§£ã§ã‚ã‚‹ã€‚
+//ãŸã ã—ã€åŠ¹ç‡åŒ–ã®ãŸã‚ã«ã€è§£ãŒä¸€ã¤ã§ãã‚‹åº¦ã«åˆ¤å®šã‚’è¡Œã£ã¦ã€ç¯„å›²å¤–ãªã‚‰å³åº§ã«falseã‚’è¿”ã™
+//trueãŒè¿”ã‚‹ã®ã¯å½“ãŸã£ãŸæ™‚ã ã‘ã§ã‚ã‚‹ã€‚
 bool solveLinearSystem(
 Vector3* o,
 const Vector3& a,
@@ -40,37 +40,37 @@ const Vector3& d ){
 	float m1220 = c.y * a.z;
 	float m1221 = c.y * b.z;
 
-	//2€Ï‚Ì·‚ğO‚ÂBs—ñ®—p‚¾‚ªAŒã‚Åg‚¢‚Ü‚í‚¹‚éB
+	//2é …ç©ã®å·®ã‚’ä¸‰ã¤ã€‚è¡Œåˆ—å¼ç”¨ã ãŒã€å¾Œã§ä½¿ã„ã¾ã‚ã›ã‚‹ã€‚
 	float m1122_m1221 = m1122 - m1221;
-	float m1220_m1022 = m1220 - m1022; //ƒ}ƒCƒiƒX
+	float m1220_m1022 = m1220 - m1022; //ãƒã‚¤ãƒŠã‚¹
 	float m1021_m1120 = m1021 - m1120;
 
-	//s—ñ®
+	//è¡Œåˆ—å¼
 	//00*( 11*22 - 12*21 ) - 01*( 10*22 - 12*20 ) + 02*( 10*21 - 11*20 )
 	float delta = a.x*( m1122_m1221 ) + b.x*( m1220_m1022 ) + c.x*( m1021_m1120 );
-	if ( delta == 0.f ){ //‰ğ‚¯‚È‚¢B‚±‚±‚Å‚Í‰‰ZŒë·‚Í–³‹‚µAŒµ–§‚É0‚É‚È‚Á‚½‚Ì‚İ‚Í‚¶‚­B
+	if ( delta == 0.f ){ //è§£ã‘ãªã„ã€‚ã“ã“ã§ã¯æ¼”ç®—èª¤å·®ã¯ç„¡è¦–ã—ã€å³å¯†ã«0ã«ãªã£ãŸæ™‚ã®ã¿ã¯ã˜ãã€‚
 		return false;
 	}
 	float rcpDelta = 1.f / delta;	
 	
-	//‰‰ZŒë·‚Ì–â‘è‚Í‹É‚ß‚Ä–Ê“|‚Å‚ ‚éB
-	//‚±‚±‚Å‚ÍŒ…—‚¿‚ª3Œ…‚É‚Æ‚Ç‚Ü‚é‚Æl‚¦AEPSILON*1000‚ğg‚¤B
-	//Œ…—‚¿‚Å3Œ…—‚¿‚é‚É‚Í“àÏ‚ª0.001ˆÈ‰º‚É‚È‚é•K—v‚ª‚ ‚èA‚»‚ê‚Í0.05“xˆÈ‰º‚Ì•½s‚¾‚¯‚¾B
+	//æ¼”ç®—èª¤å·®ã®å•é¡Œã¯æ¥µã‚ã¦é¢å€’ã§ã‚ã‚‹ã€‚
+	//ã“ã“ã§ã¯æ¡è½ã¡ãŒ3æ¡ã«ã¨ã©ã¾ã‚‹ã¨è€ƒãˆã€EPSILON*1000ã‚’ä½¿ã†ã€‚
+	//æ¡è½ã¡ã§3æ¡è½ã¡ã‚‹ã«ã¯å†…ç©ãŒ0.001ä»¥ä¸‹ã«ãªã‚‹å¿…è¦ãŒã‚ã‚Šã€ãã‚Œã¯0.05åº¦ä»¥ä¸‹ã®å¹³è¡Œã ã‘ã ã€‚
 	static const float zero = 0.f - EPSILON * 1000.f;
 	static const float one = 1.f + EPSILON * 1000.f;
 
-	//‚Å‚«‚½‹ts—ñ‚É‰E•ÓƒxƒNƒ^‚ğæ‚¶‚Â‚Â‰ğ‚ğŒvZ‚·‚éBdelta‚ÌœZ‚ÍÅŒã‚És‚¤B
+	//ã§ããŸé€†è¡Œåˆ—ã«å³è¾ºãƒ™ã‚¯ã‚¿ã‚’ä¹—ã˜ã¤ã¤è§£ã‚’è¨ˆç®—ã™ã‚‹ã€‚deltaã®é™¤ç®—ã¯æœ€å¾Œã«è¡Œã†ã€‚
 	float m0221 = c.x * b.z;
 	float m0122 = b.x * c.z;
 	float m0112 = b.x * c.y;
 	float m0211 = c.x * b.y;
 	o->x = m1122_m1221 * d.x + ( m0221-m0122 ) * d.y + ( m0112-m0211 ) * d.z;
-	//t‚Ì”»’è‚ğs‚¤B
+	//tã®åˆ¤å®šã‚’è¡Œã†ã€‚
 	o->x *= rcpDelta;
 	if ( ( o->x < zero ) || ( o->x > one ) ){
 		return false;
 	}
-	//Ÿ‚Íu‚ğŒvZ
+	//æ¬¡ã¯uã‚’è¨ˆç®—
 	float m0022 = a.x * c.z;
 	float m0220 = c.x * a.z;
 	float m0210 = c.x * a.y;
@@ -80,7 +80,7 @@ const Vector3& d ){
 	if ( o->y < zero ){
 		return false;
 	}
-	//ÅŒã‚Év‚ğŒvZ
+	//æœ€å¾Œã«vã‚’è¨ˆç®—
 	float m0120 = b.x * a.z;
 	float m0021 = a.x * b.z;
 	float m0011 = a.x * b.y;
@@ -90,7 +90,7 @@ const Vector3& d ){
 	if ( o->z < zero ){
 		return false;
 	}
-	//u,v‚Ì˜a‚ª1ˆÈ‰º‚©ƒ`ƒFƒbƒN
+	//u,vã®å’ŒãŒ1ä»¥ä¸‹ã‹ãƒã‚§ãƒƒã‚¯
 	if ( ( o->y + o->z ) > one ){
 		return false;
 	}
@@ -101,7 +101,7 @@ struct Triangle{
 	int mIndices[ 3 ];
 };
 
-//Õ“Ëˆ—‚ğ‚¨Šè‚¢‚·‚é‚É“n‚·‚à‚ÌBˆø”‚ğŒ¸‚ç‚µ‚ÄƒI[ƒo[ƒwƒbƒh‚ğŒ¸‚ç‚·‚½‚ß‚Ì‹ê“÷‚Ìô
+//è¡çªå‡¦ç†ã‚’ãŠé¡˜ã„ã™ã‚‹æ™‚ã«æ¸¡ã™ã‚‚ã®ã€‚å¼•æ•°ã‚’æ¸›ã‚‰ã—ã¦ã‚ªãƒ¼ãƒãƒ¼ãƒ˜ãƒƒãƒ‰ã‚’æ¸›ã‚‰ã™ãŸã‚ã®è‹¦è‚‰ã®ç­–
 struct Query{
 	Query( 
 	const Vector3& begin,
@@ -119,10 +119,10 @@ struct Query{
 	const Triangle* mTriangles;
 	const Vector3* mVertices;
 private:
-	void operator=( const Query& ); //‚È‚¢
+	void operator=( const Query& ); //ãªã„
 };
 
-//ƒm[ƒh\’z‚ğ‚·‚éÛ‚Ìbuild()‚É“n‚·ˆø”‚ğŒ¸‚ç‚·‚½‚ß‚Ì\‘¢‘Ì
+//ãƒãƒ¼ãƒ‰æ§‹ç¯‰ã‚’ã™ã‚‹éš›ã®build()ã«æ¸¡ã™å¼•æ•°ã‚’æ¸›ã‚‰ã™ãŸã‚ã®æ§‹é€ ä½“
 class Node;
 struct BuildArgs{
 	BuildArgs( 
@@ -146,17 +146,17 @@ struct BuildArgs{
 
 	const Triangle* mTriangles;
 	const Vector3* mVertices;
-	Node* mNodePos; //ƒm[ƒh”z—ñƒ|ƒCƒ“ƒ^
-	Pool< int > mIndexPool; //ƒCƒ“ƒfƒNƒXŠm•Û—pƒv[ƒ‹
-	bool* mHitFlags; //ˆê•ÛŠÇ—pƒqƒbƒgƒtƒ‰ƒO—Ìˆæ
+	Node* mNodePos; //ãƒãƒ¼ãƒ‰é…åˆ—ãƒã‚¤ãƒ³ã‚¿
+	Pool< int > mIndexPool; //ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹ç¢ºä¿ç”¨ãƒ—ãƒ¼ãƒ«
+	bool* mHitFlags; //ä¸€æ™‚ä¿ç®¡ç”¨ãƒ’ãƒƒãƒˆãƒ•ãƒ©ã‚°é ˜åŸŸ
 private:
-	void operator=( const BuildArgs& ); //‚È‚¢
+	void operator=( const BuildArgs& ); //ãªã„
 };
 
 bool getIntersectionTriangleAndLineSegment( 
 float* tOut, 
 const Query& q,
-int index ){ //OŠpŒ`ƒCƒ“ƒfƒNƒX
+int index ){ //ä¸‰è§’å½¢ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹
 	const Triangle& tri = q.mTriangles[ index ];
 	int i0 = tri.mIndices[ 0 ];
 	int i1 = tri.mIndices[ 1 ];
@@ -165,34 +165,34 @@ int index ){ //OŠpŒ`ƒCƒ“ƒfƒNƒX
 	const Vector3& p1 = q.mVertices[ i1 ];
 	const Vector3& p2 = q.mVertices[ i2 ];
 
-	Vector3 minusD, minusE; //•Ó‚Ì‹tŒü‚«
+	Vector3 minusD, minusE; //è¾ºã®é€†å‘ã
 	Vector3 f;
 	f.setSub( p0, q.mBegin ); 
 	minusD.setSub( p0, p1 );
 	minusE.setSub( p0, p2 );
-	//‚±‚±‚Å‚Í˜A—§•û’ö®‚ğ‰ğ‚¢‚Äˆê”­‚Å‹‚ß‚éB–{•¶18.3.2QÆ‚Ì‚±‚ÆB
+	//ã“ã“ã§ã¯é€£ç«‹æ–¹ç¨‹å¼ã‚’è§£ã„ã¦ä¸€ç™ºã§æ±‚ã‚ã‚‹ã€‚æœ¬æ–‡18.3.2å‚ç…§ã®ã“ã¨ã€‚
 	//| bx -dx -ex | | ox | = | fx |
 	//| by -dy -ey | | oy | = | fy |
 	//| bz -dz -ez | | oz | = | fz |
-	//bt+du+ev=p0-a ‚ğ‰ğ‚¯‚Î—Ç‚¢B
-	Vector3 tuv; //‰ğ
+	//bt+du+ev=p0-a ã‚’è§£ã‘ã°è‰¯ã„ã€‚
+	Vector3 tuv; //è§£
 	if ( solveLinearSystem( &tuv, q.mVector, minusD, minusE, f ) ){
-		*tOut = tuv.x; //t‚ğ•Ô‚·
+		*tOut = tuv.x; //tã‚’è¿”ã™
 		return true;
 	}else{
-		return false; //ŠO‚ê
+		return false; //å¤–ã‚Œ
 	}
 }
 
 class Node{
 public:
-	struct InnerNode{ //“à•”ƒm[ƒh‚Ìƒƒ“ƒo
-		float mLine; //•ªŠ„ü
-		Node* mLeft; //¬‚³‚¢‘¤
-		Node* mRight; //‘å‚«‚¢‘¤
+	struct InnerNode{ //å†…éƒ¨ãƒãƒ¼ãƒ‰ã®ãƒ¡ãƒ³ãƒ
+		float mLine; //åˆ†å‰²ç·š
+		Node* mLeft; //å°ã•ã„å´
+		Node* mRight; //å¤§ãã„å´
 	};
-	struct OuterNode{ //––’[ƒm[ƒh‚Ìƒƒ“ƒoBOŠpŒ`‚ğ‚Â‚Ì‚Í––’[ƒm[ƒh‚¾‚¯‚Å‚ ‚éB
-		int* mIndices; //OŠpŒ`”Ô†”z—ñ
+	struct OuterNode{ //æœ«ç«¯ãƒãƒ¼ãƒ‰ã®ãƒ¡ãƒ³ãƒã€‚ä¸‰è§’å½¢ã‚’æŒã¤ã®ã¯æœ«ç«¯ãƒãƒ¼ãƒ‰ã ã‘ã§ã‚ã‚‹ã€‚
+		int* mIndices; //ä¸‰è§’å½¢ç•ªå·é…åˆ—
 		int mIndexNumber;
 	};
 	Node() : mAxis( -1 ){
@@ -201,52 +201,52 @@ public:
 		mOuter.mIndices = 0;
 		mOuter.mIndexNumber = 0;
 	}
-	//Ä‹A”»’èŠÖ”
+	//å†å¸°åˆ¤å®šé–¢æ•°
 	bool isIntersect( 
 	const Query& q,
-	float beginT, //a,b‚ÍƒIƒŠƒWƒiƒ‹‚Ì‚Ü‚Ü‚ÅA” ‚ÌƒTƒCƒY‚É‡‚í‚¹‚é‚Ì‚Ía'=a+beginT*b,b'=a+endT*b,‚ÆŒvZ‚µ‚Äs‚¤B
+	float beginT, //a,bã¯ã‚ªãƒªã‚¸ãƒŠãƒ«ã®ã¾ã¾ã§ã€ç®±ã®ã‚µã‚¤ã‚ºã«åˆã‚ã›ã‚‹ã®ã¯a'=a+beginT*b,b'=a+endT*b,ã¨è¨ˆç®—ã—ã¦è¡Œã†ã€‚
 	float endT ) const {
-		//ŠO“_‚Å‚ ‚ê‚Î’P‚É‘“–‚è
-		if ( mAxis == -1 ){ //•ªŠ„²‚ª-1‚ÍŠO“_‚Ì‚µ‚é‚µ
+		//å¤–ç‚¹ã§ã‚ã‚Œã°å˜ã«ç·å½“ã‚Š
+		if ( mAxis == -1 ){ //åˆ†å‰²è»¸ãŒ-1ã¯å¤–ç‚¹ã®ã—ã‚‹ã—
 			for ( int i = 0; i < mOuter.mIndexNumber; ++i ){
 				int triIdx = mOuter.mIndices[ i ];
 ++G;
 				float dummyT;
-				if ( getIntersectionTriangleAndLineSegment( &dummyT, q, triIdx ) ){ //ƒIƒŠƒWƒiƒ‹ü•ª‚Å”»’è‚·‚éB
+				if ( getIntersectionTriangleAndLineSegment( &dummyT, q, triIdx ) ){ //ã‚ªãƒªã‚¸ãƒŠãƒ«ç·šåˆ†ã§åˆ¤å®šã™ã‚‹ã€‚
 					return true;
 				}
 			}
-		}else{ //“à“_B
-			//•Ê–¼
+		}else{ //å†…ç‚¹ã€‚
+			//åˆ¥å
 			const Vector3& a = q.mBegin;
 			const Vector3& b = q.mVector;
 			const Node* l = mInner.mLeft;
 			const Node* r = mInner.mRight;
-			//•½–Ê‚É“–‚½‚é‚ğ‹‚ß‚éB d = a + bt ‚æ‚è t = ( d - a ) / b
+			//å¹³é¢ã«å½“ãŸã‚‹æ™‚åˆ»ã‚’æ±‚ã‚ã‚‹ã€‚ d = a + bt ã‚ˆã‚Š t = ( d - a ) / b
 			float divT;
-			if ( b[ mAxis ] == 0.f ){ //•ª•ê0
+			if ( b[ mAxis ] == 0.f ){ //åˆ†æ¯0
 				divT = FLOAT_MAX;
 			}else{
 				divT = ( mInner.mLine - a[ mAxis ] ) / b[ mAxis ];
 			}
-			float endT0, beginT1; //Å‰‚És‚­ƒm[ƒh‚ÌI’[AŒã‚És‚­ƒm[ƒh‚Ìn“_
-			if ( divT >= endT ){ //Œã‚ë‚Ìƒm[ƒh‚Ü‚Å“’B‚µ‚È‚¢
+			float endT0, beginT1; //æœ€åˆã«è¡Œããƒãƒ¼ãƒ‰ã®çµ‚ç«¯æ™‚åˆ»ã€å¾Œã«è¡Œããƒãƒ¼ãƒ‰ã®å§‹ç‚¹æ™‚åˆ»
+			if ( divT >= endT ){ //å¾Œã‚ã®ãƒãƒ¼ãƒ‰ã¾ã§åˆ°é”ã—ãªã„
 				endT0 = endT;
 				beginT1 = endT;
-			}else if ( divT > beginT ){ //“r’†‚ÅŸ‚Ìƒm[ƒh‚É“Ë“ü‚·‚é
-				//‰‰ZŒë·‚ª‚È‚¯‚ê‚ÎdivT‚ğ‚»‚Ì‚Ü‚Ü“n‚¹‚Î‚¢‚¢‚ªAŒë·‚ª•|‚¢‚Ì‚Å‚Æ‚è‚ ‚¦‚¸\•ªL‚ß‚Éæ‚éB
+			}else if ( divT > beginT ){ //é€”ä¸­ã§æ¬¡ã®ãƒãƒ¼ãƒ‰ã«çªå…¥ã™ã‚‹
+				//æ¼”ç®—èª¤å·®ãŒãªã‘ã‚Œã°divTã‚’ãã®ã¾ã¾æ¸¡ã›ã°ã„ã„ãŒã€èª¤å·®ãŒæ€–ã„ã®ã§ã¨ã‚Šã‚ãˆãšååˆ†åºƒã‚ã«å–ã‚‹ã€‚
 				endT0 = ( endT + divT * 15.f ) * ( 1.f / 16.f );
-				beginT1 = ( beginT + divT * 15.f ) * ( 1.f / 16.f ); // 1/16‚¾‚¯n“_‚ÆI“_‚ğ¬‚º‚éB0.001‚È‚Ç‚ğ‘«‚·‚Æ”ÍˆÍ‚ª‹·‚­‚È‚Á‚½‚É—¼’[‚ğ‰z‚¦‚Ä‚µ‚Ü‚¤‚©‚ç‚¾B
-			}else{ //Œã‚ë‚Ìƒm[ƒh‚Ö‚ÍŒü‚©‚í‚È‚¢
+				beginT1 = ( beginT + divT * 15.f ) * ( 1.f / 16.f ); // 1/16ã ã‘å§‹ç‚¹ã¨çµ‚ç‚¹ã‚’æ··ãœã‚‹ã€‚0.001ãªã©ã‚’è¶³ã™ã¨ç¯„å›²ãŒç‹­ããªã£ãŸæ™‚ã«ä¸¡ç«¯ã‚’è¶Šãˆã¦ã—ã¾ã†ã‹ã‚‰ã ã€‚
+			}else{ //å¾Œã‚ã®ãƒãƒ¼ãƒ‰ã¸ã¯å‘ã‹ã‚ãªã„
 				endT0 = endT;
 				beginT1 = endT;
 			}
-			//n“_‚ğ‹‚ß‚éB1—v‘f‚Å—Ç‚¢
+			//å§‹ç‚¹ã‚’æ±‚ã‚ã‚‹ã€‚1è¦ç´ ã§è‰¯ã„
 			float begin = a[ mAxis ] + beginT * b[ mAxis ];
-			//Œë·‚ğŒvZBg‚Á‚Ä‚¢‚é€‚¢‚¸‚ê‚à‘Š‘ÎŒë·‚Í‹@ŠB¸“x‚Ì‚Ü‚Ü‚Å‚ ‚éBbeginT‚Í‰ßè‚É—]—T‚ğæ‚Á‚Ä‚¢‚éB
+			//èª¤å·®ã‚’è¨ˆç®—ã€‚ä½¿ã£ã¦ã„ã‚‹é …ã„ãšã‚Œã‚‚ç›¸å¯¾èª¤å·®ã¯æ©Ÿæ¢°ç²¾åº¦ã®ã¾ã¾ã§ã‚ã‚‹ã€‚beginTã¯éå‰°ã«ä½™è£•ã‚’å–ã£ã¦ã„ã‚‹ã€‚
 			float e = GameLib::Math::abs( a[ mAxis ] ) + GameLib::Math::abs( beginT * b[ mAxis ] ) + GameLib::Math::abs( mInner.mLine );
-			e *= EPSILON * 10.f; //‚ªA”O‚Ì‚½‚ß10”{
-			//n“_:¶
+			e *= EPSILON * 10.f; //ãŒã€å¿µã®ãŸã‚10å€
+			//å§‹ç‚¹:å·¦
 			if ( begin + e < mInner.mLine ){
 				if ( l && l->isIntersect( q, beginT, endT0 ) ){
 					return true;
@@ -256,7 +256,7 @@ public:
 						return true;
 					}
 				}
-			}else if ( begin - e > mInner.mLine ){ //n“_:‰E
+			}else if ( begin - e > mInner.mLine ){ //å§‹ç‚¹:å³
 				if ( r && r->isIntersect( q, beginT, endT0 ) ){
 					return true;
 				}
@@ -265,8 +265,8 @@ public:
 						return true;
 					}
 				}
-			}else{ //‚Ç‚Á‚¿‚©‚í‚©‚ç‚È‚¢B
-				//ƒŒƒAƒP[ƒX‚È‚Ì‚ÅŠÔ”ÍˆÍ‚ÍŠÛ‚²‚Æ‚Æ‚·‚éB
+			}else{ //ã©ã£ã¡ã‹ã‚ã‹ã‚‰ãªã„ã€‚
+				//ãƒ¬ã‚¢ã‚±ãƒ¼ã‚¹ãªã®ã§æ™‚é–“ç¯„å›²ã¯ä¸¸ã”ã¨ã¨ã™ã‚‹ã€‚
 				if ( l && l->isIntersect( q, beginT, endT ) ){
 					return true;
 				}
@@ -277,57 +277,57 @@ public:
 		}
 		return false;
 	}
-	//Ä‹A”»’èŠÖ”B–ß‚è’l‚ÍOŠpŒ`”Ô†
+	//å†å¸°åˆ¤å®šé–¢æ•°ã€‚æˆ»ã‚Šå€¤ã¯ä¸‰è§’å½¢ç•ªå·
 	void getIntersection(
-	int* minIndex, //Å¬‚Å“–‚½‚Á‚½OŠpŒ`”Ô†
-	float* minT, //Å¬
+	int* minIndex, //æœ€å°æ™‚åˆ»ã§å½“ãŸã£ãŸä¸‰è§’å½¢ç•ªå·
+	float* minT, //æœ€å°æ™‚åˆ»
 	const Query& q,
-	float beginT, //a,b‚ÍƒIƒŠƒWƒiƒ‹‚Ì‚Ü‚Ü‚ÅA” ‚ÌƒTƒCƒY‚É‡‚í‚¹‚é‚Ì‚Ía'=a+beginT*b,b'=a+endT*b,‚ÆŒvZ‚µ‚Äs‚¤B
+	float beginT, //a,bã¯ã‚ªãƒªã‚¸ãƒŠãƒ«ã®ã¾ã¾ã§ã€ç®±ã®ã‚µã‚¤ã‚ºã«åˆã‚ã›ã‚‹ã®ã¯a'=a+beginT*b,b'=a+endT*b,ã¨è¨ˆç®—ã—ã¦è¡Œã†ã€‚
 	float endT ) const {
-		//ŠO“_‚Å‚ ‚ê‚Î’P‚É‘“–‚è
-		if ( mAxis == -1 ){ //•ªŠ„²‚ª-1‚ÍŠO“_‚Ì‚µ‚é‚µ
+		//å¤–ç‚¹ã§ã‚ã‚Œã°å˜ã«ç·å½“ã‚Š
+		if ( mAxis == -1 ){ //åˆ†å‰²è»¸ãŒ-1ã¯å¤–ç‚¹ã®ã—ã‚‹ã—
 			for ( int i = 0; i < mOuter.mIndexNumber; ++i ){
 				int triIdx = mOuter.mIndices[ i ];
 ++G;
 				float t;
-				if ( getIntersectionTriangleAndLineSegment( &t, q, triIdx ) ){ //ƒIƒŠƒWƒiƒ‹ü•ª‚Å”»’è‚·‚éB
+				if ( getIntersectionTriangleAndLineSegment( &t, q, triIdx ) ){ //ã‚ªãƒªã‚¸ãƒŠãƒ«ç·šåˆ†ã§åˆ¤å®šã™ã‚‹ã€‚
 					if ( t < *minT ){
-						*minT = t; //XV
+						*minT = t; //æ›´æ–°
 						*minIndex = triIdx;
 					}
 				}
 			}
-		}else{ //“à“_B
-			//•Ê–¼
+		}else{ //å†…ç‚¹ã€‚
+			//åˆ¥å
 			const Vector3& a = q.mBegin;
 			const Vector3& b = q.mVector;
 			const Node* l = mInner.mLeft;
 			const Node* r = mInner.mRight;
-			//•½–Ê‚É“–‚½‚é‚ğ‹‚ß‚éB d = a + bt ‚æ‚è t = ( d - a ) / b
+			//å¹³é¢ã«å½“ãŸã‚‹æ™‚åˆ»ã‚’æ±‚ã‚ã‚‹ã€‚ d = a + bt ã‚ˆã‚Š t = ( d - a ) / b
 			float divT;
-			if ( b[ mAxis ] == 0.f ){ //•ª•ê0
+			if ( b[ mAxis ] == 0.f ){ //åˆ†æ¯0
 				divT = FLOAT_MAX;
 			}else{
 				divT = ( mInner.mLine - a[ mAxis ] ) / b[ mAxis ];
 			}
-			float endT0, beginT1; //Å‰‚És‚­ƒm[ƒh‚ÌI’[AŒã‚És‚­ƒm[ƒh‚Ìn“_
-			if ( divT >= endT ){ //Œã‚ë‚Ìƒm[ƒh‚Ü‚Å“’B‚µ‚È‚¢
+			float endT0, beginT1; //æœ€åˆã«è¡Œããƒãƒ¼ãƒ‰ã®çµ‚ç«¯æ™‚åˆ»ã€å¾Œã«è¡Œããƒãƒ¼ãƒ‰ã®å§‹ç‚¹æ™‚åˆ»
+			if ( divT >= endT ){ //å¾Œã‚ã®ãƒãƒ¼ãƒ‰ã¾ã§åˆ°é”ã—ãªã„
 				endT0 = endT;
 				beginT1 = endT;
-			}else if ( divT > beginT ){ //“r’†‚ÅŸ‚Ìƒm[ƒh‚É“Ë“ü‚·‚é
-				//‰‰ZŒë·‚ª‚È‚¯‚ê‚ÎdivT‚ğ‚»‚Ì‚Ü‚Ü“n‚¹‚Î‚¢‚¢‚ªAŒë·‚ª•|‚¢‚Ì‚Å‚Æ‚è‚ ‚¦‚¸\•ªL‚ß‚Éæ‚éB
+			}else if ( divT > beginT ){ //é€”ä¸­ã§æ¬¡ã®ãƒãƒ¼ãƒ‰ã«çªå…¥ã™ã‚‹
+				//æ¼”ç®—èª¤å·®ãŒãªã‘ã‚Œã°divTã‚’ãã®ã¾ã¾æ¸¡ã›ã°ã„ã„ãŒã€èª¤å·®ãŒæ€–ã„ã®ã§ã¨ã‚Šã‚ãˆãšååˆ†åºƒã‚ã«å–ã‚‹ã€‚
 				endT0 = ( endT + divT * 15.f ) * ( 1.f / 16.f );
-				beginT1 = ( beginT + divT * 15.f ) * ( 1.f / 16.f ); // 1/16‚¾‚¯n“_‚ÆI“_‚ğ¬‚º‚é
-			}else{ //Œã‚ë‚Ìƒm[ƒh‚Ö‚ÍŒü‚©‚í‚È‚¢
+				beginT1 = ( beginT + divT * 15.f ) * ( 1.f / 16.f ); // 1/16ã ã‘å§‹ç‚¹ã¨çµ‚ç‚¹ã‚’æ··ãœã‚‹
+			}else{ //å¾Œã‚ã®ãƒãƒ¼ãƒ‰ã¸ã¯å‘ã‹ã‚ãªã„
 				endT0 = endT;
 				beginT1 = endT;
 			}
-			//n“_‚ğ‹‚ß‚éB1—v‘f‚Å—Ç‚¢
+			//å§‹ç‚¹ã‚’æ±‚ã‚ã‚‹ã€‚1è¦ç´ ã§è‰¯ã„
 			float begin = a[ mAxis ] + beginT * b[ mAxis ];
-			//Œë·‚ğŒvZBg‚Á‚Ä‚¢‚é€‚¢‚¸‚ê‚à‘Š‘ÎŒë·‚Í‹@ŠB¸“x‚Ì‚Ü‚Ü‚Å‚ ‚éB
+			//èª¤å·®ã‚’è¨ˆç®—ã€‚ä½¿ã£ã¦ã„ã‚‹é …ã„ãšã‚Œã‚‚ç›¸å¯¾èª¤å·®ã¯æ©Ÿæ¢°ç²¾åº¦ã®ã¾ã¾ã§ã‚ã‚‹ã€‚
 			float e = GameLib::Math::abs( a[ mAxis ] ) + GameLib::Math::abs( beginT * b[ mAxis ] ) + GameLib::Math::abs( mInner.mLine );
-			e *= EPSILON * 10.f; //‚ªA”O‚Ì‚½‚ß10”{
-			//n“_:¶
+			e *= EPSILON * 10.f; //ãŒã€å¿µã®ãŸã‚10å€
+			//å§‹ç‚¹:å·¦
 			if ( begin + e < mInner.mLine ){
 				if ( l ){
 					l->getIntersection( minIndex, minT, q, beginT, endT0 );
@@ -337,7 +337,7 @@ public:
 						r->getIntersection( minIndex, minT, q, beginT1, endT );
 					}
 				}
-			}else if ( begin - e > mInner.mLine ){ //n“_:‰E
+			}else if ( begin - e > mInner.mLine ){ //å§‹ç‚¹:å³
 				if ( r ){
 					r->getIntersection( minIndex, minT, q, beginT, endT0 );
 				}
@@ -346,8 +346,8 @@ public:
 						l->getIntersection( minIndex, minT, q, beginT1, endT );
 					}
 				}
-			}else{ //‚Ç‚Á‚¿‚©‚í‚©‚ç‚È‚¢B
-				//ƒŒƒAƒP[ƒX‚È‚Ì‚ÅŠÔ”ÍˆÍ‚ÍŠÛ‚²‚Æ‚Æ‚·‚éB
+			}else{ //ã©ã£ã¡ã‹ã‚ã‹ã‚‰ãªã„ã€‚
+				//ãƒ¬ã‚¢ã‚±ãƒ¼ã‚¹ãªã®ã§æ™‚é–“ç¯„å›²ã¯ä¸¸ã”ã¨ã¨ã™ã‚‹ã€‚
 				if ( l ){
 					l->getIntersection( minIndex, minT, q, beginT, endT );
 				}
@@ -357,26 +357,26 @@ public:
 			}
 		}
 	}
-	//Ä‹A\’zŠÖ”
+	//å†å¸°æ§‹ç¯‰é–¢æ•°
 	/*
-	•ªŠ„‚ÌÛA•ªŠ„ü‚ÌŒvZ‚É‚ÍŒë·‚ª”º‚¤‚ªAŒë·‚İ‚Åo—ˆ‚½•ªŠ„ü‚ğÌ—p‚·‚éB
-	‚Â‚Ü‚èA0.5‚É‚È‚é‚×‚«•ªŠ„ü‚ª0.51‚É‚È‚é‚Ì‚Å‚ ‚ê‚ÎA0.51‚ğ•ªŠ„ü‚Æ‚·‚éB
-	•ªŠ„ü‚Æ‚µ‚Ä‰½‚ğg‚¤‚©‚ÍƒAƒ‹ƒSƒŠƒYƒ€ã”CˆÓ‚¾‚©‚ç‚Å‚ ‚éB
-	‚»‚µ‚ÄOŠpŒ`‚Ì’¸“_À•W‚ÍŒ³ƒf[ƒ^‚Æ‚µ‚Äˆµ‚¢AŒë·‚Ì¬“ü‚Í‰¼’è‚µ‚È‚¢B
-	‚©‚ÂAOŠpŒ`‚ÌÀ•W‚ÉŠÖ‚µ‚Ä‚Í”äŠrˆÈŠO‚Ì‰‰Z‚ğs‚í‚¸Œë·‚Í¬“ü‚µ‚È‚¢B
-	‚æ‚Á‚ÄAŠeOŠpŒ`‚ª•ªŠ„ü‚É‘Î‚µ‚Ä¶‰E‚Ç‚¿‚ç‚É‚ ‚é‚©‚ÍŒµ–§‚ÉŒë·‚ğl‚¦‚¸‚ÉŒˆ‚ß‚Ä‚æ‚¢B
-	‚È‚¨A•ªŠ„ü‚ÉŒµ–§‚Éæ‚éOŠpŒ`‚Íu‰E‚É‚ ‚év‚Æ‚·‚éB
+	åˆ†å‰²ã®éš›ã€åˆ†å‰²ç·šã®è¨ˆç®—ã«ã¯èª¤å·®ãŒä¼´ã†ãŒã€èª¤å·®è¾¼ã¿ã§å‡ºæ¥ãŸåˆ†å‰²ç·šã‚’æ¡ç”¨ã™ã‚‹ã€‚
+	ã¤ã¾ã‚Šã€0.5ã«ãªã‚‹ã¹ãåˆ†å‰²ç·šãŒ0.51ã«ãªã‚‹ã®ã§ã‚ã‚Œã°ã€0.51ã‚’åˆ†å‰²ç·šã¨ã™ã‚‹ã€‚
+	åˆ†å‰²ç·šã¨ã—ã¦ä½•ã‚’ä½¿ã†ã‹ã¯ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ä¸Šä»»æ„ã ã‹ã‚‰ã§ã‚ã‚‹ã€‚
+	ãã—ã¦ä¸‰è§’å½¢ã®é ‚ç‚¹åº§æ¨™ã¯å…ƒãƒ‡ãƒ¼ã‚¿ã¨ã—ã¦æ‰±ã„ã€èª¤å·®ã®æ··å…¥ã¯ä»®å®šã—ãªã„ã€‚
+	ã‹ã¤ã€ä¸‰è§’å½¢ã®åº§æ¨™ã«é–¢ã—ã¦ã¯æ¯”è¼ƒä»¥å¤–ã®æ¼”ç®—ã‚’è¡Œã‚ãšèª¤å·®ã¯æ··å…¥ã—ãªã„ã€‚
+	ã‚ˆã£ã¦ã€å„ä¸‰è§’å½¢ãŒåˆ†å‰²ç·šã«å¯¾ã—ã¦å·¦å³ã©ã¡ã‚‰ã«ã‚ã‚‹ã‹ã¯å³å¯†ã«èª¤å·®ã‚’è€ƒãˆãšã«æ±ºã‚ã¦ã‚ˆã„ã€‚
+	ãªãŠã€åˆ†å‰²ç·šã«å³å¯†ã«ä¹—ã‚‹ä¸‰è§’å½¢ã¯ã€Œå³ã«ã‚ã‚‹ã€ã¨ã™ã‚‹ã€‚
 	*/
 	void build(
-	const Vector3& minV, //”ÍˆÍÅ¬’l
-	const Vector3& maxV, //”ÍˆÍÅ‘å’l
+	const Vector3& minV, //ç¯„å›²æœ€å°å€¤
+	const Vector3& maxV, //ç¯„å›²æœ€å¤§å€¤
 	BuildArgs* args,
-	int restLevel ){ //‚ ‚Æ‰½‰ñ•ªŠ„‚·‚é‚©
-		//Å‰‚ÍOuter‚¾‚¯‚ğg‚¤
+	int restLevel ){ //ã‚ã¨ä½•å›åˆ†å‰²ã™ã‚‹ã‹
+		//æœ€åˆã¯Outerã ã‘ã‚’ä½¿ã†
 		OuterNode* outer = &mOuter;
 
-		//Å—Ç‚Ì•ªŠ„‚ğ‚Ç‚¤Œˆ‚ß‚é‚©‚Í“ï‚µ‚¢–â‘è‚¾‚ªA‚±‚±‚Å‚ÍÅ‚à’·‚¢•ûŒü‚ğŠ„‚éB‚±‚ê‚ª•½‹Ï“I‚É‚Í‘Ã“–‚ÈŒ‹‰Ê‚ğo‚·B
-		int axis = -1; //•ªŠ„²
+		//æœ€è‰¯ã®åˆ†å‰²ã‚’ã©ã†æ±ºã‚ã‚‹ã‹ã¯é›£ã—ã„å•é¡Œã ãŒã€ã“ã“ã§ã¯æœ€ã‚‚é•·ã„æ–¹å‘ã‚’å‰²ã‚‹ã€‚ã“ã‚ŒãŒå¹³å‡çš„ã«ã¯å¦¥å½“ãªçµæœã‚’å‡ºã™ã€‚
+		int axis = -1; //åˆ†å‰²è»¸
 		Vector3 size;
 		size.setSub( maxV, minV );
 		float maxSize = -FLOAT_MAX;
@@ -386,35 +386,35 @@ public:
 				axis = i;
 			}
 		}
-		//•ªŠ„ü
+		//åˆ†å‰²ç·š
 		float div;
 		div = minV[ axis ] + maxV[ axis ];
 		div *= 0.5f;
-		//”»’èŒ‹‰Ê‚ÍŒã‚Åg‚¤‚Ì‚Åbool”z—ñ‚É•Û‚µ‚Ä‚¨‚­B—Ìˆæ‚Ínew‚·‚é‚Æ’x‚¢‚Ì‚ÅAˆø”‚Å‚à‚ç‚Á‚Ä‚¢‚éB
+		//åˆ¤å®šçµæœã¯å¾Œã§ä½¿ã†ã®ã§boolé…åˆ—ã«ä¿æŒã—ã¦ãŠãã€‚é ˜åŸŸã¯newã™ã‚‹ã¨é…ã„ã®ã§ã€å¼•æ•°ã§ã‚‚ã‚‰ã£ã¦ã„ã‚‹ã€‚
 		bool* hitL = args->mHitFlags;
 		bool* hitR = hitL + outer->mIndexNumber;
-		//¶‰E‚ÌOŠpŒ`”
+		//å·¦å³ã®ä¸‰è§’å½¢æ•°
 		int cl = 0;
 		int cr = 0;
-		//‚Ç‚¿‚ç‚É‘®‚·‚©”»’è
+		//ã©ã¡ã‚‰ã«å±ã™ã‹åˆ¤å®š
 		const Triangle* triangles = args->mTriangles;
 		const Vector3* vertices = args->mVertices;
-		for ( int i = 0; i < outer->mIndexNumber; ++i ){ //ŠeOŠpŒ`‚É‚Â‚¢‚Ä’²‚×‚é
+		for ( int i = 0; i < outer->mIndexNumber; ++i ){ //å„ä¸‰è§’å½¢ã«ã¤ã„ã¦èª¿ã¹ã‚‹
 			const Triangle& tri = triangles[ outer->mIndices[ i ] ];
 			const Vector3& p0 = vertices[ tri.mIndices[ 0 ] ];
 			const Vector3& p1 = vertices[ tri.mIndices[ 1 ] ];
 			const Vector3& p2 = vertices[ tri.mIndices[ 2 ] ];
-			//²‚É‚Â‚¢‚ÄÅ¬Å‘å‚ğæ“¾
+			//è»¸ã«ã¤ã„ã¦æœ€å°æœ€å¤§ã‚’å–å¾—
 			float minP, maxP;
 			minP = min( p0[ axis ], p1[ axis ] );
 			minP = min( minP, p2[ axis ] );
 			maxP = max( p0[ axis ], p1[ axis ] );
 			maxP = max( maxP, p2[ axis ] );
 
-			hitL[ i ] = ( minP < div ); //–¾‚ç‚©‚É¶‚ÉŠ‘® Œë·‚ğl—¶‚µ‚Ä‚¢‚È‚¢——R‚ÍŠÖ”‚Ì‘O‚É‚ ‚éƒRƒƒ“ƒg‚ğQÆ‚Ì‚±‚ÆB
-			hitR[ i ] = ( maxP > div ); //–¾‚ç‚©‚É‰E‚ÉŠ‘®
-			//•ªŠ„ü‚Ò‚Á‚½‚è‚Å‚ ‚éê‡B‚±‚Ìê‡‰E‚ÉŠ‘®‚³‚¹‚éB—¼•û‚ÉŠ‘®‚³‚¹‚é‚Æ‚©‚Ô‚é‚©‚ç‚¾B
-			//Œë·‚Ìl—¶‚Í”»’è‚És‚¤B
+			hitL[ i ] = ( minP < div ); //æ˜ã‚‰ã‹ã«å·¦ã«æ‰€å± èª¤å·®ã‚’è€ƒæ…®ã—ã¦ã„ãªã„ç†ç”±ã¯é–¢æ•°ã®å‰ã«ã‚ã‚‹ã‚³ãƒ¡ãƒ³ãƒˆã‚’å‚ç…§ã®ã“ã¨ã€‚
+			hitR[ i ] = ( maxP > div ); //æ˜ã‚‰ã‹ã«å³ã«æ‰€å±
+			//åˆ†å‰²ç·šã´ã£ãŸã‚Šã§ã‚ã‚‹å ´åˆã€‚ã“ã®å ´åˆå³ã«æ‰€å±ã•ã›ã‚‹ã€‚ä¸¡æ–¹ã«æ‰€å±ã•ã›ã‚‹ã¨ã‹ã¶ã‚‹ã‹ã‚‰ã ã€‚
+			//èª¤å·®ã®è€ƒæ…®ã¯åˆ¤å®šæ™‚ã«è¡Œã†ã€‚
 			if ( ( minP == maxP ) && ( minP == div ) ){
 				hitR[ i ] = true;
 			}
@@ -425,23 +425,23 @@ public:
 				++cr;
 			}
 		}
-		//•ªŠ„ŠJn
-		//‚±‚±‚ÅInnerNode‚É•Ï‚í‚éBOuterNode‚Ìƒƒ“ƒo‚Íˆê’Uƒ[ƒJƒ‹•Ï”‚É‘Ş”ğ
-		//union‚Í“ª‚ğ¬—‚³‚¹‚é‚Ì‚Å‚ ‚Ü‚è‚Â‚©‚¤‚×‚«‚Å‚Í‚È‚¢‚ªA«”\ã‚Ì——R‚ª‚ ‚ê‚Îd•û‚ ‚é‚Ü‚¢B
+		//åˆ†å‰²é–‹å§‹
+		//ã“ã“ã§InnerNodeã«å¤‰ã‚ã‚‹ã€‚OuterNodeã®ãƒ¡ãƒ³ãƒã¯ä¸€æ—¦ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°ã«é€€é¿
+		//unionã¯é ­ã‚’æ··ä¹±ã•ã›ã‚‹ã®ã§ã‚ã¾ã‚Šã¤ã‹ã†ã¹ãã§ã¯ãªã„ãŒã€æ€§èƒ½ä¸Šã®ç†ç”±ãŒã‚ã‚Œã°ä»•æ–¹ã‚ã‚‹ã¾ã„ã€‚
 		int* indices = outer->mIndices;
 		int indexNumber = outer->mIndexNumber;
 		outer->mIndices = 0;
 		outer->mIndexNumber = 0;
-		outer = 0; //‚±‚êˆÈ~Outer‚Í‚Â‚©‚¦‚È‚¢
+		outer = 0; //ã“ã‚Œä»¥é™Outerã¯ã¤ã‹ãˆãªã„
 
-		InnerNode* inner = &mInner; //‚±‚±ˆÈ~inner‚Ì‚İ‚ÉƒAƒNƒZƒX
+		InnerNode* inner = &mInner; //ã“ã“ä»¥é™innerã®ã¿ã«ã‚¢ã‚¯ã‚»ã‚¹
 
-		//mAxis‚É-1ˆÈŠO‚ª“ü‚Á‚Ä‚¢‚é‚±‚Æ‚ªInnerNode‚Å‚ ‚é‚µ‚é‚µ‚¾B
-		mAxis = axis; //‚±‚ê‚Åaxis==0‚È‚ç‚»‚Ì‚Ü‚ÜA1‚È‚çYA2‚È‚çZ‚É‚È‚é
-		inner->mLine = div; //•ªŠ„ü‚ğ‘‚«‚İ
+		//mAxisã«-1ä»¥å¤–ãŒå…¥ã£ã¦ã„ã‚‹ã“ã¨ãŒInnerNodeã§ã‚ã‚‹ã—ã‚‹ã—ã ã€‚
+		mAxis = axis; //ã“ã‚Œã§axis==0ãªã‚‰ãã®ã¾ã¾ã€1ãªã‚‰Yã€2ãªã‚‰Zã«ãªã‚‹
+		inner->mLine = div; //åˆ†å‰²ç·šã‚’æ›¸ãè¾¼ã¿
 
-		//¶‰Eƒm[ƒh‚ÌŠm•Û
-		if ( cl > 0 ){ //OŠpŒ`‚ª‚ ‚ê‚Î
+		//å·¦å³ãƒãƒ¼ãƒ‰ã®ç¢ºä¿
+		if ( cl > 0 ){ //ä¸‰è§’å½¢ãŒã‚ã‚Œã°
 			inner->mLeft = args->mNodePos;
 #ifdef STRONG_DEBUG
 Vector3 boxDiv = maxV;
@@ -465,8 +465,8 @@ inner->mRight->mOrigN = cr;
 			++( args->mNodePos );
 			inner->mRight->mOuter.mIndices = args->mIndexPool.allocate( cr );
 		}
-		//¶‰Eƒm[ƒh‚ÉU‚è•ª‚¯B
-		for ( int i = 0; i < indexNumber; ++i ){ //ŠeOŠpŒ`‚É‚Â‚¢‚Ä’²‚×‚é
+		//å·¦å³ãƒãƒ¼ãƒ‰ã«æŒ¯ã‚Šåˆ†ã‘ã€‚
+		for ( int i = 0; i < indexNumber; ++i ){ //å„ä¸‰è§’å½¢ã«ã¤ã„ã¦èª¿ã¹ã‚‹
 			if ( hitL[ i ] ){
 				OuterNode* l = &inner->mLeft->mOuter;
 				l->mIndices[ l->mIndexNumber ] = indices[ i ];
@@ -478,8 +478,8 @@ inner->mRight->mOrigN = cr;
 				++( r->mIndexNumber );
 			}
 		}
-		//ƒqƒbƒgƒtƒ‰ƒO—Ìˆæ‚ğg‚¢‚Ü‚í‚·ŠÖŒW‚ÅAÄ‹AŒÄ‚Ño‚µ‚ÍU‚è•ª‚¯‚ªI‚í‚Á‚Ä‚©‚çB
-		if ( restLevel > 1 ){ //ÅIƒŒƒxƒ‹‚Í‚à‚¤ŒÄ‚Î‚È‚¢
+		//ãƒ’ãƒƒãƒˆãƒ•ãƒ©ã‚°é ˜åŸŸã‚’ä½¿ã„ã¾ã‚ã™é–¢ä¿‚ã§ã€å†å¸°å‘¼ã³å‡ºã—ã¯æŒ¯ã‚Šåˆ†ã‘ãŒçµ‚ã‚ã£ã¦ã‹ã‚‰ã€‚
+		if ( restLevel > 1 ){ //æœ€çµ‚ãƒ¬ãƒ™ãƒ«ã¯ã‚‚ã†å‘¼ã°ãªã„
 			if ( cl > 1 ){
 				Vector3 boxDiv = maxV;
 				boxDiv[ axis ] = div;
@@ -493,7 +493,7 @@ inner->mRight->mOrigN = cr;
 		}
 	}
 	void count( int* nodeNumber, int* indexNumber ){
-		++( *nodeNumber ); //©•ª‚Ì•ª‚ğ‰ÁZ
+		++( *nodeNumber ); //è‡ªåˆ†ã®åˆ†ã‚’åŠ ç®—
 		if ( mAxis != -1 ){
 			if ( mInner.mLeft ){
 				mInner.mLeft->count( nodeNumber, indexNumber );
@@ -506,7 +506,7 @@ inner->mRight->mOrigN = cr;
 		}		
 	}
 	Node* copy( Node** nodePos, int** indexPos ){
-		Node* to = *nodePos; //ƒRƒs[æ
+		Node* to = *nodePos; //ã‚³ãƒ”ãƒ¼å…ˆ
 		++( *nodePos );
 #ifdef STRONG_DEBUG
 to->mMin = mMin;
@@ -514,7 +514,7 @@ to->mMax = mMax;
 to->mOrigN = mOrigN;
 #endif
 		to->mAxis = mAxis;
-		if ( mAxis != -1 ){ //“à•”ƒm[ƒh‚Ìê‡
+		if ( mAxis != -1 ){ //å†…éƒ¨ãƒãƒ¼ãƒ‰ã®å ´åˆ
 			to->mInner.mLine = mInner.mLine;
 			if ( mInner.mLeft ){
 				to->mInner.mLeft = mInner.mLeft->copy( nodePos, indexPos );
@@ -522,9 +522,9 @@ to->mOrigN = mOrigN;
 			if ( mInner.mRight ){
 				to->mInner.mRight = mInner.mRight->copy( nodePos, indexPos );
 			}
-		}else{ //ƒCƒ“ƒfƒNƒXŠm•Û
+		}else{ //ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹ç¢ºä¿
 			to->mOuter.mIndices = *indexPos;
-			//ƒCƒ“ƒfƒNƒX‚ğƒRƒs[
+			//ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹ã‚’ã‚³ãƒ”ãƒ¼
 			for ( int i = 0; i < mOuter.mIndexNumber; ++i ){
 				to->mOuter.mIndices[ i ] = mOuter.mIndices[ i ];
 			}
@@ -533,17 +533,17 @@ to->mOrigN = mOrigN;
 		}
 		return to;
 	}
-	//‰º‚Ì•û‚Ì–³‘Ê‚Èƒm[ƒh‚ğíœ‚·‚éBí‚é‚Ì‚ÍˆÈ‰º‚Ì3í—Ş
-	//1.¶‚ªŠO“_‚Å‰E‚ª‹óB¶‚Ì“à—e‚ğ©•ª‚Éˆø‚«ã‚°‚éB
-	//2.‰E‚ªŠO“_‚Å¶‚ª‹óB‰E‚Ì“à—e‚ğ©•ª‚Éˆø‚«ã‚°‚éB
-	//3.¶‰E‚ªŠO“_‚ÅOŠpŒ`ƒŠƒXƒg‚ª“¯ˆêBq‚ğÁ‚µ‚Ä©•ª‚ÉƒRƒs[‚·‚éB
+	//ä¸‹ã®æ–¹ã®ç„¡é§„ãªãƒãƒ¼ãƒ‰ã‚’å‰Šé™¤ã™ã‚‹ã€‚å‰Šã‚‹ã®ã¯ä»¥ä¸‹ã®3ç¨®é¡
+	//1.å·¦ãŒå¤–ç‚¹ã§å³ãŒç©ºã€‚å·¦ã®å†…å®¹ã‚’è‡ªåˆ†ã«å¼•ãä¸Šã’ã‚‹ã€‚
+	//2.å³ãŒå¤–ç‚¹ã§å·¦ãŒç©ºã€‚å³ã®å†…å®¹ã‚’è‡ªåˆ†ã«å¼•ãä¸Šã’ã‚‹ã€‚
+	//3.å·¦å³ãŒå¤–ç‚¹ã§ä¸‰è§’å½¢ãƒªã‚¹ãƒˆãŒåŒä¸€ã€‚å­ã‚’æ¶ˆã—ã¦è‡ªåˆ†ã«ã‚³ãƒ”ãƒ¼ã™ã‚‹ã€‚
 	void optimize(){
-		if ( mAxis == -1 ){ //ŠO“_‚È‚çˆ—‚È‚µBI—¹B
+		if ( mAxis == -1 ){ //å¤–ç‚¹ãªã‚‰å‡¦ç†ãªã—ã€‚çµ‚äº†ã€‚
 			return;
 		}
 		Node* l = mInner.mLeft;
 		Node* r = mInner.mRight;
-		//‚Ü‚¸Ä‹AŒÄ‚Ño‚µ
+		//ã¾ãšå†å¸°å‘¼ã³å‡ºã—
 		if ( l ){
 			l->optimize();
 		}
@@ -552,12 +552,12 @@ to->mOrigN = mOrigN;
 		}
 		bool lIsOuter = ( l && ( l->mAxis == -1 ) );
 		bool rIsOuter = ( r && ( r->mAxis == -1 ) );
-		OuterNode* o = 0; //ˆø‚«ã‚°ŠO“_‚ª‚ ‚ê‚Î‚±‚±‚É“ü‚ê‚éB
-		if ( lIsOuter && !r ){ //¶‚ªŠO“_‚Å‰E‚ª‹óB
+		OuterNode* o = 0; //å¼•ãä¸Šã’å¤–ç‚¹ãŒã‚ã‚Œã°ã“ã“ã«å…¥ã‚Œã‚‹ã€‚
+		if ( lIsOuter && !r ){ //å·¦ãŒå¤–ç‚¹ã§å³ãŒç©ºã€‚
 			o = &l->mOuter;
-		}else if ( rIsOuter && !l ){ //‰E‚ªŠO“_‚Å¶‚ª‹ó
+		}else if ( rIsOuter && !l ){ //å³ãŒå¤–ç‚¹ã§å·¦ãŒç©º
 			o = &r->mOuter;
-		}else if ( lIsOuter && rIsOuter ){ //“¯ˆêƒ`ƒFƒbƒN
+		}else if ( lIsOuter && rIsOuter ){ //åŒä¸€ãƒã‚§ãƒƒã‚¯
 			OuterNode* lo = &l->mOuter;
 			OuterNode* ro = &r->mOuter;
 			bool match = true;
@@ -567,12 +567,12 @@ to->mOrigN = mOrigN;
 						match = false;
 					}
 				}
-				if ( match ){ //‘S•”ƒ}ƒbƒ`B¶‚ğ©•ª‚Éˆø‚«ã‚°‚éB
+				if ( match ){ //å…¨éƒ¨ãƒãƒƒãƒã€‚å·¦ã‚’è‡ªåˆ†ã«å¼•ãä¸Šã’ã‚‹ã€‚
 					o = lo;
 				}
 			}
 		}
-		if ( o ){ //ˆø‚«ã‚°î•ñ‚ ‚èB©•ª‚ğŠO“_‚É‚·‚éB
+		if ( o ){ //å¼•ãä¸Šã’æƒ…å ±ã‚ã‚Šã€‚è‡ªåˆ†ã‚’å¤–ç‚¹ã«ã™ã‚‹ã€‚
 			mAxis = -1;
 			mInner.mLeft = mInner.mRight = 0;
 			mOuter.mIndexNumber = o->mIndexNumber;
@@ -594,7 +594,7 @@ to->mOrigN = mOrigN;
 		}
 	}
 	void checkTriangle( const Triangle* triangles, const Vector3* vertices ) const {
-		if ( mAxis == -1 ){ //“à“_‚Ì‚İƒ`ƒFƒbƒN
+		if ( mAxis == -1 ){ //å†…ç‚¹ã®ã¿ãƒã‚§ãƒƒã‚¯
 			return;
 		}
 		if ( mInner.mLeft ){
@@ -641,12 +641,12 @@ to->mOrigN = mOrigN;
 		}
 	}
 #ifdef STRONG_DEBUG
-Vector3 mMin; //ƒfƒoƒO—p
+Vector3 mMin; //ãƒ‡ãƒã‚°ç”¨
 Vector3 mMax;
 int mOrigN;
 #endif
-	int mAxis; //•ªŠ„²B0:X, 1:Y, 2:Z, -1‚ÍOuterNodeB
-	union{ //union‚Ì’†‚Íƒƒ‚ƒŠ‚ª‹¤—L‚³‚ê‚éB––’[‚Æ“à•”‚Å‚Í•K—v‚Èƒƒ“ƒo‚ªˆá‚¤‚Ì‚Å«”\Œüã‚Ì‚½‚ß‚É‚±‚¤‚µ‚Ä‚¢‚éB
+	int mAxis; //åˆ†å‰²è»¸ã€‚0:X, 1:Y, 2:Z, -1ã¯OuterNodeã€‚
+	union{ //unionã®ä¸­ã¯ãƒ¡ãƒ¢ãƒªãŒå…±æœ‰ã•ã‚Œã‚‹ã€‚æœ«ç«¯ã¨å†…éƒ¨ã§ã¯å¿…è¦ãªãƒ¡ãƒ³ãƒãŒé•ã†ã®ã§æ€§èƒ½å‘ä¸Šã®ãŸã‚ã«ã“ã†ã—ã¦ã„ã‚‹ã€‚
 		InnerNode mInner;
 		OuterNode mOuter;
 	};
@@ -684,7 +684,7 @@ public:
 		SAFE_DELETE_ARRAY( mIndicesInNode );
 	};
 	void createFromElement( ConstElement e ){
-		//‘æˆêƒpƒXB’¸“_”AOŠpŒ`”‚ğ”‚¦‚éB
+		//ç¬¬ä¸€ãƒ‘ã‚¹ã€‚é ‚ç‚¹æ•°ã€ä¸‰è§’å½¢æ•°ã‚’æ•°ãˆã‚‹ã€‚
 		int n = e.childNumber();
 		for ( int i = 0; i < n; ++i ){
 			ConstElement child = e.child( i );
@@ -695,10 +695,10 @@ public:
 				mTriangleNumber += child.childNumber();
 			}
 		}
-		//Šm•Û
+		//ç¢ºä¿
 		mVertices = NEW Vector3[ mVertexNumber ];
 		mTriangles = NEW Triangle[ mTriangleNumber ];
-		//‘æ“ñƒpƒXB’¸“_[“U
+		//ç¬¬äºŒãƒ‘ã‚¹ã€‚é ‚ç‚¹å……å¡«
 		int vertexPos = 0;
 		int trianglePos = 0;
 		for ( int i = 0; i < n; ++i ){
@@ -710,54 +710,54 @@ public:
 				trianglePos = fillTriangles( child, trianglePos );
 			}
 		}
-		//‘æOƒpƒXk-d tree¶¬
+		//ç¬¬ä¸‰ãƒ‘ã‚¹k-d treeç”Ÿæˆ
 		buildKDTree();
 	}
 	void buildKDTree(){
-		//ƒm[ƒh‚ÍOŠpŒ`‚ª—‘z“I‚É1ŒÂ‚Ã‚ÂŠi”[‚³‚ê‚½‚Æ‰¼’è‚µ‚½‚Æ‚±‚ë‚Ü‚ÅŠ„‚é”‚¾‚¯—pˆÓ‚·‚éB
-		//OŠpŒ`”tnˆÈãÅ¬‚Ì2‚Ì™p‚ğ‹‚ßA‚»‚Ì“ñ”{‚¾‚¯—pˆÓ‚·‚ê‚Î‚æ‚¢B
+		//ãƒãƒ¼ãƒ‰ã¯ä¸‰è§’å½¢ãŒç†æƒ³çš„ã«1å€‹ã¥ã¤æ ¼ç´ã•ã‚ŒãŸã¨ä»®å®šã—ãŸã¨ã“ã‚ã¾ã§å‰²ã‚‹æ•°ã ã‘ç”¨æ„ã™ã‚‹ã€‚
+		//ä¸‰è§’å½¢æ•°tnä»¥ä¸Šæœ€å°ã®2ã®å†ªã‚’æ±‚ã‚ã€ãã®äºŒå€ã ã‘ç”¨æ„ã™ã‚Œã°ã‚ˆã„ã€‚
 		int tn = mTriangleNumber;
 		int maxNodeNumber = 1;
-		int maxLevel = 0; //Å‘å•ªŠ„”
+		int maxLevel = 0; //æœ€å¤§åˆ†å‰²æ•°
 		while ( maxNodeNumber < tn ){
 			maxNodeNumber <<= 1;
 			++maxLevel;
 		}
 		Node* tmpNodes = NEW Node[ maxNodeNumber * 2 ];
-		//ˆø”\‘¢‘Ì€”õ
+		//å¼•æ•°æ§‹é€ ä½“æº–å‚™
 		BuildArgs args( mTriangles, mVertices, tmpNodes, mTriangleNumber );
 
 		Node root;
-		//‰ŠúOŠpŒ`”Ô†[“U
+		//åˆæœŸä¸‰è§’å½¢ç•ªå·å……å¡«
 		root.mOuter.mIndices = args.mIndexPool.allocate( mTriangleNumber );
 		root.mOuter.mIndexNumber = mTriangleNumber;
 		for ( int i = 0; i < mTriangleNumber; ++i ){
 			root.mOuter.mIndices[ i ] = i;
 		}
-		//¢ŠE‚ÌƒTƒCƒY‚ğ‘ª’èBXYZ‚ÌÅ‘åÅ¬‚ğ’²‚×‚éB
-		Vector3 minV( FLOAT_MAX ); //Å‘å‚Å‰Šú‰»
-		Vector3 maxV( -minV.x ); //Å¬‚Å‰Šú‰»
+		//ä¸–ç•Œã®ã‚µã‚¤ã‚ºã‚’æ¸¬å®šã€‚XYZã®æœ€å¤§æœ€å°ã‚’èª¿ã¹ã‚‹ã€‚
+		Vector3 minV( FLOAT_MAX ); //æœ€å¤§ã§åˆæœŸåŒ–
+		Vector3 maxV( -minV.x ); //æœ€å°ã§åˆæœŸåŒ–
 		for ( int i = 0; i < mVertexNumber; ++i ){
-			minV.min( mVertices[ i ] ); //min‚ÍXYZ‚ÅÅ¬’l‚ğæ‚Á‚Ä©•ª‚É“ü‚ê‚éB
-			maxV.max( mVertices[ i ] ); //max‚ÍXYZ‚ÅÅ‘å’l‚ğæ‚Á‚Ä©•ª‚É“ü‚ê‚éB
+			minV.min( mVertices[ i ] ); //minã¯XYZã§æœ€å°å€¤ã‚’å–ã£ã¦è‡ªåˆ†ã«å…¥ã‚Œã‚‹ã€‚
+			maxV.max( mVertices[ i ] ); //maxã¯XYZã§æœ€å¤§å€¤ã‚’å–ã£ã¦è‡ªåˆ†ã«å…¥ã‚Œã‚‹ã€‚
 		}
 		root.build( minV, maxV, &args, maxLevel );
 #ifdef STRONG_DEBUG
 root.mMin = minV;
 root.mMax = maxV;
 #endif
-		root.optimize(); //–³—p‚Èƒm[ƒh‚ğí‚Á‚Ä«”\‚ğã‚°‚éB
-		//Ÿ‚É•K—v‚È—Ìˆæ‚ğ‘ª’è‚µ‚ÄAŒÅ’è‚µ‚½—Ìˆæ‚ÉƒRƒs[‚·‚éB
+		root.optimize(); //ç„¡ç”¨ãªãƒãƒ¼ãƒ‰ã‚’å‰Šã£ã¦æ€§èƒ½ã‚’ä¸Šã’ã‚‹ã€‚
+		//æ¬¡ã«å¿…è¦ãªé ˜åŸŸã‚’æ¸¬å®šã—ã¦ã€å›ºå®šã—ãŸé ˜åŸŸã«ã‚³ãƒ”ãƒ¼ã™ã‚‹ã€‚
 		int indexNumber = 0;
 		int nodeNumber = 0;
 		root.count( &nodeNumber, &indexNumber );
 		mIndicesInNode = NEW int[ indexNumber ];
 		mNodes = NEW Node[ nodeNumber ];
-		//‘Sƒm[ƒh‚ğƒRƒs[
+		//å…¨ãƒãƒ¼ãƒ‰ã‚’ã‚³ãƒ”ãƒ¼
 		Node* nodePos = mNodes;
 		int* indicesPos = mIndicesInNode;
 		root.copy( &nodePos, &indicesPos );
-		//Œãn––
+		//å¾Œå§‹æœ«
 		SAFE_DELETE_ARRAY( tmpNodes );
 #ifdef STRONG_DEBUG
 		Array< bool > triangleExistFlags( mTriangleNumber );
@@ -776,12 +776,12 @@ root.mMax = maxV;
 		if ( mDocument ){
 			if ( mDocument.isReady() ){
 				ConstElement e = mDocument.root();
-				//q‹Ÿ‚ªˆêl‚Å–¼‘O‚ªContainer‚Ì‚ÉŒÀ‚Á‚ÄAq‚ğ“n‚·B
+				//å­ä¾›ãŒä¸€äººã§åå‰ãŒContainerã®æ™‚ã«é™ã£ã¦ã€å­ã‚’æ¸¡ã™ã€‚
 				if ( ( e.childNumber() == 1 ) && ( RefString( "Container" ) != e.name() ) ){
 					e = e.child( 0 );
 				}
 				createFromElement( e );
-				e.release(); //æ‚É”jŠüB
+				e.release(); //å…ˆã«ç ´æ£„ã€‚
 				mDocument.release();
 			}else{
 				ok = false;
@@ -792,7 +792,7 @@ root.mMax = maxV;
 	bool isIntersect( const Vector3& a, const Vector3& b ) const {
 		Query q( a, b, mTriangles, mVertices );
 		bool ret = mNodes[ 0 ].isIntersect( q, 0.f, 1.f );
-#ifdef STRONG_DEBUG //”äŠr—p‘“–‚è”Å
+#ifdef STRONG_DEBUG //æ¯”è¼ƒç”¨ç·å½“ã‚Šç‰ˆ
 		bool retCheck = false;
 		for ( int i = 0; i < mTriangleNumber; ++i ){
 			float dummyT;
@@ -810,11 +810,11 @@ root.mMax = maxV;
 	const Vector3& a,
 	const Vector3& b ) const {
 G = 0;
-		float t = FLOAT_MAX; //‚±‚±‚©‚ço”­
+		float t = FLOAT_MAX; //ã“ã“ã‹ã‚‰å‡ºç™º
 		int index = -1;
 		Query q( a, b, mTriangles, mVertices );
 		mNodes[ 0 ].getIntersection( &index, &t, q, 0.f, 1.f );
-#ifdef STRONG_DEBUG //”äŠr—p‘“–‚è”Å
+#ifdef STRONG_DEBUG //æ¯”è¼ƒç”¨ç·å½“ã‚Šç‰ˆ
 		int indexCheck = -1;
 		float tCheck = FLOAT_MAX;
 		for ( int i = 0; i < mTriangleNumber; ++i ){
@@ -827,10 +827,10 @@ G = 0;
 				}
 			}
 		}
-		STRONG_ASSERT( t == tCheck ); //index‚Í‡‚í‚È‚¢‚±‚Æ‚ª‚ ‚éB
+		STRONG_ASSERT( t == tCheck ); //indexã¯åˆã‚ãªã„ã“ã¨ãŒã‚ã‚‹ã€‚
 #endif
 		if ( index != -1 ){
-			//ÅI“I‚É“–‚½‚Á‚½OŠpŒ`‚Ìî•ñ‚ğŠi”[
+			//æœ€çµ‚çš„ã«å½“ãŸã£ãŸä¸‰è§’å½¢ã®æƒ…å ±ã‚’æ ¼ç´
 			if ( tOut ){
 				*tOut = t;
 			}
@@ -841,7 +841,7 @@ G = 0;
 				const Vector3& p0 = mVertices[ i0 ];
 				const Vector3& p1 = mVertices[ i1 ];
 				const Vector3& p2 = mVertices[ i2 ];
-				Vector3 e0, e1; //Edge(=•Ó)
+				Vector3 e0, e1; //Edge(=è¾º)
 				e0.setSub( p1, p0 );
 				e1.setSub( p2, p0 );
 				nOut->setCross( e0, e1 );
@@ -885,8 +885,8 @@ private:
 	int mVertexNumber;
 	Triangle* mTriangles;
 	int mTriangleNumber;
-	Node* mNodes; //0”Ô‚ªªŒ³
-	int* mIndicesInNode; //ƒm[ƒh“àƒCƒ“ƒfƒNƒXe”z—ñ
+	Node* mNodes; //0ç•ªãŒæ ¹å…ƒ
+	int* mIndicesInNode; //ãƒãƒ¼ãƒ‰å†…ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹è¦ªé…åˆ—
 };
 
 CollisionMesh::CollisionMesh( Impl* impl ) : mImpl( impl ){

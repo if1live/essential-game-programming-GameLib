@@ -1,36 +1,36 @@
-//ƒMƒŠƒMƒŠ‚Ü‚ÅƒR[ƒh‚ğ’Pƒ‚É‚·‚é‚½‚ß‚ÉA‘¬“x‚ÍŠ®‘S‚É“xŠO‹‚µ‚Ä‚¢‚éB”ñí‚É’x‚¢B
-//‚Ç‚¤‚·‚ê‚Î‘¬‚­‚È‚é‚©l‚¦‚Ä‚İ‚é‚Æ‚¢‚¢‚¾‚ë‚¤B
+//ã‚®ãƒªã‚®ãƒªã¾ã§ã‚³ãƒ¼ãƒ‰ã‚’å˜ç´”ã«ã™ã‚‹ãŸã‚ã«ã€é€Ÿåº¦ã¯å®Œå…¨ã«åº¦å¤–è¦–ã—ã¦ã„ã‚‹ã€‚éå¸¸ã«é…ã„ã€‚
+//ã©ã†ã™ã‚Œã°é€Ÿããªã‚‹ã‹è€ƒãˆã¦ã¿ã‚‹ã¨ã„ã„ã ã‚ã†ã€‚
 
 #include <fstream>
 #include <iostream>
-#include <cassert> //•W€‚Ìassert‚ğg‚¤‚½‚ßBGameLib“à‚ÌASSERT‚Æg‚¢•û‚Í“¯‚¶B
-#include "BitStream.h" //ƒrƒbƒg’PˆÊ‚Ì“Ç‚İ‘‚«‚ğ‚·‚é‚½‚ß‚ÌƒNƒ‰ƒX
+#include <cassert> //æ¨™æº–ã®assertã‚’ä½¿ã†ãŸã‚ã€‚GameLibå†…ã®ASSERTã¨ä½¿ã„æ–¹ã¯åŒã˜ã€‚
+#include "BitStream.h" //ãƒ“ãƒƒãƒˆå˜ä½ã®èª­ã¿æ›¸ãã‚’ã™ã‚‹ãŸã‚ã®ã‚¯ãƒ©ã‚¹
 using namespace std;
 
 void encode( unsigned char* dataOut, int* sizeOut, const unsigned char* dataIn, int sizeIn );
 void decode( unsigned char* dataOut, int* sizeOut, const unsigned char* dataIn, int sizeIn );
-//ƒrƒbƒg’PˆÊ‚Å”ä‚×‚éŠÖ”
+//ãƒ“ãƒƒãƒˆå˜ä½ã§æ¯”ã¹ã‚‹é–¢æ•°
 bool isEqual( unsigned char* a, unsigned char* b, int sizeInBit );
 
-//ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚Ì‘æˆêˆø”‚ªƒtƒ@ƒCƒ‹–¼‚Ë
+//ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã®ç¬¬ä¸€å¼•æ•°ãŒãƒ•ã‚¡ã‚¤ãƒ«åã­
 int main( int, char** argv ){
-	//‚Æ‚è‚ ‚¦‚¸ŠÛX“Ç‚İ‚ŞB
+	//ã¨ã‚Šã‚ãˆãšä¸¸ã€…èª­ã¿è¾¼ã‚€ã€‚
 	ifstream in( argv[ 1 ], ifstream::binary ); 
-	//argv[1]‚ª‘æˆêˆø”‚È‚Ì‚É‚ÍŠµ‚ê‚Ä‚à‚ç‚¤‚µ‚©‚È‚¢B
-	//ƒvƒƒWƒFƒNƒg‚ÌƒvƒƒpƒeƒB‚ÌuƒfƒoƒOv‚Ì‚Æ‚±‚ë‚ÅƒRƒ}ƒ“ƒhƒ‰ƒCƒ“ˆø”‚ªİ’è‚Å‚«‚éBtest.txt‚Æ‘‚¢‚Ä‚ ‚é‚Í‚¸‚¾B
+	//argv[1]ãŒç¬¬ä¸€å¼•æ•°ãªã®ã«ã¯æ…£ã‚Œã¦ã‚‚ã‚‰ã†ã—ã‹ãªã„ã€‚
+	//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã®ã€Œãƒ‡ãƒã‚°ã€ã®ã¨ã“ã‚ã§ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³å¼•æ•°ãŒè¨­å®šã§ãã‚‹ã€‚test.txtã¨æ›¸ã„ã¦ã‚ã‚‹ã¯ãšã ã€‚
 	in.seekg( 0, ifstream::end );
 	int inSize = static_cast< int >( in.tellg() );
 	in.seekg( 0, ifstream::beg );
 	char* inData = new char[ inSize ];
 	in.read( inData, inSize );
 
-	//‘‚«‚İƒoƒbƒtƒ@‚ğŠÛXŠm•ÛB
-	//ƒnƒtƒ}ƒ“•„†‚ÌÅˆ«ƒP[ƒX‚ÍA‘S•”8bit•„†‚É‚È‚Á‚ÄA‚»‚±‚É•„†•\‚ª‰Á‚í‚Á‚½ê‡B
-	//•„†•\‚Í•„†’·1byte+•„†Å‘å255bit(8byte)‚ÅA9*256ƒoƒCƒgB‚»‚ê‚ÉŒ³ƒTƒCƒY4ƒoƒCƒg
+	//æ›¸ãè¾¼ã¿ãƒãƒƒãƒ•ã‚¡ã‚’ä¸¸ã€…ç¢ºä¿ã€‚
+	//ãƒãƒ•ãƒãƒ³ç¬¦å·ã®æœ€æ‚ªã‚±ãƒ¼ã‚¹ã¯ã€å…¨éƒ¨8bitç¬¦å·ã«ãªã£ã¦ã€ãã“ã«ç¬¦å·è¡¨ãŒåŠ ã‚ã£ãŸå ´åˆã€‚
+	//ç¬¦å·è¡¨ã¯ç¬¦å·é•·1byte+ç¬¦å·æœ€å¤§255bit(8byte)ã§ã€9*256ãƒã‚¤ãƒˆã€‚ãã‚Œã«å…ƒã‚µã‚¤ã‚º4ãƒã‚¤ãƒˆ
 	int outMaxSize = inSize + 9 * 256 + 4;
 	char* outData = new char[ outMaxSize ];
 
-	//‚¶‚á‚ ˆ³k‚·‚é‚æ[
+	//ã˜ã‚ƒã‚åœ§ç¸®ã™ã‚‹ã‚ˆãƒ¼
 	int outSize;
 	encode( 
 		reinterpret_cast< unsigned char* >( outData ), 
@@ -38,11 +38,11 @@ int main( int, char** argv ){
 		reinterpret_cast< unsigned char* >( inData ), 
 		inSize );
 
-	//ƒTƒCƒY‚±‚±‚Ü‚ÅŒ¸‚è‚Ü‚µ‚½
+	//ã‚µã‚¤ã‚ºã“ã“ã¾ã§æ¸›ã‚Šã¾ã—ãŸ
 	cout << "FileSize: " << inSize << " -> " << outSize << endl;
 
-	//ˆ³k‚µ‚½‚à‚Ì‚ğ“WŠJ‚µ‚Ä‚¿‚á‚ñ‚ÆŒ³‚É–ß‚é‚©Šm‚©‚ß‚æ‚¤B
-	char* outData2 = new char[ inSize ]; //“¯‚¶‚Å‚¢‚¢‚Í‚¸‚¾‚æ‚ËH
+	//åœ§ç¸®ã—ãŸã‚‚ã®ã‚’å±•é–‹ã—ã¦ã¡ã‚ƒã‚“ã¨å…ƒã«æˆ»ã‚‹ã‹ç¢ºã‹ã‚ã‚ˆã†ã€‚
+	char* outData2 = new char[ inSize ]; //åŒã˜ã§ã„ã„ã¯ãšã ã‚ˆã­ï¼Ÿ
 	int outSize2;
 	decode( 
 		reinterpret_cast< unsigned char* >( outData2 ), 
@@ -60,34 +60,34 @@ int main( int, char** argv ){
 #endif
 }
 
-//ˆ³k‚·‚é‚æ[
+//åœ§ç¸®ã™ã‚‹ã‚ˆãƒ¼
 /*
-ƒnƒtƒ}ƒ“ˆ³kBÅ‰‚É‚â‚é‚±‚Æ‚Í‚»‚ê‚¼‚ê‚Ì•¶š‚Ì‰ñ”‚ğ”‚¦‚é‚±‚ÆB
-‚»‚ÌŒã‚Í–Ø\¬‚ğ‚ª‚ñ‚Î‚éB
+ãƒãƒ•ãƒãƒ³åœ§ç¸®ã€‚æœ€åˆã«ã‚„ã‚‹ã“ã¨ã¯ãã‚Œãã‚Œã®æ–‡å­—ã®å›æ•°ã‚’æ•°ãˆã‚‹ã“ã¨ã€‚
+ãã®å¾Œã¯æœ¨æ§‹æˆã‚’ãŒã‚“ã°ã‚‹ã€‚
 */
 
-//ƒnƒtƒ}ƒ“–Ø‚Ìƒm[ƒhB“ñ•ª–Ø‚È‚Ì‚Å¶‰E‚Ìƒ|ƒCƒ“ƒ^‚ª‚ ‚èAƒJƒEƒ“ƒg‚ğ‚¿A•¶š‚à‚ÂB•¶š‚ª‚È‚¢‚Í-1B
+//ãƒãƒ•ãƒãƒ³æœ¨ã®ãƒãƒ¼ãƒ‰ã€‚äºŒåˆ†æœ¨ãªã®ã§å·¦å³ã®ãƒã‚¤ãƒ³ã‚¿ãŒã‚ã‚Šã€ã‚«ã‚¦ãƒ³ãƒˆã‚’æŒã¡ã€æ–‡å­—ã‚‚æŒã¤ã€‚æ–‡å­—ãŒãªã„æ™‚ã¯-1ã€‚
 class Node{
 public:
-	Node() : mLeft( 0 ), mRight( 0 ), mCount( 0xffffffff ), mLetter( -1 ){} //ƒJƒEƒ“ƒg‚Í–³ŒÀ‚É‚µ‚Æ‚­B
+	Node() : mLeft( 0 ), mRight( 0 ), mCount( 0xffffffff ), mLetter( -1 ){} //ã‚«ã‚¦ãƒ³ãƒˆã¯ç„¡é™ã«ã—ã¨ãã€‚
 
-	//•„†‚ğì‚Á‚Ä‚¢‚«‚Ü‚·B
+	//ç¬¦å·ã‚’ä½œã£ã¦ã„ãã¾ã™ã€‚
 	void makeCodeTable( int* lengths, unsigned char* codes, unsigned char* currentCode, int currentCodeLength ){
-		//unsigned charˆêŒÂ‚É8bit“ü‚é‚Ì‚ÅA8‚ÅŠ„‚Á‚ÄƒoƒCƒg‚ğŠm’èA—]‚è‚ÅƒVƒtƒg‚ğŠm’èB
+		//unsigned charä¸€å€‹ã«8bitå…¥ã‚‹ã®ã§ã€8ã§å‰²ã£ã¦ãƒã‚¤ãƒˆã‚’ç¢ºå®šã€ä½™ã‚Šã§ã‚·ãƒ•ãƒˆã‚’ç¢ºå®šã€‚
 		int index = currentCodeLength / 8;
 		int shift = currentCodeLength % 8;
-		//q‚ª‚¢‚ê‚ÎAq‚ÉŠÛ“Š‚°
+		//å­ãŒã„ã‚Œã°ã€å­ã«ä¸¸æŠ•ã’
 		if ( mLeft ){
-			//¶‚È‚Ì‚Å0‚ğŒ»İ‚Ì•„†‚É’Ç‰Á
-			currentCode[ index ] &= ~( 1 << shift ); //ƒrƒbƒg‚ğ0‚ÉB
+			//å·¦ãªã®ã§0ã‚’ç¾åœ¨ã®ç¬¦å·ã«è¿½åŠ 
+			currentCode[ index ] &= ~( 1 << shift ); //ãƒ“ãƒƒãƒˆã‚’0ã«ã€‚
 			mLeft->makeCodeTable( lengths, codes, currentCode, currentCodeLength + 1);
 		}
 		if ( mRight ){
-			//‰E‚È‚Ì‚Å1‚ğŒ»İ‚Ì•„†‚É’Ç‰Á
-			currentCode[ index ] |= ( 1 << shift ); //ƒrƒbƒg‚ğ1‚ÉB
+			//å³ãªã®ã§1ã‚’ç¾åœ¨ã®ç¬¦å·ã«è¿½åŠ 
+			currentCode[ index ] |= ( 1 << shift ); //ãƒ“ãƒƒãƒˆã‚’1ã«ã€‚
 			mRight->makeCodeTable( lengths, codes, currentCode, currentCodeLength + 1 );
 		}
-		//‚à‚µ‚±‚¢‚Â‚ª•¶š‚È‚ç•¶š‚ğo—Í‚¹‚Ë‚Î‚È‚ç‚ÊB
+		//ã‚‚ã—ã“ã„ã¤ãŒæ–‡å­—ãªã‚‰æ–‡å­—ã‚’å‡ºåŠ›ã›ã­ã°ãªã‚‰ã¬ã€‚
 		if ( mLetter != -1 ){
 			lengths[ mLetter ] = currentCodeLength;
 			for ( int i = 0; i < 8; ++i ){
@@ -99,13 +99,13 @@ public:
 
 	Node* mLeft;
 	Node* mRight;
-	unsigned mCount; //‚±‚Ìß‚ÌƒJƒEƒ“ƒg(0xffffffff‚ª‚à‚Ä‚é‚æ‚¤‚Éunsigned)
-	int mLetter; //•¶š(-1‚ğ‚Â‚½‚ß‚ÉintBƒPƒ`‚é‚È‚çshort‚É‚µ‚æ‚¤)
+	unsigned mCount; //ã“ã®ç¯€ã®ã‚«ã‚¦ãƒ³ãƒˆ(0xffffffffãŒã‚‚ã¦ã‚‹ã‚ˆã†ã«unsigned)
+	int mLetter; //æ–‡å­—(-1ã‚’æŒã¤ãŸã‚ã«intã€‚ã‚±ãƒã‚‹ãªã‚‰shortã«ã—ã‚ˆã†)
 };
 
 
 void encode( unsigned char* dataOut, int* sizeOut, const unsigned char* dataIn, int sizeIn ){
-	//”‚¦‚é
+	//æ•°ãˆã‚‹
 	int counts[ 256 ];
 	for ( int i = 0; i < 256; ++i ){
 		counts[ i ] = 0;
@@ -113,70 +113,70 @@ void encode( unsigned char* dataOut, int* sizeOut, const unsigned char* dataIn, 
 	for ( int i = 0; i < sizeIn; ++i ){
 		++counts[ dataIn[ i ] ];
 	}
-	//”‚¦I‚í‚Á‚½B–Ø‚ğì‚è‚Ü‚·B
-	//–Ø‚Í‚Ü‚¸256ŒÂ‚Ìß‚ğ•À‚×‚é‚±‚Æ‚©‚çn‚ß‚éB
-	//ß”z—ñ‚ğ—pˆÓ‚·‚é‚ªAß‚Ì”‚ÍÅ‘å‚¢‚­‚Â‚É‚È‚é‚¾‚ë‚¤H
+	//æ•°ãˆçµ‚ã‚ã£ãŸã€‚æœ¨ã‚’ä½œã‚Šã¾ã™ã€‚
+	//æœ¨ã¯ã¾ãš256å€‹ã®ç¯€ã‚’ä¸¦ã¹ã‚‹ã“ã¨ã‹ã‚‰å§‹ã‚ã‚‹ã€‚
+	//ç¯€é…åˆ—ã‚’ç”¨æ„ã™ã‚‹ãŒã€ç¯€ã®æ•°ã¯æœ€å¤§ã„ãã¤ã«ãªã‚‹ã ã‚ã†ï¼Ÿ
 
-	//‹A”[–@“I‚Él‚¦‚éB
-	//•¶š‚ª1ŒÂ‚Ì‚É‚Íß‚Í1ŒÂB
-	//‚±‚±‚É•¶š‚ğˆêŒÂ‘‚â‚·‚É‰½‚ª‹N‚±‚é‚©‚ÆŒ¾‚¦‚ÎAÅ‘å‚Å“ñŒÂß‚ª‘‚¦‚é
-	//¶‰E‚É}‚ğo‚µ‚ÄŠi”[‚·‚é‚©‚çB‚±‚ê‚ğ255‰ñŒJ‚è•Ô‚·‚ñ‚¾‚©‚çA511ŒÂ‚Ìß‚ªÅ‘åB‚Å‚à512ŒÂ—pˆÓ‚µ‚Ä‚¨‚­B
+	//å¸°ç´æ³•çš„ã«è€ƒãˆã‚‹ã€‚
+	//æ–‡å­—ãŒ1å€‹ã®æ™‚ã«ã¯ç¯€ã¯1å€‹ã€‚
+	//ã“ã“ã«æ–‡å­—ã‚’ä¸€å€‹å¢—ã‚„ã™æ™‚ã«ä½•ãŒèµ·ã“ã‚‹ã‹ã¨è¨€ãˆã°ã€æœ€å¤§ã§äºŒå€‹ç¯€ãŒå¢—ãˆã‚‹
+	//å·¦å³ã«æã‚’å‡ºã—ã¦æ ¼ç´ã™ã‚‹ã‹ã‚‰ã€‚ã“ã‚Œã‚’255å›ç¹°ã‚Šè¿”ã™ã‚“ã ã‹ã‚‰ã€511å€‹ã®ç¯€ãŒæœ€å¤§ã€‚ã§ã‚‚512å€‹ç”¨æ„ã—ã¦ãŠãã€‚
 	Node nodes[ 512 ];
-	//‚Ü‚¸Å‰‚Ì256ŒÂ‚Ìƒm[ƒh‚ğ‰Šú‰»‚µ‚Ü‚·B
+	//ã¾ãšæœ€åˆã®256å€‹ã®ãƒãƒ¼ãƒ‰ã‚’åˆæœŸåŒ–ã—ã¾ã™ã€‚
 	for ( int i = 0; i < 256; ++i ){
 		nodes[ i ].mCount = counts[ i ];
 		nodes[ i ].mLetter = i;
 	}
-	int nodeNumber = 256; //Œ»İ256ŒÂg‚Á‚Ä‚Ü‚·B
+	int nodeNumber = 256; //ç¾åœ¨256å€‹ä½¿ã£ã¦ã¾ã™ã€‚
 
-	//‚³‚ A–Ø‚ğ\’z‚µ‚æ‚¤I
-	//255‰ñ‰ñ‚¹‚Î‘S•”‚Ìß‚ª‚­‚Á‚Â‚«‚Ü‚·B‚±‚ê‚ÍØ–¾‚Å‚«‚é‚Ì‚Å‚µ‚Ä‚İ‚æ‚¤B
-	//—v‚·‚é‚É–ˆ‰ñß‚ğˆêŒÂg‚¤‚í‚¯‚ÅA511ŒÂ‚É‚È‚Á‚½‚Ég‚¢Ø‚é‚Ì‚¾‚©‚çA‚»‚±‚ÅI‚í‚é‚Ì‚¾B
-	//‚»‚µ‚ÄA–Ø‚ÌŒ`‚ª‚Ç‚¤‚Å‚ ‚êA255ŒÂ‚Ì’[ƒm[ƒh‚ğ‚Â–Ø‚Íâ‘Î‚É511ŒÂ‚Ìß‚ğ‚Â‚Ì‚Å‚ ‚éB
+	//ã•ã‚ã€æœ¨ã‚’æ§‹ç¯‰ã—ã‚ˆã†ï¼
+	//255å›å›ã›ã°å…¨éƒ¨ã®ç¯€ãŒãã£ã¤ãã¾ã™ã€‚ã“ã‚Œã¯è¨¼æ˜ã§ãã‚‹ã®ã§ã—ã¦ã¿ã‚ˆã†ã€‚
+	//è¦ã™ã‚‹ã«æ¯å›ç¯€ã‚’ä¸€å€‹ä½¿ã†ã‚ã‘ã§ã€511å€‹ã«ãªã£ãŸæ™‚ã«ä½¿ã„åˆ‡ã‚‹ã®ã ã‹ã‚‰ã€ãã“ã§çµ‚ã‚ã‚‹ã®ã ã€‚
+	//ãã—ã¦ã€æœ¨ã®å½¢ãŒã©ã†ã§ã‚ã‚Œã€255å€‹ã®ç«¯ãƒãƒ¼ãƒ‰ã‚’æŒã¤æœ¨ã¯çµ¶å¯¾ã«511å€‹ã®ç¯€ã‚’æŒã¤ã®ã§ã‚ã‚‹ã€‚
 	for ( int j = 0; j < 255; ++j ){
-		//‚Ü‚¸‚â‚é‚±‚ÆBƒJƒEƒ“ƒg‚ªˆê”Ô¬‚³‚¢“z‚ÆA“ñ”Ô–Ú‚É¬‚³‚¢“z‚ğ’T‚·B
-		//ŠÖŒW‚È‚­‚È‚Á‚½ß‚ÍƒJƒEƒ“ƒg‚ª0xffffffff‚É‚È‚Á‚Ä‚¢‚é‚Ì‚ÅƒXƒLƒbƒv‚³‚ê‚éB
-		//‚È‚¨A511”Ô–Ú‚Íƒ_ƒ~[B‚·‚²‚­‚Å‚©‚¢ƒJƒEƒ“ƒg‚ª“ü‚ê‚Á‚Ï‚È‚µ‚É‚È‚Á‚Ä‚¢‚é‚Ì‚ÅA‚±‚ê‚Æ
-		int merged0 = 511; //ˆê”ÔƒJƒEƒ“ƒg‚ª¬‚³‚¢ß
-		int merged1 = 511; //“ñ”Ô–Ú‚ÉƒJƒEƒ“ƒg‚ª¬‚³‚¢ß
-		for ( int i = 0; i < nodeNumber; ++i ){ //‚±‚ÌŒŸõ‚ÍŒ«‚¢•û–@‚ğg‚¤‚Æ‚ ‚Á‚³‚è‚‘¬‰»‚Å‚«‚é‚ªAƒR[ƒh‚ª’·‚­‚È‚é‚Ì‚Å‚â‚ç‚È‚¢B
+		//ã¾ãšã‚„ã‚‹ã“ã¨ã€‚ã‚«ã‚¦ãƒ³ãƒˆãŒä¸€ç•ªå°ã•ã„å¥´ã¨ã€äºŒç•ªç›®ã«å°ã•ã„å¥´ã‚’æ¢ã™ã€‚
+		//é–¢ä¿‚ãªããªã£ãŸç¯€ã¯ã‚«ã‚¦ãƒ³ãƒˆãŒ0xffffffffã«ãªã£ã¦ã„ã‚‹ã®ã§ã‚¹ã‚­ãƒƒãƒ—ã•ã‚Œã‚‹ã€‚
+		//ãªãŠã€511ç•ªç›®ã¯ãƒ€ãƒŸãƒ¼ã€‚ã™ã”ãã§ã‹ã„ã‚«ã‚¦ãƒ³ãƒˆãŒå…¥ã‚Œã£ã±ãªã—ã«ãªã£ã¦ã„ã‚‹ã®ã§ã€ã“ã‚Œã¨
+		int merged0 = 511; //ä¸€ç•ªã‚«ã‚¦ãƒ³ãƒˆãŒå°ã•ã„ç¯€
+		int merged1 = 511; //äºŒç•ªç›®ã«ã‚«ã‚¦ãƒ³ãƒˆãŒå°ã•ã„ç¯€
+		for ( int i = 0; i < nodeNumber; ++i ){ //ã“ã®æ¤œç´¢ã¯è³¢ã„æ–¹æ³•ã‚’ä½¿ã†ã¨ã‚ã£ã•ã‚Šé«˜é€ŸåŒ–ã§ãã‚‹ãŒã€ã‚³ãƒ¼ãƒ‰ãŒé•·ããªã‚‹ã®ã§ã‚„ã‚‰ãªã„ã€‚
 			if ( nodes[ i ].mCount < nodes[ merged1 ].mCount ){
 				if ( nodes[ i ].mCount < nodes[ merged0 ].mCount ){
-					merged1 = merged0; //2ˆÊ‚ğ¡‚Ü‚Å‚Ì1ˆÊ‚É
-					merged0 = i; //1ˆÊ‚ğŒğŠ·
+					merged1 = merged0; //2ä½ã‚’ä»Šã¾ã§ã®1ä½ã«
+					merged0 = i; //1ä½ã‚’äº¤æ›
 				}else{
-					merged1 = i; //2ˆÊ‚¾‚¯ŒğŠ·
+					merged1 = i; //2ä½ã ã‘äº¤æ›
 				}
 			}
 		}
-		//1ˆÊ‚Æ2ˆÊ‚ğ‚­‚Á‚Â‚¯‚½ß‚ğì‚éB
+		//1ä½ã¨2ä½ã‚’ãã£ã¤ã‘ãŸç¯€ã‚’ä½œã‚‹ã€‚
 		Node* newNode = &nodes[ nodeNumber ];
 		++nodeNumber;
 		newNode->mLeft = &nodes[ merged0 ];
 		newNode->mRight = &nodes[ merged1 ];
-		newNode->mCount = nodes[ merged0 ].mCount + nodes[ merged1 ].mCount; //ƒJƒEƒ“ƒg‚Í˜a‚É‚È‚é
-		nodes[ merged0 ].mCount = nodes[ merged1 ].mCount = 0xffffffff; //‚­‚Á‚Â‚¯‚ç‚ê‚½“z‚ÌƒJƒEƒ“ƒg‚Í‚¢‚ç‚È‚¢‚Ì‚Å–³ŒÀ‚É–ß‚·B
+		newNode->mCount = nodes[ merged0 ].mCount + nodes[ merged1 ].mCount; //ã‚«ã‚¦ãƒ³ãƒˆã¯å’Œã«ãªã‚‹
+		nodes[ merged0 ].mCount = nodes[ merged1 ].mCount = 0xffffffff; //ãã£ã¤ã‘ã‚‰ã‚ŒãŸå¥´ã®ã‚«ã‚¦ãƒ³ãƒˆã¯ã„ã‚‰ãªã„ã®ã§ç„¡é™ã«æˆ»ã™ã€‚
 	}
-	//–Ø‚ª‚Å‚«‚½I
-	//‚±‚Ì‚Ü‚Üˆ³k‚ğŠJn‚µ‚Ä‚à‚¢‚¢‚Ì‚¾‚ªA
-	//‚Å‚«‚½•„†‚ğ”z—ñ‚É“ü‚ê‚Ä‚¨‚¢‚½•û‚ªŒã‚Ìˆ—‚ªŠy‚È‚Ì‚ÅA‚»‚¤‚µ‚Ä‚¨‚­B
-	int lengths[ 256 ]; //•„†’·
-	unsigned char codes[ 256 * 8 ]; //•„†(Å‘å8ƒoƒCƒg‚Å‚·‚©‚ç)
-	//•„†‚ğ‰Šú‰»
+	//æœ¨ãŒã§ããŸï¼
+	//ã“ã®ã¾ã¾åœ§ç¸®ã‚’é–‹å§‹ã—ã¦ã‚‚ã„ã„ã®ã ãŒã€
+	//ã§ããŸç¬¦å·ã‚’é…åˆ—ã«å…¥ã‚Œã¦ãŠã„ãŸæ–¹ãŒå¾Œã®å‡¦ç†ãŒæ¥½ãªã®ã§ã€ãã†ã—ã¦ãŠãã€‚
+	int lengths[ 256 ]; //ç¬¦å·é•·
+	unsigned char codes[ 256 * 8 ]; //ç¬¦å·(æœ€å¤§8ãƒã‚¤ãƒˆã§ã™ã‹ã‚‰)
+	//ç¬¦å·ã‚’åˆæœŸåŒ–
 	for ( int i = 0; i < 256; ++i ){
 		for ( int j = 0; j < 8; ++j ){
 			codes[ i * 8 + j ] = 0;
 		}
 	}
-	//ª‚Á‚±‚ÍÅŒã‚Éì‚Á‚½ß‚ÅA‚±‚ê‚Í510”Ô‚ÆŒˆ‚Ü‚Á‚Ä‚¢‚éB510”Ô‚©‚çÄ‹A‚Å•„†•\‚ğì‚ë‚¤B
+	//æ ¹ã£ã“ã¯æœ€å¾Œã«ä½œã£ãŸç¯€ã§ã€ã“ã‚Œã¯510ç•ªã¨æ±ºã¾ã£ã¦ã„ã‚‹ã€‚510ç•ªã‹ã‚‰å†å¸°ã§ç¬¦å·è¡¨ã‚’ä½œã‚ã†ã€‚
 	int currentCodeLength = 0;
 	unsigned char currentCode[ 8 ];
 	for ( int i = 0; i < 8; ++i ){
 		currentCode[ i ] = 0;
 	}
-	nodes[ 510 ].makeCodeTable( lengths, codes, currentCode, currentCodeLength ); //ÅŒã‚Ìˆø”‚Í¡‚Ì[‚³
+	nodes[ 510 ].makeCodeTable( lengths, codes, currentCode, currentCodeLength ); //æœ€å¾Œã®å¼•æ•°ã¯ä»Šã®æ·±ã•
 
-	//‚Å‚«‚½•„†•\‚ğ•\¦‚µ‚Ä‚İ‚æ‚¤
+	//ã§ããŸç¬¦å·è¡¨ã‚’è¡¨ç¤ºã—ã¦ã¿ã‚ˆã†
 	for ( int i = 0; i < 256; ++i ){
 		cout << i << "\t" << lengths[ i ] << "\t";
 		for ( int j = 0; j < lengths[ i ]; ++j ){
@@ -185,47 +185,47 @@ void encode( unsigned char* dataOut, int* sizeOut, const unsigned char* dataIn, 
 		cout << endl;
 	}
 
-	//•„†•\‚ª‚Å‚«‚½I‘‚«‚İŠJnB
-	OBitStream stream( dataOut ); //o—Íæƒoƒbƒtƒ@‚ğ“–‚Ä‚Ä
+	//ç¬¦å·è¡¨ãŒã§ããŸï¼æ›¸ãè¾¼ã¿é–‹å§‹ã€‚
+	OBitStream stream( dataOut ); //å‡ºåŠ›å…ˆãƒãƒƒãƒ•ã‚¡ã‚’å½“ã¦ã¦
 	
-	//Å‰‚ÉŒ³‚Ìƒtƒ@ƒCƒ‹ƒTƒCƒY‚ğ‘‚«‚Ş
+	//æœ€åˆã«å…ƒã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºã‚’æ›¸ãè¾¼ã‚€
 	stream.write( static_cast< unsigned >( sizeIn ) );
 
-	//•„†•\‚ğ‘‚«‚à‚¤B
+	//ç¬¦å·è¡¨ã‚’æ›¸ãè¾¼ã‚‚ã†ã€‚
 	for ( int i = 0; i < 256; ++i ){
 		unsigned char l = static_cast< unsigned char >( lengths[ i ] );
-		stream.write( &l, 8 ); //•„†’·‚Í8bitŒÅ’è
-		stream.write( &codes[ i * 8 ], lengths[ i ] ); //•„†‚Í‰Â•Ï’·
+		stream.write( &l, 8 ); //ç¬¦å·é•·ã¯8bitå›ºå®š
+		stream.write( &codes[ i * 8 ], lengths[ i ] ); //ç¬¦å·ã¯å¯å¤‰é•·
 	}
 	
-	//ˆ³kŠJnI‚Æ‚Á‚Ä‚à’Pƒ‚É‘‚¯‚éB’uŠ·‚µ‚Ä‘‚«‚Ş‚¾‚¯‚¾‚©‚çB
+	//åœ§ç¸®é–‹å§‹ï¼ã¨ã£ã¦ã‚‚å˜ç´”ã«æ›¸ã‘ã‚‹ã€‚ç½®æ›ã—ã¦æ›¸ãè¾¼ã‚€ã ã‘ã ã‹ã‚‰ã€‚
 	for ( int i = 0; i < sizeIn; ++i ){
 		int c = dataIn[ i ];
 		stream.write( &codes[ c * 8 ], lengths[ c ] );
 	}
-	*sizeOut = stream.sizeInByte() + 4; //ƒoƒCƒg‚ÅƒTƒCƒY‚ğ‚à‚ç‚Á‚ÄAæ“ª‚Ì•¶š”‚Ì4‚ğ‘«‚·B
+	*sizeOut = stream.sizeInByte() + 4; //ãƒã‚¤ãƒˆã§ã‚µã‚¤ã‚ºã‚’ã‚‚ã‚‰ã£ã¦ã€å…ˆé ­ã®æ–‡å­—æ•°ã®4ã‚’è¶³ã™ã€‚
 }
 
-//À‚Í”n­³’¼‚É‘‚­‚Æ“WŠJ‚Ì•û‚ªd‚¢B
-//1ƒrƒbƒg“Ç‚Ş“x‚É•„†•\‚É’T‚µ‚Ä‚¢‚é‚à‚Ì‚ª‚È‚¢‚©’²‚×‚é‰H–Ú‚É‚È‚é‚©‚ç‚¾B
+//å®Ÿã¯é¦¬é¹¿æ­£ç›´ã«æ›¸ãã¨å±•é–‹ã®æ–¹ãŒé‡ã„ã€‚
+//1ãƒ“ãƒƒãƒˆèª­ã‚€åº¦ã«ç¬¦å·è¡¨ã«æ¢ã—ã¦ã„ã‚‹ã‚‚ã®ãŒãªã„ã‹èª¿ã¹ã‚‹ç¾½ç›®ã«ãªã‚‹ã‹ã‚‰ã ã€‚
 void decode( unsigned char* dataOut, int* sizeOut, const unsigned char* dataIn, int sizeIn ){
 	IBitStream stream( dataIn );
-	//‚Ü‚¸32bitæ‚èo‚·B‚±‚ê‚ªƒtƒ@ƒCƒ‹ƒTƒCƒY‚Å‚·B
+	//ã¾ãš32bitå–ã‚Šå‡ºã™ã€‚ã“ã‚ŒãŒãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºã§ã™ã€‚
 	int origSize = stream.readS4();
 
-	//•„†•\‚ğì‚è‚Ü‚·B
-	int lengths[ 256 ]; //•„†’·
-	unsigned char codes[ 256 * 8 ]; //•„†(Å‘å8ƒoƒCƒg‚Å‚·‚©‚ç)
+	//ç¬¦å·è¡¨ã‚’ä½œã‚Šã¾ã™ã€‚
+	int lengths[ 256 ]; //ç¬¦å·é•·
+	unsigned char codes[ 256 * 8 ]; //ç¬¦å·(æœ€å¤§8ãƒã‚¤ãƒˆã§ã™ã‹ã‚‰)
 	for ( int i = 0; i < 256 * 8; ++i ){
-		codes[ i ] = 0; //ƒR[ƒh0‰Šú‰»
+		codes[ i ] = 0; //ã‚³ãƒ¼ãƒ‰0åˆæœŸåŒ–
 	}
 	for ( int i = 0; i < 256; ++i ){
 		unsigned char buf[ 8 ];
-		stream.read( buf, 8 ); //•„†’·
+		stream.read( buf, 8 ); //ç¬¦å·é•·
 		lengths[ i ] = buf[ 0 ];
-		stream.read( &codes[ i * 8 ], lengths[ i ] ); //•„†“Ç‚İ‚İ
+		stream.read( &codes[ i * 8 ], lengths[ i ] ); //ç¬¦å·èª­ã¿è¾¼ã¿
 	}
-	//“Ç‚ñ‚¾•„†•\‚ğ•\¦‚µ‚Ä‚İ‚æ‚¤
+	//èª­ã‚“ã ç¬¦å·è¡¨ã‚’è¡¨ç¤ºã—ã¦ã¿ã‚ˆã†
 	for ( int i = 0; i < 256; ++i ){
 		cout << i << "\t" << lengths[ i ] << "\t";
 		for ( int j = 0; j < lengths[ i ]; ++j ){
@@ -234,29 +234,29 @@ void decode( unsigned char* dataOut, int* sizeOut, const unsigned char* dataIn, 
 		cout << endl;
 	}
 
-	//‚³‚ A’†g‚ğ“Ç‚İ‚à‚¤B
-	int pos = 0; //‘‚«‚İˆÊ’u
+	//ã•ã‚ã€ä¸­èº«ã‚’èª­ã¿è¾¼ã‚‚ã†ã€‚
+	int pos = 0; //æ›¸ãè¾¼ã¿ä½ç½®
 	for ( int i = 0; i < origSize; ++i ){
-		//0‰Šú‰»‚µ‚½—Ìˆæ‚ğì‚Á‚ÄA
+		//0åˆæœŸåŒ–ã—ãŸé ˜åŸŸã‚’ä½œã£ã¦ã€
 		unsigned char code[ 8 ];
 		for ( int j = 0; j < 8; ++j ){
 			code[ j ] = 0;
 		}
-		//1ƒrƒbƒg“Ç‚ñ‚Å‚Í•„†•\‚Æ”ä‚×‚Äƒ}ƒbƒ`‚µ‚Ä‚¢‚é‚©’²‚×‚é
+		//1ãƒ“ãƒƒãƒˆèª­ã‚“ã§ã¯ç¬¦å·è¡¨ã¨æ¯”ã¹ã¦ãƒãƒƒãƒã—ã¦ã„ã‚‹ã‹èª¿ã¹ã‚‹
 		bool found = false;
-		for ( int j = 0; j < 255; ++j ){ //Å‘å255ƒrƒbƒg‚Å‚·B
+		for ( int j = 0; j < 255; ++j ){ //æœ€å¤§255ãƒ“ãƒƒãƒˆã§ã™ã€‚
 			int index = j / 8;
 			int shift = j % 8;
-			if ( stream.read() ){ //1bit“Ç‚ñ‚Å1‚È‚ç1‚ğ‘‚«‚Ş
+			if ( stream.read() ){ //1bitèª­ã‚“ã§1ãªã‚‰1ã‚’æ›¸ãè¾¼ã‚€
 				code[ index ] |= ( 1 << shift );
 			}
-			//•„†•\‚©‚ç’T‚µ‚Ü‚·B
+			//ç¬¦å·è¡¨ã‹ã‚‰æ¢ã—ã¾ã™ã€‚
 			int length = j + 1;
 			for ( int k = 0; k < 256; ++k ){
-				if ( lengths[ k ] == length ){ //’·‚³‚ª“¯‚¶‚ÅA
-					if ( isEqual( &codes[ k * 8 ], code, length ) ){ //ˆê‚È‚ç
-						dataOut[ pos ] = static_cast< unsigned char >( k ); //•¶š‚ğo—Í
-//						cout << static_cast< char >( k ); //ƒfƒR[ƒh‚µ‚½•¶š‚ğo‚µ‚Ä‚İ‚æ‚¤
+				if ( lengths[ k ] == length ){ //é•·ã•ãŒåŒã˜ã§ã€
+					if ( isEqual( &codes[ k * 8 ], code, length ) ){ //ä¸€ç·’ãªã‚‰
+						dataOut[ pos ] = static_cast< unsigned char >( k ); //æ–‡å­—ã‚’å‡ºåŠ›
+//						cout << static_cast< char >( k ); //ãƒ‡ã‚³ãƒ¼ãƒ‰ã—ãŸæ–‡å­—ã‚’å‡ºã—ã¦ã¿ã‚ˆã†
 						++pos;
 						found = true;
 						break;
@@ -267,30 +267,30 @@ void decode( unsigned char* dataOut, int* sizeOut, const unsigned char* dataIn, 
 				break;
 			}
 		}
-		assert( found ); //Œ©‚Â‚©‚ç‚È‚¢‚±‚Æ‚Í‚ ‚è‚¦‚È‚¢
+		assert( found ); //è¦‹ã¤ã‹ã‚‰ãªã„ã“ã¨ã¯ã‚ã‚Šãˆãªã„
 	}
 	cout << endl;
-	assert( pos == origSize ); //‚¿‚á‚ñ‚Æ‚Ò‚Á‚½‚èƒfƒR[ƒh‚Å‚«‚½‚©H
+	assert( pos == origSize ); //ã¡ã‚ƒã‚“ã¨ã´ã£ãŸã‚Šãƒ‡ã‚³ãƒ¼ãƒ‰ã§ããŸã‹ï¼Ÿ
 	assert( stream.positionInByte() <= sizeIn );
 	*sizeOut = pos;
 }
 
 
-//ƒrƒbƒg”äŠrŠÖ”
+//ãƒ“ãƒƒãƒˆæ¯”è¼ƒé–¢æ•°
 bool isEqual( unsigned char* a, unsigned char* b, int sizeInBit ){
-	//‚Ü‚¸ƒoƒCƒg’PˆÊ‚Å‚Å‚«‚é•ª‚¾‚¯‚â‚é
+	//ã¾ãšãƒã‚¤ãƒˆå˜ä½ã§ã§ãã‚‹åˆ†ã ã‘ã‚„ã‚‹
 	int sizeInByte = sizeInBit / 8;
 	for ( int i = 0; i < sizeInByte; ++i ){
 		if ( a[ i ] != b[ i ] ){
 			return false;
 		}
 	}
-	sizeInBit = sizeInBit % 8; //—]‚èƒrƒbƒg”
-	if ( sizeInBit > 0 ){ //—]‚è‚ª‚ ‚ê‚ÎA—]‚è‚ğ”ä‚×‚é
-		//–â‘è‚ÌƒrƒbƒgˆÈŠO‚ğ0‚É‚·‚é‚½‚ß‚Ì1‚Ì•À‚Ñ‚ğì‚éB
-		unsigned char mask = static_cast< unsigned char >( 0xff >> ( 8 - sizeInBit ) ); //—á‚¦‚Î6bit‚ ‚Ü‚Á‚Ä‚é‚È‚çA00111111‚ªì‚è‚½‚¢‚í‚¯‚¾B11111111‚ğƒVƒtƒg‚µ‚Äì‚éB
+	sizeInBit = sizeInBit % 8; //ä½™ã‚Šãƒ“ãƒƒãƒˆæ•°
+	if ( sizeInBit > 0 ){ //ä½™ã‚ŠãŒã‚ã‚Œã°ã€ä½™ã‚Šã‚’æ¯”ã¹ã‚‹
+		//å•é¡Œã®ãƒ“ãƒƒãƒˆä»¥å¤–ã‚’0ã«ã™ã‚‹ãŸã‚ã®1ã®ä¸¦ã³ã‚’ä½œã‚‹ã€‚
+		unsigned char mask = static_cast< unsigned char >( 0xff >> ( 8 - sizeInBit ) ); //ä¾‹ãˆã°6bitã‚ã¾ã£ã¦ã‚‹ãªã‚‰ã€00111111ãŒä½œã‚ŠãŸã„ã‚ã‘ã ã€‚11111111ã‚’ã‚·ãƒ•ãƒˆã—ã¦ä½œã‚‹ã€‚
 		return ( ( a[ sizeInByte ] & mask ) == ( b[ sizeInByte ] & mask ) );
-	}else{ //—]‚è‚ª‚È‚¢‚Ì‚ÅA‚±‚±‚Ü‚Å—ˆ‚½‚Æ‚¢‚¤‚±‚Æ‚Ítrue‚¾‚Æ‚¢‚¤‚±‚Æ‚¾B
+	}else{ //ä½™ã‚ŠãŒãªã„ã®ã§ã€ã“ã“ã¾ã§æ¥ãŸã¨ã„ã†ã“ã¨ã¯trueã ã¨ã„ã†ã“ã¨ã ã€‚
 		return true;
 	}
 }

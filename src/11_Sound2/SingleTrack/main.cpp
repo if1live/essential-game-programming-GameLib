@@ -1,10 +1,10 @@
 #include "GameLib/Framework.h"
 
-//Šy•ˆ’è‹`
+//æ¥½è­œå®šç¾©
 struct Note{
-	int mName; //ƒhƒŒƒ~B0‚ª65Hz‚ÌƒhB24‚ª‚¢‚í‚ä‚é^‚ñ’†‚ÌƒhB
-	int mLength; // 100•ª‚Ì1•b’PˆÊ
-	int mVolume; // 0‚©‚ç100
+	int mName; //ãƒ‰ãƒ¬ãƒŸã€‚0ãŒ65Hzã®ãƒ‰ã€‚24ãŒã„ã‚ã‚†ã‚‹çœŸã‚“ä¸­ã®ãƒ‰ã€‚
+	int mLength; // 100åˆ†ã®1ç§’å˜ä½
+	int mVolume; // 0ã‹ã‚‰100
 };
 
 const int C = 24;
@@ -46,39 +46,39 @@ const Note gNotes[] = {
 const int gNoteNumber = 17;
 
 void createSound( 
-short* data, //o—Í
-int waveWidth, //”g‚Ì•=‰¹—Ê
-int note, //‰¹”Ô†0‚ª261Hz‚ÌƒhB12‚Í522Hz‚ÌƒhB‚ÆŒ¾‚¤Š´‚¶‚Ì‰¹”Ô†
-int sampleNumber ){ //ƒf[ƒ^”
-	//Žü”g”ƒe[ƒuƒ‹B2‚Ì12æª(1.05946”{)‚Ã‚Â‚³‚ê‚Ä‚¢‚­
+short* data, //å‡ºåŠ›
+int waveWidth, //æ³¢ã®å¹…=éŸ³é‡
+int note, //éŸ³ç•ªå·0ãŒ261Hzã®ãƒ‰ã€‚12ã¯522Hzã®ãƒ‰ã€‚ã¨è¨€ã†æ„Ÿã˜ã®éŸ³ç•ªå·
+int sampleNumber ){ //ãƒ‡ãƒ¼ã‚¿æ•°
+	//å‘¨æ³¢æ•°ãƒ†ãƒ¼ãƒ–ãƒ«ã€‚2ã®12ä¹—æ ¹(1.05946å€)ã¥ã¤ã•ã‚Œã¦ã„ã
 	int frequencyTable[] = {
 		261, 277, 293, 311, 329, 349, 370, 392, 415, 440, 466, 494,
 	};
-	int octave = note / 12; //ƒIƒNƒ^[ƒu‚ðŒˆ’èB‚±‚Ì”‚¾‚¯Žü”g”2”{‚µ‚Ä‚â‚éB
-	int f = frequencyTable[ note % 12 ]; //•\‚ðˆø‚¢‚ÄƒhƒŒƒ~‚ðŒˆ‚ß‚é
+	int octave = note / 12; //ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–ã‚’æ±ºå®šã€‚ã“ã®æ•°ã ã‘å‘¨æ³¢æ•°2å€ã—ã¦ã‚„ã‚‹ã€‚
+	int f = frequencyTable[ note % 12 ]; //è¡¨ã‚’å¼•ã„ã¦ãƒ‰ãƒ¬ãƒŸã‚’æ±ºã‚ã‚‹
 
-	//2ƒIƒNƒ^[ƒu‰º‚É‚¸‚ç‚·
+	//2ã‚ªã‚¯ã‚¿ãƒ¼ãƒ–ä¸‹ã«ãšã‚‰ã™
 	octave -= 2;
 	if ( octave >= 0 ){
-		f <<= octave; //octave‚ª2‚È‚ç4”{‚µ‚½‚¢‚ªA‚±‚ê‚Í¶ƒVƒtƒg2‚¾B
+		f <<= octave; //octaveãŒ2ãªã‚‰4å€ã—ãŸã„ãŒã€ã“ã‚Œã¯å·¦ã‚·ãƒ•ãƒˆ2ã ã€‚
 	}else{
 		f >>= -octave;
 	}
 
-	//i‚ÉŠ|‚¯‚éæ”‚ðŒvŽZ‚µ‚æ‚¤
+	//iã«æŽ›ã‘ã‚‹ä¹—æ•°ã‚’è¨ˆç®—ã—ã‚ˆã†
 	/*
-	1 —~‚µ‚¢Žü”g” = 44100 / (i‚ª‚¢‚­‚Â‚Å”g‚ªŠª‚«–ß‚é‚©)
-	2 (i‚ª‚¢‚­‚Â‚Å”g‚ªŠª‚«–ß‚é‚©) = ”g‚Ì• / i‚ÉŠ|‚¯‚éæ”
+	1 æ¬²ã—ã„å‘¨æ³¢æ•° = 44100 / (iãŒã„ãã¤ã§æ³¢ãŒå·»ãæˆ»ã‚‹ã‹)
+	2 (iãŒã„ãã¤ã§æ³¢ãŒå·»ãæˆ»ã‚‹ã‹) = æ³¢ã®å¹… / iã«æŽ›ã‘ã‚‹ä¹—æ•°
 	
-	1,2‚ÌŽ®‚©‚çA
+	1,2ã®å¼ã‹ã‚‰ã€
 
-	i‚ÉŠ|‚¯‚éæ” = ”g‚Ì• * —~‚µ‚¢Žü”g” / 44100
+	iã«æŽ›ã‘ã‚‹ä¹—æ•° = æ³¢ã®å¹… * æ¬²ã—ã„å‘¨æ³¢æ•° / 44100
 	*/
 
-	//i‚ÉŠ|‚¯‚é”‚É’¼‚·(ã‚ÌŽ®ŽQÆ)
+	//iã«æŽ›ã‘ã‚‹æ•°ã«ç›´ã™(ä¸Šã®å¼å‚ç…§)
 	int m = waveWidth * f / 44100;
 
-	//Œã‚Íƒf[ƒ^–„‚ß‚é‚¾‚¯
+	//å¾Œã¯ãƒ‡ãƒ¼ã‚¿åŸ‹ã‚ã‚‹ã ã‘
 	for ( int i = 0; i < sampleNumber; ++i ){
 		data[ i ] = static_cast< short >( (i*m) % waveWidth );
 	}
@@ -89,11 +89,11 @@ bool gFirstFrame = true;
 namespace GameLib{
 	void Framework::update(){
 		sleep( 16 );
-		if ( gFirstFrame ){ //Å‰‚ÌƒtƒŒ[ƒ€‚µ‚©ˆ—‚µ‚È‚¢
+		if ( gFirstFrame ){ //æœ€åˆã®ãƒ•ãƒ¬ãƒ¼ãƒ ã—ã‹å‡¦ç†ã—ãªã„
 			gFirstFrame = false;
-			short* wave = new short[ 44100 * 60 ]; //‚Æ‚è‚ ‚¦‚¸1•ªB”z—ñ‚ª‘å‚«‚¢Žž‚Ínew‚µ‚½•û‚ª‚¢‚¢B
+			short* wave = new short[ 44100 * 60 ]; //ã¨ã‚Šã‚ãˆãš1åˆ†ã€‚é…åˆ—ãŒå¤§ãã„æ™‚ã¯newã—ãŸæ–¹ãŒã„ã„ã€‚
 
-			//Šy•ˆ‚ð‰ðŽß‚µ‚Ü‚·B
+			//æ¥½è­œã‚’è§£é‡ˆã—ã¾ã™ã€‚
 			int time = 0;
 			for ( int i = 0; i < gNoteNumber; ++i ){
 				const Note& n = gNotes[ i ];
@@ -104,7 +104,7 @@ namespace GameLib{
 					n.mLength * 441 );
 				time += n.mLength * 441;
 			}
-			//Žc‚Á‚½ŽžŠÔ0‚ð–„‚ß‚é
+			//æ®‹ã£ãŸæ™‚é–“0ã‚’åŸ‹ã‚ã‚‹
 			for ( int i = time; i < 44100 * 60; ++i ){
 				wave[ i ] = 0;
 			}

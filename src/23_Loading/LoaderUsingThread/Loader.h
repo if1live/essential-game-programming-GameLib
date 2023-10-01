@@ -10,9 +10,9 @@ using namespace std;
 
 class File{
 public:
-	bool isReady() const; //ƒ[ƒhI‚í‚Á‚Ä‚éH
-	int getSize() const; //ƒtƒ@ƒCƒ‹ƒTƒCƒYæ“¾
-	const char* getData() const; //’†gæ“¾
+	bool isReady() const; //ãƒ­ãƒ¼ãƒ‰çµ‚ã‚ã£ã¦ã‚‹ï¼Ÿ
+	int getSize() const; //ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºå–å¾—
+	const char* getData() const; //ä¸­èº«å–å¾—
 private:
 	File( const char* filename );
 	~File();
@@ -23,7 +23,7 @@ private:
 	int mSize;
 };
 
-//Loader::update‚ğŒÄ‚Ô‚¾‚¯‚Ìl
+//Loader::updateã‚’å‘¼ã¶ã ã‘ã®äºº
 class LoadingThread : public GameLib::Threading::Thread{
 public:
 	LoadingThread(){ start(); }
@@ -39,19 +39,19 @@ public:
 
 	void createFile( File**, const char* filename );
 	void destroyFile( File** );
-	void update( bool* endOut ); //I‚í‚é‚ÍendOut‚Étrue‚ğ“ü‚ê‚é
+	void update( bool* endOut ); //çµ‚ã‚ã‚‹æ™‚ã¯endOutã«trueã‚’å…¥ã‚Œã‚‹
 private:
 	Loader();
-	Loader( const Loader& ); //••ˆó
+	Loader( const Loader& ); //å°å°
 	~Loader();
 
-	//ƒXƒŒƒbƒh‚Ì“s‡‚É‚æ‚è”z—ñ‚É‚·‚éB
+	//ã‚¹ãƒ¬ãƒƒãƒ‰ã®éƒ½åˆã«ã‚ˆã‚Šé…åˆ—ã«ã™ã‚‹ã€‚
 	static const int MAX_FILE_NUMBER = 100;
 	File* mFiles[ MAX_FILE_NUMBER ];
 	
-	LoadingThread* mThread; //ƒXƒŒƒbƒh
+	LoadingThread* mThread; //ã‚¹ãƒ¬ãƒƒãƒ‰
 	GameLib::Threading::Mutex mLock;
-	bool mEndRequest; //I‚í‚é‚Æ‚«‚Étrue‚É‚·‚éB
+	bool mEndRequest; //çµ‚ã‚ã‚‹ã¨ãã«trueã«ã™ã‚‹ã€‚
 	static const int READ_UNIT = 1 * 1024 * 1024; //1MB
 
 	static Loader* mInstance;

@@ -22,7 +22,7 @@ mChild( 0 ){
 	}else{
 		mStageID = 0;
 	}
-	//Å‰‚ÍReady
+	//æœ€åˆã¯Ready
 	mChild = new Ready();
 }
 
@@ -34,7 +34,7 @@ Parent::~Parent(){
 Base* Parent::update( GrandParent* ){
 	Base* next = this;
 	Base* nextChild = mChild->update( this );
-	//‘JˆÚ”»’è
+	//é·ç§»åˆ¤å®š
 	if ( nextChild != mChild ){
 		Game::Child* casted = dynamic_cast< Game::Child* >( nextChild );
 		if ( casted ){
@@ -45,7 +45,7 @@ Base* Parent::update( GrandParent* ){
 		}
 		casted = 0;
 	}
-	nextChild = 0; //”O‚Ì‚½‚ß
+	nextChild = 0; //å¿µã®ãŸã‚
 
 	return next;
 }
@@ -62,7 +62,7 @@ int Parent::lifeNumber() const {
 	return mLife;
 }
 
-//Parent::Mode‚ğParent::Mode‚É•ÏŠ·B‰º—¬ƒV[ƒPƒ“ƒX‚ÉParent‚ğŒ©‚¹‚È‚¢B
+//Parent::Modeã‚’Parent::Modeã«å¤‰æ›ã€‚ä¸‹æµã‚·ãƒ¼ã‚±ãƒ³ã‚¹ã«Parentã‚’è¦‹ã›ãªã„ã€‚
 Parent::Mode Parent::mode() const {
 	Mode r = MODE_NONE;
 	switch ( GrandParent::instance()->mode() ){

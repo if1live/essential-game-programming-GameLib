@@ -25,41 +25,41 @@ namespace GameLib{
 		if ( !gContainer ){
 			gContainer = Container::create( "cube.txt" );
 			while ( !gContainer.isReady() ){
-				; //ƒ[ƒh‘Ò‚¿
+				; //ãƒ­ãƒ¼ãƒ‰å¾…ã¡
 			}
 			gModel0 = gContainer.createModel( 0 );
 			gModel1 = gContainer.createModel( 0 );
-			gModel1.setScale( Vector3( 0.5f ) ); //“à‘¤‚Í”¼•ª
-			gModel0.setColor( Vector3( 1.f, 1.f, 0.5f ) ); //‰©F
-			gModel1.setColor( Vector3( 0.5f, 1.f, 1.f ) ); //…F
+			gModel1.setScale( Vector3( 0.5f ) ); //å†…å´ã¯åŠåˆ†
+			gModel0.setColor( Vector3( 1.f, 1.f, 0.5f ) ); //é»„è‰²
+			gModel1.setColor( Vector3( 0.5f, 1.f, 1.f ) ); //æ°´è‰²
 			gModel0.setTransparency( 0.5f );
 			gModel1.setTransparency( 0.5f );
 		}
-		//ƒrƒ…[s—ñ‚ğì‚ë‚¤
+		//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã‚’ä½œã‚ã†
 		Vector3 eye( 0.f, 0.f, 5.f );
 		Matrix34 vm;
 		vm.setViewTransform( 
 			eye,
 			Vector3( 0.f, 0.f, 0.f ), 
 			Vector3( 0.f, 1.f, 0.f ) );
-		//“§‹•ÏŠ·s—ñ
+		//é€è¦–å¤‰æ›è¡Œåˆ—
 		Matrix44 pm;
 		pm.setPerspectiveTransform( 
 			60.f, 
 			static_cast< float >( width() ),
 			static_cast< float >( height() ),
 			1.f, 10000.f );
-		//Ÿ‚ÉPV‚ğì‚é
+		//æ¬¡ã«PVã‚’ä½œã‚‹
 		pm *= vm;
 
-		//ƒ‰ƒCƒg‚Å‚à‚¤‚²‚©‚»‚©
+		//ãƒ©ã‚¤ãƒˆã§ã‚‚ã†ã”ã‹ãã‹
 		Graphics::Manager gm = Graphics::Manager::instance(); 
 		gm.setProjectionViewMatrix( pm );
 		gm.setLightingMode( LIGHTING_PER_VERTEX );
-		gm.setLightColor( 0, Vector3( 1.f, 1.f, 1.f ) ); //”’
-		gm.setLightColor( 1, Vector3( 1.f, 0.5f, 0.5f ) ); //Ô
-		gm.setLightColor( 2, Vector3( 0.5f, 1.f, 0.5f ) ); //—Î
-		gm.setLightColor( 3, Vector3( 0.5f, 0.5f, 1.f ) ); //Â
+		gm.setLightColor( 0, Vector3( 1.f, 1.f, 1.f ) ); //ç™½
+		gm.setLightColor( 1, Vector3( 1.f, 0.5f, 0.5f ) ); //èµ¤
+		gm.setLightColor( 2, Vector3( 0.5f, 1.f, 0.5f ) ); //ç·‘
+		gm.setLightColor( 3, Vector3( 0.5f, 0.5f, 1.f ) ); //é’
 		gm.setAmbientColor( Vector3( 0.2f, 0.2f, 0.2f ) );
 		gm.setEyePosition( eye );
 		for ( int i = 0; i < 4; ++i ){
@@ -73,15 +73,15 @@ namespace GameLib{
 		float fc = static_cast< float >( gCount ) * 0.5f;
 		gModel0.setAngle( Vector3( fc, fc * 2.f, fc * 3.f ) );
 		gModel1.setAngle( Vector3( fc * 2.f, fc * 3.f, fc ) );
-		//Zƒoƒbƒtƒ@‘‚«‚İOff
+		//Zãƒãƒƒãƒ•ã‚¡æ›¸ãè¾¼ã¿Off
 		gm.enableDepthWrite( true );
-		//— –Ê‘‚«‚İ
+		//è£é¢æ›¸ãè¾¼ã¿
 		gm.setCullMode( Graphics::CULL_FRONT );
 		gModel0.draw();
 		gModel1.draw();
-		//•\–Ê‘‚«‚İ
+		//è¡¨é¢æ›¸ãè¾¼ã¿
 		gm.setCullMode( Graphics::CULL_BACK );
-		gModel1.draw(); //’†‚ªæ
+		gModel1.draw(); //ä¸­ãŒå…ˆ
 		gModel0.draw();
 
 		if ( isEndRequested() ){

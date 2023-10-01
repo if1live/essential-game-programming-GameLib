@@ -4,9 +4,9 @@ namespace GameLib{
 
 namespace {
 
-int toString16( char* out, unsigned a, int n ){ //n‚Í16i‰»‚µ‚½‚ÌÅ‘åŒ…”
+int toString16( char* out, unsigned a, int n ){ //nã¯16é€²åŒ–ã—ãŸæ™‚ã®æœ€å¤§æ¡æ•°
 	static const char table[ 16 ] = { '0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F', };
-	for ( int i = 0; i < n; ++i ){ //ã‚ÌŒ…‚©‚ç‡‚Éˆ—
+	for ( int i = 0; i < n; ++i ){ //ä¸Šã®æ¡ã‹ã‚‰é †ã«å‡¦ç†
 		int shift = ( n - 1 - i ) * 4;
 		unsigned mask = 0xf << shift;
 		unsigned t = a & mask;
@@ -16,11 +16,11 @@ int toString16( char* out, unsigned a, int n ){ //n‚Í16i‰»‚µ‚½‚ÌÅ‘åŒ…”
 	return n;
 }
 
-//æ“ª‚Ì0‚ğ‚»‚Ì‚Ü‚Ü‚É‚µ‚Ä•Ô‚·B
-//‰½ŒÌƒ}ƒCƒiƒX”»’è‚ğ’†‚Å‚â‚ç‚È‚¢‚©‚ÆŒ¾‚¦‚ÎAunsigned‚Åó‚¯æ‚ê‚Î
-//ƒ}ƒCƒiƒX‚Ìint‚ª“ü‚ç‚È‚¢‚µAint‚Åó‚¯æ‚ê‚Îunsigned‚ª“ü‚ç‚È‚¢‚©‚ç‚Å‚ ‚é
-void toString10Core( char* out,  unsigned a, int n ){ //n‚Í10i‰»‚µ‚½‚ÌÅ‘åŒ…”BÅ‘å10
-	//10i’è”
+//å…ˆé ­ã®0ã‚’ãã®ã¾ã¾ã«ã—ã¦è¿”ã™ã€‚
+//ä½•æ•…ãƒã‚¤ãƒŠã‚¹åˆ¤å®šã‚’ä¸­ã§ã‚„ã‚‰ãªã„ã‹ã¨è¨€ãˆã°ã€unsignedã§å—ã‘å–ã‚Œã°
+//ãƒã‚¤ãƒŠã‚¹ã®intãŒå…¥ã‚‰ãªã„ã—ã€intã§å—ã‘å–ã‚Œã°unsignedãŒå…¥ã‚‰ãªã„ã‹ã‚‰ã§ã‚ã‚‹
+void toString10Core( char* out,  unsigned a, int n ){ //nã¯10é€²åŒ–ã—ãŸæ™‚ã®æœ€å¤§æ¡æ•°ã€‚æœ€å¤§10
+	//10é€²å®šæ•°
 	static const int d[ 9 ] = { 
 		10,
 		100,
@@ -32,7 +32,7 @@ void toString10Core( char* out,  unsigned a, int n ){ //n‚Í10i‰»‚µ‚½‚ÌÅ‘åŒ…
 		100000000,
 		1000000000,
 	};
-	//10‚ÅŠ„‚Á‚½‚ ‚Ü‚è‚ğŠi”[‚µ‚ÄA10‚ÅŠ„‚éB
+	//10ã§å‰²ã£ãŸã‚ã¾ã‚Šã‚’æ ¼ç´ã—ã¦ã€10ã§å‰²ã‚‹ã€‚
 	for ( int i = 0; i < n - 1; ++i ){
 		int q = a / d[ n - 2 - i ];
 		out[ i ] = static_cast< char >( q );
@@ -41,17 +41,17 @@ void toString10Core( char* out,  unsigned a, int n ){ //n‚Í10i‰»‚µ‚½‚ÌÅ‘åŒ…
 	out[ n - 1 ] = static_cast< char >( a );
 }
 
-//‰½ŒÌƒ}ƒCƒiƒX”»’è‚ğ’†‚Å‚â‚ç‚È‚¢‚©‚ÆŒ¾‚¦‚ÎAunsigned‚Åó‚¯æ‚ê‚Î
-//ƒ}ƒCƒiƒX‚Ìint‚ª“ü‚ç‚È‚¢‚µAint‚Åó‚¯æ‚ê‚Îunsigned‚ª“ü‚ç‚È‚¢‚©‚ç‚Å‚ ‚é
-int toString10( char* out,  unsigned a, int n, bool minus ){ //n‚Í10i‰»‚µ‚½‚ÌÅ‘åŒ…”BÅ‘å10
+//ä½•æ•…ãƒã‚¤ãƒŠã‚¹åˆ¤å®šã‚’ä¸­ã§ã‚„ã‚‰ãªã„ã‹ã¨è¨€ãˆã°ã€unsignedã§å—ã‘å–ã‚Œã°
+//ãƒã‚¤ãƒŠã‚¹ã®intãŒå…¥ã‚‰ãªã„ã—ã€intã§å—ã‘å–ã‚Œã°unsignedãŒå…¥ã‚‰ãªã„ã‹ã‚‰ã§ã‚ã‚‹
+int toString10( char* out,  unsigned a, int n, bool minus ){ //nã¯10é€²åŒ–ã—ãŸæ™‚ã®æœ€å¤§æ¡æ•°ã€‚æœ€å¤§10
 	char* p = out;
-	//ƒ}ƒCƒiƒX‚È‚çƒ}ƒCƒiƒX‚ğ“f‚«o‚·
+	//ãƒã‚¤ãƒŠã‚¹ãªã‚‰ãƒã‚¤ãƒŠã‚¹ã‚’åãå‡ºã™
 	if ( minus ){
 		*p++ = '-';
 	}
-	char s[ 10 ]; //’†ŠÔƒoƒbƒtƒ@
+	char s[ 10 ]; //ä¸­é–“ãƒãƒƒãƒ•ã‚¡
 	toString10Core( s, a, n );
-	//0‚ğƒXƒLƒbƒv
+	//0ã‚’ã‚¹ã‚­ãƒƒãƒ—
 	int begin = n;
 	for ( int i = 0; i < n; ++i ){
 		if ( s[ i ] != 0 ){
@@ -59,7 +59,7 @@ int toString10( char* out,  unsigned a, int n, bool minus ){ //n‚Í10i‰»‚µ‚½‚Ì
 			break;
 		}
 	}
-	if ( begin == n ){ //ˆêŒ…‚à‚È‚¢B‚Â‚Ü‚è0
+	if ( begin == n ){ //ä¸€æ¡ã‚‚ãªã„ã€‚ã¤ã¾ã‚Š0
 		*p++ = '0';
 	}else{
 		for ( int i = begin; i < n; ++i ){
@@ -135,15 +135,15 @@ int toString16( char* out, unsigned a ){
 }
 
 int toString( char* out, float a, int precision ){
-	char* p = out; //‘‚«‚İƒ|ƒCƒ“ƒ^
-	if ( a < 0.f ){ //•„†ˆ—
+	char* p = out; //æ›¸ãè¾¼ã¿ãƒã‚¤ãƒ³ã‚¿
+	if ( a < 0.f ){ //ç¬¦å·å‡¦ç†
 		*p++ = '-';
 		a = -a;
 	}
 	unsigned o = *reinterpret_cast< unsigned* >( &a );
 	int e = ( o & 0x7f800000 ) >> 23;
-	unsigned m = o & 0x007fffff; //‰B‚êƒrƒbƒg‚Ì1‚ğ‘«‚·
-	//“Áê”‚ğˆ—
+	unsigned m = o & 0x007fffff; //éš ã‚Œãƒ“ãƒƒãƒˆã®1ã‚’è¶³ã™
+	//ç‰¹æ®Šæ•°ã‚’å‡¦ç†
 	if ( e == 0 ){
 		*p++ = '0';
 		return static_cast< int >( p - out );
@@ -159,19 +159,19 @@ int toString( char* out, float a, int precision ){
 		}
 		return static_cast< int >( p - out );
 	}
-	e -= 127; //w”ƒoƒCƒAƒX
-	e -= 23; //‰¼”•”‚Ì2^23ƒPƒ^•ª‚ğw”‚©‚çˆø‚­
-	m += 0x00800000; //‰B‚êƒrƒbƒg‚Ì1‚ğ‘«‚·
-	m <<= 8; //8ƒrƒbƒgƒVƒtƒg
-	e -= 8; //‚»‚Ì•ªŒ…ƒ_ƒEƒ“
+	e -= 127; //æŒ‡æ•°ãƒã‚¤ã‚¢ã‚¹
+	e -= 23; //ä»®æ•°éƒ¨ã®2^23ã‚±ã‚¿åˆ†ã‚’æŒ‡æ•°ã‹ã‚‰å¼•ã
+	m += 0x00800000; //éš ã‚Œãƒ“ãƒƒãƒˆã®1ã‚’è¶³ã™
+	m <<= 8; //8ãƒ“ãƒƒãƒˆã‚·ãƒ•ãƒˆ
+	e -= 8; //ãã®åˆ†æ¡ãƒ€ã‚¦ãƒ³
 
 	int e10 = 0;
-	if ( e > 0 ){ //2™p‚ğæZ‚µ‚Â‚Â10‚Åœ‚·‚éB
+	if ( e > 0 ){ //2å†ªã‚’ä¹—ç®—ã—ã¤ã¤10ã§é™¤ã™ã‚‹ã€‚
 		for ( int i = 0; i < e; ++i ){
-			if ( m > 0x80000000 ){ //‚ ‚Ó‚ê‚éI
+			if ( m > 0x80000000 ){ //ã‚ãµã‚Œã‚‹ï¼
 				m /= 10;
 				++e10;
-				if ( i + 2 < e ){ //‚Ü‚¾2‰ñˆÈãæ‚¸‚é‚È‚ç‚±‚±‚Å‚â‚Á‚Ä‚µ‚Ü‚¤B
+				if ( i + 2 < e ){ //ã¾ã 2å›ä»¥ä¸Šä¹—ãšã‚‹ãªã‚‰ã“ã“ã§ã‚„ã£ã¦ã—ã¾ã†ã€‚
 					m <<= 2;
 					i += 2;
 				}
@@ -181,10 +181,10 @@ int toString( char* out, float a, int precision ){
 	}else{
 		e = -e;
 		for ( int i = 0; i < e; ++i ){
-			if ( m < 0x19000000 ){ //ƒPƒ^‚ğã‚°‚Ü‚·
+			if ( m < 0x19000000 ){ //ã‚±ã‚¿ã‚’ä¸Šã’ã¾ã™
 				m *= 10;
 				--e10;
-				if ( i + 2 < e ){ //‚Ü‚¾2‰ñˆÈãœ‚·‚é‚È‚ç‚±‚±‚Å‚â‚Á‚Ä‚µ‚Ü‚¤B
+				if ( i + 2 < e ){ //ã¾ã 2å›ä»¥ä¸Šé™¤ã™ã‚‹ãªã‚‰ã“ã“ã§ã‚„ã£ã¦ã—ã¾ã†ã€‚
 					m >>= 2;
 					i += 2;
 				}
@@ -192,11 +192,11 @@ int toString( char* out, float a, int precision ){
 			m >>= 1;
 		}
 	}
-	char s[ 10 ]; //’†ŠÔ“f‚«o‚µƒoƒbƒtƒ@
+	char s[ 10 ]; //ä¸­é–“åãå‡ºã—ãƒãƒƒãƒ•ã‚¡
 	toString10Core( s, m, 10 );
-	//ˆÈ‰ºƒtƒH[ƒ}ƒbƒeƒBƒ“ƒO
+	//ä»¥ä¸‹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒ†ã‚£ãƒ³ã‚°
 
-	//æ“ª‚ª0‚Å‚È‚¢‚æ‚¤‚É‚¸‚ç‚·BŒã‚ÌH’ö‚ª’Pƒ‰»‚·‚é
+	//å…ˆé ­ãŒ0ã§ãªã„ã‚ˆã†ã«ãšã‚‰ã™ã€‚å¾Œã®å·¥ç¨‹ãŒå˜ç´”åŒ–ã™ã‚‹
 	int zeroEnd = 0;
 	for ( int i = 0; i < 10; ++i ){
 		if ( s[ i ] != 0 ){
@@ -205,23 +205,23 @@ int toString( char* out, float a, int precision ){
 			++zeroEnd;
 		}
 	}
-	if ( zeroEnd == 10 ){ //‘S•”0“Áê‚Èê‡‚È‚Ì‚Å”²‚¯‚é
+	if ( zeroEnd == 10 ){ //å…¨éƒ¨0ç‰¹æ®Šãªå ´åˆãªã®ã§æŠœã‘ã‚‹
 		*p++ = '0';
 		return static_cast< int >( p - out );
 	}
-	//ˆÚ‚·
+	//ç§»ã™
 	for ( int i = 0; i < 10 - zeroEnd; ++i ){
 		s[ i ] = s[ i + zeroEnd ];
 	}
 	for ( int i = 10 - zeroEnd; i < 10; ++i ){
 		s[ i ] = 0;
 	}
-	e10 -= zeroEnd; //ã‚É‚¸‚ç‚µ‚½•ªŒ…Œ¸­
-	e10 += 9; //10‰­‚ÌˆÊ‚ğ1‚É‚·‚é‚Ì‚Å9ƒPƒ^e‚Éƒvƒ‰ƒX
+	e10 -= zeroEnd; //ä¸Šã«ãšã‚‰ã—ãŸåˆ†æ¡æ¸›å°‘
+	e10 += 9; //10å„„ã®ä½ã‚’1ã«ã™ã‚‹ã®ã§9ã‚±ã‚¿eã«ãƒ—ãƒ©ã‚¹
 
-	//o—ÍŒ…”
+	//å‡ºåŠ›æ¡æ•°
 	int n = ( precision < 9 ) ? precision : 9;
-	//lÌŒÜ“ü
+	//å››æ¨äº”å…¥
 	bool carry = ( s[ n ] >= 5 );
 	s[ n ] = 0;
 	if ( carry ){
@@ -234,7 +234,7 @@ int toString( char* out, float a, int precision ){
 				break;
 			}
 		}
-		if ( carry ){ //Å‘åŒ…‚Ü‚ÅŒJ‚èã‚ª‚Á‚Ä‚¢‚éB‹É‚ß‚Ä‹H
+		if ( carry ){ //æœ€å¤§æ¡ã¾ã§ç¹°ã‚Šä¸ŠãŒã£ã¦ã„ã‚‹ã€‚æ¥µã‚ã¦ç¨€
 			s[ 0 ] = 1;
 			for ( int i = 1; i < 10; ++i ){
 				s[ i ] = 0;
@@ -242,7 +242,7 @@ int toString( char* out, float a, int precision ){
 			++e10;
 		}
 	}
-	//Ÿ‚ÉAŒã‚ë‚©‚ç0‚ğ”‚¦‚Ä‚»‚Ì”‚¾‚¯n‚ğŒ¸‚ç‚·
+	//æ¬¡ã«ã€å¾Œã‚ã‹ã‚‰0ã‚’æ•°ãˆã¦ãã®æ•°ã ã‘nã‚’æ¸›ã‚‰ã™
 	for ( int i = n - 1; i > 0; --i ){
 		if ( s[ i ] == 0 ){
 			--n;
@@ -250,20 +250,20 @@ int toString( char* out, float a, int precision ){
 			break;
 		}
 	}
-	//e10‚ª[-2,precision)‚É‚ ‚ê‚Îe‹L–@‚Íg‚í‚È‚¢B‚»‚Ì•û‚ª’Z‚­‚È‚é‚©‚ç‚¾B
+	//e10ãŒ[-2,precision)ã«ã‚ã‚Œã°eè¨˜æ³•ã¯ä½¿ã‚ãªã„ã€‚ãã®æ–¹ãŒçŸ­ããªã‚‹ã‹ã‚‰ã ã€‚
 	if ( ( e10 >= -2 ) && ( e10 < precision ) ){ 
-		if ( e10 >= 0 ){ //‘æˆêˆÊ‚ª®”‚Ìê‡
+		if ( e10 >= 0 ){ //ç¬¬ä¸€ä½ãŒæ•´æ•°ã®å ´åˆ
 			for ( int i = 0; i < n; ++i ){
 				*p++ = '0' + s[ i ];
-				if ( ( i == e10 ) && ( i != n - 1 ) ){ //ÅŒã‚Ì”‚È‚ç¬”“_–³—p
-					*p++ = '.'; //¬”“_o—Í
+				if ( ( i == e10 ) && ( i != n - 1 ) ){ //æœ€å¾Œã®æ•°ãªã‚‰å°æ•°ç‚¹ç„¡ç”¨
+					*p++ = '.'; //å°æ•°ç‚¹å‡ºåŠ›
 				}
 			}
-			//e‚ª‚Å‚©‚¢ê‡‚Í—]•ª‚Ì0‚ª•K—v
+			//eãŒã§ã‹ã„å ´åˆã¯ä½™åˆ†ã®0ãŒå¿…è¦
 			for ( int i = n; i <= e10; ++i ){
 				*p++ = '0';
 			}
-		}else{ //‘æˆêˆÊ‚ª¬”‚Ìê‡
+		}else{ //ç¬¬ä¸€ä½ãŒå°æ•°ã®å ´åˆ
 			*p++ = '0';
 			*p++ = '.';
 			if ( e10 == -2 ){
@@ -273,10 +273,10 @@ int toString( char* out, float a, int precision ){
 				*p++ = '0' + s[ i ];
 			}
 		}
-	}else{ //e‹L–@
-		//ˆêŒ…o—Í
+	}else{ //eè¨˜æ³•
+		//ä¸€æ¡å‡ºåŠ›
 		*p++ = '0' + s[ 0 ];
-		//¬”“_o—Í
+		//å°æ•°ç‚¹å‡ºåŠ›
 		*p++ = '.';
 		for ( int i = 1; i < n; ++i ){
 			*p++ = '0' + s[ i ];

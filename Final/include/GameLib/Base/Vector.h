@@ -3,43 +3,43 @@
 
 namespace GameLib{
 
-///��@�\��std::vector
+///低機能版std::vector
 /*!
-std::vector���g�킸��������g�����_�͂Ȃɂ��H
-���͂��܂�Ȃ��B�p�x�̒Ⴂ�֐���A�댯�Ȋ֐��������Ă���̂�
-�g���₷���A�w�K�ɂ͓K���Ă��邾�낤�B
-���Ƃ�STL��size_t���Ԃ��Ă��邱�Ƃɕ����Ă���l�ɂ͂����߂ł���Bint�ł��������I
+std::vectorを使わずこちらを使う利点はなにか？
+実はあまりない。頻度の低い関数や、危険な関数を除いてあるので
+使いやすく、学習には適しているだろう。
+あとはSTLでsize_tが返ってくることに閉口している人にはお勧めである。intでいいじゃん！
 
-��{�I�ɂ��̃N���X�͊y�ɏ������߂ɂ���A�T�C�Y�ύX�n�̊֐���
-�ĂׂΓ��R�x���BArray�ƈ���ăR�s�[���ł��邪�A���v���ȃR�s�[�͔j�œI�Ȑ��\�̗򉻂�
-�������낤�B
+基本的にこのクラスは楽に書くためにあり、サイズ変更系の関数を
+呼べば当然遅い。Arrayと違ってコピーもできるが、無思慮なコピーは破滅的な性能の劣化を
+招くだろう。
 */
 template< class T > class Vector{
 public:
-	///capacity���w�肷��ƁA���̐��܂ł͑����Ă������z���Ȃ��B
+	///capacityを指定すると、その数までは増えても引っ越さない。
 	explicit Vector( int size = 0, int capacity = 0 );
-	///�ۂ��ƃR�s�[����B�x�����Ƃ͊o�傹��
-	Vector( const Vector& ); //�R�s�[�R���X�g���N�^���֎~���Ȃ�
+	///丸ごとコピーする。遅いことは覚悟せよ
+	Vector( const Vector& ); //コピーコンストラクタを禁止しない
 	~Vector();
-	//����B�ۂ��ƃR�s�[����B�x�����Ƃ͊o�傹��
-	void operator=( const Vector& ); //������֎~���Ȃ�
-	///�ǉ�
+	//代入。丸ごとコピーする。遅いことは覚悟せよ
+	void operator=( const Vector& ); //代入も禁止しない
+	///追加
 	void push( const T& );
-	///�ꏊ�������ǉ��B�|�C���^��Ԃ��̂ł����ɓ���邱�ƁB
+	///場所だけ作る追加。ポインタを返すのでここに入れること。
 	T* push();
-	///�ŏI�v�f���폜
+	///最終要素を削除
 	void pop();
-	///�S�폜
+	///全削除
 	void clear();
-	///�T�C�Y�擾
+	///サイズ取得
 	int size() const;
-	///�T�C�Y�ύX�B���������Ă����z�����N����Ȃ��B
+	///サイズ変更。小さくしても引越しが起こらない。
 	void setSize( int );
-	///�Y����(��const)
+	///添え字(非const)
 	T& operator[]( int );
-	///�Y����(const)
+	///添え字(const)
 	const T& operator[]( int ) const;
-	///���g��ʂ̃x�N�^�Ɉڂ��B�����͋�ɂȂ�B����ɓ����Ă������̂͏�����B
+	///中身を別のベクタに移す。自分は空になる。相手に入っていたものは消える。
 	void moveTo( Vector* );
 private:
 	T* mElements;
@@ -48,7 +48,7 @@ private:
 };
 
 } //namespace GameLib
-#include "GameLib/Base/Impl/VectorImpl.h" //���g�͂��̒�
+#include "GameLib/Base/Impl/VectorImpl.h" //中身はこの中
 
 #endif
 

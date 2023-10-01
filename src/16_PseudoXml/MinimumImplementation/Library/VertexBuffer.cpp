@@ -9,14 +9,14 @@ using namespace PseudoXml;
 VertexBuffer::VertexBuffer( const Element* e ) : 
 mPositions( 0 ),
 mUVs( 0 ){
-	//ƒGƒ‰[ƒ`ƒFƒbƒN‘S‘R‚µ‚Ä‚Ü‚¹‚ñ
+	//ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯å…¨ç„¶ã—ã¦ã¾ã›ã‚“
 	mSize = e->childNumber();
 	if ( mSize > 0 ){
 		mPositions = new Vector3[ mSize ];
 		mUVs = new Vector2[ mSize ];
 		for ( int i = 0; i < mSize; ++i ){
 			const Element* vertex = e->child( i );
-			//ƒAƒgƒŠƒrƒ…[ƒg‚©‚ç”²‚«o‚·
+			//ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆã‹ã‚‰æŠœãå‡ºã™
 			int an = vertex->attributeNumber();
 			for ( int j = 0; j < an; ++j ){
 				const Attribute* a = vertex->attribute( j );
@@ -29,7 +29,7 @@ mUVs( 0 ){
 			}
 		}
 	}
-	//–¼‘O‚ð”²‚­
+	//åå‰ã‚’æŠœã
 	int an = e->attributeNumber();
 	for ( int i = 0; i < an; ++i ){
 		const Attribute* a = e->attribute( i );

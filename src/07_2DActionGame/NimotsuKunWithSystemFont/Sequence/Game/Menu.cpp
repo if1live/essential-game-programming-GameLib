@@ -20,51 +20,51 @@ Menu::~Menu(){
 
 void Menu::update( Parent* parent ){
 	Framework f = Framework::instance();
-	//0:‚â‚è‚È‚¨‚µ
-	//1:–ÊƒZƒŒ‚Ö
-	//2:ƒ^ƒCƒgƒ‹‰æ–Ê‚Ö
-	//3:–ß‚é
+	//0:ã‚„ã‚ŠãªãŠã—
+	//1:é¢ã‚»ãƒ¬ã¸
+	//2:ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ã¸
+	//3:æˆ»ã‚‹
 	if ( f.isKeyTriggered( 'w' ) ){
 		--mMenuCursor;
-		if ( mMenuCursor < 0 ){ //ƒ}ƒCƒiƒX‚ÍÅ‘å’l‚Éƒ‹[ƒv
+		if ( mMenuCursor < 0 ){ //ãƒã‚¤ãƒŠã‚¹ã¯æœ€å¤§å€¤ã«ãƒ«ãƒ¼ãƒ—
  			mMenuCursor = 3;
 		}
 	}else if ( f.isKeyTriggered( 'z' ) ){
 		++mMenuCursor;
-		if ( mMenuCursor > 3 ){ //3‚ğ‰z‚¦‚½‚ç0‚Éƒ‹[ƒv
+		if ( mMenuCursor > 3 ){ //3ã‚’è¶ŠãˆãŸã‚‰0ã«ãƒ«ãƒ¼ãƒ—
 			mMenuCursor = 0;
 		}
 	}else if ( f.isKeyTriggered( ' ' ) ){
 		switch ( mMenuCursor ){
-			case 0: //‚â‚è‚È‚¨‚µ
+			case 0: //ã‚„ã‚ŠãªãŠã—
 				parent->state()->reset();
 				parent->moveTo( Parent::SEQ_PLAY );
 				break;
-			case 1: //–ÊƒZƒŒ‚Ö
+			case 1: //é¢ã‚»ãƒ¬ã¸
 				parent->moveTo( Parent::SEQ_STAGE_SELECT );
 				break;
-			case 2: //ƒ^ƒCƒgƒ‹‚Ö
+			case 2: //ã‚¿ã‚¤ãƒˆãƒ«ã¸
 				parent->moveTo( Parent::SEQ_TITLE );
 				break;
-			case 3: //‚»‚Ì‚Ü‚Ü–ß‚é
+			case 3: //ãã®ã¾ã¾æˆ»ã‚‹
 				parent->moveTo( Parent::SEQ_PLAY );
 				break;
-			default: //‚»‚Ì‘¼‚Í–³‹
+			default: //ãã®ä»–ã¯ç„¡è¦–
 				break;
 		}
 	}
-	//•`‰æ
-	//‚Ü‚¸ƒQ[ƒ€‰æ–Ê
+	//æç”»
+	//ã¾ãšã‚²ãƒ¼ãƒ ç”»é¢
 	parent->state()->draw();
-	//ã‚Éd‚Ë‚é
+	//ä¸Šã«é‡ã­ã‚‹
 	mImage->draw();
-	//š‚ğ•`‚­
-	f.drawDebugString( 0, 0, "[ÒÆ­°]" );
-	f.drawDebugString( 1, 1, "Ó³²ÁÄŞ" );
-	f.drawDebugString( 1, 2, "½Ã°¼Ş¾Ú¸ÄÍ" );
-	f.drawDebugString( 1, 3, "À²ÄÙ¶ŞÒİÍ" );
-	f.drawDebugString( 1, 4, "¹Ş°ÑÆÓÄŞÙ" );
-	//ƒJ[ƒ\ƒ‹‚ğ‘‚­
+	//å­—ã‚’æã
+	f.drawDebugString( 0, 0, "[ï¾’ï¾†ï½­ï½°]" );
+	f.drawDebugString( 1, 1, "ï¾“ï½³ï½²ï¾ï¾„ï¾" );
+	f.drawDebugString( 1, 2, "ï½½ï¾ƒï½°ï½¼ï¾ï½¾ï¾šï½¸ï¾„ï¾" );
+	f.drawDebugString( 1, 3, "ï¾€ï½²ï¾„ï¾™ï½¶ï¾ï¾’ï¾ï¾" );
+	f.drawDebugString( 1, 4, "ï½¹ï¾ï½°ï¾‘ï¾†ï¾“ï¾„ï¾ï¾™" );
+	//ã‚«ãƒ¼ã‚½ãƒ«ã‚’æ›¸ã
 	f.drawDebugString( 0, mMenuCursor + 1, ">" );
 }
 

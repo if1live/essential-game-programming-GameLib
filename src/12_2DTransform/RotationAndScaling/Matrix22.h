@@ -5,9 +5,9 @@ class Vector2;
 
 class Matrix22{
 public:
-	//4—v‘f—^‚¦‚ÄƒRƒ“ƒXƒgƒ‰ƒNƒg
+	//4è¦ç´ ä¸ãˆã¦ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 	Matrix22( double e00, double e01, double e10, double e11 );
-	//ƒxƒNƒ^‚ÆŠ|‚¯Z
+	//ãƒ™ã‚¯ã‚¿ã¨æ›ã‘ç®—
 	void multiply( Vector2* out, const Vector2& in ) const;
 private:
 	double m00, m01, m10, m11;

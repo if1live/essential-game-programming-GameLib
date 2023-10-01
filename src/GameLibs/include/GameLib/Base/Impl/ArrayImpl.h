@@ -38,15 +38,15 @@ template< class T > inline Array< T >::~Array(){
 }
 
 template< class T > inline void Array< T >::setSize( int size ){
-	//‹ó‚©Ak¬•ûŒü‚È‚çó‚¯•t‚¯‚é
-	if ( !mElements ){ //‹ó
+	//ç©ºã‹ã€ç¸®å°æ–¹å‘ãªã‚‰å—ã‘ä»˜ã‘ã‚‹
+	if ( !mElements ){ //ç©º
 		mElements = static_cast< T* >( OPERATOR_NEW( sizeof( T ) * size ) );
 		for ( int i = 0; i < size; ++i ){
 			new ( &mElements[ i ] ) T;
 		}
 	}else{
 		STRONG_ASSERT( ( size <= mSize ) && "Array::setSize() : extension is not supperted." );
-		//k¬•ªƒfƒXƒgƒ‰ƒNƒg
+		//ç¸®å°åˆ†ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 		for ( int i = size; i < mSize; ++i ){
 			mElements[ i ].~T();
 		}

@@ -9,7 +9,7 @@
 namespace GameLib{
 using namespace std;
 
-//•W€”Å
+//æ¨™æº–ç‰ˆ
 template< class T > inline unsigned Hash< T >::value( const T& v, unsigned m ) const {
 	const unsigned char* p = reinterpret_cast< const unsigned char* >( &v );
 	unsigned h = 0;
@@ -25,13 +25,13 @@ template< class T > inline bool Hash< T >::isEqual( const T& a, const T& b ) con
 	return ( a == b );
 }
 
-//ƒ|ƒCƒ“ƒ^—p“Á•Ê”Å
+//ãƒã‚¤ãƒ³ã‚¿ç”¨ç‰¹åˆ¥ç‰ˆ
 template<> inline bool Hash< const char* >::isEqual( const char* const& a, const char* const& b ) const {
 	const char* pa = a;
 	const char* pb = b;
 
-	while ( *pa == *pb ){ //•Ğ•û‚ªæ‚ÉI‚í‚Á‚Ä‚µ‚Ü‚¤‚àŒŸo‚Å‚«‚é
-		if ( *pa == '\0' ){ //‚±‚±‚Ü‚Å“™‚µ‚­‚Ä“¯‚É0‚É‚È‚Á‚½‚Á‚Ä‚±‚Æ‚Í“™‚µ‚¢‚Á‚Ä‚±‚Æ‚¾B
+	while ( *pa == *pb ){ //ç‰‡æ–¹ãŒå…ˆã«çµ‚ã‚ã£ã¦ã—ã¾ã†æ™‚ã‚‚æ¤œå‡ºã§ãã‚‹
+		if ( *pa == '\0' ){ //ã“ã“ã¾ã§ç­‰ã—ãã¦åŒæ™‚ã«0ã«ãªã£ãŸã£ã¦ã“ã¨ã¯ç­‰ã—ã„ã£ã¦ã“ã¨ã ã€‚
 			return true;
 		}
 		++pa;
@@ -41,15 +41,15 @@ template<> inline bool Hash< const char* >::isEqual( const char* const& a, const
 }
 
 template<> inline bool Hash< const string* >::isEqual( const string* const& a, const string* const& b ) const {
-	if ( a->size() != b->size() ){ //‚È‚­‚Ä‚à‚¢‚¢‚ªA‚±‚ê‚Å‘‚­I‚í‚ê‚é‰Â”\«‚Í‚‚¢
+	if ( a->size() != b->size() ){ //ãªãã¦ã‚‚ã„ã„ãŒã€ã“ã‚Œã§æ—©ãçµ‚ã‚ã‚Œã‚‹å¯èƒ½æ€§ã¯é«˜ã„
 		return false;
 	}
-	//ƒTƒCƒY‚ÍˆêB
+	//ã‚µã‚¤ã‚ºã¯ä¸€ç·’ã€‚
 	const char* pa = a->c_str();
 	const char* pb = b->c_str();
 
-	while ( *pa == *pb ){ //•Ğ•û‚ªæ‚ÉI‚í‚Á‚Ä‚µ‚Ü‚¤‚àŒŸo‚Å‚«‚é
-		if ( *pa == '\0' ){ //‚±‚±‚Ü‚Å“™‚µ‚­‚Ä“¯‚É0‚É‚È‚Á‚½‚Á‚Ä‚±‚Æ‚Í“™‚µ‚¢‚Á‚Ä‚±‚Æ‚¾B
+	while ( *pa == *pb ){ //ç‰‡æ–¹ãŒå…ˆã«çµ‚ã‚ã£ã¦ã—ã¾ã†æ™‚ã‚‚æ¤œå‡ºã§ãã‚‹
+		if ( *pa == '\0' ){ //ã“ã“ã¾ã§ç­‰ã—ãã¦åŒæ™‚ã«0ã«ãªã£ãŸã£ã¦ã“ã¨ã¯ç­‰ã—ã„ã£ã¦ã“ã¨ã ã€‚
 			return true;
 		}
 		++pa;
@@ -59,15 +59,15 @@ template<> inline bool Hash< const string* >::isEqual( const string* const& a, c
 }
 
 template<> inline bool Hash< const RefString* >::isEqual( const RefString* const& a, const RefString* const& b ) const {
-	if ( a->size() != b->size() ){ //‚È‚­‚Ä‚à‚¢‚¢‚ªA‚±‚ê‚Å‘‚­I‚í‚ê‚é‰Â”\«‚Í‚‚¢
+	if ( a->size() != b->size() ){ //ãªãã¦ã‚‚ã„ã„ãŒã€ã“ã‚Œã§æ—©ãçµ‚ã‚ã‚Œã‚‹å¯èƒ½æ€§ã¯é«˜ã„
 		return false;
 	}
-	//ƒTƒCƒY‚ÍˆêB
+	//ã‚µã‚¤ã‚ºã¯ä¸€ç·’ã€‚
 	const char* pa = a->get();
 	const char* pb = b->get();
 
-	while ( *pa == *pb ){ //•Ğ•û‚ªæ‚ÉI‚í‚Á‚Ä‚µ‚Ü‚¤‚àŒŸo‚Å‚«‚é
-		if ( *pa == '\0' ){ //‚±‚±‚Ü‚Å“™‚µ‚­‚Ä“¯‚É0‚É‚È‚Á‚½‚Á‚Ä‚±‚Æ‚Í“™‚µ‚¢‚Á‚Ä‚±‚Æ‚¾B
+	while ( *pa == *pb ){ //ç‰‡æ–¹ãŒå…ˆã«çµ‚ã‚ã£ã¦ã—ã¾ã†æ™‚ã‚‚æ¤œå‡ºã§ãã‚‹
+		if ( *pa == '\0' ){ //ã“ã“ã¾ã§ç­‰ã—ãã¦åŒæ™‚ã«0ã«ãªã£ãŸã£ã¦ã“ã¨ã¯ç­‰ã—ã„ã£ã¦ã“ã¨ã ã€‚
 			return true;
 		}
 		++pa;
@@ -76,7 +76,7 @@ template<> inline bool Hash< const RefString* >::isEqual( const RefString* const
 	return false;
 }
 
-//“Á•Êƒo[ƒWƒ‡ƒ“‚ğˆê’Ê‚è—pˆÓ
+//ç‰¹åˆ¥ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚’ä¸€é€šã‚Šç”¨æ„
 template<> inline unsigned Hash< int >::value( const int& v, unsigned m ) const {
 	return static_cast< unsigned >( v ) % m;
 }

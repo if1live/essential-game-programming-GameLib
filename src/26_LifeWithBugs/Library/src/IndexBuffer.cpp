@@ -7,25 +7,25 @@
 using namespace GameLib::PseudoXml;
 
 IndexBuffer::IndexBuffer( Element& e ){
-	//ƒGƒ‰[ƒ`ƒFƒbƒN‘S‘R‚µ‚Ä‚Ü‚¹‚ñ
+	//ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯å…¨ç„¶ã—ã¦ã¾ã›ã‚“
 	int n = e.childNumber();
-	mSize = n * 3; //OŠpŒ`”~3
+	mSize = n * 3; //ä¸‰è§’å½¢æ•°Ã—3
 	if ( mSize > 0 ){
 		mIndexBuffer = GameLib::Graphics::IndexBuffer::create( mSize );
 		unsigned short* indices = mIndexBuffer.lock();
 		for ( int i = 0; i < n; ++i ){
 			Element triangle = e.child( i );
-			Attribute a = triangle.attribute( 0 ); //indicesˆêŒÂ‚µ‚©‚È‚¢‚Ì‚ÅŒˆ‚ß‚¤‚¿
-			//unsigned short‚ğæ‚éŠÖ”‚ª‚È‚¢‚Ì‚Åint‚É“ü‚ê‚Ä‚©‚çƒRƒs[
+			Attribute a = triangle.attribute( 0 ); //indicesä¸€å€‹ã—ã‹ãªã„ã®ã§æ±ºã‚ã†ã¡
+			//unsigned shortã‚’å–ã‚‹é–¢æ•°ãŒãªã„ã®ã§intã«å…¥ã‚Œã¦ã‹ã‚‰ã‚³ãƒ”ãƒ¼
 			int tmp[ 3 ];
-			a.getIntValues( tmp, 3 ); //ƒGƒ‰[ƒ`ƒFƒbƒN‚µ‚È‚¢‚Æ‚¢‚¯‚È‚¢‚ñ‚Å‚·‚æH–{“–‚ÍB
+			a.getIntValues( tmp, 3 ); //ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯ã—ãªã„ã¨ã„ã‘ãªã„ã‚“ã§ã™ã‚ˆï¼Ÿæœ¬å½“ã¯ã€‚
 			indices[ i * 3 + 0 ] = static_cast< unsigned short >( tmp[ 0 ] );
 			indices[ i * 3 + 1 ] = static_cast< unsigned short >( tmp[ 1 ] );
 			indices[ i * 3 + 2 ] = static_cast< unsigned short >( tmp[ 2 ] );
 		}
 		mIndexBuffer.unlock( &indices );
 	}
-	//–¼‘O‚ğ”²‚­
+	//åå‰ã‚’æŠœã
 	int an = e.attributeNumber();
 	for ( int i = 0; i < an; ++i ){
 		Attribute a = e.attribute( i );
@@ -37,7 +37,7 @@ IndexBuffer::IndexBuffer( Element& e ){
 }
 
 IndexBuffer::~IndexBuffer(){
-	//e‚ªÁ‚¦‚é‚ÆƒCƒ“ƒfƒNƒXƒoƒbƒtƒ@‚àŸè‚ÉÁ‚¦‚éB
+	//è¦ªãŒæ¶ˆãˆã‚‹ã¨ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚‚å‹æ‰‹ã«æ¶ˆãˆã‚‹ã€‚
 }
 
 int IndexBuffer::size() const {

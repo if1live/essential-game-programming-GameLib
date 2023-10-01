@@ -1,12 +1,12 @@
-#include <algorithm> //random_shuffle()‚Ì‚½‚ß‚É
+#include <algorithm> //random_shuffle()ã®ãŸã‚ã«
 #include <iostream>
-#include <ctime> //clock()‚Ì‚½‚ß‚É
+#include <ctime> //clock()ã®ãŸã‚ã«
 using namespace std;
 
 int main( int argc, char** ){
 	cout << "PREPARING... " << endl;
 
-	const int N = 1000 * 1000 * 20; //10MB•ª
+	const int N = 1000 * 1000 * 20; //10MBåˆ†
 	int* a = new int[ N ]; 
 	int** p0 = new int*[ N ];
 	int** p1 = new int*[ N ];
@@ -15,24 +15,24 @@ int main( int argc, char** ){
 		p0[ i ] = &a[ i ];
 		p1[ i ] = &a[ i ];
 	}
-	//p1‚ğƒoƒ‰ƒoƒ‰‚É
+	//p1ã‚’ãƒãƒ©ãƒãƒ©ã«
 	random_shuffle( p1, p1 + N );
-	//argc‚ğŒ©‚Ä‚Ç‚Á‚¿‚Ìƒ|ƒCƒ“ƒ^”z—ñ‚ğg‚¤‚©‘I‘ğ
+	//argcã‚’è¦‹ã¦ã©ã£ã¡ã®ãƒã‚¤ãƒ³ã‚¿é…åˆ—ã‚’ä½¿ã†ã‹é¸æŠ
 	int** p = ( argc == 1 ) ? p0 : p1;
 
-	double t0 = clock();	//ŠÔn“_
-	//100‰ñƒAƒNƒZƒX
+	double t0 = clock();	//æ™‚é–“å§‹ç‚¹
+	//100å›ã‚¢ã‚¯ã‚»ã‚¹
 	for ( int j = 0; j < 100; ++j ){
 		for ( int i = 0; i < N; ++i ){
 			++( *p[ i ] );
 		}
 		cout << j << endl;
 	}
-	double t1 = clock(); //ŠÔI“_
+	double t1 = clock(); //æ™‚é–“çµ‚ç‚¹
 
-	cout << "TIME: " << ( t1 - t0 ) / CLOCKS_PER_SEC << endl; //‚±‚ê‚Å•b‚É‚È‚é
+	cout << "TIME: " << ( t1 - t0 ) / CLOCKS_PER_SEC << endl; //ã“ã‚Œã§ç§’ã«ãªã‚‹
 
-	while( true ); //–³ŒÀƒ‹[ƒv
+	while( true ); //ç„¡é™ãƒ«ãƒ¼ãƒ—
 
 	return 0;
 }

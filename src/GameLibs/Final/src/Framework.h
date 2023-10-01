@@ -25,74 +25,74 @@ public:
 	};
 	class Configuration{
 	public:
-		///•Ý’è
+		///å¹…è¨­å®š
 		void setWidth( int );
-		///‚‚³Ý’è
+		///é«˜ã•è¨­å®š
 		void setHeight( int );
-		///ƒEƒBƒ“ƒhƒEƒ^ƒCƒgƒ‹Ý’è
+		///ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¿ã‚¤ãƒˆãƒ«è¨­å®š
 		void setTitle( const char* title );
-		///‚’¼“¯Šú—LŒø‰»Ý’è
+		///åž‚ç›´åŒæœŸæœ‰åŠ¹åŒ–è¨­å®š
 		void enableVSync( bool = true );
-		///ƒtƒ‹ƒXƒNƒŠ[ƒ“ƒAƒ“ƒ`ƒGƒCƒŠƒAƒXÝ’è
+		///ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ãƒ³ãƒã‚¨ã‚¤ãƒªã‚¢ã‚¹è¨­å®š
 		void enableAntiAlias( bool = true );
-		///‹N“®Žž‚Ìƒtƒ‹ƒXƒNƒŠ[ƒ“ƒtƒ‰ƒOÝ’è
+		///èµ·å‹•æ™‚ã®ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ãƒ•ãƒ©ã‚°è¨­å®š
 		void enableFullScreen( bool = true );
-		///ƒtƒ‹ƒXƒNƒŠ[ƒ“‰»‚ð‹ÖŽ~‚·‚é
+		///ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åŒ–ã‚’ç¦æ­¢ã™ã‚‹
 		void forbidFullScreen( bool = true );
-		///ƒhƒ‰ƒbƒOƒAƒ“ƒhƒhƒƒbƒv—LŒø‰»
+		///ãƒ‰ãƒ©ãƒƒã‚°ã‚¢ãƒ³ãƒ‰ãƒ‰ãƒ­ãƒƒãƒ—æœ‰åŠ¹åŒ–
 		void enableDragAndDrop( bool = true );
-		///ƒA[ƒJƒCƒu”Œˆ’è
+		///ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–æ•°æ±ºå®š
 		void setArchiveNumber( int );
-		///ƒA[ƒJƒCƒu–¼Ý’è
+		///ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–åè¨­å®š
 		void setArchiveName( int index, const char* );
-		///ƒ[ƒhƒ‚[ƒhÝ’è
+		///ãƒ­ãƒ¼ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 		void setLoadMode( LoadMode );
-		///‰½‚©ƒtƒ@ƒCƒ‹‚ðƒ[ƒh
+		///ä½•ã‹ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ­ãƒ¼ãƒ‰
 		void loadFile( string* out, const char* filename ) const;
-		///ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“ƒIƒvƒVƒ‡ƒ“‚ðŽæ“¾
+		///ã‚³ãƒžãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’å–å¾—
 		const char* commandLineString() const;
-		///HALT,ASSERT‚Å‘¦Ž€‚¹‚¸‚É—áŠO‚ð“Š‚°‚é‹@”\‚Ì—LŒø‰»B”„‚è•¨‚É‘¦Ž€ƒR[ƒh‚Í“ü‚ê‚ç‚ê‚È‚¢A‚Æ‚¢‚¤l‚Ì‚½‚ß‚Ì‚à‚ÌB
+		///HALT,ASSERTã§å³æ­»ã›ãšã«ä¾‹å¤–ã‚’æŠ•ã’ã‚‹æ©Ÿèƒ½ã®æœ‰åŠ¹åŒ–ã€‚å£²ã‚Šç‰©ã«å³æ­»ã‚³ãƒ¼ãƒ‰ã¯å…¥ã‚Œã‚‰ã‚Œãªã„ã€ã¨ã„ã†äººã®ãŸã‚ã®ã‚‚ã®ã€‚
 		void enableThrowWhenHalt( bool = true );
-		///’Ç‰ÁƒXƒŒƒbƒh”Ý’è
+		///è¿½åŠ ã‚¹ãƒ¬ãƒƒãƒ‰æ•°è¨­å®š
 		void setExtraThreadNumber( int );
 	};
 	Framework();
-	///ƒCƒ“ƒXƒ^ƒ“ƒXŽæ“¾
+	///ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 	static Framework instance();
 
-	///ƒ†[ƒU’è‹`ŠÖ”Bì‚ç‚È‚¢‚ÆƒŠƒ“ƒNƒGƒ‰[
+	///ãƒ¦ãƒ¼ã‚¶å®šç¾©é–¢æ•°ã€‚ä½œã‚‰ãªã„ã¨ãƒªãƒ³ã‚¯ã‚¨ãƒ©ãƒ¼
 	void configure( Configuration* );
-	///ƒ†[ƒU’è‹`ŠÖ”B‚±‚Ì’†‚Å‚È‚É‚à‚©‚à‚â‚é
+	///ãƒ¦ãƒ¼ã‚¶å®šç¾©é–¢æ•°ã€‚ã“ã®ä¸­ã§ãªã«ã‚‚ã‹ã‚‚ã‚„ã‚‹
 	void update(); 
 
-	///ƒtƒ‹ƒXƒNƒŠ[ƒ“ƒtƒ‰ƒOÝ’èB
+	///ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ãƒ•ãƒ©ã‚°è¨­å®šã€‚
 	void enableFullScreen( bool );
-	///‰æ–Ê•Žæ“¾
+	///ç”»é¢å¹…å–å¾—
 	int width() const;
-	///‰æ–Ê‚‚³Žæ“¾
+	///ç”»é¢é«˜ã•å–å¾—
 	int height() const;
-	///ƒAƒvƒŠ–¼Žæ“¾
+	///ã‚¢ãƒ—ãƒªåå–å¾—
 	const char* title() const;
-	///ƒtƒ‹ƒXƒNƒŠ[ƒ“‚Å‚·‚©H
+	///ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã§ã™ã‹ï¼Ÿ
 	bool isFullScreen() const;
-	///ƒtƒ‹ƒXƒNƒŠ[ƒ“‰»‚Í‹ÖŽ~‚³‚ê‚Ä‚Ü‚·‚©H
+	///ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åŒ–ã¯ç¦æ­¢ã•ã‚Œã¦ã¾ã™ã‹ï¼Ÿ
 	bool isFullScreenForbidden() const;
-	///ƒhƒ‰ƒbƒOƒAƒ“ƒhƒhƒƒbƒv‚Í—LŒø‚Å‚·‚©H
+	///ãƒ‰ãƒ©ãƒƒã‚°ã‚¢ãƒ³ãƒ‰ãƒ‰ãƒ­ãƒƒãƒ—ã¯æœ‰åŠ¹ã§ã™ã‹ï¼Ÿ
 	bool isDragAndDropEnabled() const;
-	///Framework‚ÉI—¹–½—ß‚ðo‚·
+	///Frameworkã«çµ‚äº†å‘½ä»¤ã‚’å‡ºã™
 	void requestEnd();
-	///Framework‚ÉI—¹–½—ß‚ªo‚Ä‚¢‚é‚©’²‚×‚é
+	///Frameworkã«çµ‚äº†å‘½ä»¤ãŒå‡ºã¦ã„ã‚‹ã‹èª¿ã¹ã‚‹
 	bool isEndRequested() const;
-	///Žž‚ðŽæ“¾‚·‚é(ƒ~ƒŠ•b’PˆÊ)
+	///æ™‚åˆ»ã‚’å–å¾—ã™ã‚‹(ãƒŸãƒªç§’å˜ä½)
 	unsigned time() const;
-	///ƒtƒŒ[ƒ€ƒŒ[ƒgŽæ“¾
+	///ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆå–å¾—
 	int frameRate() const;
-	///ƒtƒŒ[ƒ€ƒŒ[ƒgÝ’è(“à•”‚Å‘Ò‚¿ƒ‹[ƒv‚ð‰ñ‚µ‚Ä‚­‚ê‚é)
+	///ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆè¨­å®š(å†…éƒ¨ã§å¾…ã¡ãƒ«ãƒ¼ãƒ—ã‚’å›žã—ã¦ãã‚Œã‚‹)
 	void setFrameRate( int );
-	///’¼‘OƒtƒŒ[ƒ€ŽžŠÔŽæ“¾(ƒ~ƒŠ•b’PˆÊ)
+	///ç›´å‰ãƒ•ãƒ¬ãƒ¼ãƒ æ™‚é–“å–å¾—(ãƒŸãƒªç§’å˜ä½)
 	int previousFrameInterval() const;
 
-	//ˆÈ‰ºƒ‰ƒCƒuƒ‰ƒŠŽg—pŽÒ‚Í’m‚ç‚È‚­‚Ä‚¢‚¢
+	//ä»¥ä¸‹ãƒ©ã‚¤ãƒ–ãƒ©ãƒªä½¿ç”¨è€…ã¯çŸ¥ã‚‰ãªãã¦ã„ã„
 	void start( void* windowHandle );
 	void preUpdate();
 	void postUpdate();
@@ -102,7 +102,7 @@ public:
 
 } //namespace GameLib
 
-//ƒx[ƒXƒT[ƒrƒX—LŒø‰»
+//ãƒ™ãƒ¼ã‚¹ã‚µãƒ¼ãƒ“ã‚¹æœ‰åŠ¹åŒ–
 #include "GameLib/GameLib.h"
 
 #endif

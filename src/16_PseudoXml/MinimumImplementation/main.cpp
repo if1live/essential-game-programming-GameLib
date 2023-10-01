@@ -24,14 +24,14 @@ namespace GameLib{
 		sleep( 16 );
 		if ( gFirstFrame ){
 			gFirstFrame = false;
-			//ƒf[ƒ^ƒx[ƒX“Ç‚Ýž‚Ý
+			//ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹èª­ã¿è¾¼ã¿
 			gGraphicsDatabase = new GraphicsDatabase( "data.txt" );
-			//ƒ‚ƒfƒ‹‚ðì‚é
+			//ãƒ¢ãƒ‡ãƒ«ã‚’ä½œã‚‹
 			gModel = gGraphicsDatabase->createModel( "batch" );
-			//ƒJƒƒ‰¶¬
+			//ã‚«ãƒ¡ãƒ©ç”Ÿæˆ
 			gCamera = new Camera();
 		}
-		//ƒJƒƒ‰XV
+		//ã‚«ãƒ¡ãƒ©æ›´æ–°
 		gCamera->setPosition( Vector3(
 			sin( gCount ) * 20.0,
 			10.0,
@@ -39,43 +39,43 @@ namespace GameLib{
 
 		Matrix44 pvm;
 		gCamera->createPerspectiveViewMatrix( &pvm );
-		//ƒ‚ƒfƒ‹‚Ì‰ñ“]XV
+		//ãƒ¢ãƒ‡ãƒ«ã®å›žè»¢æ›´æ–°
 		gModel->setAngle( Vector3( gCount, gCount * 2, gCount * 3 ) );
-		//•`‰æ
+		//æç”»
 		gModel->draw( pvm );
 
-		//‹Uxml‘‚«o‚µƒeƒXƒg
+		//å½xmlæ›¸ãå‡ºã—ãƒ†ã‚¹ãƒˆ
 		if ( GameLib::Input::Manager::instance().keyboard().isTriggered( ' ' ) ){
 			using namespace PseudoXml;
 			Document document;
 			Element* root = document.root();
-			//ª‚Á‚±‚ÉˆêŒÂ‰Á‚¦‚é
+			//æ ¹ã£ã“ã«ä¸€å€‹åŠ ãˆã‚‹
 			root->setChildNumber( 1 );
 			Element* cameraData = root->child( 0 );
 			cameraData->setName( "CameraData" );
-			//ƒf[ƒ^‚ð“ñ‚Â“ü‚ê‚é
+			//ãƒ‡ãƒ¼ã‚¿ã‚’äºŒã¤å…¥ã‚Œã‚‹
 			cameraData->setChildNumber( 2 );
 			Element* e = cameraData->child( 0 );
 			e->setName( "Position" );
-			//ˆÊ’uƒf[ƒ^
+			//ä½ç½®ãƒ‡ãƒ¼ã‚¿
 			e->setAttributeNumber( 3 );
 			e->attribute( 0 )->set( "x", gCamera->position()->x );
 			e->attribute( 1 )->set( "y", gCamera->position()->y );
 			e->attribute( 2 )->set( "z", gCamera->position()->z );
-			//’Ž‹“_ƒf[ƒ^
+			//æ³¨è¦–ç‚¹ãƒ‡ãƒ¼ã‚¿
 			e = cameraData->child( 1 );
 			e->setName( "Target" );
 			e->setAttributeNumber( 3 );
 			e->attribute( 0 )->set( "x", gCamera->target()->x );
 			e->attribute( 1 )->set( "y", gCamera->target()->y );
 			e->attribute( 2 )->set( "z", gCamera->target()->z );
-			//‘‚«ž‚ß
+			//æ›¸ãè¾¼ã‚
 			document.write( "camera.txt" );
 		}
 		++gCount;
 
-		//ŒãŽn––Bì‚Á‚½‡”Ô‚Æ‹t‚ÉÁ‚·‚Ì‚ª’Ê‚Ì‹Z‚¾B
-		//Žg‚Á‚Ä‚¢‚é•û‚ðæ‚ÉÁ‚µ‚ÄAŽg‚í‚ê‚Ä‚¢‚é‚à‚Ì‚ÍŒã‚ÉÁ‚·‚×‚«‚Å‚ ‚éB
+		//å¾Œå§‹æœ«ã€‚ä½œã£ãŸé †ç•ªã¨é€†ã«æ¶ˆã™ã®ãŒé€šã®æŠ€ã ã€‚
+		//ä½¿ã£ã¦ã„ã‚‹æ–¹ã‚’å…ˆã«æ¶ˆã—ã¦ã€ä½¿ã‚ã‚Œã¦ã„ã‚‹ã‚‚ã®ã¯å¾Œã«æ¶ˆã™ã¹ãã§ã‚ã‚‹ã€‚
 		if ( isEndRequested() ){
 			SAFE_DELETE( gCamera );
 			SAFE_DELETE( gModel );

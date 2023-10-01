@@ -28,14 +28,14 @@ bool multiplyWToZByHand ){
 	m22 = a;
 	m23 = b;
 	m32 = -1.0;
-	//c‚è‘S•”0
+	//æ®‹ã‚Šå…¨éƒ¨0
 	m01 = m02 = m03 = 0.0;
 	m10 = m12 = m13 = 0.0;
 	m20 = m21 = 0.0;
 	m30 = m31 = m33 = 0.0;
 }
 
-//â‘Îin!=out‚È‚Ì‚ÅƒoƒbƒNƒAƒbƒv‚Í•s—v
+//çµ¶å¯¾in!=outãªã®ã§ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ã¯ä¸è¦
 void Matrix44::multiply( double* out, const Vector3& in ) const {
 	out[ 0 ] = m00 * in.x + m01 * in.y + m02 * in.z + m03;
 	out[ 1 ] = m10 * in.x + m11 * in.y + m12 * in.z + m13;
@@ -44,11 +44,11 @@ void Matrix44::multiply( double* out, const Vector3& in ) const {
 }
 
 void Matrix44::operator*=( const Matrix34& m ){
-	setMul( *this, m ); //setMul‚ğ—¬—p‚µ‚æ‚¤Bˆ—‚Í“¯‚¶‚¾B
+	setMul( *this, m ); //setMulã‚’æµç”¨ã—ã‚ˆã†ã€‚å‡¦ç†ã¯åŒã˜ã ã€‚
 }
 
 void Matrix44::setMul( const Matrix44& a, const Matrix34& b ){
-	//a == this‚Ì‰Â”\«‚ª‚ ‚é‚Ì‚ÅƒoƒbƒNƒAƒbƒv‚Í•K—v
+	//a == thisã®å¯èƒ½æ€§ãŒã‚ã‚‹ã®ã§ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ã¯å¿…è¦
 	double tx, ty, tz;
 	tx = a.m00; ty = a.m01; tz = a.m02;
 	m00 = tx * b.m00 + ty * b.m10 + tz * b.m20;

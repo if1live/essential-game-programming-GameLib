@@ -7,27 +7,27 @@
 #include <cassert>
 using namespace std;
 /*
-‚±‚ÌƒTƒ“ƒvƒ‹‚Å‚Íwindows‚ÌŠÖ”‚ÌASCII”Å(•’Ê‚Ìchar*‚ğæ‚éƒo[ƒWƒ‡ƒ“)
-‚ğ’¼ÚŒÄ‚Ño‚µ‚Äg‚¤B–{—ˆ‚ÍTCHAR‚È‚Ç‚Ìƒ}ƒNƒ‚ğ‘½—p‚µ‚ÄUnicode‚ÆASCII‚ğ
-ˆÓ¯‚¹‚¸‚Ég‚¤‚Ì‚ªì–@‚È‚Ì‚¾‚ªAŒ©Šµ‚ê‚È‚¢ƒR[ƒh‚Í“Ç‚İ‚É‚­‚¢‚µA
-•Ê‚ÉwindowsƒvƒƒOƒ‰ƒ~ƒ“ƒO‚ğŠw‚Ô‚±‚Æ‚Í–Ú“I‚Å‚Í‚È‚¢B
-ÀÛperl‚âbashAC#‚È‚Ç‚ğŠo‚¦‚ê‚Î‚±‚Ìè‚Ìƒc[ƒ‹‚ğC++‚Å‘‚­‚±‚Æ‚à‚È‚­‚È‚é‚¾‚ë‚¤B
-‚±‚±‚Å‚Íwindowsì–@‚ğ–³‹‚µ‚ÄASCII”Å‚ğ’¼ÚŒÄ‚Ô
+ã“ã®ã‚µãƒ³ãƒ—ãƒ«ã§ã¯windowsã®é–¢æ•°ã®ASCIIç‰ˆ(æ™®é€šã®char*ã‚’å–ã‚‹ãƒãƒ¼ã‚¸ãƒ§ãƒ³)
+ã‚’ç›´æ¥å‘¼ã³å‡ºã—ã¦ä½¿ã†ã€‚æœ¬æ¥ã¯TCHARãªã©ã®ãƒã‚¯ãƒ­ã‚’å¤šç”¨ã—ã¦Unicodeã¨ASCIIã‚’
+æ„è­˜ã›ãšã«ä½¿ã†ã®ãŒä½œæ³•ãªã®ã ãŒã€è¦‹æ…£ã‚Œãªã„ã‚³ãƒ¼ãƒ‰ã¯èª­ã¿ã«ãã„ã—ã€
+åˆ¥ã«windowsãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°ã‚’å­¦ã¶ã“ã¨ã¯ç›®çš„ã§ã¯ãªã„ã€‚
+å®Ÿéš›perlã‚„bashã€C#ãªã©ã‚’è¦šãˆã‚Œã°ã“ã®æ‰‹ã®ãƒ„ãƒ¼ãƒ«ã‚’C++ã§æ›¸ãã“ã¨ã‚‚ãªããªã‚‹ã ã‚ã†ã€‚
+ã“ã“ã§ã¯windowsä½œæ³•ã‚’ç„¡è¦–ã—ã¦ASCIIç‰ˆã‚’ç›´æ¥å‘¼ã¶
 
-<g‚¤ŠÖ”>
+<ä½¿ã†é–¢æ•°>
 GetFirstFileA
 GetNextFileA
-<g‚¤\‘¢‘Ì>
+<ä½¿ã†æ§‹é€ ä½“>
 WIN32_FIND_DATAA
 */
 
-//ƒtƒ@ƒCƒ‹ˆê——‚ğæ“¾
+//ãƒ•ã‚¡ã‚¤ãƒ«ä¸€è¦§ã‚’å–å¾—
 void enumerateFiles( 
 	list< string >& fileNameListOut, 
 	const string& directoryName,
 	bool verbose );
 
-//ƒA[ƒJƒCƒu‚ğì‚é
+//ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–ã‚’ä½œã‚‹
 bool createArchive( 
 	const string* fileNames, 
 	int fileNumber, 
@@ -36,7 +36,7 @@ bool createArchive(
 	bool verbose,
 	double compressionThreshold );
 
-//ˆ³k–{‘Ì
+//åœ§ç¸®æœ¬ä½“
 bool compress( 
 	int* outSize, 
 	int* inPlaceDecompressionBufferSize,
@@ -45,7 +45,7 @@ bool compress(
 	ifstream* iStream,
 	double threshold );
 
-//int‘‚«‚İ‚Ì•Ö—˜ŠÖ”
+//intæ›¸ãè¾¼ã¿ã®ä¾¿åˆ©é–¢æ•°
 void write( ofstream* o, unsigned a ){
    char str[ 4 ];
    str[ 0 ] = static_cast< char >( ( a & 0x000000ff ) >>  0 );
@@ -57,7 +57,7 @@ void write( ofstream* o, unsigned a ){
 
 #include "GameLib/GameLib.h"
 
-//‘æˆêˆø”‚ªo—Íƒtƒ@ƒCƒ‹–¼
+//ç¬¬ä¸€å¼•æ•°ãŒå‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«å
 int main( int argc, char** argv ){
 	int blockSize = 4;
 	string archiveDir;
@@ -65,44 +65,44 @@ int main( int argc, char** argv ){
 	bool verbose = false;
 	bool help = false;
 	double threshold = 100.0;
-	//ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‰ğß
+	//ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³è§£é‡ˆ
 	for ( int i = 1; i < argc; ++i ){
-		if ( argv[ i ][ 0 ] == '-' ){ //-‚©‚ç‚Í‚¶‚Ü‚ê‚Î‚È‚É‚©‚ÌƒIƒvƒVƒ‡ƒ“
+		if ( argv[ i ][ 0 ] == '-' ){ //-ã‹ã‚‰ã¯ã˜ã¾ã‚Œã°ãªã«ã‹ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³
 			char c = argv[ i ][ 1 ];
-			if ( c == 'b' ){ //ƒTƒCƒYw’è
+			if ( c == 'b' ){ //ã‚µã‚¤ã‚ºæŒ‡å®š
 				if ( ( i + 1 ) < argc ){
 					istringstream iss( argv[ i + 1 ] );
 					iss >> blockSize;
 				}
 				++i;
-			}else if ( c == 'o' ){ //o—Íƒtƒ@ƒCƒ‹–¼w’è
+			}else if ( c == 'o' ){ //å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«åæŒ‡å®š
 				if ( ( i + 1 ) < argc ){
 					archiveName = argv[ i + 1 ];
 				}
 				++i;
-			}else if ( c == 'r' ){ //è‡’l
+			}else if ( c == 'r' ){ //é–¾å€¤
 				if ( ( i + 1 ) < argc ){
 					istringstream iss( argv[ i + 1 ] );
 					iss >> threshold;
 					if ( threshold > 100.0 ){
-						threshold = 100.0; //100ˆÈã‚Í‹–‚³‚È‚¢
+						threshold = 100.0; //100ä»¥ä¸Šã¯è¨±ã•ãªã„
 					}
 				}
 				++i;
-			}else if ( c == 'v' ){ //é`ãƒ‚[ƒh
+			}else if ( c == 'v' ){ //é¥’èˆŒãƒ¢ãƒ¼ãƒ‰
 				verbose = true;
-			}else if ( c == 'h' ){ //ƒwƒ‹ƒv
+			}else if ( c == 'h' ){ //ãƒ˜ãƒ«ãƒ—
 				help = true;
 			}
 		}else{
 			archiveDir = argv[ i ];
 		}
 	}
-	//ƒA[ƒJƒCƒuƒfƒBƒŒƒNƒgƒŠw’è‚ª‚È‚¢‚Æ‘Ê–ÚB
+	//ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªæŒ‡å®šãŒãªã„ã¨é§„ç›®ã€‚
 	if ( archiveDir.size() == 0 ){
 		help = true;
 	}
-	//ƒwƒ‹ƒv•\¦‚µ‚ÄI‚í‚è
+	//ãƒ˜ãƒ«ãƒ—è¡¨ç¤ºã—ã¦çµ‚ã‚ã‚Š
 	if ( help ){
 		cout << "Usage: Archiver.exe rootDir [ -o outfilename ][ -s blockSize ][ -r thresholdRatio ][ -v ][ -h ]" << endl;
 		cout << "<Options>" << endl;
@@ -111,24 +111,24 @@ int main( int argc, char** argv ){
 		cout << "\t-r percent     : specify threshold. if compressed size is less than this, non-compressed data is written." << endl;
 		cout << "\t-v             : verbose mode." << endl;
 		cout << "\t-h             : display this help." << endl;
-#ifndef NDEBUG //‚±‚¤‚µ‚Ä‚¨‚­‚ÆƒfƒoƒO‚Ì‚µ‚©—ˆ‚È‚¢
-	while( true ){;} //visual studio‚©‚çÀs‚·‚é‚ÉƒRƒ“ƒ\[ƒ‹‚ğ—Ç‚­‚İ‚½‚¢‚Ì‚ÅB
+#ifndef NDEBUG //ã“ã†ã—ã¦ãŠãã¨ãƒ‡ãƒã‚°ã®æ™‚ã—ã‹æ¥ãªã„
+	while( true ){;} //visual studioã‹ã‚‰å®Ÿè¡Œã™ã‚‹æ™‚ã«ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã‚’è‰¯ãã¿ãŸã„ã®ã§ã€‚
 #endif
 		return 1;
 	}
-	//ƒA[ƒJƒCƒu–¼‚ª‚È‚¯‚ê‚ÎƒA[ƒJƒCƒuƒfƒBƒŒƒNƒgƒŠ–¼‚©‚ç‚Â‚¯‚Ä‚â‚é
+	//ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–åãŒãªã‘ã‚Œã°ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåã‹ã‚‰ã¤ã‘ã¦ã‚„ã‚‹
 	if ( archiveName.size() == 0 ){
 		archiveName = archiveDir;
 		archiveName += ".bin";
 	}
 
-	//‚æ‚­g‚¤‚à‚Ì‚É•Ê–¼‚ğ
+	//ã‚ˆãä½¿ã†ã‚‚ã®ã«åˆ¥åã‚’
 	typedef list< string > List;
 	typedef List::iterator It;
 	List fileNameList;
-	//ƒtƒ@ƒCƒ‹ƒŠƒXƒg‚ğì‚é
+	//ãƒ•ã‚¡ã‚¤ãƒ«ãƒªã‚¹ãƒˆã‚’ä½œã‚‹
 	enumerateFiles( fileNameList, archiveDir.c_str(), verbose );
-	//g‚¢‚É‚­‚¢‚Ì‚Å”z—ñ‚É•ÏŠ·
+	//ä½¿ã„ã«ãã„ã®ã§é…åˆ—ã«å¤‰æ›
 	int fileNumber = static_cast< int >( fileNameList.size() );
 	string* fileNames = new string[ fileNumber ];
 	int j = 0;
@@ -137,7 +137,7 @@ int main( int argc, char** argv ){
 		++j;
 	}
 
-	//ƒA[ƒJƒCƒu¶¬
+	//ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–ç”Ÿæˆ
 	bool succeeded = createArchive( 
 		fileNames, 
 		fileNumber, 
@@ -145,75 +145,75 @@ int main( int argc, char** argv ){
 		blockSize, 
 		verbose, 
 		threshold );
-	if ( !succeeded ){ //¸”sÁ‚µ‚½‚è‚Í‚µ‚È‚¢B‚µ‚½•û‚ª‚¢‚¢‚ñ‚¾‚ë‚¤‚ªB
+	if ( !succeeded ){ //å¤±æ•—æ™‚æ¶ˆã—ãŸã‚Šã¯ã—ãªã„ã€‚ã—ãŸæ–¹ãŒã„ã„ã‚“ã ã‚ã†ãŒã€‚
 		cerr << "creating failed. delete output file manually." << endl;
-#ifndef NDEBUG //‚±‚¤‚µ‚Ä‚¨‚­‚ÆƒfƒoƒO‚Ì‚µ‚©—ˆ‚È‚¢
-	while( true ){;} //visual studio‚©‚çÀs‚·‚é‚ÉƒRƒ“ƒ\[ƒ‹‚ğ—Ç‚­‚İ‚½‚¢‚Ì‚ÅB
+#ifndef NDEBUG //ã“ã†ã—ã¦ãŠãã¨ãƒ‡ãƒã‚°ã®æ™‚ã—ã‹æ¥ãªã„
+	while( true ){;} //visual studioã‹ã‚‰å®Ÿè¡Œã™ã‚‹æ™‚ã«ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã‚’è‰¯ãã¿ãŸã„ã®ã§ã€‚
 #endif
 		return 1;
 	}
 
-#ifndef NDEBUG //‚±‚¤‚µ‚Ä‚¨‚­‚ÆƒfƒoƒO‚Ì‚µ‚©—ˆ‚È‚¢
-	while( true ){;} //visual studio‚©‚çÀs‚·‚é‚ÉƒRƒ“ƒ\[ƒ‹‚ğ—Ç‚­‚İ‚½‚¢‚Ì‚ÅB
+#ifndef NDEBUG //ã“ã†ã—ã¦ãŠãã¨ãƒ‡ãƒã‚°ã®æ™‚ã—ã‹æ¥ãªã„
+	while( true ){;} //visual studioã‹ã‚‰å®Ÿè¡Œã™ã‚‹æ™‚ã«ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã‚’è‰¯ãã¿ãŸã„ã®ã§ã€‚
 #endif
 	return 0;
 }
 
-//------------------------ŠÖ”----------------------------
+//------------------------é–¢æ•°----------------------------
 
 void enumerateFiles( 
 list< string >& fileNameList, 
 const string& directoryName,
 bool verbose ){
-	HANDLE iterator; //ƒCƒeƒŒ[ƒ^‚İ‚½‚¢‚È‚à‚Ì‚È‚Ì‚Åiterator‚Æ–¼‚ğ•t‚¯‚Ä‚İ‚éB
-	WIN32_FIND_DATAA fileData; //‚±‚±‚Éƒtƒ@ƒCƒ‹–¼‚ª“ü‚ê‚ç‚ê‚éB
-	//Å‰‚Ìƒtƒ@ƒCƒ‹æ“¾
+	HANDLE iterator; //ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã¿ãŸã„ãªã‚‚ã®ãªã®ã§iteratorã¨åã‚’ä»˜ã‘ã¦ã¿ã‚‹ã€‚
+	WIN32_FIND_DATAA fileData; //ã“ã“ã«ãƒ•ã‚¡ã‚¤ãƒ«åãŒå…¥ã‚Œã‚‰ã‚Œã‚‹ã€‚
+	//æœ€åˆã®ãƒ•ã‚¡ã‚¤ãƒ«å–å¾—
 	string searchPath = directoryName;
-	searchPath += "\\*.*"; //\‚Í“Áê‚È•¶š‚È‚Ì‚Å“ñŒÂd‚Ë‚éB‚»‚¤‚·‚é‚Æ‚¿‚å‚¤‚ÇˆêŒÂ“ü‚éB
+	searchPath += "\\*.*"; //\ã¯ç‰¹æ®Šãªæ–‡å­—ãªã®ã§äºŒå€‹é‡ã­ã‚‹ã€‚ãã†ã™ã‚‹ã¨ã¡ã‚‡ã†ã©ä¸€å€‹å…¥ã‚‹ã€‚
 
-	//ƒtƒ@ƒCƒ‹‚¾‚¯
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã ã‘
 	iterator = FindFirstFileA( searchPath.c_str(), &fileData );
 	if ( iterator == INVALID_HANDLE_VALUE ){
-		//‰½‚©¸”s‚µ‚½B
+		//ä½•ã‹å¤±æ•—ã—ãŸã€‚
 		return;
 	}
-	while ( true ){ //‚Æ‚è‚ ‚¦‚¸ğŒ‚È‚µBƒ‹[ƒv‚ÌŒã‚ë‚Å”²‚¯‚é
+	while ( true ){ //ã¨ã‚Šã‚ãˆãšæ¡ä»¶ãªã—ã€‚ãƒ«ãƒ¼ãƒ—ã®å¾Œã‚ã§æŠœã‘ã‚‹
 		if ( !( fileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ) ){
-			//ƒtƒ@ƒCƒ‹–¼‚É‚ÍƒfƒBƒŒƒNƒgƒŠ–¼‚İ‚É‚µ‚Ä‚â‚é•K—v‚ª‚ ‚é
+			//ãƒ•ã‚¡ã‚¤ãƒ«åã«ã¯ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåè¾¼ã¿ã«ã—ã¦ã‚„ã‚‹å¿…è¦ãŒã‚ã‚‹
 			string filename = directoryName;
 			filename += '\\';
 			filename += fileData.cFileName; 
 			if ( verbose ){
-				cout << "\tFile : " << filename << endl; //•\¦‚µ‚Ä‚â‚ë‚¤BƒfƒoƒO‚É‚à‚È‚é‚µB
+				cout << "\tFile : " << filename << endl; //è¡¨ç¤ºã—ã¦ã‚„ã‚ã†ã€‚ãƒ‡ãƒã‚°ã«ã‚‚ãªã‚‹ã—ã€‚
 			}
-			fileNameList.push_back( filename ); //ƒŠƒXƒg‚É’Ç‰Á
+			fileNameList.push_back( filename ); //ãƒªã‚¹ãƒˆã«è¿½åŠ 
 		}
-		if ( !FindNextFileA( iterator, &fileData ) ){ //Ÿ‚ÖBŸ‚ª‚È‚¯‚ê‚Î”²‚¯‚éBiterator‚ª•ÏX‚³‚ê‚»‚¤‚É‚È‚¢‚ªAHANDLEŒ^‚Íƒ|ƒCƒ“ƒ^‚È‚Ì‚ÅA‚±‚ê‚Å‘åä•vB
+		if ( !FindNextFileA( iterator, &fileData ) ){ //æ¬¡ã¸ã€‚æ¬¡ãŒãªã‘ã‚Œã°æŠœã‘ã‚‹ã€‚iteratorãŒå¤‰æ›´ã•ã‚Œãã†ã«ãªã„ãŒã€HANDLEå‹ã¯ãƒã‚¤ãƒ³ã‚¿ãªã®ã§ã€ã“ã‚Œã§å¤§ä¸ˆå¤«ã€‚
 			break;
 		}
 	}
-	//ƒfƒBƒŒƒNƒgƒŠ‚¾‚¯
+	//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã ã‘
 	iterator = FindFirstFileA( searchPath.c_str(), &fileData );
 	if ( iterator == INVALID_HANDLE_VALUE ){
-		//‰½‚©¸”s‚µ‚½B
+		//ä½•ã‹å¤±æ•—ã—ãŸã€‚
 		return;
 	}
-	while ( true ){ //‚Æ‚è‚ ‚¦‚¸ğŒ‚È‚µBƒ‹[ƒv‚ÌŒã‚ë‚Å”²‚¯‚é
+	while ( true ){ //ã¨ã‚Šã‚ãˆãšæ¡ä»¶ãªã—ã€‚ãƒ«ãƒ¼ãƒ—ã®å¾Œã‚ã§æŠœã‘ã‚‹
 		string name = fileData.cFileName;
-		//¢‚Á‚½‚±‚Æ‚É.‚Æ‚©..‚Æ‚©‚à•Ô‚·‚Ì‚ÅA‚±‚¢‚Â‚ç‚ÍœŠOB‚Å‚È‚¢‚Æ–³ŒÀƒ‹[ƒv‚µ‚Ä‚µ‚Ü‚¤B
+		//å›°ã£ãŸã“ã¨ã«.ã¨ã‹..ã¨ã‹ã‚‚è¿”ã™ã®ã§ã€ã“ã„ã¤ã‚‰ã¯é™¤å¤–ã€‚ã§ãªã„ã¨ç„¡é™ãƒ«ãƒ¼ãƒ—ã—ã¦ã—ã¾ã†ã€‚
 		if ( name == "." || name == ".." ){
-			; //‰½‚à‚µ‚È‚¢
-		}else if ( fileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ){ //ƒfƒBƒŒƒNƒgƒŠ‚Å‚·B
-			//ƒfƒBƒŒƒNƒgƒŠ–¼‚ğŒp‚¬‘«‚µ‚Ä‚â‚éB
+			; //ä½•ã‚‚ã—ãªã„
+		}else if ( fileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ){ //ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã§ã™ã€‚
+			//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåã‚’ç¶™ãè¶³ã—ã¦ã‚„ã‚‹ã€‚
 			string newDirectoryName = directoryName;
 			newDirectoryName += '\\';
 			newDirectoryName += name;
 			if ( verbose ){
 				cout << "Directory : " << newDirectoryName << endl;
 			}
-			enumerateFiles( fileNameList, newDirectoryName.c_str(), verbose ); //Ä‹AŒÄ‚Ño‚µ
+			enumerateFiles( fileNameList, newDirectoryName.c_str(), verbose ); //å†å¸°å‘¼ã³å‡ºã—
 		}
-		if ( !FindNextFileA( iterator, &fileData ) ){ //Ÿ‚ÖBŸ‚ª‚È‚¯‚ê‚Î”²‚¯‚éBiterator‚ª•ÏX‚³‚ê‚»‚¤‚É‚È‚¢‚ªAHANDLEŒ^‚Íƒ|ƒCƒ“ƒ^‚È‚Ì‚ÅA‚±‚ê‚Å‘åä•vB
+		if ( !FindNextFileA( iterator, &fileData ) ){ //æ¬¡ã¸ã€‚æ¬¡ãŒãªã‘ã‚Œã°æŠœã‘ã‚‹ã€‚iteratorãŒå¤‰æ›´ã•ã‚Œãã†ã«ãªã„ãŒã€HANDLEå‹ã¯ãƒã‚¤ãƒ³ã‚¿ãªã®ã§ã€ã“ã‚Œã§å¤§ä¸ˆå¤«ã€‚
 			break;
 		}
 	}
@@ -226,20 +226,20 @@ const char* archiveName,
 int blockSize, 
 bool verbose,
 double threshold ){
-	//‘‚«‚İæ‚ğŠJ‚¯‚Ä
+	//æ›¸ãè¾¼ã¿å…ˆã‚’é–‹ã‘ã¦
 	ofstream out( archiveName, ofstream::binary );
 	if ( !out ){
 		cerr << "can't create output file." << endl;
 		return false;
 	}
-	//ƒtƒ@ƒCƒ‹ƒTƒCƒY”z—ñ‚ğŠm•Û
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºé…åˆ—ã‚’ç¢ºä¿
 	int* originalSizes = new int[ fileNumber ];
 	int* outputSizes = new int[ fileNumber ];
 	int* inPlaceDecompressionBufferSizes = new int[ fileNumber ];
 
-	//ƒŠƒXƒgfileNames‚ğŒ©‚ÄŠJ‚¯‚Ä‚Í“Ç‚İo‚µ‚ÄƒRƒs[
+	//ãƒªã‚¹ãƒˆfileNamesã‚’è¦‹ã¦é–‹ã‘ã¦ã¯èª­ã¿å‡ºã—ã¦ã‚³ãƒ”ãƒ¼
 	for ( int i = 0; i < fileNumber; ++i ){
-		setlocale( LC_ALL, "" ); //‚±‚ê‚ª‚È‚¢‚Æ“ú–{Œêƒtƒ@ƒCƒ‹–¼‚ğó‚¯•t‚¯‚È‚¢
+		setlocale( LC_ALL, "" ); //ã“ã‚ŒãŒãªã„ã¨æ—¥æœ¬èªãƒ•ã‚¡ã‚¤ãƒ«åã‚’å—ã‘ä»˜ã‘ãªã„
 		ifstream in( fileNames[ i ].c_str(), ifstream::binary );
 		if ( !in ){
 			cerr << "can't open file : " << fileNames[ i ] << endl;
@@ -254,7 +254,7 @@ double threshold ){
 			delete[] originalSizes;
 			originalSizes = 0;
 			out.close();
-			out.open( archiveName ); //ŠJ‚«‚È‚¨‚·–‚Å’†g‚ğ‹ó‚É
+			out.open( archiveName ); //é–‹ããªãŠã™äº‹ã§ä¸­èº«ã‚’ç©ºã«
 			return false;
 		}
 		in.seekg( 0, ifstream::beg );
@@ -265,7 +265,7 @@ double threshold ){
 			double ratio = ( sizeBig == 0 ) ? 100.0 : outputSizes[ i ] * 100.0 / sizeBig;
 			cout << fileNames[ i ] << " ) : " << sizeBig << " -> " << outputSizes[ i ] << " ( " << ratio << "% )" << endl;
 		}
-		//ƒuƒƒbƒNƒTƒCƒY‚ ‚Ü‚è‚Éƒ_ƒ~[‚ğ‘‚«‚İ
+		//ãƒ–ãƒ­ãƒƒã‚¯ã‚µã‚¤ã‚ºã‚ã¾ã‚Šã«ãƒ€ãƒŸãƒ¼ã‚’æ›¸ãè¾¼ã¿
 		int mod = outputSizes[ i ] % blockSize;
 		int padding = ( mod > 0 ) ? ( blockSize - mod ) : 0;
 		for ( int j = 0; j < padding; ++j ){
@@ -277,13 +277,13 @@ double threshold ){
 		cout << "FileNumber : " << fileNumber << endl;
 		cout << "BlockSize : " << blockSize << endl;
 	}
-	//ƒtƒ@ƒCƒ‹‚Ì––”ö‚ÌˆÊ’u‚ğ‹L˜^
-	streamsize dataEnd = out.tellp(); //tellg‚Íget‚ÌˆÊ’u‚ÅAtellp‚Íput‚ÌˆÊ’u‚¾
-	//‚Ü‚¸ƒtƒ@ƒCƒ‹‚Ì”‚ğ‘‚«‚ñ‚Å‚â‚ë‚¤
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã®æœ«å°¾ã®ä½ç½®ã‚’è¨˜éŒ²
+	streamsize dataEnd = out.tellp(); //tellgã¯getã®ä½ç½®ã§ã€tellpã¯putã®ä½ç½®ã 
+	//ã¾ãšãƒ•ã‚¡ã‚¤ãƒ«ã®æ•°ã‚’æ›¸ãè¾¼ã‚“ã§ã‚„ã‚ã†
 	out.write( reinterpret_cast< char* >( &fileNumber ), 4 );
-	//•\‚ğì‚é‚½‚ß‚ÉƒTƒCƒY‚ğƒIƒtƒZƒbƒg‚É’¼‚µ‚È‚ª‚çA
-	//êŠAƒTƒCƒYA–¼‘O‚Ì•¶š”A–¼‘O‚ğŠi”[‚µ‚Ä‚¢‚­B
-	unsigned pos = 0; //ƒuƒƒbƒN’PˆÊ‚ÌˆÊ’u
+	//è¡¨ã‚’ä½œã‚‹ãŸã‚ã«ã‚µã‚¤ã‚ºã‚’ã‚ªãƒ•ã‚»ãƒƒãƒˆã«ç›´ã—ãªãŒã‚‰ã€
+	//å ´æ‰€ã€ã‚µã‚¤ã‚ºã€åå‰ã®æ–‡å­—æ•°ã€åå‰ã‚’æ ¼ç´ã—ã¦ã„ãã€‚
+	unsigned pos = 0; //ãƒ–ãƒ­ãƒƒã‚¯å˜ä½ã®ä½ç½®
 	for ( int i = 0; i < fileNumber; ++i ){
 		write( &out, pos );
 		write( &out, outputSizes[ i ] );
@@ -294,17 +294,17 @@ double threshold ){
 		write( &out, nameLength );
 		out.write( name.c_str(), nameLength );
 		if ( verbose ){
-			cout << pos << '\t' << outputSizes[ i ] << '\t' << originalSizes[ i ] << '\t' << inPlaceDecompressionBufferSizes[ i ] << '\t' << nameLength << '\t' << name << endl; //ƒfƒoƒO—p‚É•\¦‚µ‚Ä‚â‚ë‚¤
+			cout << pos << '\t' << outputSizes[ i ] << '\t' << originalSizes[ i ] << '\t' << inPlaceDecompressionBufferSizes[ i ] << '\t' << nameLength << '\t' << name << endl; //ãƒ‡ãƒã‚°ç”¨ã«è¡¨ç¤ºã—ã¦ã‚„ã‚ã†
 		}
 		pos += ( outputSizes[ i ] + blockSize - 1 ) / blockSize;
 	}
-	//ÅŒã‚É‘‚«‚Ş‚Ì‚ªƒuƒƒbƒNƒTƒCƒY
+	//æœ€å¾Œã«æ›¸ãè¾¼ã‚€ã®ãŒãƒ–ãƒ­ãƒƒã‚¯ã‚µã‚¤ã‚º
 	write( &out, blockSize );
-	//•\‚ÌŠJnˆÊ’u‚ğ‘‚«‚ñ‚Å‚â‚éB
+	//è¡¨ã®é–‹å§‹ä½ç½®ã‚’æ›¸ãè¾¼ã‚“ã§ã‚„ã‚‹ã€‚
 	assert( dataEnd % blockSize == 0 );
 	unsigned dataEndInBlock = static_cast< unsigned >( dataEnd / blockSize );
 	write( &out, dataEndInBlock );
-	//Œãn––
+	//å¾Œå§‹æœ«
 	delete[] outputSizes;
 	outputSizes = 0;
 	delete[] originalSizes;

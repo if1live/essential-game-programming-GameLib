@@ -4,7 +4,7 @@ using namespace GameLib;
 #include "Pad.h"
 #include "Sequence/Parent.h"
 
-//ƒ†[ƒUŽÀ‘•ŠÖ”B’†g‚ÍSequence::Parent‚ÉŠÛ“Š‚°
+//ãƒ¦ãƒ¼ã‚¶å®Ÿè£…é–¢æ•°ã€‚ä¸­èº«ã¯Sequence::Parentã«ä¸¸æŠ•ã’
 namespace GameLib{
 	void Framework::update(){
 		if ( !Sequence::Parent::instance() ){
@@ -12,7 +12,7 @@ namespace GameLib{
 			setFrameRate( 60 );
 		}
 		Sequence::Parent::instance()->update();
-		//I—¹”»’è(q‚ª‰Ÿ‚³‚ê‚½‚©Aƒ}ƒEƒX‚Å~ƒ{ƒ^ƒ“‚ª’@‚©‚ê‚½‚©)
+		//çµ‚äº†åˆ¤å®š(qãŒæŠ¼ã•ã‚ŒãŸã‹ã€ãƒžã‚¦ã‚¹ã§Ã—ãƒœã‚¿ãƒ³ãŒå©ã‹ã‚ŒãŸã‹)
 		if ( Pad::isOn( Pad::Q ) ){
 			requestEnd();
 		}

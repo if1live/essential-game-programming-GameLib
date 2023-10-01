@@ -44,7 +44,7 @@ namespace GameLib{
 			gModel1 = gContainer1.createModel( 0 );
 		}
 
-		//ƒrƒ…[s—ñ‚ğì‚ë‚¤
+		//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã‚’ä½œã‚ã†
 		Matrix34 rm;
 		rm.setRotationY( gAngleY );
 		rm.rotateX( gAngleX );
@@ -54,7 +54,7 @@ namespace GameLib{
 		eyePosition.madd( tv, gEyeDistance );
 		Matrix34 vm;
 		vm.setViewTransform( eyePosition, gEyeTarget, Vector3( 0.f, 1.f, 0.f ) );
-		//“§‹•ÏŠ·
+		//é€è¦–å¤‰æ›
 		Matrix44 pm;
 		pm.setPerspectiveTransform( 
 			60.f, 
@@ -63,11 +63,11 @@ namespace GameLib{
 			gEyeDistance * 0.01f, gEyeDistance * 10.f );
 		pm *= vm;
 
-		//ƒJƒƒ‰“ü—Í”½‰f
-		Input::Mouse mouse; //À‚Í‚±‚ê‚Åg‚¦‚é
+		//ã‚«ãƒ¡ãƒ©å…¥åŠ›åæ˜ 
+		Input::Mouse mouse; //å®Ÿã¯ã“ã‚Œã§ä½¿ãˆã‚‹
 		float x = static_cast< float >( mouse.velocityX() );
 		float y = static_cast< float >( mouse.velocityY() );
-		if ( mouse.isOn( Input::Mouse::BUTTON_LEFT ) ){ //¶ƒ{ƒ^ƒ“‰ñ“]
+		if ( mouse.isOn( Input::Mouse::BUTTON_LEFT ) ){ //å·¦ãƒœã‚¿ãƒ³å›è»¢
 			gAngleX -= 0.1f * y;
 			if ( gAngleX > 89.f ){
 				gAngleX = 89.f;
@@ -75,7 +75,7 @@ namespace GameLib{
 				gAngleX = -89.f;
 			}
 			gAngleY -= 0.1f * x;
-		}else if ( mouse.isOn( Input::Mouse::BUTTON_RIGHT ) ){ //‰Eƒ{ƒ^ƒ“A’‹“_ˆÚ“®
+		}else if ( mouse.isOn( Input::Mouse::BUTTON_RIGHT ) ){ //å³ãƒœã‚¿ãƒ³ã€æ³¨è¦–ç‚¹ç§»å‹•
 			Vector3 xv( vm.m00, vm.m01, vm.m02 );
 			xv *= x;
 			Vector3 yv( vm.m10, vm.m11, vm.m12 );
@@ -112,7 +112,7 @@ namespace GameLib{
 		}else if ( kb.isOn( 'z' ) ){
 			gPos.z += 0.002f;
 		}
-		//ƒRƒŠƒWƒ‡ƒ“B’n–Ê‚Ì‚‚³ƒQƒbƒg
+		//ã‚³ãƒªã‚¸ãƒ§ãƒ³ã€‚åœ°é¢ã®é«˜ã•ã‚²ãƒƒãƒˆ
 		float t;
 		Vector3 n( 0.f );
 		gPos.y = 500.f;
@@ -125,7 +125,7 @@ namespace GameLib{
 		gModel0.draw();
 		gModel1.draw();
 
-		//‹“_‚©‚ç“Š‚°‚Ä‚İ‚é
+		//è¦–ç‚¹ã‹ã‚‰æŠ•ã’ã¦ã¿ã‚‹
 		float t2;
 		Vector3 n2( 0.f );
 		Vector3 p2( 0.f );

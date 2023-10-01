@@ -41,8 +41,8 @@ public:
 	void moveTo( NextSequence );
 
 	State* state();
-	void drawState() const; //ƒQ[ƒ€•`‰æ
-	bool hasFinalStageCleared() const; //ÅI–ÊƒNƒŠƒA‚µ‚Ü‚µ‚½H
+	void drawState() const; //ã‚²ãƒ¼ãƒ æç”»
+	bool hasFinalStageCleared() const; //æœ€çµ‚é¢ã‚¯ãƒªã‚¢ã—ã¾ã—ãŸï¼Ÿ
 	int lifeNumber() const;
 	Mode mode() const;
 	void startLoading();
@@ -50,7 +50,7 @@ private:
 	State* mState;
 	int mStageID;
 	int mLife;
-	static const int FINAL_STAGE = 2; //¡‚Í2–Ê‚ªÅI–Ê
+	static const int FINAL_STAGE = 2; //ä»Šã¯2é¢ãŒæœ€çµ‚é¢
 	static const int INITIALI_LIFE_NUMBER = 2;
 
 	NextSequence mNextSequence;

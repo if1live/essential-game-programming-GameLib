@@ -29,19 +29,19 @@ Pad* Pad::instance(){
 
 bool Pad::isOn( Button b, int id ) const {
 	bool r = false;
-	//ƒWƒ‡ƒCƒXƒeƒBƒbƒN‚ ‚éH
+	//ã‚¸ãƒ§ã‚¤ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚ã‚‹ï¼Ÿ
 	Manager m = Manager::instance();
 	if ( m.joystickNumber() > id ){
 		Joystick j = m.joystick( id );
 		switch ( b ){
 			case JUMP:
-				r = ( j.isOn( 0 ) ) ? 1 : 0; //0”Ôƒ{ƒ^ƒ“‚ªƒWƒƒƒ“ƒv
+				r = ( j.isOn( 0 ) ) ? 1 : 0; //0ç•ªãƒœã‚¿ãƒ³ãŒã‚¸ãƒ£ãƒ³ãƒ—
 				break;
 			case FIRE:
-				r = ( j.isOn( 1 ) ) ? 1 : 0; //1”Ôƒ{ƒ^ƒ“‚ª•Ší
+				r = ( j.isOn( 1 ) ) ? 1 : 0; //1ç•ªãƒœã‚¿ãƒ³ãŒæ­¦å™¨
 				break;
 			case TURN:
-				r = ( j.isOn( 2 ) ) ? 1 : 0; //2”Ôƒ{ƒ^ƒ“‚ªù‰ñ
+				r = ( j.isOn( 2 ) ) ? 1 : 0; //2ç•ªãƒœã‚¿ãƒ³ãŒæ—‹å›
 				break;
 			case UP:
 				r = ( j.isOn( Joystick::BUTTON_UP ) ) ? 1 : 0;
@@ -58,7 +58,7 @@ bool Pad::isOn( Button b, int id ) const {
 			default: ASSERT( false ); break;
 		}
 	}
-	//ƒL[ƒ{[ƒh‚ğ’Ç‰Á
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã‚’è¿½åŠ 
 	Keyboard k = m.keyboard();
 	if ( id == 0 ){ //1P
 		char c = 0;
@@ -92,19 +92,19 @@ bool Pad::isOn( Button b, int id ) const {
 
 bool Pad::isTriggered( Button b, int id ) const {
 	bool r = false;
-	//ƒWƒ‡ƒCƒXƒeƒBƒbƒN‚ ‚éH
+	//ã‚¸ãƒ§ã‚¤ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚ã‚‹ï¼Ÿ
 	Manager m = Manager::instance();
 	if ( m.joystickNumber() > id ){
 		Joystick j = m.joystick( id );
 		switch ( b ){
 			case JUMP:
-				r = ( j.isTriggered( 0 ) ) ? 1 : 0; //0”Ôƒ{ƒ^ƒ“‚ªƒWƒƒƒ“ƒv
+				r = ( j.isTriggered( 0 ) ) ? 1 : 0; //0ç•ªãƒœã‚¿ãƒ³ãŒã‚¸ãƒ£ãƒ³ãƒ—
 				break;
 			case FIRE:
-				r = ( j.isTriggered( 1 ) ) ? 1 : 0; //1”Ôƒ{ƒ^ƒ“‚ª•Ší
+				r = ( j.isTriggered( 1 ) ) ? 1 : 0; //1ç•ªãƒœã‚¿ãƒ³ãŒæ­¦å™¨
 				break;
 			case TURN:
-				r = ( j.isTriggered( 2 ) ) ? 1 : 0; //2”Ôƒ{ƒ^ƒ“‚ªù‰ñ
+				r = ( j.isTriggered( 2 ) ) ? 1 : 0; //2ç•ªãƒœã‚¿ãƒ³ãŒæ—‹å›
 				break;
 			case UP:
 				r = ( j.isTriggered( Joystick::BUTTON_UP ) ) ? 1 : 0;
@@ -121,7 +121,7 @@ bool Pad::isTriggered( Button b, int id ) const {
 			default: ASSERT( false ); break;
 		}
 	}
-	//ƒL[ƒ{[ƒh‚ğ’Ç‰Á
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã‚’è¿½åŠ 
 	Keyboard k = m.keyboard();
 	if ( id == 0 ){ //1P
 		char c = 0;

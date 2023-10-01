@@ -1,6 +1,6 @@
 #include "Matrix23.h"
 #include "Vector2.h"
-#include "GameLib/Math.h" //sin,cos‚Ì‚½‚ß‚É
+#include "GameLib/Math.h" //sin,cosã®ãŸã‚ã«
 using namespace GameLib;
 
 Matrix23::Matrix23(){
@@ -41,7 +41,7 @@ void Matrix23::operator*=( const Matrix23& m ){
 }
 
 void Matrix23::multiply( Vector2* out, const Vector2& in ) const {
-	double tx = in.x; //out‚Æin‚ª“¯‚¶‚©‚à‚µ‚ê‚È‚¢‚Ì‚ÅAƒoƒbƒNƒAƒbƒv
-	out->x = m00 * tx + m01 * in.y + m02; //¶ã*x + ’†ã*y + ‰Eã*1
-	out->y = m10 * tx + m11 * in.y + m12; //¶‰º*x + ’†‰º*y + ¶‰º*1
+	double tx = in.x; //outã¨inãŒåŒã˜ã‹ã‚‚ã—ã‚Œãªã„ã®ã§ã€ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—
+	out->x = m00 * tx + m01 * in.y + m02; //å·¦ä¸Š*x + ä¸­ä¸Š*y + å³ä¸Š*1
+	out->y = m10 * tx + m11 * in.y + m12; //å·¦ä¸‹*x + ä¸­ä¸‹*y + å·¦ä¸‹*1
 }

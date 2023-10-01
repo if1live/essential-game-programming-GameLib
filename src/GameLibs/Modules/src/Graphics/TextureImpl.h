@@ -31,9 +31,9 @@ public:
 	mOriginalHeight( 0 ),
 	mExtension( EXT_UNKNOWN ),
 	mName( 0 ){
-		//ˆê‰ñƒGƒ‰[ó‘Ô‚É‚µ‚Ä‚¨‚­B¬Œ÷‚·‚ê‚ÎŒã‚Åtrue‚É‚·‚é
+		//ä¸€å›ã‚¨ãƒ©ãƒ¼çŠ¶æ…‹ã«ã—ã¦ãŠãã€‚æˆåŠŸã™ã‚Œã°å¾Œã§trueã«ã™ã‚‹
 		mIsError = true;
-		//–¼‘O‚â‚çƒtƒ@ƒCƒ‹–¼‚â‚ç‚ğ”²‚­
+		//åå‰ã‚„ã‚‰ãƒ•ã‚¡ã‚¤ãƒ«åã‚„ã‚‰ã‚’æŠœã
 		int an = e.attributeNumber();
 		for ( int i = 0; i < an; ++i ){
 			ConstAttribute a = e.attribute( i );
@@ -53,7 +53,7 @@ public:
 					}
 					filename += a.value();
 					mFile = FileIO::InFile::create( filename.c_str() );
-					mIsError = false; //’m‚Á‚Ä‚éŠg’£q‚Ìƒtƒ@ƒCƒ‹‚ª‚ ‚Á‚½
+					mIsError = false; //çŸ¥ã£ã¦ã‚‹æ‹¡å¼µå­ã®ãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã£ãŸ
 				}
 			}
 		}
@@ -72,7 +72,7 @@ public:
 		if ( mExtension != EXT_UNKNOWN ){
 			mFile = FileIO::InFile::create( filename );
 		}else{
-			mIsError = true; //’m‚ç‚ñƒtƒ@ƒCƒ‹—ˆ‚½Bó‚¯•t‚¯‚È‚¢B
+			mIsError = true; //çŸ¥ã‚‰ã‚“ãƒ•ã‚¡ã‚¤ãƒ«æ¥ãŸã€‚å—ã‘ä»˜ã‘ãªã„ã€‚
 		}
 	}
 	Impl( int w, int h, bool createMipChain, IDirect3DDevice9* device ) :
@@ -97,15 +97,15 @@ public:
 	mOriginalHeight( 0 ),
 	mExtension( EXT_UNKNOWN ),
 	mName( 0 ){
-		//ƒtƒ@ƒCƒ‹–¼‚ª‚È‚­”»’f‚Å‚«‚È‚¢‚Ì‚ÅA’†g4ƒoƒCƒg‚Å”»’è
+		//ãƒ•ã‚¡ã‚¤ãƒ«åãŒãªãåˆ¤æ–­ã§ããªã„ã®ã§ã€ä¸­èº«4ãƒã‚¤ãƒˆã§åˆ¤å®š
 		if ( data[ 0 ] == 'D' && data[ 1 ] == 'D' && data[ 2 ] == 'S' && data[ 3 ] == ' ' ){
 			readDDS( data, size );
-		}else{ //tga‚Æ‚µ‚Ä‰ğß
+		}else{ //tgaã¨ã—ã¦è§£é‡ˆ
 			readTGA( data, size );
 		}
 	}
 	~Impl(){
-		if ( mDxObject ){ //ƒGƒ‰[‚µ‚Ä‚ê‚Î0‚¾‚µ
+		if ( mDxObject ){ //ã‚¨ãƒ©ãƒ¼ã—ã¦ã‚Œã°0ã ã—
 			mDxObject->Release();
 			mDxObject = 0;
 		}
@@ -169,22 +169,22 @@ public:
 		const int footerStringLength = static_cast< int >( strlen( footerString ) );
 		char pixelSize = ( alpha ) ? 4 : 3;
 		int fileSize = width * height * pixelSize;
-		fileSize += 18; //ƒwƒbƒ_
-		fileSize += ( 8 + footerStringLength + 1 ); //ƒtƒbƒ^
+		fileSize += 18; //ãƒ˜ãƒƒãƒ€
+		fileSize += ( 8 + footerStringLength + 1 ); //ãƒ•ãƒƒã‚¿
 		char* data = NEW char[ fileSize ];
-		//ƒwƒbƒ_ˆê‰ñ0‚Å–„‚ß‚¿‚á‚¦
+		//ãƒ˜ãƒƒãƒ€ä¸€å›0ã§åŸ‹ã‚ã¡ã‚ƒãˆ
 		for ( int i = 0; i < 18; ++i ){
 			data[ i ] = 0;
 		}
 		unsigned char* dst = reinterpret_cast< unsigned char* >( data );
-		dst[ 0x0 ] = 0; //IDƒtƒB[ƒ‹ƒh’·
-		dst[ 0x1 ] = 0; //ƒpƒŒƒbƒg—L–³
+		dst[ 0x0 ] = 0; //IDãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰é•·
+		dst[ 0x1 ] = 0; //ãƒ‘ãƒ¬ãƒƒãƒˆæœ‰ç„¡
 		dst[ 0x2 ] = 2; //RGB24bit
-		dst[ 0x3 ] = 0; //ƒpƒŒƒbƒgƒIƒtƒZƒbƒgH (lower)
-		dst[ 0x4 ] = 0; //ƒpƒŒƒbƒgƒIƒtƒZƒbƒgH (upper)
-		dst[ 0x5 ] = 0; //ƒpƒŒƒbƒg”H (lower)
-		dst[ 0x6 ] = 0; //ƒpƒŒƒbƒg”H (upper)
-		dst[ 0x7 ] = 0; //ƒpƒŒƒbƒgƒrƒbƒg[“xH
+		dst[ 0x3 ] = 0; //ãƒ‘ãƒ¬ãƒƒãƒˆã‚ªãƒ•ã‚»ãƒƒãƒˆï¼Ÿ (lower)
+		dst[ 0x4 ] = 0; //ãƒ‘ãƒ¬ãƒƒãƒˆã‚ªãƒ•ã‚»ãƒƒãƒˆï¼Ÿ (upper)
+		dst[ 0x5 ] = 0; //ãƒ‘ãƒ¬ãƒƒãƒˆæ•°ï¼Ÿ (lower)
+		dst[ 0x6 ] = 0; //ãƒ‘ãƒ¬ãƒƒãƒˆæ•°ï¼Ÿ (upper)
+		dst[ 0x7 ] = 0; //ãƒ‘ãƒ¬ãƒƒãƒˆãƒ“ãƒƒãƒˆæ·±åº¦ï¼Ÿ
 		dst[ 0x8 ] = 0; //X offset (lower)
 		dst[ 0x9 ] = 0; //X offset (upper)
 		dst[ 0xa ] = 0; //Y offset (lower)
@@ -193,10 +193,10 @@ public:
 		dst[ 0xd ] = static_cast< char >( ( width & 0xff00 ) >> 8 ); //width (lower)
 		dst[ 0xe ] = static_cast< char >( height & 0xff ); //width (lower)
 		dst[ 0xf ] = static_cast< char >( ( height & 0xff00 ) >> 8 ); //width (lower)
-		dst[ 0x10 ] = pixelSize * 8; //F[“x
-		dst[ 0x11 ] = 0x20 + ( ( alpha ) ? 8 : 0 ); //ã‚©‚ç‰ºƒtƒ‰ƒO‚Æ3bit–Ú‚Í•s–¾
+		dst[ 0x10 ] = pixelSize * 8; //è‰²æ·±åº¦
+		dst[ 0x11 ] = 0x20 + ( ( alpha ) ? 8 : 0 ); //ä¸Šã‹ã‚‰ä¸‹ãƒ•ãƒ©ã‚°ã¨3bitç›®ã¯ä¸æ˜
 
-		//’†g
+		//ä¸­èº«
 		dst += 0x12;
 		if ( alpha ){
 			for ( int y = 0; y < height; ++y ){
@@ -224,8 +224,8 @@ public:
 				src += pitch / 4;
 			}
 		}
-		//ƒtƒbƒ^‚ğ‘‚«‚Ş
-		//8ƒoƒCƒgƒ[ƒ
+		//ãƒ•ãƒƒã‚¿ã‚’æ›¸ãè¾¼ã‚€
+		//8ãƒã‚¤ãƒˆã‚¼ãƒ­
 		for ( int i = 0; i < 8; ++i ){	
 			dst[ i ] = 0;
 		}
@@ -235,7 +235,7 @@ public:
 		}
 		dst[ footerStringLength ] = '\0';
 
-		//‘‚«‚Ş
+		//æ›¸ãè¾¼ã‚€
 		FileIO::Manager().write( filename, data, fileSize );
 		SAFE_DELETE_ARRAY( data );
 	}
@@ -249,24 +249,24 @@ public:
 	static void writeDds( const char* filename, int width, int height, int pitch, const unsigned* src, bool alpha ){
 		int fileSize = width * height * 4 + 128;
 		char* data = NEW char[ fileSize ];
-		//ƒwƒbƒ_ˆê‰ñ0‚Å–„‚ß‚¿‚á‚¦
+		//ãƒ˜ãƒƒãƒ€ä¸€å›0ã§åŸ‹ã‚ã¡ã‚ƒãˆ
 		for ( int i = 0; i < 128; ++i ){
 			data[ i ] = 0;
 		}
 		unsigned char* dst = reinterpret_cast< unsigned char* >( data );
-		//DDS‚ğƒoƒCƒiƒŠƒGƒfƒBƒ^‚ÅŒ©‚½’†g‚ğˆÓ–¡‚à‚í‚©‚ç‚¸‘‚«‚ñ‚Å‚¢‚é‚¾‚¯
+		//DDSã‚’ãƒã‚¤ãƒŠãƒªã‚¨ãƒ‡ã‚£ã‚¿ã§è¦‹ãŸä¸­èº«ã‚’æ„å‘³ã‚‚ã‚ã‹ã‚‰ãšæ›¸ãè¾¼ã‚“ã§ã„ã‚‹ã ã‘
 		dst[ 0x0 ] = 'D';
 		dst[ 0x1 ] = 'D';
 		dst[ 0x2 ] = 'S';
 		dst[ 0x3 ] = ' ';
-		dst[ 0x4 ] = 0x7c; //\‘¢‘ÌƒTƒCƒY124
+		dst[ 0x4 ] = 0x7c; //æ§‹é€ ä½“ã‚µã‚¤ã‚º124
 		dst[ 0x8 ] = 0x7; //flags
 		dst[ 0x9 ] = 0x10; //flags
 		dst[ 0xc ] = static_cast< char >( height & 0xff );
 		dst[ 0xd ] = static_cast< char >( ( height & 0xff00 ) >> 8 );
 		dst[ 0x10 ] = static_cast< char >( width & 0xff );
 		dst[ 0x11 ] = static_cast< char >( ( width & 0xff00 ) >> 8 );
-		dst[ 0x4c ] = 0x20; //DDPIXELFORMAT‚ÌƒTƒCƒY32
+		dst[ 0x4c ] = 0x20; //DDPIXELFORMATã®ã‚µã‚¤ã‚º32
 		dst[ 0x50 ] = 0x41; //flags
 		dst[ 0x58 ] = 0x20; //32bit
 		dst[ 0x5e ] = 0xff; //Rmask
@@ -304,7 +304,7 @@ public:
 				src += pitch / 4;
 			}
 		}
-		//‘‚«‚Ş
+		//æ›¸ãè¾¼ã‚€
 		FileIO::Manager().write( filename, data, fileSize );
 		SAFE_DELETE_ARRAY( data );
 	}
@@ -315,7 +315,7 @@ public:
 		writeDds( filename, mWidth, mHeight, pitch, b, true );
 		unlock( 0 );
 	}
-	///‚»‚Ìê‚Åƒf[ƒ^‚ğƒtƒ@ƒCƒ‹‚É‘‚«o‚·B•Ö—˜ŠÖ”Bpitch‚É‚Í‘å’ïheight*4‚ª“ü‚é‚ªA‚»‚¤‚Æ‚ÍŒÀ‚ç‚È‚¢B
+	///ãã®å ´ã§ãƒ‡ãƒ¼ã‚¿ã‚’ãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ãå‡ºã™ã€‚ä¾¿åˆ©é–¢æ•°ã€‚pitchã«ã¯å¤§æŠµheight*4ãŒå…¥ã‚‹ãŒã€ãã†ã¨ã¯é™ã‚‰ãªã„ã€‚
 	static void write( const char* filename, int width, int height, int pitch, const unsigned* data ){
 		Extension ext = getExtension( filename );
 		if ( ext == EXT_DDS ){
@@ -333,7 +333,7 @@ public:
 	bool isReady(){
 		if ( mFile ){
 			if ( mFile.isFinished() ){
-				if ( mFile.isError() ){ //ƒ[ƒhI—¹
+				if ( mFile.isError() ){ //ãƒ­ãƒ¼ãƒ‰çµ‚äº†
 					mIsError = true;
 				}else{
 					if ( mExtension == EXT_DDS ){
@@ -341,16 +341,16 @@ public:
 					}else if ( mExtension == EXT_TGA ){
 						readTGA( mFile.data(), mFile.size() );
 					}else{
-						ASSERT( 0 ); //‚ ‚è‚¦‚Ê‚æ
+						ASSERT( 0 ); //ã‚ã‚Šãˆã¬ã‚ˆ
 					}
 					mFile.release();
 				}
-				return true; //ƒGƒ‰[‚Å‚àI—¹
+				return true; //ã‚¨ãƒ©ãƒ¼ã§ã‚‚çµ‚äº†
 			}else{
-				return false; //ƒ[ƒhI‚í‚Á‚Ä‚Ü‚¹‚ñB
+				return false; //ãƒ­ãƒ¼ãƒ‰çµ‚ã‚ã£ã¦ã¾ã›ã‚“ã€‚
 			}
 		}else{
-			return true; //‚»‚à‚»‚àƒtƒ@ƒCƒ‹‚ª‚È‚¢‚È‚çAŠ®‘S‚ÉI‚í‚Á‚½‚©AÅ‰‚©‚çƒtƒ@ƒCƒ‹Œo—R‚Å‚È‚¢‚©B
+			return true; //ãã‚‚ãã‚‚ãƒ•ã‚¡ã‚¤ãƒ«ãŒãªã„ãªã‚‰ã€å®Œå…¨ã«çµ‚ã‚ã£ãŸã‹ã€æœ€åˆã‹ã‚‰ãƒ•ã‚¡ã‚¤ãƒ«çµŒç”±ã§ãªã„ã‹ã€‚
 		}
 	}
 	void createDxObject( int w, int h, bool createMipmaps ){
@@ -363,13 +363,13 @@ public:
 			ASSERT( hr != E_OUTOFMEMORY && "CreateTexture : E OUT OF MEMORY" );
 			ASSERT( 0 && "CreateTexture : unknown error" );
 		}
-		mDxDevice = 0; //“ñ“xì‚é‚±‚Æ‚Í‚È‚¢B‚±‚±‚ÅI‚í‚éB
-		//¬Œ÷‚µ‚Ä‚©‚ç‘ã“ü
+		mDxDevice = 0; //äºŒåº¦ä½œã‚‹ã“ã¨ã¯ãªã„ã€‚ã“ã“ã§çµ‚ã‚ã‚‹ã€‚
+		//æˆåŠŸã—ã¦ã‹ã‚‰ä»£å…¥
 		mWidth = w;
 		mHeight = h;
 	}
 	static int powerOfTwo( int a ){
-		ASSERT( a < 0x40000000 ); //a‚ª0x40000000‚æ‚è‘å‚«‚¢‚Æ–³ŒÀƒ‹[ƒv‚É‚È‚éB
+		ASSERT( a < 0x40000000 ); //aãŒ0x40000000ã‚ˆã‚Šå¤§ãã„ã¨ç„¡é™ãƒ«ãƒ¼ãƒ—ã«ãªã‚‹ã€‚
 		int r = 1;
 		while ( r < a ){
 			r *= 2;
@@ -405,20 +405,20 @@ public:
 		int pixelSize = getUnsignedChar( data + 16 ) / 8;
 		int paletteNumber = 0;
 		int paletteDepth = 0;
-		//ƒpƒŒƒbƒg‚ ‚ñ‚ÌH
+		//ãƒ‘ãƒ¬ãƒƒãƒˆã‚ã‚“ã®ï¼Ÿ
 		if ( ( data[ 2 ] & 7 ) == 1 ){
 			paletteNumber = getUnsignedShort( data + 5 );
 			paletteDepth = getUnsignedChar( data + 7 ) / 8;
 			ASSERT( paletteDepth == 3 || paletteDepth == 4 );
 		}
 		const unsigned char* src = 0;
-		const unsigned char* pSrc = 0; //ƒpƒŒƒbƒgƒf[ƒ^
+		const unsigned char* pSrc = 0; //ãƒ‘ãƒ¬ãƒƒãƒˆãƒ‡ãƒ¼ã‚¿
 		src = reinterpret_cast< const unsigned char* >( data );
 		pSrc = src + 18;
-		src += 18 + paletteNumber * paletteDepth; //ƒf[ƒ^æ“ªæ“¾
-		//ˆ³k‘Î‰
+		src += 18 + paletteNumber * paletteDepth; //ãƒ‡ãƒ¼ã‚¿å…ˆé ­å–å¾—
+		//åœ§ç¸®å¯¾å¿œ
 		Array< unsigned char > uncompressed;
-		if ( data[ 2 ] & 0x8 ){ //ˆ³k‚µ‚Ä‚â‚ª‚è‚Ü‚·B
+		if ( data[ 2 ] & 0x8 ){ //åœ§ç¸®ã—ã¦ã‚„ãŒã‚Šã¾ã™ã€‚
 			const unsigned char* s = src;
 			const unsigned char* sEnd = reinterpret_cast< const unsigned char* >( data ) + size;
 			uncompressed.setSize( pixelSize * sw * sh );
@@ -426,13 +426,13 @@ public:
 			while ( s < sEnd ){
 				int l = ( *s & 0x7f ) + 1;
 				bool compressed = ( ( *s & 0x80 ) != 0 );
-				if ( n + l > sw * sh ){ //‘‚«‚İ”ÍˆÍƒ`ƒFƒbƒN
+				if ( n + l > sw * sh ){ //æ›¸ãè¾¼ã¿ç¯„å›²ãƒã‚§ãƒƒã‚¯
 					cout << "readTGA : can't read. compressed data is invalid." << endl;
 					mIsError = true;
 					return;
 				}
 				int readSize = pixelSize * ( ( compressed ) ? 1 : l );
-				if ( s + readSize > sEnd ){ //ƒtƒ@ƒCƒ‹––”ö‚ğ‰z‚¦‚éBˆÙí
+				if ( s + readSize > sEnd ){ //ãƒ•ã‚¡ã‚¤ãƒ«æœ«å°¾ã‚’è¶Šãˆã‚‹ã€‚ç•°å¸¸
 					cout << "readTGA : can't read. compressed data is invalid. it must be truncated." << endl;
 					mIsError = true;
 					return;
@@ -455,18 +455,18 @@ public:
 						++n;
 					}
 				}
-				if ( n == sw * sh ){ //“Ç‚İI‚í‚è
+				if ( n == sw * sh ){ //èª­ã¿çµ‚ã‚ã‚Š
 					break;
 				}
 			}
-			src = &uncompressed[ 0 ]; //ƒf[ƒ^ƒ|ƒCƒ“ƒ^·‚µ‘Ö‚¦
+			src = &uncompressed[ 0 ]; //ãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ã‚¿å·®ã—æ›¿ãˆ
 		}else if ( size < ( sh * sw * pixelSize + 18 + paletteNumber + paletteDepth ) ){ 
-			//”ñˆ³k‚È‚çƒtƒ@ƒCƒ‹ƒTƒCƒY‚Ì‰ºŒÀ‚ª‘¶İ‚·‚éB
+			//éåœ§ç¸®ãªã‚‰ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºã®ä¸‹é™ãŒå­˜åœ¨ã™ã‚‹ã€‚
 			cout << "readTGA : file must be collapsed." << endl;
-			mIsError = true; //ƒtƒ@ƒCƒ‹‚ª‰ó‚ê‚Ä‚é
+			mIsError = true; //ãƒ•ã‚¡ã‚¤ãƒ«ãŒå£Šã‚Œã¦ã‚‹
 			return;
 		}
-		//Y”½“]‘Î‰
+		//Yåè»¢å¯¾å¿œ
 		int yBegin;
 		int yEnd;
 		int dy;
@@ -476,25 +476,25 @@ public:
 			yEnd = -1;
 			dy = -1;
 			dSrc = -sw * pixelSize;
-			src += sw * pixelSize * ( sh - 1 ); //Œã‚ë‚©‚çn‚ß‚È‚¢‚Æ
+			src += sw * pixelSize * ( sh - 1 ); //å¾Œã‚ã‹ã‚‰å§‹ã‚ãªã„ã¨
 		}else{
 			yBegin = 0;
 			yEnd = sh;
 			dy = 1;
 			dSrc = sw * pixelSize;
 		}
-		//”ñ‘Î‰Œ^ƒ`ƒFƒbƒN
+		//éå¯¾å¿œå‹ãƒã‚§ãƒƒã‚¯
 		if ( ( data[ 2 ] & 0x7 ) == 0 ){
 			cout << "readTGA : this file contains no image." << endl;
 			mIsError = true;
 			return;
 		}
-		//2‚×‚«‚É’¼‚µ‚ÄƒeƒNƒXƒ`ƒƒì¬
+		//2ã¹ãã«ç›´ã—ã¦ãƒ†ã‚¯ã‚¹ãƒãƒ£ä½œæˆ
 		int dh = powerOfTwo( sh );
 		int dw = powerOfTwo( sw );
 		createDxObject( dw, dh, true );
 
-		//ƒƒbƒN‚µ‚Ä‘‚«‚İ
+		//ãƒ­ãƒƒã‚¯ã—ã¦æ›¸ãè¾¼ã¿
 		unsigned* surface;
 		int pitch;
 		lock( &surface, &pitch, 0 );
@@ -509,7 +509,7 @@ public:
 					dst[ x ] |= src[ x * 4 + 2 ] << 16;
 					dst[ x ] |= src[ x * 4 + 3 ] << 24;
 				}
-				for ( int x = sw; x < pitch / 4; ++x ){ //X‚ ‚Ü‚è‚Í^‚Á•
+				for ( int x = sw; x < pitch / 4; ++x ){ //Xã‚ã¾ã‚Šã¯çœŸã£é»’
 					dst[ x ] = 0;
 				}
 				dst += pitch;
@@ -521,36 +521,36 @@ public:
 					dst[ x ] = src[ x * 3 + 0 ];
 					dst[ x ] |= src[ x * 3 + 1 ] << 8;
 					dst[ x ] |= src[ x * 3 + 2 ] << 16;
-					dst[ x ] |= 0xff000000; //A‚Í255
+					dst[ x ] |= 0xff000000; //Aã¯255
 				}
-				for ( int x = sw; x < pitch; ++x ){ //X‚ ‚Ü‚è‚Í^‚Á•
+				for ( int x = sw; x < pitch; ++x ){ //Xã‚ã¾ã‚Šã¯çœŸã£é»’
 					dst[ x ] = 0;
 				}
 				dst += pitch;
 				src += dSrc;
 			}
-		}else if ( pixelSize == 2 ){ //ƒOƒŒƒCƒXƒP[ƒ‹+ƒAƒ‹ƒtƒ@
+		}else if ( pixelSize == 2 ){ //ã‚°ãƒ¬ã‚¤ã‚¹ã‚±ãƒ¼ãƒ«+ã‚¢ãƒ«ãƒ•ã‚¡
 			for ( int y = yBegin; y != yEnd; y += dy ){
 				for ( int x = 0; x < sw; ++x ){
 					unsigned t = src[ x * 2 + 0 ];
 					dst[ x ] = t | ( t << 8 ) | ( t << 16 );
 					dst[ x ] |= src[ x * 2 + 1 ] << 24;
 				}
-				for ( int x = sw; x < pitch; ++x ){ //X‚ ‚Ü‚è‚Í^‚Á•
+				for ( int x = sw; x < pitch; ++x ){ //Xã‚ã¾ã‚Šã¯çœŸã£é»’
 					dst[ x ] = 0;
 				}
 				dst += pitch;
 				src += dSrc;
 			}
 		}else if ( pixelSize == 1 ){
-			if ( paletteNumber > 0 ){ //ƒpƒŒƒbƒg‚ ‚éê‡
+			if ( paletteNumber > 0 ){ //ãƒ‘ãƒ¬ãƒƒãƒˆã‚ã‚‹å ´åˆ
 				Array< unsigned > palette( paletteNumber ); 
 				if ( paletteDepth == 3 ){
 					for ( int i = 0; i < paletteNumber; ++i ){
 						palette[ i ] = pSrc[ i * 3 + 0 ];
 						palette[ i ] |= pSrc[ i * 3 + 1 ] << 8;
 						palette[ i ] |= pSrc[ i * 3 + 2 ] << 16;
-						palette[ i ] |= 0xff000000; //A‚Í255
+						palette[ i ] |= 0xff000000; //Aã¯255
 					}
 				}else if ( paletteDepth == 4 ){
 					for ( int i = 0; i < paletteNumber; ++i ){
@@ -564,7 +564,7 @@ public:
 					for ( int x = 0; x < sw; ++x ){
 						dst[ x ] = palette[ src[ x ] ];
 					}
-					for ( int x = sw; x < pitch; ++x ){ //X‚ ‚Ü‚è‚Í^‚Á•
+					for ( int x = sw; x < pitch; ++x ){ //Xã‚ã¾ã‚Šã¯çœŸã£é»’
 						dst[ x ] = 0;
 					}
 					dst += pitch;
@@ -576,7 +576,7 @@ public:
 						dst[ x ] = 0x00ffffff;
 						dst[ x ] |= src[ x ] << 24;
 					}
-					for ( int x = sw; x < pitch; ++x ){ //X‚ ‚Ü‚è‚Í^‚Á•
+					for ( int x = sw; x < pitch; ++x ){ //Xã‚ã¾ã‚Šã¯çœŸã£é»’
 						dst[ x ] = 0;
 					}
 					dst += pitch;
@@ -584,7 +584,7 @@ public:
 				}
 			}
 		}
-		//Y‚ ‚Ü‚è‚ğ^‚Á•‚É
+		//Yã‚ã¾ã‚Šã‚’çœŸã£é»’ã«
 		for ( int y = sh; y < dh; ++y ){
 			for ( int x = 0; x < pitch; ++x ){
 				dst[ x ] = 0;
@@ -603,17 +603,17 @@ public:
 		mOriginalWidth = sw;
 		mOriginalHeight = sh;
 		int pixelSize = getUnsigned( data + 88 ) / 8;
-		//ƒtƒ@ƒCƒ‹ƒTƒCƒY‘åä•vH
+		//ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºå¤§ä¸ˆå¤«ï¼Ÿ
 		if ( size < ( sh * sw * pixelSize + 128 ) ){
-			mIsError = true; //ƒtƒ@ƒCƒ‹‚ª‰ó‚ê‚Ä‚é
+			mIsError = true; //ãƒ•ã‚¡ã‚¤ãƒ«ãŒå£Šã‚Œã¦ã‚‹
 			return;
 		}
-		//2‚×‚«‚É’¼‚µ‚ÄƒeƒNƒXƒ`ƒƒì¬
+		//2ã¹ãã«ç›´ã—ã¦ãƒ†ã‚¯ã‚¹ãƒãƒ£ä½œæˆ
 		int dh = powerOfTwo( sh );
 		int dw = powerOfTwo( sw );
 		createDxObject( dw, dh, true );
 
-		//ƒƒbƒN‚µ‚Ä‘‚«‚İ
+		//ãƒ­ãƒƒã‚¯ã—ã¦æ›¸ãè¾¼ã¿
 		unsigned* surface;
 		int pitch;
 		lock( &surface, &pitch, 0 );
@@ -621,7 +621,7 @@ public:
 		unsigned* dst = surface;
 		const unsigned char* src;
 		src = reinterpret_cast< const unsigned char* >( data );
-		src += 128; //ƒf[ƒ^æ“ªæ“¾
+		src += 128; //ãƒ‡ãƒ¼ã‚¿å…ˆé ­å–å¾—
 
 		if ( pixelSize == 4 ){
 			unsigned alphaMask = getUnsigned( data + 0x68 );
@@ -632,13 +632,13 @@ public:
 					dst[ x ] |= src[ x * 4 + 1 ] << 8;
 					dst[ x ] |= src[ x * 4 + 2 ] << 16;
 					dst[ x ] |= src[ x * 4 + 3 ] << 24;
-					dst[ x ] |= alphaOr; //XRGB‘Î‰
+					dst[ x ] |= alphaOr; //XRGBå¯¾å¿œ
 				}
-				for ( int x = sw; x < pitch / 4; ++x ){ //X‚ ‚Ü‚è‚Í^‚Á•
+				for ( int x = sw; x < pitch / 4; ++x ){ //Xã‚ã¾ã‚Šã¯çœŸã£é»’
 					dst[ x ] = 0;
 				}
 				dst += pitch;
-				src += ( sw * pixelSize + 3 ) & ( ~3 ); //4ƒoƒCƒgƒAƒ‰ƒCƒ“
+				src += ( sw * pixelSize + 3 ) & ( ~3 ); //4ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³
 			}
 		}else if ( pixelSize == 3 ){
 			for ( int y = 0; y < sh; ++y ){
@@ -646,13 +646,13 @@ public:
 					dst[ x ] = src[ x * 3 + 0 ];
 					dst[ x ] |= src[ x * 3 + 1 ] << 8;
 					dst[ x ] |= src[ x * 3 + 2 ] << 16;
-					dst[ x ] |= 0xff000000; //A‚Í255
+					dst[ x ] |= 0xff000000; //Aã¯255
 				}
-				for ( int x = sw; x < pitch; ++x ){ //X‚ ‚Ü‚è‚Í^‚Á•
+				for ( int x = sw; x < pitch; ++x ){ //Xã‚ã¾ã‚Šã¯çœŸã£é»’
 					dst[ x ] = 0;
 				}
 				dst += pitch;
-				src += ( sw * pixelSize + 3 ) & ( ~3 ); //4ƒoƒCƒgƒAƒ‰ƒCƒ“
+				src += ( sw * pixelSize + 3 ) & ( ~3 ); //4ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³
 			}
 		}else if ( pixelSize == 1 ){
 			for ( int y = 0; y < sh; ++y ){
@@ -660,14 +660,14 @@ public:
 					dst[ x ] = 0x00ffffff;
 					dst[ x ] |= src[ x ] << 24;
 				}
-				for ( int x = sw; x < pitch; ++x ){ //X‚ ‚Ü‚è‚Í^‚Á•
+				for ( int x = sw; x < pitch; ++x ){ //Xã‚ã¾ã‚Šã¯çœŸã£é»’
 					dst[ x ] = 0;
 				}
 				dst += pitch;
-				src += ( sw * pixelSize + 3 ) & ( ~3 ); //4ƒoƒCƒgƒAƒ‰ƒCƒ“
+				src += ( sw * pixelSize + 3 ) & ( ~3 ); //4ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³
 			}
 		}
-		//Y‚ ‚Ü‚è‚ğ^‚Á•‚É
+		//Yã‚ã¾ã‚Šã‚’çœŸã£é»’ã«
 		for ( int y = sh; y < dh; ++y ){
 			for ( int x = 0; x < pitch; ++x ){
 				dst[ x ] = 0;
@@ -679,11 +679,11 @@ public:
 		src = 0;
 		dst = 0;
 	}
-	//–Ê“|‚È‚Ì‚ÅÄ‹AŒÄ‚Ño‚µBpitch‚ÍDWORD’PˆÊB‚Â‚Ü‚è/4
+	//é¢å€’ãªã®ã§å†å¸°å‘¼ã³å‡ºã—ã€‚pitchã¯DWORDå˜ä½ã€‚ã¤ã¾ã‚Š/4
 	void createMipmapChain( const unsigned* src, int srcPitch, int sw, int sh, int level ){
 		int dw = sw >> 1;
 		int dh = sh >> 1;
-		if ( dw == 0 || dh == 0 ){ //•Ğ•û‚ª0‚É‚È‚Á‚½
+		if ( dw == 0 || dh == 0 ){ //ç‰‡æ–¹ãŒ0ã«ãªã£ãŸ
 			return;
 		}
 		unsigned* dstSurface;
@@ -691,8 +691,8 @@ public:
 		lock( &dstSurface, &dstPitch, level );
 		unsigned* dst = dstSurface;
 		dstPitch /= 4;
-		ASSERT( dstPitch >= dw ); //‚±‚±‚ª¬‚³‚¢‚Ì‚Í‚ ‚è‚¦‚È‚¢B
-		//‚Æ‚è‚ ‚¦‚¸’x‚­‚Ä‚à‚¢‚¢‚âB
+		ASSERT( dstPitch >= dw ); //ã“ã“ãŒå°ã•ã„ã®ã¯ã‚ã‚Šãˆãªã„ã€‚
+		//ã¨ã‚Šã‚ãˆãšé…ãã¦ã‚‚ã„ã„ã‚„ã€‚
 		for ( int y = 0; y < dh; ++y ){
 			for ( int x = 0; x < dw; ++x ){
 				unsigned c0 = src[ ( 2 * x ) ];
@@ -706,17 +706,17 @@ public:
 				int r = ( c0 & 0xff ) + ( c1 & 0xff ) + ( c2 & 0xff ) + ( c3 & 0xff );
 				c0 >>= 8; c1 >>= 8; c2 >>= 8; c3 >>= 8;
 				int a = ( c0 & 0xff ) + ( c1 & 0xff ) + ( c2 & 0xff ) + ( c3 & 0xff );
-				b = ( b + 2 ) >> 2; //lÌŒÜ“ü‚Ì‚½‚ß‚É+2
-				g = ( g + 2 ) >> 2; //lÌŒÜ“ü‚Ì‚½‚ß‚É+2
-				r = ( r + 2 ) >> 2; //lÌŒÜ“ü‚Ì‚½‚ß‚É+2
-				a = ( a + 2 ) >> 2; //lÌŒÜ“ü‚Ì‚½‚ß‚É+2
+				b = ( b + 2 ) >> 2; //å››æ¨äº”å…¥ã®ãŸã‚ã«+2
+				g = ( g + 2 ) >> 2; //å››æ¨äº”å…¥ã®ãŸã‚ã«+2
+				r = ( r + 2 ) >> 2; //å››æ¨äº”å…¥ã®ãŸã‚ã«+2
+				a = ( a + 2 ) >> 2; //å››æ¨äº”å…¥ã®ãŸã‚ã«+2
 				dst[ x ] = b | ( g << 8 ) | ( r << 16 ) | ( a << 24 );
 			}
 			dst += dstPitch;
-			src += srcPitch * 2; //2si‚Ş
+			src += srcPitch * 2; //2è¡Œé€²ã‚€
 		}
 		unlock( level );
-		//Ä‹AŒÄ‚Ño‚µ
+		//å†å¸°å‘¼ã³å‡ºã—
 		createMipmapChain( dstSurface, dstPitch, dw, dh, level + 1 );
 	}
 	int width() const {
@@ -731,7 +731,7 @@ public:
 	int originalHeight() const {
 		return mOriginalHeight;
 	}
-	static int mipmapNumber( int w, int h ){ //‚»‚ÌêŒvZB‚Ç‚Á‚¿‚©‚ª1‚É‚È‚Á‚½‚ç‚»‚±‚ÅI‚í‚èB
+	static int mipmapNumber( int w, int h ){ //ãã®å ´è¨ˆç®—ã€‚ã©ã£ã¡ã‹ãŒ1ã«ãªã£ãŸã‚‰ãã“ã§çµ‚ã‚ã‚Šã€‚
 		int levels = 0;
 		while ( w > 0 && h > 0 ){
 			w >>= 1;

@@ -11,8 +11,8 @@ void Triangle::setPosition( const Vector3& p0, const Vector3& p1, const Vector3&
 }
 
 double Triangle::getIntersectionTime( const Vector3& lineBegin, const Vector3& lineVector ) const {
-	double inf = numeric_limits< double >::max(); //double‚Å•\‚¹‚éˆê”Ô‘å‚«‚È”B“–‚½‚ç‚È‚¯‚ê‚Î‚±‚ê‚ª•Ô‚é
-	//–{‚Æ“¯‚¶‹L†‚É’u‚«‚È‚¨‚·
+	double inf = numeric_limits< double >::max(); //doubleã§è¡¨ã›ã‚‹ä¸€ç•ªå¤§ããªæ•°ã€‚å½“ãŸã‚‰ãªã‘ã‚Œã°ã“ã‚ŒãŒè¿”ã‚‹
+	//æœ¬ã¨åŒã˜è¨˜å·ã«ç½®ããªãŠã™
 	const Vector3& a = lineBegin;
 	const Vector3& b = lineVector;
 	const Vector3& c = mPosition[ 0 ];
@@ -21,20 +21,20 @@ double Triangle::getIntersectionTime( const Vector3& lineBegin, const Vector3& l
 	e.setSub( mPosition[ 2 ], c );
 	Vector3 f;
 	f.setSub( c, a );
-	//–@ü‚ğ‹‚ß‚æ‚¤B
+	//æ³•ç·šã‚’æ±‚ã‚ã‚ˆã†ã€‚
 	Vector3 n;
 	n.setCross( d, e );
-	//t‚ğ‹‚ß‚éB
+	//tã‚’æ±‚ã‚ã‚‹ã€‚
 	double nf = n.dot( f );
 	double nb = n.dot( b );
-	if ( nb == 0.f ){ //•½s
-	  return inf; //‚Í‚¸‚ê‚É‚µ‚¿‚á‚¦B
+	if ( nb == 0.f ){ //å¹³è¡Œ
+	  return inf; //ã¯ãšã‚Œã«ã—ã¡ã‚ƒãˆã€‚
 	}
 	double t = nf / nb;
 	if ( t < 0 || t > 1 ){ 
 	  return inf;
 	}
-	///v‚ğ‹‚ß‚éB
+	///vã‚’æ±‚ã‚ã‚‹ã€‚
 	Vector3 p;
 	p.setMadd( b, t, a );
 	Vector3 g;
@@ -44,8 +44,8 @@ double Triangle::getIntersectionTime( const Vector3& lineBegin, const Vector3& l
 	double dd = d.dot( d );
 	double ee = e.dot( e );
 	double de = d.dot( e );
-	//de*de - dd*ee‚Ì‹t”‚Í“ñ‰ñg‚¤‚Ì‚ÅAˆê‰ñ‚ÅÏ‚Ü‚¹‚Ä‚‘¬‰»‚·‚éB
-	double dedeEedd = de * de - ee * dd; //‚±‚¢‚Â‚Í0‚É‚Í‚È‚è‚¦‚È‚¢‚Ì‚Åƒ`ƒFƒbƒN‚È‚µ‚Å‹t”‚ªæ‚ê‚é
+	//de*de - dd*eeã®é€†æ•°ã¯äºŒå›ä½¿ã†ã®ã§ã€ä¸€å›ã§æ¸ˆã¾ã›ã¦é«˜é€ŸåŒ–ã™ã‚‹ã€‚
+	double dedeEedd = de * de - ee * dd; //ã“ã„ã¤ã¯0ã«ã¯ãªã‚Šãˆãªã„ã®ã§ãƒã‚§ãƒƒã‚¯ãªã—ã§é€†æ•°ãŒå–ã‚Œã‚‹
 	double rcpDedeEedd = 1.0 / dedeEedd; 
 
 	double u = ( gd*de - ge*dd ) * rcpDedeEedd;
@@ -56,7 +56,7 @@ double Triangle::getIntersectionTime( const Vector3& lineBegin, const Vector3& l
 	if ( v < 0 || ( u + v > 1 ) ){
 	  return inf;
 	}
-	return t; //t‚ª
+	return t; //tãŒæ™‚åˆ»
 }
 
 bool Triangle::isIntersect( const Vector3& lineBegin, const Vector3& lineVector ) const {
@@ -65,13 +65,13 @@ bool Triangle::isIntersect( const Vector3& lineBegin, const Vector3& lineVector 
 }
 
 bool Triangle::restrictMove( Vector3* v, const Vector3& p ) const {
-	//‚Ü‚¸”»’è
+	//ã¾ãšåˆ¤å®š
 	bool r = isIntersect( p, *v );
 	if ( !r ){
-		return false; //“–‚½‚ç‚È‚¢‚Ì‚Å‚»‚Ì‚Ü‚ÜI‚í‚é
+		return false; //å½“ãŸã‚‰ãªã„ã®ã§ãã®ã¾ã¾çµ‚ã‚ã‚‹
 	}
-	//‚³‚Ä“–‚½‚Á‚Ä‚¢‚é‚È‚ç‚ÎAƒxƒNƒ^‚ğC³‚·‚éB
-	//®‚Í–@ün‚ğg‚Á‚ÄˆÈ‰º‚Ì‚æ‚¤‚É‘‚¯‚é
+	//ã•ã¦å½“ãŸã£ã¦ã„ã‚‹ãªã‚‰ã°ã€ãƒ™ã‚¯ã‚¿ã‚’ä¿®æ­£ã™ã‚‹ã€‚
+	//å¼ã¯æ³•ç·šnã‚’ä½¿ã£ã¦ä»¥ä¸‹ã®ã‚ˆã†ã«æ›¸ã‘ã‚‹
 	//a = v - dot( n, v ) * n / |n|^2
 	Vector3 d, e, n;
 	d.setSub( mPosition[ 1 ], mPosition[ 0 ] );

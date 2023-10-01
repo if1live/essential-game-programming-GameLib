@@ -16,7 +16,7 @@ class Bullet;
 
 class Robo{
 public:
-	Robo( int id ); //”Ô†‚à‚ç‚¤B©•ª‚ª‰½”Ô‚©’m‚è‚½‚¢‚Ì‚ÅB
+	Robo( int id ); //ç•ªå·ã‚‚ã‚‰ã†ã€‚è‡ªåˆ†ãŒä½•ç•ªã‹çŸ¥ã‚ŠãŸã„ã®ã§ã€‚
 	~Robo();
 	void draw() const;
 	void update( Robo* robo );
@@ -30,27 +30,27 @@ public:
 	bool getLockOn() const;
 	const Vector3* getBulletPosition( int i ) const;
 
-	static const int mJumpUpTime; //ã¸‚µ‚Ä‚¢‚­ŠÔ
-	static const int mJumpStayTime; //ã¸Œã‰º~‚Ü‚Å‚ÌŠÔ
-	static const int mJumpFallTime; //‰º~‚É‚©‚©‚éŠÔ
-	static const int mMoveAccelEndCount; //•à‚«n‚ß‚Ä‰Á‘¬‚ªI—¹‚·‚é‚Ü‚Å‚ÌŠÔ
-	static const float mMaxMoveSpeed; //Å‘åˆÚ“®‘¬“x
-	static const float mJumpHeight; //Å‘å‚“x
-	static const int mCameraDelayCount; //ƒWƒƒƒ“ƒvŠJnŒã‰½ƒtƒŒ[ƒ€‚Å“G‚Ì•û‚ğŒü‚­‚©
-	static const float mCameraDistanceZ; //‰½ƒ[ƒgƒ‹Œã‚ë‚©‚çÊ‚·H
-	static const float mCameraDistanceY; //Œ©‰º‚ë‚µ‹ï‡
-	static const float mCameraTargetDistanceZ; //’‹“_‚Í‰½ƒ[ƒgƒ‹æH
-	static const float mTurnSpeed; //ù‰ñ‘¬“x
-	static const int mMaxHitPoint; //Å‘åƒqƒbƒgƒ|ƒCƒ“ƒgz
-	static const int mMaxEnergy; //•Šíƒ|ƒCƒ“ƒgÅ‘å’l
-	static const int mEnergyPerBullet; //ˆê”­‚ ‚½‚è‚ÌÁ”ïƒGƒlƒ‹ƒM[
-	static const int mEnergyCharge; //–ˆƒtƒŒ[ƒ€—­‚Ü‚éƒGƒlƒ‹ƒM[
-	static const float mLockOnAngleIn; //ƒƒbƒNƒIƒ“‚·‚éŠp“x
-	static const float mLockOnAngleOut; //ƒƒbƒNƒIƒ“‚·‚éŠp“x
+	static const int mJumpUpTime; //ä¸Šæ˜‡ã—ã¦ã„ãæ™‚é–“
+	static const int mJumpStayTime; //ä¸Šæ˜‡å¾Œä¸‹é™ã¾ã§ã®æ™‚é–“
+	static const int mJumpFallTime; //ä¸‹é™ã«ã‹ã‹ã‚‹æ™‚é–“
+	static const int mMoveAccelEndCount; //æ­©ãå§‹ã‚ã¦åŠ é€ŸãŒçµ‚äº†ã™ã‚‹ã¾ã§ã®æ™‚é–“
+	static const float mMaxMoveSpeed; //æœ€å¤§ç§»å‹•é€Ÿåº¦
+	static const float mJumpHeight; //æœ€å¤§é«˜åº¦
+	static const int mCameraDelayCount; //ã‚¸ãƒ£ãƒ³ãƒ—é–‹å§‹å¾Œä½•ãƒ•ãƒ¬ãƒ¼ãƒ ã§æ•µã®æ–¹ã‚’å‘ãã‹
+	static const float mCameraDistanceZ; //ä½•ãƒ¡ãƒ¼ãƒˆãƒ«å¾Œã‚ã‹ã‚‰å†™ã™ï¼Ÿ
+	static const float mCameraDistanceY; //è¦‹ä¸‹ã‚ã—å…·åˆ
+	static const float mCameraTargetDistanceZ; //æ³¨è¦–ç‚¹ã¯ä½•ãƒ¡ãƒ¼ãƒˆãƒ«å…ˆï¼Ÿ
+	static const float mTurnSpeed; //æ—‹å›é€Ÿåº¦
+	static const int mMaxHitPoint; //æœ€å¤§ãƒ’ãƒƒãƒˆãƒã‚¤ãƒ³ãƒˆz
+	static const int mMaxEnergy; //æ­¦å™¨ãƒã‚¤ãƒ³ãƒˆæœ€å¤§å€¤
+	static const int mEnergyPerBullet; //ä¸€ç™ºã‚ãŸã‚Šã®æ¶ˆè²»ã‚¨ãƒãƒ«ã‚®ãƒ¼
+	static const int mEnergyCharge; //æ¯ãƒ•ãƒ¬ãƒ¼ãƒ æºœã¾ã‚‹ã‚¨ãƒãƒ«ã‚®ãƒ¼
+	static const float mLockOnAngleIn; //ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã™ã‚‹è§’åº¦
+	static const float mLockOnAngleOut; //ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã™ã‚‹è§’åº¦
 private:
 	void move( bool left, bool right, bool up, bool down );
 	void turn( bool left, bool right );
-	//vlƒ‹[ƒ`ƒ“Bƒ{ƒ^ƒ““ü—Í‚ğ•Ô‚·BƒvƒŒƒCƒ„[‘€ìƒLƒƒƒ‰‚È‚ç‚½‚¾“ü—Í‚ğæ‚é‚¾‚¯
+	//æ€è€ƒãƒ«ãƒ¼ãƒãƒ³ã€‚ãƒœã‚¿ãƒ³å…¥åŠ›ã‚’è¿”ã™ã€‚ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ“ä½œã‚­ãƒ£ãƒ©ãªã‚‰ãŸã å…¥åŠ›ã‚’å–ã‚‹ã ã‘
 	void think( bool* jump, bool* fire, bool* turn, bool* left, bool* right, bool* up, bool* down ) const;
 
 	Vector3 mPosition;
@@ -63,21 +63,21 @@ private:
 	int mBulletNumber;
 
 	int mCameraCount;
-	int mCount; //ˆÚ“®ŠJnŒã‰½ƒtƒŒ[ƒ€Œo‚Á‚½H
-	Vector3 mVelocity; //Œ»İ‚Ì•½–Ê‘¬“x
-	float mAngleVelocityY; //U‚èŒü‚«‘¬“x
+	int mCount; //ç§»å‹•é–‹å§‹å¾Œä½•ãƒ•ãƒ¬ãƒ¼ãƒ çµŒã£ãŸï¼Ÿ
+	Vector3 mVelocity; //ç¾åœ¨ã®å¹³é¢é€Ÿåº¦
+	float mAngleVelocityY; //æŒ¯ã‚Šå‘ãé€Ÿåº¦
 
 	enum Mode{
-		MODE_JUMP_UP, //ƒWƒƒƒ“ƒvã¸’†
-		MODE_JUMP_STAY, //ƒWƒƒƒ“ƒvã‹ó‚Å’â~’†
-		MODE_JUMP_FALL, //ƒWƒƒƒ“ƒv~‰º’†
-		MODE_ON_LAND, //’…’n‚µ‚Ä‚é
+		MODE_JUMP_UP, //ã‚¸ãƒ£ãƒ³ãƒ—ä¸Šæ˜‡ä¸­
+		MODE_JUMP_STAY, //ã‚¸ãƒ£ãƒ³ãƒ—ä¸Šç©ºã§åœæ­¢ä¸­
+		MODE_JUMP_FALL, //ã‚¸ãƒ£ãƒ³ãƒ—é™ä¸‹ä¸­
+		MODE_ON_LAND, //ç€åœ°ã—ã¦ã‚‹
 	};
 	Mode mMode;
 
-	int mHitPoint; //‘Ì—Í
-	int mEnergy; //•Ší‚ğŒ‚‚Â‚Ì‚É•K—v‚ÈƒGƒlƒ‹ƒM[
-	bool mLockOn; //ƒƒbƒNƒIƒ“‚µ‚Ä‚Ü‚·‚©H
+	int mHitPoint; //ä½“åŠ›
+	int mEnergy; //æ­¦å™¨ã‚’æ’ƒã¤ã®ã«å¿…è¦ãªã‚¨ãƒãƒ«ã‚®ãƒ¼
+	bool mLockOn; //ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã¾ã™ã‹ï¼Ÿ
 };
 
 #endif

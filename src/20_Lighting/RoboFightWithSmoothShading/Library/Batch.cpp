@@ -15,7 +15,7 @@
 using namespace GameLib;
 using namespace GameLib::PseudoXml;
 
-//•Ö—˜ŠÖ”ŒQ
+//ä¾¿åˆ©é–¢æ•°ç¾¤
 namespace {
 
 double clamp( double a, double min, double max ){
@@ -28,17 +28,17 @@ double clamp( double a, double min, double max ){
 	}
 }
 
-//’¸“_’PˆÊƒ‰ƒCƒeƒBƒ“ƒO
+//é ‚ç‚¹å˜ä½ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°
 unsigned light(
 const Vector3& lightVector,
 const Vector3& lightColor,
 const Vector3& ambient,
 const Vector3& diffuseColor,
 const Vector3& normal ){
-	//–@ü‚Æƒ‰ƒCƒgƒxƒNƒ^‚Ì“àÏ‚ğæ‚éB
+	//æ³•ç·šã¨ãƒ©ã‚¤ãƒˆãƒ™ã‚¯ã‚¿ã®å†…ç©ã‚’å–ã‚‹ã€‚
 	double cosine = lightVector.dot( normal );
 	if ( cosine < 0.0 ){
-		cosine = 0.0; //•‰‚Í‚È‚¢
+		cosine = 0.0; //è² ã¯ãªã„
 	}
 	Vector3 c;
 	c.x = lightColor.x * diffuseColor.x * cosine + ambient.x;
@@ -54,30 +54,30 @@ const Vector3& normal ){
 }
 
 void computeNormal( Vector3* normals, const VertexBuffer& vb, const IndexBuffer& ib ){
-	//–@ü‚ğ0‰Šú‰»
+	//æ³•ç·šã‚’0åˆæœŸåŒ–
 	for ( int i = 0; i < vb.size(); ++i ){
 		normals[ i ].set( 0.0, 0.0, 0.0 );
 	}
-	//ŒvZŠJn
+	//è¨ˆç®—é–‹å§‹
 	int triangleNumber = ib.size() / 3;	
 	for ( int i = 0; i < triangleNumber; ++i ){
 		unsigned i0 = ib.index( i * 3 + 0 );
 		unsigned i1 = ib.index( i * 3 + 1 );
 		unsigned i2 = ib.index( i * 3 + 2 );
 
-		//–@ü‚ğŒvZ‚µ‚æ‚¤B
+		//æ³•ç·šã‚’è¨ˆç®—ã—ã‚ˆã†ã€‚
 		Vector3 n;
 		Vector3 p01, p02;
 		p01.setSub( *vb.position( i1 ), *vb.position( i0 ) );
 		p02.setSub( *vb.position( i2 ), *vb.position( i0 ) );
 		n.setCross( p01, p02 );
-		n *= 1.f / n.length(); //’·‚³‚ğ1‚É‚µ‚Ä
-		//‚±‚ê‚ğ’¸“_‚²‚Æ‚Ì–@ü‚É‰ÁZ
+		n *= 1.f / n.length(); //é•·ã•ã‚’1ã«ã—ã¦
+		//ã“ã‚Œã‚’é ‚ç‚¹ã”ã¨ã®æ³•ç·šã«åŠ ç®—
 		normals[ i0 ] += n;
 		normals[ i1 ] += n;
 		normals[ i2 ] += n;
 	}
-	//ÅŒã‚É‘S•”’·‚³‚ğ1‚É
+	//æœ€å¾Œã«å…¨éƒ¨é•·ã•ã‚’1ã«
 	for ( int i = 0; i < vb.size(); ++i ){
 		normals[ i ] *= 1.f / normals[ i ].length();
 	}
@@ -91,7 +91,7 @@ mVertexBuffer( 0 ),
 mIndexBuffer( 0 ),
 mTexture( 0 ),
 mBlendMode( Framework::BLEND_OPAQUE ){
-	//–¼‘O‚â‚ç‚È‚É‚â‚ç‚ğ”²‚­
+	//åå‰ã‚„ã‚‰ãªã«ã‚„ã‚‰ã‚’æŠœã
 	int an = e.attributeNumber();
 	for ( int i = 0; i < an; ++i ){
 		Attribute a = e.attribute( i );
@@ -115,7 +115,7 @@ mBlendMode( Framework::BLEND_OPAQUE ){
 			}
 		}
 	}
-	//–@üŒvZ
+	//æ³•ç·šè¨ˆç®—
 	mNormals = new Vector3[ mVertexBuffer->size() ];
 	computeNormal( mNormals, *mVertexBuffer, *mIndexBuffer );
 }
@@ -146,42 +146,42 @@ const Vector3& lightColor,
 const Vector3& ambient,
 const Vector3& diffuseColor ) const {
 	Framework f = Framework::instance();
-	//ƒeƒNƒXƒ`ƒƒƒZƒbƒg
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚»ãƒƒãƒˆ
 	if ( mTexture ){
 		mTexture->set();
 	}else{
-		f.setTexture( 0 ); //‹ó‚ÌƒeƒNƒXƒ`ƒƒ
+		f.setTexture( 0 ); //ç©ºã®ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	}
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhƒZƒbƒg
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰ã‚»ãƒƒãƒˆ
 	f.setBlendMode( mBlendMode );
-	//ƒuƒŒƒ“ƒhƒ‚[ƒh‚É‚æ‚Á‚ÄZƒoƒbƒtƒ@‘‚«‚İ‚Ìƒtƒ‰ƒO‚ğOn,Off
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰ã«ã‚ˆã£ã¦Zãƒãƒƒãƒ•ã‚¡æ›¸ãè¾¼ã¿ã®ãƒ•ãƒ©ã‚°ã‚’On,Off
 	if ( mBlendMode == Framework::BLEND_OPAQUE ){
 		f.enableDepthWrite( true );
 	}else{
 		f.enableDepthWrite( false );
 	}
-	//ZƒeƒXƒg‚Í‚¢‚Â‚àOn
+	//Zãƒ†ã‚¹ãƒˆã¯ã„ã¤ã‚‚On
 	f.enableDepthTest( true );
-	//’¸“_‚ğƒ[ƒ‹ƒh‚É•ÏŠ·
+	//é ‚ç‚¹ã‚’ãƒ¯ãƒ¼ãƒ«ãƒ‰ã«å¤‰æ›
 	int vertexNumber = mVertexBuffer->size();
 	Vector3* wv = new Vector3[ vertexNumber ];
 	for ( int i = 0;i < vertexNumber; ++i ){
 		wm.multiply( &wv[ i ], *mVertexBuffer->position( i ) );
 	}
-	//’¸“_‚ğÅI•ÏŠ·
+	//é ‚ç‚¹ã‚’æœ€çµ‚å¤‰æ›
 	double* fv = new double[ vertexNumber * 4 ]; //final vertices
 	for ( int i = 0;i < vertexNumber; ++i ){
 		pvm.multiply( &fv[ i * 4 ], wv[ i ] );
 	}
-	//–@ü‚ğƒ[ƒ‹ƒhÀ•W‚É•ÏŠ·‚·‚éB–{“–‚Íƒ[ƒ‹ƒhs—ñ‚Å‚Í‚¢‚¯‚È‚¢B
-	Matrix34 wmNormal = wm; //ƒ[ƒ‹ƒhs—ñ‚©‚çˆÚ“®‚ğ”²‚¢‚½‚à‚Ì
+	//æ³•ç·šã‚’ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã«å¤‰æ›ã™ã‚‹ã€‚æœ¬å½“ã¯ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã§ã¯ã„ã‘ãªã„ã€‚
+	Matrix34 wmNormal = wm; //ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‹ã‚‰ç§»å‹•ã‚’æŠœã„ãŸã‚‚ã®
 	wmNormal.m03 = wmNormal.m13 = wmNormal.m23 = 0.0;
-	//‘O‚à‚Á‚Ä’¸“_’PˆÊ‚ÅF‚ğŒˆ‚ß‚Ä‚¨‚­
+	//å‰ã‚‚ã£ã¦é ‚ç‚¹å˜ä½ã§è‰²ã‚’æ±ºã‚ã¦ãŠã
 	unsigned* colors = new unsigned[ vertexNumber ];
 	for ( int i = 0; i < vertexNumber; ++i ){
 		Vector3 wm; //world normal
-		wmNormal.multiply( &wm, mNormals[ i ] ); //ƒ[ƒ‹ƒhÀ•W‚É•ÏŠ·
-		wm *= 1.f / wm.length(); //’·‚³‚ğ1‚É‚µ‚Ä
+		wmNormal.multiply( &wm, mNormals[ i ] ); //ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã«å¤‰æ›
+		wm *= 1.f / wm.length(); //é•·ã•ã‚’1ã«ã—ã¦
 		colors[ i ] = light( lightVector, lightColor, ambient, diffuseColor, wm );
 	}
 	int triangleNumber = mIndexBuffer->size() / 3;

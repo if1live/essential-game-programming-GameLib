@@ -6,7 +6,7 @@
 #include "GameLib/Framework.h"
 using namespace std;
 
-namespace{ //–³–¼namespace‚Ìg—p‚ÉŠµ‚ê‚æ‚¤B
+namespace{ //ç„¡ånamespaceã®ä½¿ç”¨ã«æ…£ã‚Œã‚ˆã†ã€‚
 	int getInt( ifstream& in ){
 		unsigned char buffer[ 4 ];
 		in.read( reinterpret_cast< char* >( buffer ), 4 );
@@ -32,7 +32,7 @@ File::~File(){
 }
 
 bool File::isReady() const {
-	return ( mData != 0 ); //ƒ[ƒh‚ªI‚í‚é‚Ü‚Åƒf[ƒ^‚É’l‚Í“ü‚ç‚È‚¢‚Ì‚Å‚±‚ê‚ÅƒI[ƒP[
+	return ( mData != 0 ); //ãƒ­ãƒ¼ãƒ‰ãŒçµ‚ã‚ã‚‹ã¾ã§ãƒ‡ãƒ¼ã‚¿ã«å€¤ã¯å…¥ã‚‰ãªã„ã®ã§ã“ã‚Œã§ã‚ªãƒ¼ã‚±ãƒ¼
 }
 
 int File::getSize() const {
@@ -46,29 +46,29 @@ const char* File::getData() const {
 }
 
 Archive::Archive( const char* name ){
-	//ƒtƒ@ƒCƒ‹‚ğŠJ‚¯‚Äƒƒ“ƒo‚É‚Á‚Ä‚¨‚­B
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã‘ã¦ãƒ¡ãƒ³ãƒã«æŒã£ã¦ãŠãã€‚
 	mStream = new ifstream( name, ifstream::binary );
-	//––”ö‚©‚ç4ƒoƒCƒg‘O‚ÖˆÚ“®
+	//æœ«å°¾ã‹ã‚‰4ãƒã‚¤ãƒˆå‰ã¸ç§»å‹•
 	mStream->seekg( -4, ifstream::end );
-	//getInt()‚Í4ƒoƒCƒg“Ç‚İ‚ñ‚Åint‚ğ•Ô‚·ŠÖ”‚Æ‚µ‚æ‚¤B
+	//getInt()ã¯4ãƒã‚¤ãƒˆèª­ã¿è¾¼ã‚“ã§intã‚’è¿”ã™é–¢æ•°ã¨ã—ã‚ˆã†ã€‚
 	int tableBegin = getInt( *mStream );
-	//ƒe[ƒuƒ‹æ“ª‚ÖˆÚ“®
+	//ãƒ†ãƒ¼ãƒ–ãƒ«å…ˆé ­ã¸ç§»å‹•
 	mStream->seekg( tableBegin, ifstream::beg );
-	//4ƒoƒCƒg“Ç‚Ş‚Æƒtƒ@ƒCƒ‹”
+	//4ãƒã‚¤ãƒˆèª­ã‚€ã¨ãƒ•ã‚¡ã‚¤ãƒ«æ•°
 	mFileNumber = getInt( *mStream );
-	//Œã‚Íƒ‹[ƒv‚Å‰ñ‚µ‚È‚ª‚ç“Ç‚ñ‚Å‚¢‚­B
+	//å¾Œã¯ãƒ«ãƒ¼ãƒ—ã§å›ã—ãªãŒã‚‰èª­ã‚“ã§ã„ãã€‚
 	for ( int i = 0; i < mFileNumber; ++i ){
 		Entry e;
 		e.mPosition = getInt( *mStream );
 		e.mSize = getInt( *mStream );
 		int nameLength = getInt( *mStream );
-		//–¼‘O‚Íˆê’Uˆê”z—ñ‚É‚¢‚ê‚éB‚·‚®delete‚·‚é‚ªB
-		char* name = new char[ nameLength + 1 ]; //I’[NULL‚Å+1
+		//åå‰ã¯ä¸€æ—¦ä¸€æ™‚é…åˆ—ã«ã„ã‚Œã‚‹ã€‚ã™ãdeleteã™ã‚‹ãŒã€‚
+		char* name = new char[ nameLength + 1 ]; //çµ‚ç«¯NULLã§+1
 		mStream->read( name, nameLength );
-		name[ nameLength ] = '\0'; //I’[NULL
-		//mEntries‚Ímap< char*, Entry >
-		mEntries.insert( make_pair( name, e ) ); //map‚ÉŠi”[
-		//î•ñ‚ğ“f‚«o‚µ‚Ä‚İ‚æ‚¤B³‚µ‚¢‚©H
+		name[ nameLength ] = '\0'; //çµ‚ç«¯NULL
+		//mEntriesã¯map< char*, Entry >
+		mEntries.insert( make_pair( name, e ) ); //mapã«æ ¼ç´
+		//æƒ…å ±ã‚’åãå‡ºã—ã¦ã¿ã‚ˆã†ã€‚æ­£ã—ã„ã‹ï¼Ÿ
 //		GameLib::cout << e.mPosition << " " << e.mSize << " " << nameLength << " " << name << GameLib::endl;
 		SAFE_DELETE_ARRAY( name );
 	}
@@ -85,11 +85,11 @@ void Archive::read( File* f )  {
 		const Entry& e = it->second;
 		f->mData = new char[ e.mSize ]; 
 		f->mSize = e.mSize;
-		//êŠˆÚ“®
+		//å ´æ‰€ç§»å‹•
 		mStream->seekg( e.mPosition, ifstream::beg );
-		//“Ç‚İ‚İ
+		//èª­ã¿è¾¼ã¿
 		mStream->read( f->mData, e.mSize );
-	}else{ //‚È‚¢
+	}else{ //ãªã„
 		ASSERT( false );
 	}
 }
@@ -97,7 +97,7 @@ void Archive::read( File* f )  {
 Loader* Loader::mInstance = 0;
 
 Loader::Loader( const char* archiveName ) : mArchive( 0 ){
-	if ( archiveName ){ //ƒA[ƒJƒCƒu‚ª‚ ‚é‚æ‚¤‚Å‚·BŠJ‚¯‚Ä€”õ‚ğ‚·‚é‚Æ‚µ‚æ‚¤B
+	if ( archiveName ){ //ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–ãŒã‚ã‚‹ã‚ˆã†ã§ã™ã€‚é–‹ã‘ã¦æº–å‚™ã‚’ã™ã‚‹ã¨ã—ã‚ˆã†ã€‚
 		mArchive = new Archive( archiveName );
 	}
 }
@@ -132,15 +132,15 @@ void Loader::createFile( File** f, const char* filename ){
 }
 
 void Loader::destroyFile( File** f ){
-	if ( !( *f ) ){ //‚·‚Å‚É0B‚â‚é‚±‚Æ‚È‚¢B
+	if ( !( *f ) ){ //ã™ã§ã«0ã€‚ã‚„ã‚‹ã“ã¨ãªã„ã€‚
 		return;
 	}
 	typedef list< File* >::iterator It;
 	for ( It i = mFiles.begin(); i != mFiles.end(); ++i ){
-		if ( *i == *f ){ //Œ©‚Â‚©‚Á‚½B
-			SAFE_DELETE( *f ); //•¨‚ğÁ‚µ‚Ä
-			mFiles.erase( i ); //ƒŠƒXƒg‚©‚ç‚àÁ‚µ‚Ä
-			*f = 0; //ó‚¯æ‚èƒ|ƒCƒ“ƒ^‚ğ0‚É
+		if ( *i == *f ){ //è¦‹ã¤ã‹ã£ãŸã€‚
+			SAFE_DELETE( *f ); //ç‰©ã‚’æ¶ˆã—ã¦
+			mFiles.erase( i ); //ãƒªã‚¹ãƒˆã‹ã‚‰ã‚‚æ¶ˆã—ã¦
+			*f = 0; //å—ã‘å–ã‚Šãƒã‚¤ãƒ³ã‚¿ã‚’0ã«
 			break;
 		}
 	}
@@ -151,8 +151,8 @@ void Loader::update(){
 	typedef list< File* >::iterator It;
 	for ( It i = mFiles.begin(); i != mFiles.end(); ++i ){
 		File* f = *i;
-		if ( !f->isReady() ){ //I‚í‚Á‚Ä‚Ë‚¦Bƒ[ƒh‚·‚é‚æ
-			if ( mArchive ){ //ƒA[ƒJƒCƒu‚©‚ç
+		if ( !f->isReady() ){ //çµ‚ã‚ã£ã¦ã­ãˆã€‚ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ã‚ˆ
+			if ( mArchive ){ //ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–ã‹ã‚‰
 				mArchive->read( f );
 			}else{
 				ifstream in( f->mFilename.c_str(), ifstream::binary );

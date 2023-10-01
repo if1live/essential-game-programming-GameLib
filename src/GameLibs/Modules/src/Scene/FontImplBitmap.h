@@ -9,7 +9,7 @@
 namespace GameLib{
 namespace Scene{
 
-namespace{ //–³–¼
+namespace{ //ç„¡å
 
 class FontImplBitmap : public Font::Impl{
 public:
@@ -22,12 +22,12 @@ public:
 	mTextures( 0 ),
 	mTextureNumber( textureNumber ),
 	mCharNumber( bitmapCharNumber ){
-		//ƒeƒNƒXƒ`ƒƒ‚ğˆê‹“‚É¶¬‚µ‚Ü‚·B
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ä¸€æŒ™ã«ç”Ÿæˆã—ã¾ã™ã€‚
 		mTextures = NEW Texture[ mTextureNumber ];
 		for ( int i = 0; i < mTextureNumber; ++i ){
 			mTextures[ i ] = Texture::create( textureFileNames[ i ] );
 		}
-		//•¶šƒe[ƒuƒ‹‚ğ¶¬B‚Â‚¢‚Å‚Éheight‚ÌÅ‘å’l‚ğ‹‚ß‚é
+		//æ–‡å­—ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’ç”Ÿæˆã€‚ã¤ã„ã§ã«heightã®æœ€å¤§å€¤ã‚’æ±‚ã‚ã‚‹
 		mChars = NEW Char[ mCharNumber ];
 		for ( int i = 0; i < mCharNumber; ++i ){
 			Char& src = mChars[ i ];
@@ -53,12 +53,12 @@ public:
 	mTextures( 0 ),
 	mTextureNumber( textureNumber ),
 	mCharNumber( bitmapCharNumber ){
-		//ƒeƒNƒXƒ`ƒƒ‚ğˆê‹“‚É¶¬‚µ‚Ü‚·B
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ä¸€æŒ™ã«ç”Ÿæˆã—ã¾ã™ã€‚
 		mTextures = NEW Texture[ mTextureNumber ];
 		for ( int i = 0; i < mTextureNumber; ++i ){
 			mTextures[ i ] = Texture::create( textureFileData[ i ], textureFileSizes[ i ] );
 		}
-		//•¶šƒe[ƒuƒ‹‚ğ¶¬B‚Â‚¢‚Å‚Éheight‚ÌÅ‘å’l‚ğ‹‚ß‚é
+		//æ–‡å­—ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’ç”Ÿæˆã€‚ã¤ã„ã§ã«heightã®æœ€å¤§å€¤ã‚’æ±‚ã‚ã‚‹
 		mChars = NEW Char[ mCharNumber ];
 		for ( int i = 0; i < mCharNumber; ++i ){
 			Char& src = mChars[ i ];
@@ -84,7 +84,7 @@ public:
 	Vector2* uvTopLeft,
 	Vector2* uvBottomRight,
 	int code ){
-		//“ñ•ªŒŸõ’v‚µ‚Ü‚·‚æ
+		//äºŒåˆ†æ¤œç´¢è‡´ã—ã¾ã™ã‚ˆ
 		int first = 0;
 		int last = mCharNumber - 1;
 		while ( last > first ){
@@ -99,7 +99,7 @@ public:
 			}
 		}
 		if ( mChars[ first ].mCode == code ){
-			//”­Œ©B
+			//ç™ºè¦‹ã€‚
 			Char& c = mChars[ first ];
 			*texture = mTextures[ c.mTexturePage ];
 			float tw = static_cast< float >( texture->width() );
@@ -125,12 +125,12 @@ private:
 		bool operator<( const Char& a ) const {
 			return ( mCode < a.mCode );
 		}
-		unsigned char mTexturePage; //ƒeƒNƒXƒ`ƒƒƒy[ƒW
-		unsigned char mHeight; //‚‚³î•ñ(ƒsƒNƒZƒ‹)
-		unsigned char mWidth; //•î•ñ(ƒsƒNƒZƒ‹)
-		unsigned short mCode; //•¶šƒR[ƒh(SHIFT_JISŒÀ’è)
-		unsigned short mX; //¶’[
-		unsigned short mY; //ã’[
+		unsigned char mTexturePage; //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒšãƒ¼ã‚¸
+		unsigned char mHeight; //é«˜ã•æƒ…å ±(ãƒ”ã‚¯ã‚»ãƒ«)
+		unsigned char mWidth; //å¹…æƒ…å ±(ãƒ”ã‚¯ã‚»ãƒ«)
+		unsigned short mCode; //æ–‡å­—ã‚³ãƒ¼ãƒ‰(SHIFT_JISé™å®š)
+		unsigned short mX; //å·¦ç«¯
+		unsigned short mY; //ä¸Šç«¯
 	};
 	int mCharHeight;
 	Texture* mTextures;

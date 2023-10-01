@@ -24,7 +24,7 @@ template< class T >	inline SharedPtr< T >::~SharedPtr(){
 			delete mReference->mPointer;
 			delete mReference;
 		}
-		mReference = 0; //‚¢‚¸‚ê‚É‚¹‚æƒ|ƒCƒ“ƒ^‚Í0‚É‚·‚éB
+		mReference = 0; //ã„ãšã‚Œã«ã›ã‚ˆãƒã‚¤ãƒ³ã‚¿ã¯0ã«ã™ã‚‹ã€‚
 	}
 }
 
@@ -32,16 +32,16 @@ template< class T >	inline SharedPtr< T >& SharedPtr< T >::operator=( T* p ){
 	if ( mReference ){
 		if ( mReference->decrement() == 0 ){
 			delete mReference->mPointer;
-			if ( p ){ //ƒ|ƒCƒ“ƒ^‚ª‹ó‚Å‚È‚¯‚ê‚Î
-				mReference->mPointer = p; //‘¼‚É’N‚àg‚Á‚Ä‚È‚¢‚Ì‚Å‚±‚ê‚ğ‘‚«Š·‚¦‚Ä—¬—pB
+			if ( p ){ //ãƒã‚¤ãƒ³ã‚¿ãŒç©ºã§ãªã‘ã‚Œã°
+				mReference->mPointer = p; //ä»–ã«èª°ã‚‚ä½¿ã£ã¦ãªã„ã®ã§ã“ã‚Œã‚’æ›¸ãæ›ãˆã¦æµç”¨ã€‚
 				mReference->mCount = 1;
-			}else{ //’N‚àg‚í‚È‚¢‚Ì‚ÅÁ‚·
+			}else{ //èª°ã‚‚ä½¿ã‚ãªã„ã®ã§æ¶ˆã™
 				delete mReference;
 				mReference = 0;
 			}
-		}else if ( p ){ //ƒ|ƒCƒ“ƒ^‚ª‹ó‚Å‚È‚¢‚Ì‚ÅV‚½‚É¶¬B‚¾‚ªAreference‚Í‘¼‚©‚çŒ©‚Ä‚¢‚é‚Ì‚ÅG‚ç‚È‚¢B
+		}else if ( p ){ //ãƒã‚¤ãƒ³ã‚¿ãŒç©ºã§ãªã„ã®ã§æ–°ãŸã«ç”Ÿæˆã€‚ã ãŒã€referenceã¯ä»–ã‹ã‚‰è¦‹ã¦ã„ã‚‹ã®ã§è§¦ã‚‰ãªã„ã€‚
 			mReference = NEW Reference( p );
-		}else{ //ƒ|ƒCƒ“ƒ^‚ª‹óBreference‚Í‘¼‚©‚çŒ©‚Ä‚¢‚é‚Ì‚ÅG‚ç‚¸AQÆŠÖŒW‚ğØ‚éB
+		}else{ //ãƒã‚¤ãƒ³ã‚¿ãŒç©ºã€‚referenceã¯ä»–ã‹ã‚‰è¦‹ã¦ã„ã‚‹ã®ã§è§¦ã‚‰ãšã€å‚ç…§é–¢ä¿‚ã‚’åˆ‡ã‚‹ã€‚
 			mReference = 0;
 		}
 	}else if ( p ){
@@ -52,15 +52,15 @@ template< class T >	inline SharedPtr< T >& SharedPtr< T >::operator=( T* p ){
 
 template< class T >	inline SharedPtr< T >& SharedPtr< T >::operator=( const SharedPtr< T >& p ){
 	if ( mReference ){
-		if ( mReference->decrement() == 0 ){ //ˆá‚¤‚Í0‚É‚È‚Á‚½‚çŠJ•ú
+		if ( mReference->decrement() == 0 ){ //é•ã†æ™‚ã¯0ã«ãªã£ãŸã‚‰é–‹æ”¾
 			delete mReference->mPointer;
 			delete mReference;
 			mReference = 0;
 		}
 	}
-	//·‚µ‘Ö‚¦
+	//å·®ã—æ›¿ãˆ
 	mReference = p.mReference;
-	if ( mReference ){ //ƒ‚ƒm‚ª‚ ‚ê‚ÎƒCƒ“ƒNƒŠƒƒ“ƒg
+	if ( mReference ){ //ãƒ¢ãƒãŒã‚ã‚Œã°ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 		mReference->increment();
 	}
 	return *this;
@@ -86,7 +86,7 @@ template< class T >	inline const T* SharedPtr< T >::operator->() const {
 	return ( mReference ) ? mReference->mPointer : 0;
 }
 
-//ƒ|ƒCƒ“ƒ^‚ğ‚»‚Ì‚Ü‚Ü•Ô‚·‚Æˆ«—p‚³‚ê‚é‹°‚ê‚ª‚ ‚é‚Ì‚ÅA”ñƒ[ƒ‚È‚ç0xffffffff‚ğ•Ô‚·B
+//ãƒã‚¤ãƒ³ã‚¿ã‚’ãã®ã¾ã¾è¿”ã™ã¨æ‚ªç”¨ã•ã‚Œã‚‹æã‚ŒãŒã‚ã‚‹ã®ã§ã€éã‚¼ãƒ­ãªã‚‰0xffffffffã‚’è¿”ã™ã€‚
 template< class T >	inline SharedPtr< T >::operator void*() const {
 	T* p = ( mReference ) ? mReference->mPointer : 0;
 	return ( p ) ? reinterpret_cast< void* >( ~0 ) : 0;
@@ -113,7 +113,7 @@ template< class T > inline int SharedPtr< T >::Reference::decrement(){
 }
 
 
-//ˆÈ‰ºconst”Å
+//ä»¥ä¸‹constç‰ˆ
 template< class T > inline ConstSharedPtr< T >::ConstSharedPtr(){
 }
 

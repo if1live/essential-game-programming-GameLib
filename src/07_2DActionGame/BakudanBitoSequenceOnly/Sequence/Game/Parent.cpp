@@ -16,7 +16,7 @@ namespace Game{
 
 Parent::Parent() : 
 mState( 0 ),
-mStageID( 1 ), //Å‰‚Í1–Ê
+mStageID( 1 ), //æœ€åˆã¯1é¢
 mLife( INITIALI_LIFE_NUMBER ),
 mNextSequence( NEXT_NONE ),
 mClear( 0 ),
@@ -25,7 +25,7 @@ mPause( 0 ),
 mPlay( 0 ),
 mFailure( 0 ),
 mJudge( 0 ){
-	//Å‰‚ÍReady
+	//æœ€åˆã¯Ready
 	mReady = new Ready();
 }
 
@@ -53,15 +53,15 @@ void Parent::update( GrandParent* parent ){
 	}else if ( mJudge ){
 		mJudge->update( this );
 	}else{
-		HALT( "bakana!" ); //‚ ‚è‚¦‚È‚¢
+		HALT( "bakana!" ); //ã‚ã‚Šãˆãªã„
 	}
-	//‘JˆÚ”»’è
+	//é·ç§»åˆ¤å®š
 	switch ( mNextSequence ){
 		case NEXT_CLEAR:
 			ASSERT( !mClear && !mReady && !mPause && mPlay && !mFailure && !mJudge );
 			SAFE_DELETE( mPlay );
 			mClear = new Clear();
-			++mStageID; //Ÿ‚ÌƒXƒe[ƒW‚Ö
+			++mStageID; //æ¬¡ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã¸
 			break;
 		case NEXT_READY:
 			ASSERT( !mReady && !mPause && !mPlay && ( mFailure || mClear ||  mJudge ) );
@@ -129,7 +129,7 @@ int Parent::lifeNumber() const {
 	return mLife;
 }
 
-//Parent::Mode‚ğParent::Mode‚É•ÏŠ·B‰º—¬ƒV[ƒPƒ“ƒX‚ÉParent‚ğŒ©‚¹‚È‚¢B
+//Parent::Modeã‚’Parent::Modeã«å¤‰æ›ã€‚ä¸‹æµã‚·ãƒ¼ã‚±ãƒ³ã‚¹ã«Parentã‚’è¦‹ã›ãªã„ã€‚
 Parent::Mode Parent::mode() const {
 	Mode r = MODE_NONE;
 	switch ( GrandParent::instance()->mode() ){
@@ -142,14 +142,14 @@ Parent::Mode Parent::mode() const {
 
 void Parent::startLoading(){
 	SAFE_DELETE( mState );
-	//ƒ[ƒh‚µ‚Ü‚·
+	//ãƒ­ãƒ¼ãƒ‰ã—ã¾ã™
 	std::ostringstream oss;
 	if ( mode() == MODE_1P ){
 		oss << "data/stageData/" << mStageID << ".txt";
 	}else{
-		oss << "data/stageData/9.txt"; //“ñl—pƒXƒe[ƒW‚Ì‚©‚í‚è‚É9–Ê‚ğƒ[ƒh 
+		oss << "data/stageData/9.txt"; //äºŒäººç”¨ã‚¹ãƒ†ãƒ¼ã‚¸ã®ã‹ã‚ã‚Šã«9é¢ã‚’ãƒ­ãƒ¼ãƒ‰ 
 	}
-	File file( oss.str().c_str() ); //‚±‚ê‚Åconst char*‚ªæ‚ê‚é
+	File file( oss.str().c_str() ); //ã“ã‚Œã§const char*ãŒå–ã‚Œã‚‹
 	mState = new State( file.data(), file.size() );
 }
 

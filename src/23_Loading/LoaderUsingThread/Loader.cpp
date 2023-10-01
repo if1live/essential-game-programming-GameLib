@@ -20,7 +20,7 @@ File::~File(){
 }
 
 bool File::isReady() const {
-	return ( mData != 0 ); //ƒ[ƒh‚ªI‚í‚é‚Ü‚Åƒf[ƒ^‚É’l‚Í“ü‚ç‚È‚¢‚Ì‚Å‚±‚ê‚ÅƒI[ƒP[
+	return ( mData != 0 ); //ãƒ­ãƒ¼ãƒ‰ãŒçµ‚ã‚ã‚‹ã¾ã§ãƒ‡ãƒ¼ã‚¿ã«å€¤ã¯å…¥ã‚‰ãªã„ã®ã§ã“ã‚Œã§ã‚ªãƒ¼ã‚±ãƒ¼
 }
 
 int File::getSize() const {
@@ -35,8 +35,8 @@ const char* File::getData() const {
 
 void LoadingThread::operator()(){
 	bool end = false;
-	while ( !end ){ //–³ŒÀƒ‹[ƒv
-		Threading::sleep( 1 ); //ˆêü‚²‚Æ‚É‚µ‚Î‚ç‚­Q‚éBƒOƒ‹ƒOƒ‹‰ñ‚é‚Ì‚ğ–h‚¬‚½‚¢B
+	while ( !end ){ //ç„¡é™ãƒ«ãƒ¼ãƒ—
+		Threading::sleep( 1 ); //ä¸€å‘¨ã”ã¨ã«ã—ã°ã‚‰ãå¯ã‚‹ã€‚ã‚°ãƒ«ã‚°ãƒ«å›ã‚‹ã®ã‚’é˜²ããŸã„ã€‚
 		Loader::instance()->update( &end );
 	}
 }
@@ -47,21 +47,21 @@ Loader::Loader() : mThread( 0 ), mEndRequest( false ){
 	mThread = new LoadingThread;
 	mLock = Mutex::create();
 
-	//0‚¤‚ß
+	//0ã†ã‚
 	for ( int i = 0; i < MAX_FILE_NUMBER; ++i ){
 		mFiles[ i ] = 0;
 	}
 }
 
 Loader::~Loader(){
-	//ƒXƒŒƒbƒh‚ğ~‚ß‚é
+	//ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’æ­¢ã‚ã‚‹
 	mLock.lock();
 	mEndRequest = true;
 	mLock.unlock();
-	//ƒXƒŒƒbƒh‚ğdeleteB’†‚Åwait()‚µ‚ÄI—¹‚ğ‘Ò‚Â
+	//ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’deleteã€‚ä¸­ã§wait()ã—ã¦çµ‚äº†ã‚’å¾…ã¤
 	SAFE_DELETE( mThread );
 
-	//ƒŠƒXƒg‚ğ–•E
+	//ãƒªã‚¹ãƒˆã‚’æŠ¹æ®º
 	for ( int i = 0; i < MAX_FILE_NUMBER; ++i ){
 		if ( mFiles[ i ] ){
 			SAFE_DELETE( mFiles[ i ] );
@@ -84,11 +84,11 @@ void Loader::destroy(){
 
 void Loader::createFile( File** f, const char* filename ){
 	ASSERT( !( *f ) && "pointer must be NUL. " ); 
-	//‹ó‚¢‚Ä‚éêŠ‚ğ’T‚·
+	//ç©ºã„ã¦ã‚‹å ´æ‰€ã‚’æ¢ã™
 	for ( int i = 0; i < MAX_FILE_NUMBER; ++i ){
 		if ( !mFiles[ i ] ){
 			*f = new File( filename );
-			mLock.lock(); //‘«‚·‘O‚É“ü‚é
+			mLock.lock(); //è¶³ã™å‰ã«å…¥ã‚‹
 			mFiles[ i ] = *f;
 			mLock.unlock();
 			break;
@@ -97,16 +97,16 @@ void Loader::createFile( File** f, const char* filename ){
 }
 
 void Loader::destroyFile( File** f ){
-	if ( !( *f ) ){ //‚·‚Å‚É0B‚â‚é‚±‚Æ‚È‚¢B
+	if ( !( *f ) ){ //ã™ã§ã«0ã€‚ã‚„ã‚‹ã“ã¨ãªã„ã€‚
 		return;
 	}
-	//’T‚·
+	//æ¢ã™
 	for ( int i = 0; i < MAX_FILE_NUMBER; ++i ){
 		if ( mFiles[ i ] == *f ){
-			mLock.lock(); //Á‚·‘O‚É“ü‚é
+			mLock.lock(); //æ¶ˆã™å‰ã«å…¥ã‚‹
 			SAFE_DELETE( mFiles[ i ] );
 			mLock.unlock();
-			*f = 0; //ó‚¯æ‚èƒ|ƒCƒ“ƒ^‚ğ0‚É
+			*f = 0; //å—ã‘å–ã‚Šãƒã‚¤ãƒ³ã‚¿ã‚’0ã«
 			break;
 		}
 	}
@@ -115,37 +115,37 @@ void Loader::destroyFile( File** f ){
 
 void Loader::update( bool* endOut ){
 	for ( int i = 0; i < MAX_FILE_NUMBER; ++i ){
-		string filename; //ƒtƒ@ƒCƒ‹–¼‚ğæ‚èo‚·‚½‚ß‚ÉB
+		string filename; //ãƒ•ã‚¡ã‚¤ãƒ«åã‚’å–ã‚Šå‡ºã™ãŸã‚ã«ã€‚
 
 		mLock.lock();
-		if ( mEndRequest ){ //I‚í‚ê‚ÆŒ¾‚í‚ê‚Ä‚¢‚éBŸ‚Ìƒ‹[ƒv‚Å”²‚¯‚Ü‚·B
+		if ( mEndRequest ){ //çµ‚ã‚ã‚Œã¨è¨€ã‚ã‚Œã¦ã„ã‚‹ã€‚æ¬¡ã®ãƒ«ãƒ¼ãƒ—ã§æŠœã‘ã¾ã™ã€‚
 			*endOut = true;
 		}
 		if ( mFiles[ i ] && !mFiles[ i ]->isReady() ){
 			filename = mFiles[ i ]->mFilename;
 		}
-		mLock.unlock(); //ƒ[ƒhI—¹‚©‚Ç‚¤‚©‚¾‚¯Œ©‚Äˆê‰ño‚é
+		mLock.unlock(); //ãƒ­ãƒ¼ãƒ‰çµ‚äº†ã‹ã©ã†ã‹ã ã‘è¦‹ã¦ä¸€å›å‡ºã‚‹
 
-		if ( filename.size() > 0 ){ //ƒtƒ@ƒCƒ‹–¼‚ª“ü‚Á‚Ä‚éBƒ[ƒh‚µ‚ë‚Æ‚¢‚¤‚±‚Æ‚¾B
+		if ( filename.size() > 0 ){ //ãƒ•ã‚¡ã‚¤ãƒ«åãŒå…¥ã£ã¦ã‚‹ã€‚ãƒ­ãƒ¼ãƒ‰ã—ã‚ã¨ã„ã†ã“ã¨ã ã€‚
 			int size;
 			char* data = 0;
-			//ˆê’Uƒ[ƒJƒ‹‚Ì•Ï”‚Éƒ[ƒh‚·‚éB‚»‚¤‚·‚ê‚ÎƒNƒŠƒeƒBƒJƒ‹ƒZƒNƒVƒ‡ƒ“‚É“ü‚ç‚¸‚ÉÏ‚ŞB
+			//ä¸€æ—¦ãƒ­ãƒ¼ã‚«ãƒ«ã®å¤‰æ•°ã«ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ã€‚ãã†ã™ã‚Œã°ã‚¯ãƒªãƒ†ã‚£ã‚«ãƒ«ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã«å…¥ã‚‰ãšã«æ¸ˆã‚€ã€‚
 			ifstream in( filename.c_str(), ifstream::binary );
 			in.seekg( 0, ifstream::end );
 			size = static_cast< int >( in.tellg() ); 
 			in.seekg( 0, ifstream::beg );
 			data = new char[ size ];
 			in.read( data, size );
-			//ƒ[ƒh‚ªI‚í‚Á‚Ä‚©‚çƒNƒŠƒeƒBƒJƒ‹ƒZƒNƒVƒ‡ƒ“‚É“ü‚éB“ü‚è‚Á‚Ï‚È‚µ‚¾‚ÆŒƒ‚µ‚­«”\‚ª—‚¿‚éB
+			//ãƒ­ãƒ¼ãƒ‰ãŒçµ‚ã‚ã£ã¦ã‹ã‚‰ã‚¯ãƒªãƒ†ã‚£ã‚«ãƒ«ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã«å…¥ã‚‹ã€‚å…¥ã‚Šã£ã±ãªã—ã ã¨æ¿€ã—ãæ€§èƒ½ãŒè½ã¡ã‚‹ã€‚
 			mLock.lock();
-			if ( mFiles[ i ] ){ //‚à‚¤‚È‚¢‚©‚à‚µ‚ê‚È‚¢Bƒ`ƒFƒbƒNB
+			if ( mFiles[ i ] ){ //ã‚‚ã†ãªã„ã‹ã‚‚ã—ã‚Œãªã„ã€‚ãƒã‚§ãƒƒã‚¯ã€‚
 				mFiles[ i ]->mData = data;
-				data = 0; //ŠÇ—Œ ‚ğ“n‚µ‚½‚Ì‚¾‚©‚ç0‚ÉB
+				data = 0; //ç®¡ç†æ¨©ã‚’æ¸¡ã—ãŸã®ã ã‹ã‚‰0ã«ã€‚
 				mFiles[ i ]->mSize = size;
 			}
 			mLock.unlock();
-			if ( data ){ //‚à‚µƒf[ƒ^‚ª‚Ü‚¾‚ ‚é‚Æ‚¢‚¤‚±‚Æ‚ÍAã‚Ìif‚É“ü‚ê‚È‚©‚Á‚½‚Æ‚¢‚¤‚±‚Æ‚¾‚©‚ç”jŠüB
-				//delete‚Í’x‚¢‚Ì‚ÅƒNƒŠƒeƒBƒJƒ‹ƒZƒNƒVƒ‡ƒ“‚É“ü‚ê‚½‚­‚È‚©‚Á‚½‚Ì‚¾B
+			if ( data ){ //ã‚‚ã—ãƒ‡ãƒ¼ã‚¿ãŒã¾ã ã‚ã‚‹ã¨ã„ã†ã“ã¨ã¯ã€ä¸Šã®ifã«å…¥ã‚Œãªã‹ã£ãŸã¨ã„ã†ã“ã¨ã ã‹ã‚‰ç ´æ£„ã€‚
+				//deleteã¯é…ã„ã®ã§ã‚¯ãƒªãƒ†ã‚£ã‚«ãƒ«ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã«å…¥ã‚ŒãŸããªã‹ã£ãŸã®ã ã€‚
 				SAFE_DELETE_ARRAY( data );
 			}
 		}

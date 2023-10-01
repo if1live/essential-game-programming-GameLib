@@ -34,17 +34,17 @@ public:
 	mThreads( 0 ), 
 	mThreadNumber( 0 ), 
 	mEndRequest( false ),
-	mCoreNumber( 1 ){ //Å’á‚Å‚à1
-		mQueueSemaphore = Semaphore::create( 0, 0x7fffffff ); //Å‘å’l‚Í–³ŒÀ
+	mCoreNumber( 1 ){ //æœ€ä½ã§ã‚‚1
+		mQueueSemaphore = Semaphore::create( 0, 0x7fffffff ); //æœ€å¤§å€¤ã¯ç„¡é™
 		mLock = Mutex::create();
 
-		//ƒRƒA”æ“¾
-#ifdef NDEBUG //Debug”Å‚Å‚Í©“®‚Å‚ÍˆêŒÂ‚µ‚©ì‚ç‚È‚¢BŠJ”­ƒ}ƒVƒ“‚Å“®‚¢‚Ä‘¼‚Å“®‚©‚È‚¢A‚ğ–h‚®‚½‚ßB
+		//ã‚³ã‚¢æ•°å–å¾—
+#ifdef NDEBUG //Debugç‰ˆã§ã¯è‡ªå‹•ã§ã¯ä¸€å€‹ã—ã‹ä½œã‚‰ãªã„ã€‚é–‹ç™ºãƒã‚·ãƒ³ã§å‹•ã„ã¦ä»–ã§å‹•ã‹ãªã„ã€ã‚’é˜²ããŸã‚ã€‚
 		HANDLE process = GetCurrentProcess();
 		DWORD processMask;
 		DWORD systemMask;
 		BOOL succeeded = GetProcessAffinityMask( process, &processMask, &systemMask );
-		if ( succeeded != 0 ){ //¸”s‚³‚ê‚Ä‚à¢‚é‚¯‚Ç‚È...
+		if ( succeeded != 0 ){ //å¤±æ•—ã•ã‚Œã¦ã‚‚å›°ã‚‹ã‘ã©ãª...
 			for ( int i = 1; i < 32; ++i ){
 				if ( processMask & ( 1 << i ) ){
 					++mCoreNumber;
@@ -52,26 +52,26 @@ public:
 			}
 		}
 #endif
-		mThreadNumber = additionalThreadNumber + mCoreNumber + 1; //Å’á‚Å‚àƒRƒA”+1(ƒ[ƒ_—p)‚Íì‚é
+		mThreadNumber = additionalThreadNumber + mCoreNumber + 1; //æœ€ä½ã§ã‚‚ã‚³ã‚¢æ•°+1(ãƒ­ãƒ¼ãƒ€ç”¨)ã¯ä½œã‚‹
 		mThreads = new HANDLE[ mThreadNumber ];
-		//‹N“®
+		//èµ·å‹•
 		for ( int i = 0; i < mThreadNumber; ++i ){
 			unsigned dummy;
 			mThreads[ i ] = reinterpret_cast< HANDLE >( _beginthreadex( NULL, 0, execute, this, 0, &dummy ) );
-			SetThreadPriority( mThreads[ i ], THREAD_PRIORITY_BELOW_NORMAL ); //—Dæ“x‚¿‚å‚Á‚Æ‰º
+			SetThreadPriority( mThreads[ i ], THREAD_PRIORITY_BELOW_NORMAL ); //å„ªå…ˆåº¦ã¡ã‚‡ã£ã¨ä¸‹
 		}
 	}
 	~ManagerImpl(){
-		//I—¹‘Ò‚¿
+		//çµ‚äº†å¾…ã¡
 		mLock.lock();
 		mEndRequest = true;
 		mLock.unlock();
 
-		//ƒXƒŒƒbƒhI—¹‘Ò‚¿
+		//ã‚¹ãƒ¬ãƒƒãƒ‰çµ‚äº†å¾…ã¡
 		for ( int i = 0; i < mThreadNumber; ++i ){
 			while ( true ){
-				//I‚í‚ç‚È‚¢ŠÔƒZƒ}ƒtƒH‚ğ‘‚â‚µ‚È‚ª‚ç‚®‚é‚®‚é‘Ò‚ÂBdecrease‚Å‘Ò‚Á‚Ä‚é‚Ì‚Åincrease‚µ‚È‚¢‚Æ‹N‚«‚È‚¢B
-				mQueueSemaphore.increase(); //ƒLƒ…[‚É‰½‚©“ü‚Á‚Ä‚¢‚é‚æ‚¤‚ÉŒ©‚¹‚©‚¯‚Ä‹N‚±‚·
+				//çµ‚ã‚ã‚‰ãªã„é–“ã‚»ãƒãƒ•ã‚©ã‚’å¢—ã‚„ã—ãªãŒã‚‰ãã‚‹ãã‚‹å¾…ã¤ã€‚decreaseã§å¾…ã£ã¦ã‚‹ã®ã§increaseã—ãªã„ã¨èµ·ããªã„ã€‚
+				mQueueSemaphore.increase(); //ã‚­ãƒ¥ãƒ¼ã«ä½•ã‹å…¥ã£ã¦ã„ã‚‹ã‚ˆã†ã«è¦‹ã›ã‹ã‘ã¦èµ·ã“ã™
 				if ( WAIT_OBJECT_0 == WaitForSingleObject( mThreads[ i ], 1 ) ){ 
 					CloseHandle( mThreads[ i ] );
 					mThreads[ i ] = 0;
@@ -88,7 +88,7 @@ public:
 	}
 	void execute(){
 		while ( true ){
-			mQueueSemaphore.decrease(); //ƒLƒ…[’Ç‰Á‚ğ‘Ò‚Â
+			mQueueSemaphore.decrease(); //ã‚­ãƒ¥ãƒ¼è¿½åŠ ã‚’å¾…ã¤
 
 			mLock.lock();
 			if ( mEndRequest ){
@@ -96,11 +96,11 @@ public:
 				break;
 			}
 			Entry e = mQueue.front();
-			mQueue.pop_front(); //ƒLƒ…[‚©‚çæ‚èo‚·
+			mQueue.pop_front(); //ã‚­ãƒ¥ãƒ¼ã‹ã‚‰å–ã‚Šå‡ºã™
 			mLock.unlock();
 
-			( *( e.mThread ) )(); //Às
-			e.mFinished->set(); //I—¹ƒtƒ‰ƒO—§‚Ä‚é
+			( *( e.mThread ) )(); //å®Ÿè¡Œ
+			e.mFinished->set(); //çµ‚äº†ãƒ•ãƒ©ã‚°ç«‹ã¦ã‚‹
 		}
 	}
 	void add( Thread* t, Event* finishFlag ){
@@ -110,18 +110,18 @@ public:
 		mQueue.push_back( e );
 		mLock.unlock();
 
-		mQueueSemaphore.increase(); //‘«‚µ‚Ü‚µ‚½
+		mQueueSemaphore.increase(); //è¶³ã—ã¾ã—ãŸ
 	}
 	int getCoreNumber() const {
 		return mCoreNumber;
 	}
 private:
-	HANDLE* mThreads; //ƒXƒŒƒbƒhƒnƒ“ƒhƒ‹”z—ñ
+	HANDLE* mThreads; //ã‚¹ãƒ¬ãƒƒãƒ‰ãƒãƒ³ãƒ‰ãƒ«é…åˆ—
 	int mThreadNumber;
 	bool mEndRequest;
 	Semaphore mQueueSemaphore;
 	Mutex mLock;
-	list< Entry > mQueue; //—v‹‘Ò‚¿s—ñ
+	list< Entry > mQueue; //è¦æ±‚å¾…ã¡è¡Œåˆ—
 	int mCoreNumber;
 };
 extern ManagerImpl* gManagerImpl;

@@ -7,19 +7,19 @@ namespace XFile{
 
 class Parser;
 
-//XFile�N���X
+//XFileクラス
 /*!
-XFile����f�[�^�\�����\�z����B�������\�z�����f�[�^�\���ւ͒��ڃA�N�Z�X�͂ł����A
-xml�ɂ��Ă��܂��Ă���xml�p�[�T�œǂݎ�邱�ƂɂȂ�B
-����́AXFile�𒼐ڂ̃��f���t�H�[�}�b�g�Ƃ��Ďg�킸�A
-�P�Ȃ钆�ԃt�H�[�}�b�g�Ƃ������Ă��Ȃ�����ł���B
+XFileからデータ構造を構築する。ただし構築したデータ構造へは直接アクセスはできず、
+xmlにしてしまってからxmlパーサで読み取ることになる。
+これは、XFileを直接のモデルフォーマットとして使わず、
+単なる中間フォーマットとしか見ていないからである。
 */
 class Document{
 public:
 	Document( const char* data, int size );
 	~Document();
 	bool isValid() const;
-	///xml������ɕϊ��B����ȊO�̂��Ƃ͂ł��Ȃ��B
+	///xml文字列に変換。これ以外のことはできない。
 	void convertToString( std::string* ) const;
 private:
 	Parser* mParser;

@@ -11,7 +11,7 @@
 #include "GameLib/PseudoXml/Element.h"
 #include "GameLib/PseudoXml/Attribute.h"
 #include "GameLib/PseudoXml/Document.h"
-using namespace GameLib::PseudoXml; //‚©‚Ô‚Á‚Ä‚È‚¢‚µusing‚µ‚¿‚á‚¦
+using namespace GameLib::PseudoXml; //ã‹ã¶ã£ã¦ãªã„ã—usingã—ã¡ã‚ƒãˆ
 
 GraphicsDatabase::GraphicsDatabase( Element& e ) : 
 mVertexBuffers( 0 ),
@@ -44,14 +44,14 @@ mTreeNumber( 0 ),
 mAnimationNumber( 0 ){
 	Document document = Document::create( filename );
 	while ( !document.isReady() ){
-		; //ƒ[ƒh‘Ò‚¿
+		; //ãƒ­ãƒ¼ãƒ‰å¾…ã¡
 	}
 	Element root = document.root();
 	createFromElement( root );
 }
 
 GraphicsDatabase::~GraphicsDatabase(){
-	//ˆË‘¶‚µ‚Ä‚¢‚é‚à‚Ì‚©‚çÁ‚·‚Ì‚ÅAÅ‰‚ÍTree
+	//ä¾å­˜ã—ã¦ã„ã‚‹ã‚‚ã®ã‹ã‚‰æ¶ˆã™ã®ã§ã€æœ€åˆã¯Tree
 	if ( mTrees ){
 		for ( int i = 0; i < mTreeNumber; ++i ){
 			SAFE_DELETE( mTrees[ i ] );
@@ -59,28 +59,28 @@ GraphicsDatabase::~GraphicsDatabase(){
 		SAFE_DELETE_ARRAY( mTrees );
 	}
 
-	//Ÿƒoƒbƒ`B
+	//æ¬¡ãƒãƒƒãƒã€‚
 	if ( mBatches ){
 		for ( int i = 0; i < mBatchNumber; ++i ){
 			SAFE_DELETE( mBatches[ i ] );
 		}
 		SAFE_DELETE_ARRAY( mBatches );
 	}
-	//ƒeƒNƒXƒ`ƒƒ
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	if ( mTextures ){
 		for ( int i = 0; i < mTextureNumber; ++i ){
 			SAFE_DELETE( mTextures[ i ] );
 		}
 		SAFE_DELETE_ARRAY( mTextures );
 	}
-	//ƒCƒ“ƒfƒNƒXƒoƒbƒtƒ@
+	//ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡
 	if ( mIndexBuffers ){
 		for ( int i = 0; i < mIndexBufferNumber; ++i ){
 			SAFE_DELETE( mIndexBuffers[ i ] );
 		}
 		SAFE_DELETE_ARRAY( mIndexBuffers );
 	}
-	//’¸“_ƒoƒbƒtƒ@
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 	if ( mVertexBuffers ){
 		for ( int i = 0; i < mVertexBufferNumber; ++i ){
 			SAFE_DELETE( mVertexBuffers[ i ] );
@@ -169,7 +169,7 @@ const Animation* GraphicsDatabase::animation( const char* name ) const {
 
 void GraphicsDatabase::createFromElement( Element& e ){
 	int n = e.childNumber();
-	//‚Ü‚¸”‚ğ”‚¦‚é
+	//ã¾ãšæ•°ã‚’æ•°ãˆã‚‹
 	for ( int i = 0; i < n; ++i ){
 		Element child = e.child( i );
 		string name = child.name();
@@ -187,7 +187,7 @@ void GraphicsDatabase::createFromElement( Element& e ){
 			++mAnimationNumber;
 		}
 	}
-	//”z—ñŠm•Û
+	//é…åˆ—ç¢ºä¿
 	if ( mVertexBufferNumber > 0 ){
 		mVertexBuffers = new VertexBuffer*[ mVertexBufferNumber ];
 	}
@@ -206,7 +206,7 @@ void GraphicsDatabase::createFromElement( Element& e ){
 	if ( mAnimationNumber > 0 ){
 		mAnimations = new Animation*[ mAnimationNumber ];
 	}
-	//¡‰½ŒÂ–Ú‚É‘‚«‚ñ‚Å‚¢‚é‚©
+	//ä»Šä½•å€‹ç›®ã«æ›¸ãè¾¼ã‚“ã§ã„ã‚‹ã‹
 	int vertexBufferPos = 0;
 	int indexBufferPos = 0;
 	int texturePos = 0;
@@ -214,7 +214,7 @@ void GraphicsDatabase::createFromElement( Element& e ){
 	int treePos = 0;
 	int animationPos = 0;
 
-	//‰½‚É‚àˆË‘¶‚µ‚Ä‚¢‚È‚¢‚à‚Ì‚ğì‚é
+	//ä½•ã«ã‚‚ä¾å­˜ã—ã¦ã„ãªã„ã‚‚ã®ã‚’ä½œã‚‹
 	for ( int i = 0; i < n; ++i ){
 		Element child = e.child( i );
 		string name = child.name();
@@ -232,7 +232,7 @@ void GraphicsDatabase::createFromElement( Element& e ){
 			++animationPos;
 		}
 	}
-	//Batch‚ÍIndexBuffer,VertexBuffer,Texture‚ÉˆË‘¶‚µ‚Ä‚¢‚é‚Ì‚ÅŒã‚Å‚â‚é
+	//Batchã¯IndexBuffer,VertexBuffer,Textureã«ä¾å­˜ã—ã¦ã„ã‚‹ã®ã§å¾Œã§ã‚„ã‚‹
 	for ( int i = 0; i < n; ++i ){
 		Element child = e.child( i );
 		string name = child.name();
@@ -241,7 +241,7 @@ void GraphicsDatabase::createFromElement( Element& e ){
 			++batchPos;
 		}
 	}
-	//Tree‚ÍBatch‚ÉˆË‘¶‚µ‚Ä‚¢‚é‚Ì‚Å‚³‚ç‚ÉŒã‚Å‚â‚é
+	//Treeã¯Batchã«ä¾å­˜ã—ã¦ã„ã‚‹ã®ã§ã•ã‚‰ã«å¾Œã§ã‚„ã‚‹
 	for ( int i = 0; i < n; ++i ){
 		Element child = e.child( i );
 		string name = child.name();

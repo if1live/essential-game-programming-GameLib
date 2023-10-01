@@ -11,9 +11,9 @@ using namespace GameLib::PseudoXml;
 AnimationNode::AnimationNode( Element& e ) :
 mCurves( 0 ),
 mCurveNumber( 0 ){
-	ASSERT( string( "Node" ) == e.name() ); //Node‚¾‚æ‚ËH
-	ASSERT( e.childNumber() > 0 ); //ƒJ[ƒuˆêŒÂ‚Í‚ ‚é‚æ‚ËH
-	//–¼‘Oæ“¾
+	ASSERT( string( "Node" ) == e.name() ); //Nodeã ã‚ˆã­ï¼Ÿ
+	ASSERT( e.childNumber() > 0 ); //ã‚«ãƒ¼ãƒ–ä¸€å€‹ã¯ã‚ã‚‹ã‚ˆã­ï¼Ÿ
+	//åå‰å–å¾—
 	int an = e.attributeNumber();
 	const string nameStr( "name" );
 	for ( int i = 0; i < an; ++i ){
@@ -56,7 +56,7 @@ double time ) const {
 			case Curve::TYPE_SCALE_X: scale->x = v; break;
 			case Curve::TYPE_SCALE_Y: scale->y = v; break;
 			case Curve::TYPE_SCALE_Z: scale->z = v; break;
-			default: ASSERT( false ); break; //‚ ‚è‚È‚¢
+			default: ASSERT( false ); break; //ã‚ã‚Šãªã„
 		}
 	}
 }

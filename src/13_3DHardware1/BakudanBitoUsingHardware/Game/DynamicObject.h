@@ -10,54 +10,54 @@ public:
 		TYPE_PLAYER,
 		TYPE_ENEMY,
 
-		TYPE_NONE, //€‚ñ‚Å‚Ü‚·
+		TYPE_NONE, //æ­»ã‚“ã§ã¾ã™
 	};
 	DynamicObject();
 	void set( int x, int y, Type );
 	void draw( const Image* ) const;
-	//ˆÚ“®
+	//ç§»å‹•
 	void move( const int* wallsX, int* wallsY, int wallNumber );
-	//‚Ç‚±‚Ìƒ}ƒX‚É’†S‚ª‚ ‚é‚Ì‚©‚½‚¸‚Ë‚éB
+	//ã©ã“ã®ãƒã‚¹ã«ä¸­å¿ƒãŒã‚ã‚‹ã®ã‹ãŸãšã­ã‚‹ã€‚
 	void getCell( int* x, int* y ) const;
-	//dx,dy‚¾‚¯ˆÚ“®‚µ‚½Û‚Éd‚È‚Á‚Ä‚¢‚éƒ}ƒXÀ•W‚ğ”z—ñ‚É“ü‚ê‚Ä•Ô‚·B
-	//ˆø”‚Íint[4]‚ª“ñ‚ÂB–ß‚è’l‚Í“ü‚ê‚½”B1,2,4‚Ì‚Ç‚ê‚©B
+	//dx,dyã ã‘ç§»å‹•ã—ãŸéš›ã«é‡ãªã£ã¦ã„ã‚‹ãƒã‚¹åº§æ¨™ã‚’é…åˆ—ã«å…¥ã‚Œã¦è¿”ã™ã€‚
+	//å¼•æ•°ã¯int[4]ãŒäºŒã¤ã€‚æˆ»ã‚Šå€¤ã¯å…¥ã‚ŒãŸæ•°ã€‚1,2,4ã®ã©ã‚Œã‹ã€‚
 	int getIntersectionCell( int* xArray, int* yArray, int dx, int dy ) const;
-	//G‚Á‚Ä‚¢‚éÅ‘å4ƒ}ƒX‚ğó‚¯æ‚Á‚Ä‰“š‚ğs‚¤B
+	//è§¦ã£ã¦ã„ã‚‹æœ€å¤§4ãƒã‚¹ã‚’å—ã‘å–ã£ã¦å¿œç­”ã‚’è¡Œã†ã€‚
 	void doCollisionReactionToStatic( StaticObject** o, int cellNumber );
 	void doCollisionReactionToDynamic( DynamicObject* );
 
-	//DynamicObject‚Æ‚ÌŒğ·”»’è
+	//DynamicObjectã¨ã®äº¤å·®åˆ¤å®š
 	bool isIntersect( const DynamicObject& ) const;
-	//•Ç—p
+	//å£ç”¨
 	bool isIntersectWall( int wallCellX, int wallCellY );
 
-	//•Ö—˜ŠÖ”ŒQ
-	bool hasBombButtonPressed() const;	//”š’eƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚©’²‚×‚é
+	//ä¾¿åˆ©é–¢æ•°ç¾¤
+	bool hasBombButtonPressed() const;	//çˆ†å¼¾ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸã‹èª¿ã¹ã‚‹
 	bool isPlayer() const;
 	bool isEnemy() const;
-	void die(); //€‚É‚Ü‚·(mType‚ğNONE‚É‚·‚é‚±‚Æ‚Å•\Œ»)
-	bool isDead() const; //€‚ñ‚Å‚Ü‚·‚©H
+	void die(); //æ­»ã«ã¾ã™(mTypeã‚’NONEã«ã™ã‚‹ã“ã¨ã§è¡¨ç¾)
+	bool isDead() const; //æ­»ã‚“ã§ã¾ã™ã‹ï¼Ÿ
 
-	//’¼Ú‚¢‚¶‚è‚½‚»‚¤‚È‚à‚Ì‚Íprivate‚É‚Í‚µ‚È‚¢B•p”É‚ÉState‚©‚çg‚¤‚à‚Ì‚¾‚©‚ç‚¾B
+	//ç›´æ¥ã„ã˜ã‚ŠãŸãã†ãªã‚‚ã®ã¯privateã«ã¯ã—ãªã„ã€‚é »ç¹ã«Stateã‹ã‚‰ä½¿ã†ã‚‚ã®ã ã‹ã‚‰ã ã€‚
 	Type mType;
-	//ƒvƒŒƒCƒ„[ê—p
-	int mBombPower; //”š”­—Í
-	int mBombNumber; //”š’e”
-	int mPlayerID; //ƒvƒŒƒCƒ„[”Ô†
-	//”š’e‚ğ’u‚­lê—p
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼å°‚ç”¨
+	int mBombPower; //çˆ†ç™ºåŠ›
+	int mBombNumber; //çˆ†å¼¾æ•°
+	int mPlayerID; //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·
+	//çˆ†å¼¾ã‚’ç½®ãäººå°‚ç”¨
 	int mLastBombX[ 2 ];
 	int mLastBombY[ 2 ];
 private:
-	//•Ç—p
+	//å£ç”¨
 	static bool isIntersectWall( int x, int y, int wallCellX, int wallCellY );
-	//¡ƒtƒŒ[ƒ€‚ÌˆÚ“®—Ê‚ğæ“¾
+	//ä»Šãƒ•ãƒ¬ãƒ¼ãƒ ã®ç§»å‹•é‡ã‚’å–å¾—
 	void getVelocity( int* dx, int* dy ) const;
-	//ˆÚ“®•ûŒü‚ğæ“¾
+	//ç§»å‹•æ–¹å‘ã‚’å–å¾—
 	void getDirection( int* dx, int* dy ) const;
-	//À•W(“à•”’PˆÊ)
+	//åº§æ¨™(å†…éƒ¨å˜ä½)
 	int mX;
 	int mY;
-	//“Gê—p
+	//æ•µå°‚ç”¨
 	int mDirectionX;
 	int mDirectionY;
 };

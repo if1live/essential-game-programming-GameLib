@@ -16,7 +16,7 @@ Stage::Stage() : mDatabase( 0 ), mModel( 0 ), mTriangles( 0 ){
 	mDatabase = new GraphicsDatabase( "stage.txt" );
 	mModel = mDatabase->createModel( "draw" );
 
-	//Õ“Ëˆ——pƒf[ƒ^ì¬
+	//è¡çªå‡¦ç†ç”¨ãƒ‡ãƒ¼ã‚¿ä½œæˆ
 	const Batch* batch = mDatabase->batch( "collision" );
 	const IndexBuffer* ib = batch->indexBuffer();
 	const VertexBuffer* vb = batch->vertexBuffer();
@@ -46,7 +46,7 @@ void Stage::draw( const Matrix44& pvm ) const {
 
 void Stage::restrictMove( Vector3* v, const Vector3& p ) const {
 	Vector3 vCopy = *v;
-	//‘æˆêƒ‹[ƒv
+	//ç¬¬ä¸€ãƒ«ãƒ¼ãƒ—
 	double t = numeric_limits< double >::max();
 	int minI = -1;
 	for ( int i = 0; i < mTriangleNumber; ++i ){
@@ -56,10 +56,10 @@ void Stage::restrictMove( Vector3* v, const Vector3& p ) const {
 			minI = i;
 		}
 	}
-	if ( t >= 0.f && t <= 1.f ){ //“–‚½‚Á‚½
+	if ( t >= 0.f && t <= 1.f ){ //å½“ãŸã£ãŸ
 		mTriangles[ minI ].restrictMove( &vCopy, p );
 	}
-	//‘æ“ñƒ‹[ƒv
+	//ç¬¬äºŒãƒ«ãƒ¼ãƒ—
 	t = numeric_limits< double >::max();
 	minI = -1;
 	for ( int i = 0; i < mTriangleNumber; ++i ){
@@ -69,10 +69,10 @@ void Stage::restrictMove( Vector3* v, const Vector3& p ) const {
 			minI = i;
 		}
 	}
-	if ( t >= 0.f && t <= 1.f ){ //“–‚½‚Á‚½
+	if ( t >= 0.f && t <= 1.f ){ //å½“ãŸã£ãŸ
 		mTriangles[ minI ].restrictMove( &vCopy, p );
 	}
-	//‘æOƒ‹[ƒvB“–‚½‚é‚æ‚¤‚È‚ç‚È‚©‚Á‚½‚±‚Æ‚É‚µ‚ÄI‚í‚éB
+	//ç¬¬ä¸‰ãƒ«ãƒ¼ãƒ—ã€‚å½“ãŸã‚‹ã‚ˆã†ãªã‚‰ãªã‹ã£ãŸã“ã¨ã«ã—ã¦çµ‚ã‚ã‚‹ã€‚
 	t = numeric_limits< double >::max();
 	minI = -1;
 	for ( int i = 0; i < mTriangleNumber; ++i ){

@@ -6,20 +6,20 @@ class Matrix34;
 
 class Matrix44{
 public:
-	Matrix44(); //ƒfƒtƒHƒ‹ƒg‚ÅƒRƒ“ƒXƒgƒ‰ƒNƒg
-	//“§‹•ÏŠ·s—ñ¶¬
+	Matrix44(); //ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
+	//é€è¦–å¤‰æ›è¡Œåˆ—ç”Ÿæˆ
 	void setPerspectiveTransform( 
 		double fieldOfViewY,
 		double windowWidth,
 		double windowHeight,
 		double nearClip,
 		double farClip,
-		bool multiplyWToZByHand = false ); //©—Í‚ÅZ‚ÉW‚ğ‚©‚¯‚é‚©
-	//ƒxƒNƒ^‚ÆŠ|‚¯Z
+		bool multiplyWToZByHand = false ); //è‡ªåŠ›ã§Zã«Wã‚’ã‹ã‘ã‚‹ã‹
+	//ãƒ™ã‚¯ã‚¿ã¨æ›ã‘ç®—
 	void multiply( double* out, const Vector3& in ) const;
-	//s—ñ‚ÆŠ|‚¯Z
+	//è¡Œåˆ—ã¨æ›ã‘ç®—
 	void operator*=( const Matrix34& );
-	//Š|‚¯ZŒ‹‰Ê‚ğŠi”[
+	//æ›ã‘ç®—çµæœã‚’æ ¼ç´
 	void setMul( const Matrix44&, const Matrix34& );
 private:
 	double m00, m01, m02, m03;

@@ -10,7 +10,7 @@
 using namespace GameLib::PseudoXml;
 
 VertexBuffer::VertexBuffer( Element& e ){
-	//ƒGƒ‰[ƒ`ƒFƒbƒN‘S‘R‚µ‚Ä‚Ü‚¹‚ñ
+	//ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯å…¨ç„¶ã—ã¦ã¾ã›ã‚“
 	mSize = e.childNumber();
 	if ( mSize > 0 ){
 		mVertexBuffer = GameLib::Graphics::VertexBuffer::create( mSize );
@@ -22,7 +22,7 @@ VertexBuffer::VertexBuffer( Element& e ){
 			v[ i ].mColor = 0xffffffff;
 
 			Element vertex = e.child( i );
-			//ƒAƒgƒŠƒrƒ…[ƒg‚©‚ç”²‚«o‚·
+			//ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆã‹ã‚‰æŠœãå‡ºã™
 			int an = vertex.attributeNumber();
 			for ( int j = 0; j < an; ++j ){
 				Attribute a = vertex.attribute( j );
@@ -38,7 +38,7 @@ VertexBuffer::VertexBuffer( Element& e ){
 		}
 		mVertexBuffer.unlock( &v );
 	}
-	//–¼‘O‚ğ”²‚­
+	//åå‰ã‚’æŠœã
 	int an = e.attributeNumber();
 	for ( int i = 0; i < an; ++i ){
 		Attribute a = e.attribute( i );
@@ -50,7 +50,7 @@ VertexBuffer::VertexBuffer( Element& e ){
 }
 
 VertexBuffer::~VertexBuffer(){
-	//e‚ªÁ‚¦‚é‚Æ’¸“_ƒoƒbƒtƒ@‚àˆê‚ÉÁ‚¦‚é
+	//è¦ªãŒæ¶ˆãˆã‚‹ã¨é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚‚ä¸€ç·’ã«æ¶ˆãˆã‚‹
 }
 
 int VertexBuffer::size() const {

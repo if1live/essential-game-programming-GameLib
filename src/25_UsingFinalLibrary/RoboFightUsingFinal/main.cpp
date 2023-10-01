@@ -26,7 +26,7 @@ Robo* gRobo[ 2 ];
 Stage* gStage;
 int gTime;
 bool gPlaying = false;
-const int TIME_LIMIT = 90; //90•b
+const int TIME_LIMIT = 90; //90ç§’
 
 Vector3 gAmbient( 0.2f, 0.3f, 0.4f );
 GameLib::Scene::PrimitiveRenderer gPrimitiveRenderer;
@@ -37,15 +37,15 @@ void drawRect( Vector2* p, unsigned c1, unsigned c2 ){
 	for ( int i = 0; i < 4; ++i ){
 		p4[ i ].x = p[ i ].x;
 		p4[ i ].y = p[ i ].y;
-		p4[ i ].z = 0.0; //z‚Í0ŒÅ’è
-		p4[ i ].w = 1.0; //w‚Í1ŒÅ’è
+		p4[ i ].z = 0.0; //zã¯0å›ºå®š
+		p4[ i ].w = 1.0; //wã¯1å›ºå®š
 	}
 	gPrimitiveRenderer.addTransformedTriangle( p4[ 0 ], p4[ 1 ], p4[ 2 ], c1, c1, c2 );
 	gPrimitiveRenderer.addTransformedTriangle( p4[ 3 ], p4[ 1 ], p4[ 2 ], c2, c1, c2 );
 }
 
 
-//ƒ†[ƒUÀ‘•ŠÖ”B’†g‚ÍmainLoop()‚É
+//ãƒ¦ãƒ¼ã‚¶å®Ÿè£…é–¢æ•°ã€‚ä¸­èº«ã¯mainLoop()ã«
 namespace GameLib{
 	void Framework::configure( Configuration* c ){
 		c->enableVSync( true );
@@ -70,7 +70,7 @@ namespace GameLib{
 			++gTime;
 		}
 
-		//0”Ôƒƒ{‚©‚çƒJƒƒ‰s—ñƒQƒbƒg
+		//0ç•ªãƒ­ãƒœã‹ã‚‰ã‚«ãƒ¡ãƒ©è¡Œåˆ—ã‚²ãƒƒãƒˆ
 		Matrix44 pvm;
 		pvm.setPerspectiveTransform( 45.f, 
 			static_cast< float >( width() ),
@@ -79,11 +79,11 @@ namespace GameLib{
 			10000.f );
 		Matrix34 vm;
 		Vector3 eyePosition;
-		gRobo[ 0 ]->getView( &vm, &eyePosition ); //ƒrƒ…[s—ñ‚Íƒƒ{‚Éì‚Á‚Ä‚à‚ç‚¤
+		gRobo[ 0 ]->getView( &vm, &eyePosition ); //ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã¯ãƒ­ãƒœã«ä½œã£ã¦ã‚‚ã‚‰ã†
 		pvm *= vm;
 
-		//•`‰æ
-		//ƒOƒ[ƒoƒ‹‚Èƒ‰ƒCƒeƒBƒ“ƒOİ’è
+		//æç”»
+		//ã‚°ãƒ­ãƒ¼ãƒãƒ«ãªãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°è¨­å®š
 		Graphics::Manager gm = Graphics::Manager::instance();
 		gm.setProjectionViewMatrix( pvm );
 		gm.setEyePosition( eyePosition );
@@ -95,17 +95,17 @@ namespace GameLib{
 		Vector3 lightPos[ 4 ];
 		lightPos[ 0 ].set( 100000.f, 100000.f, 100000.f );
 		float lightIntensities[ 4 ];
-		lightIntensities[ 0 ] = lightPos[ 0 ].length(); //’·‚³‚ğ‹­“x‚É‚·‚ê‚ÎA‚¾‚¢‚½‚¢‚»‚Ì‹——£‚Å1‚É‚È‚é
-		//c‚èO‚Â‚Ìƒ‰ƒCƒg‚Í’e‚Ì‚Æ‚±‚ë‚É’u‚±‚¤‚©B
-		//ƒJƒƒ‰‚É‹ß‚¢‡‚É3‚Â‘I‚Ú‚¤B
+		lightIntensities[ 0 ] = lightPos[ 0 ].length(); //é•·ã•ã‚’å¼·åº¦ã«ã™ã‚Œã°ã€ã ã„ãŸã„ãã®è·é›¢ã§1ã«ãªã‚‹
+		//æ®‹ã‚Šä¸‰ã¤ã®ãƒ©ã‚¤ãƒˆã¯å¼¾ã®ã¨ã“ã‚ã«ç½®ã“ã†ã‹ã€‚
+		//ã‚«ãƒ¡ãƒ©ã«è¿‘ã„é †ã«3ã¤é¸ã¼ã†ã€‚
 		float nearestDistance[ 3 ];
 		int nearestIndex[ 3 ];
 		for ( int i = 0; i < 3; ++i ){
 			nearestDistance[ i ] = numeric_limits< float >::max();
 			nearestIndex[ i ] = -1;
 		}
-		//‹——£‚ğ‘ª‚è‚È‚ª‚çÅ¬‚ğO‚Âæ“¾
-		//100‚Íƒƒ{‚ ‚½‚è‚Ì’e‚Ì”‚ÌÅ‘å”B
+		//è·é›¢ã‚’æ¸¬ã‚ŠãªãŒã‚‰æœ€å°ã‚’ä¸‰ã¤å–å¾—
+		//100ã¯ãƒ­ãƒœã‚ãŸã‚Šã®å¼¾ã®æ•°ã®æœ€å¤§æ•°ã€‚
 		for ( int i = 0; i < 2; ++i ){
 			for ( int j = 0; j < 100; ++j ){
 				const Vector3* p = gRobo[ i ]->getBulletPosition( j );
@@ -149,7 +149,7 @@ namespace GameLib{
 			}
 		}
 		gm.setCullMode( Graphics::CULL_BACK );
-		//ƒ‰ƒCƒgİ’è
+		//ãƒ©ã‚¤ãƒˆè¨­å®š
 		for ( int i = 0; i < 4; ++i ){
 			gm.setLightPosition( i, lightPos[ i ] );
 			gm.setLightIntensity( i, lightIntensities[ i ] );
@@ -158,19 +158,19 @@ namespace GameLib{
 		gRobo[ 0 ]->draw();
 		gRobo[ 1 ]->draw();
 
-		//ˆÈ‰ºƒtƒƒ“ƒgƒGƒ“ƒh•`‰æ
-		//ƒ‚ƒfƒ‹•`x‰æ‚Å‚¢‚¶‚ç‚ê‚½‚à‚Ì‚ğŒ³‚É–ß‚·
+		//ä»¥ä¸‹ãƒ•ãƒ­ãƒ³ãƒˆã‚¨ãƒ³ãƒ‰æç”»
+		//ãƒ¢ãƒ‡ãƒ«æxç”»ã§ã„ã˜ã‚‰ã‚ŒãŸã‚‚ã®ã‚’å…ƒã«æˆ»ã™
 		gm.setDiffuseColor( Vector3( 1.f, 1.f, 1.f ) );
 		gm.setTransparency( 1.f );
 		gm.setLightingMode( Graphics::LIGHTING_NONE );
 
-		//•K—v‚Èî•ñ‚ğ”²‚¢‚Ä
+		//å¿…è¦ãªæƒ…å ±ã‚’æŠœã„ã¦
 		int hp0 = gRobo[ 0 ]->getHitPoint();
 		int hp1 = gRobo[ 1 ]->getHitPoint();
 		int e0 = gRobo[ 0 ]->getEnergy();
 		bool lockOn0 = gRobo[ 0 ]->getLockOn();
 
-		//ZƒeƒXƒg–³—pBƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒhON
+		//Zãƒ†ã‚¹ãƒˆç„¡ç”¨ã€‚ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰ON
 		gPrimitiveRenderer.enableDepthTest( false );
 		gPrimitiveRenderer.enableDepthWrite( false );
 		gPrimitiveRenderer.setBlendMode( Graphics::BLEND_LINEAR );
@@ -178,7 +178,7 @@ namespace GameLib{
 		Vector2 p[ 4 ];
 		unsigned c1;
 		unsigned c2;
-		//‘Ì—Íƒo[”wŒi
+		//ä½“åŠ›ãƒãƒ¼èƒŒæ™¯
 		p[ 0 ].set( -0.9f, 0.95f );
 		p[ 1 ].set( -0.9f, 0.87f );
 		p[ 2 ].set( 0.1f, 0.95f );
@@ -191,7 +191,7 @@ namespace GameLib{
 		p[ 3 ].set( 0.1f, 0.82f );
 		c1 = c2 = 0xff806040;
 		drawRect( p, c1, c2 );
-		//‘Ì—Íƒo[–{‘Ì
+		//ä½“åŠ›ãƒãƒ¼æœ¬ä½“
 		float length = static_cast< float >( hp0 ) / static_cast< float >( Robo::mMaxHitPoint );
 		p[ 0 ].set( -0.9f, 0.95f );
 		p[ 1 ].set( -0.9f, 0.87f );
@@ -208,16 +208,16 @@ namespace GameLib{
 		c1 = 0xffff4422;
 		c2 = 0xffffcc88;
 		drawRect( p, c1, c2 );
-		//•ŠíƒGƒlƒ‹ƒM[
-		//”wŒi
+		//æ­¦å™¨ã‚¨ãƒãƒ«ã‚®ãƒ¼
+		//èƒŒæ™¯
 		p[ 0 ].set( -0.1f, -0.7f );
 		p[ 1 ].set( -0.1f, -0.8f );
 		p[ 2 ].set( 0.1f, -0.7f );
 		p[ 3 ].set( 0.1f, -0.8f );
 		c1 = c2 = 0x80404040;
 		drawRect( p, c1, c2 );
-		//–{‘Ì
-		gPrimitiveRenderer.setBlendMode( Graphics::BLEND_ADDITIVE ); //‰ÁZ‚É‚µ‚Ä‚İ‚æ‚¤‚©‚È
+		//æœ¬ä½“
+		gPrimitiveRenderer.setBlendMode( Graphics::BLEND_ADDITIVE ); //åŠ ç®—ã«ã—ã¦ã¿ã‚ˆã†ã‹ãª
 		length = 0.2f * static_cast< float >( e0 ) / static_cast< float >( Robo::mMaxEnergy );
 		p[ 0 ].set( -0.1f, -0.7f );
 		p[ 1 ].set( -0.1f, -0.8f );
@@ -227,31 +227,31 @@ namespace GameLib{
 		c2 = 0x80ffff00;
 		drawRect( p, c1, c2 );
 
-		//ƒŒ[ƒ_[
+		//ãƒ¬ãƒ¼ãƒ€ãƒ¼
 		gPrimitiveRenderer.setBlendMode( Graphics::BLEND_LINEAR );
-		//”wŒi
+		//èƒŒæ™¯
 		p[ 0 ].set( 0.7f, 0.7f );
 		p[ 1 ].set( 0.7f, 0.9f );
 		p[ 2 ].set( 0.9f, 0.7f );
 		p[ 3 ].set( 0.9f, 0.9f );
 		c1 = c2 = 0x80404040;
 		drawRect( p, c1, c2 );
-		gPrimitiveRenderer.setBlendMode( Graphics::BLEND_ADDITIVE ); //‰ÁZ‚É‚µ‚Ä‚İ‚æ‚¤‚©
-		//©•ª
+		gPrimitiveRenderer.setBlendMode( Graphics::BLEND_ADDITIVE ); //åŠ ç®—ã«ã—ã¦ã¿ã‚ˆã†ã‹
+		//è‡ªåˆ†
 		Vector2 t;
 		t.set( gRobo[ 0 ]->position()->x, gRobo[ 0 ]->position()->z ); //x.z
-		t *= 0.002f; //+-50‚ÌƒXƒe[ƒW‚ğ0.2‚Ì‘å‚«‚³‚Ék¬‚·‚é‚ñ‚¾‚©‚çA0.2/100‚Å0.002
-		t += Vector2( 0.8f, 0.8f ); //(0.8,0.8)‚ª’†S‚È‚Ì‚¾‚©‚çA‚»‚ê‚ğ‘«‚·
+		t *= 0.002f; //+-50ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’0.2ã®å¤§ãã•ã«ç¸®å°ã™ã‚‹ã‚“ã ã‹ã‚‰ã€0.2/100ã§0.002
+		t += Vector2( 0.8f, 0.8f ); //(0.8,0.8)ãŒä¸­å¿ƒãªã®ã ã‹ã‚‰ã€ãã‚Œã‚’è¶³ã™
 		p[ 0 ].set( t.x - 0.005f, t.y - 0.005f );
 		p[ 1 ].set( t.x - 0.005f, t.y + 0.005f );
 		p[ 2 ].set( t.x + 0.005f, t.y - 0.005f );
 		p[ 3 ].set( t.x + 0.005f, t.y + 0.005f );
 		c1 = c2 = 0xcc0080ff;
 		drawRect( p, c1, c2 );
-		//“G
+		//æ•µ
 		t.set( gRobo[ 1 ]->position()->x, gRobo[ 1 ]->position()->z ); //x.z
-		t *= 0.002f; //+-50‚ÌƒXƒe[ƒW‚ğ0.2‚Ì‘å‚«‚³‚Ék¬‚·‚é‚ñ‚¾‚©‚çA0.2/100‚Å0.002
-		t += Vector2( 0.8f, 0.8f ); //(0.8,0.8)‚ª’†S‚È‚Ì‚¾‚©‚çA‚»‚ê‚ğ‘«‚·
+		t *= 0.002f; //+-50ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’0.2ã®å¤§ãã•ã«ç¸®å°ã™ã‚‹ã‚“ã ã‹ã‚‰ã€0.2/100ã§0.002
+		t += Vector2( 0.8f, 0.8f ); //(0.8,0.8)ãŒä¸­å¿ƒãªã®ã ã‹ã‚‰ã€ãã‚Œã‚’è¶³ã™
 		p[ 0 ].set( t.x - 0.005f, t.y - 0.005f );
 		p[ 1 ].set( t.x - 0.005f, t.y + 0.005f );
 		p[ 2 ].set( t.x + 0.005f, t.y - 0.005f );
@@ -259,19 +259,19 @@ namespace GameLib{
 		c1 = c2 = 0xccff8000;
 		drawRect( p, c1, c2 );
 
-		//ƒƒbƒNƒIƒ“ƒ}[ƒN
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ãƒãƒ¼ã‚¯
 		if ( lockOn0 ){
-			gPrimitiveRenderer.setBlendMode( Graphics::BLEND_ADDITIVE ); //‰ÁZ‚É‚µ‚Ä‚İ‚æ‚¤‚©‚È
-			//“Gƒƒ{‚ğÀ•W•ÏŠ·‚µ‚ÄƒXƒNƒŠ[ƒ“À•W‚É•ÏŠ·
+			gPrimitiveRenderer.setBlendMode( Graphics::BLEND_ADDITIVE ); //åŠ ç®—ã«ã—ã¦ã¿ã‚ˆã†ã‹ãª
+			//æ•µãƒ­ãƒœã‚’åº§æ¨™å¤‰æ›ã—ã¦ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã«å¤‰æ›
 			Vector3 t = *gRobo[ 1 ]->position();
 			Vector4 p4;
 			pvm.mul( &p4, t );
-			//XYÀ•W‚Íw‚ÅŠ„‚ê‚Îo‚éB
+			//XYåº§æ¨™ã¯wã§å‰²ã‚Œã°å‡ºã‚‹ã€‚
 			float x = p4[ 0 ] / p4[ 3 ];
 			float y = p4[ 1 ] / p4[ 3 ];
-			//F‚ÍÔ‚©‚È‚ 
+			//è‰²ã¯èµ¤ã‹ãªã‚
 			c1 = c2 = 0x80ff0000;
-			//ü4–{‚Å‚â‚ë‚¤B
+			//ç·š4æœ¬ã§ã‚„ã‚ã†ã€‚
 			p[ 0 ].set( x - 0.01f, y + 0.2f );
 			p[ 1 ].set( x - 0.01f, y + 0.1f );
 			p[ 2 ].set( x + 0.01f, y + 0.2f );
@@ -293,8 +293,8 @@ namespace GameLib{
 			p[ 3 ].set( x + 0.1f, y + 0.01f );
 			drawRect( p, c1, c2 );
 		}
-		//ŠÔ§ŒÀ
-		gPrimitiveRenderer.setBlendMode( Graphics::BLEND_LINEAR ); //‚à‚Ç‚µ‚Ä
+		//æ™‚é–“åˆ¶é™
+		gPrimitiveRenderer.setBlendMode( Graphics::BLEND_LINEAR ); //ã‚‚ã©ã—ã¦
 		length = 1.9f * static_cast< float >( 60 * TIME_LIMIT - gTime ) / static_cast< float >( 60 * TIME_LIMIT );
 		p[ 0 ].set( -0.95f, -0.95f );
 		p[ 1 ].set( -0.95f, -0.9f );
@@ -306,7 +306,7 @@ namespace GameLib{
 		p[ 1 ].set( -0.95f, -0.9f );
 		p[ 2 ].set( -0.95f + length, -0.95f );
 		p[ 3 ].set( -0.95f + length, -0.9f );
-		gPrimitiveRenderer.setBlendMode( Graphics::BLEND_ADDITIVE ); //‰ÁZ?
+		gPrimitiveRenderer.setBlendMode( Graphics::BLEND_ADDITIVE ); //åŠ ç®—?
 		c1 = 0x80ff8888;
 		c2 = 0x8088ffff;
 		drawRect( p, c1, c2 );
@@ -319,7 +319,7 @@ namespace GameLib{
 			gPlaying = false;
 			DebugScreen::instance().draw( 20, 5, "Game Over. press FIRE" );
 			if ( Pad::instance()->isTriggered( Pad::FIRE, 0 ) ){
-				//ƒZƒbƒg‚µ‚Ä‚¢‚é‚à‚Ì‚ÍŒãn––
+				//ã‚»ãƒƒãƒˆã—ã¦ã„ã‚‹ã‚‚ã®ã¯å¾Œå§‹æœ«
 				gm.setVertexBuffer( 0 );
 				gm.setIndexBuffer( 0 );
 				gm.setTexture( 0 );
@@ -334,15 +334,15 @@ namespace GameLib{
 				gTime = 0;
 			}
 		}
-		gPrimitiveRenderer.draw(); //‘«‚µI‚í‚Á‚½‚ç•`‰æ
-		//I—¹”»’è(ƒ}ƒEƒX‚Å~ƒ{ƒ^ƒ“‚ª’@‚©‚ê‚½‚©)
+		gPrimitiveRenderer.draw(); //è¶³ã—çµ‚ã‚ã£ãŸã‚‰æç”»
+		//çµ‚äº†åˆ¤å®š(ãƒã‚¦ã‚¹ã§Ã—ãƒœã‚¿ãƒ³ãŒå©ã‹ã‚ŒãŸã‹)
 		if ( isEndRequested() ){
 			if ( gStage ){
 				Pad::destroy();
 				SAFE_DELETE( gRobo[ 0 ] );
 				SAFE_DELETE( gRobo[ 1 ] );
 				SAFE_DELETE( gStage );
-				//ƒOƒ[ƒoƒ‹‚É‚ ‚é‚à‚Ì‚ÍŸè‚É‚ÍÁ‚¦‚È‚¢‚Ì‚ÅŠJ•ú
+				//ã‚°ãƒ­ãƒ¼ãƒãƒ«ã«ã‚ã‚‹ã‚‚ã®ã¯å‹æ‰‹ã«ã¯æ¶ˆãˆãªã„ã®ã§é–‹æ”¾
 				gPrimitiveRenderer.release(); 
 			}
 		}

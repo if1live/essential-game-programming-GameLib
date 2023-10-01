@@ -3,33 +3,33 @@
 
 class Vector2{
 public:
-	//‰½‚à‚µ‚È‚¢ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ä½•ã‚‚ã—ãªã„ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Vector2();
-	//®”‚©‚çƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//æ•´æ•°ã‹ã‚‰ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Vector2( int x, int y );
-	//double‚©‚çƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//doubleã‹ã‚‰ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Vector2( double x, double y );
-	//Vector2‚©‚çƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//Vector2ã‹ã‚‰ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Vector2( const Vector2& );
-	//Œã‚©‚ç”š‚ğƒZƒbƒg
+	//å¾Œã‹ã‚‰æ•°å­—ã‚’ã‚»ãƒƒãƒˆ
 	void set( double x, double y );
-	//‘«‚µZ
+	//è¶³ã—ç®—
 	void operator+=( const Vector2& );
-	//ˆø‚«Z
+	//å¼•ãç®—
 	void operator-=( const Vector2& );
-	//xyz‚ğa”{
+	//xyzã‚’aå€
 	void operator*=( double );
-	//ƒRƒs[
+	//ã‚³ãƒ”ãƒ¼
 	void operator=( const Vector2& );
-	//‘«‚µZ‚ğƒZƒbƒg
+	//è¶³ã—ç®—ã‚’ã‚»ãƒƒãƒˆ
 	void setAdd( const Vector2&, const Vector2& );
-	//ˆø‚«Z‚ğƒZƒbƒg
+	//å¼•ãç®—ã‚’ã‚»ãƒƒãƒˆ
 	void setSub( const Vector2&, const Vector2& );
-	//’·‚³‚Ì“ñæƒQƒbƒg
+	//é•·ã•ã®äºŒä¹—ã‚²ãƒƒãƒˆ
 	double squareLength() const;
-	//’·‚³ƒQƒbƒg
+	//é•·ã•ã‚²ãƒƒãƒˆ
 	double length() const;
-	//•âŠÔ‚ğƒZƒbƒg( this = a + u*ab + v*ac )
+	//è£œé–“ã‚’ã‚»ãƒƒãƒˆ( this = a + u*ab + v*ac )
 	void setInterporation( 
 		const Vector2& a, 
 		const Vector2& ab, 

@@ -4,17 +4,17 @@ using namespace GameLib;
 #include "State.h"
 #include "File.h"
 
-//ŠÖ”ƒvƒƒgƒ^ƒCƒv
+//é–¢æ•°ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—
 void mainLoop();
 
-//ƒOƒ[ƒoƒ‹•Ï”
+//ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 State* gState = 0;
 bool gPrevInputS = false;
 bool gPrevInputA = false;
 bool gPrevInputW = false;
 bool gPrevInputZ = false;
 
-//ƒ†[ƒUÀ‘•ŠÖ”B’†g‚ÍmainLoop()‚ÉŠÛ“Š‚°
+//ãƒ¦ãƒ¼ã‚¶å®Ÿè£…é–¢æ•°ã€‚ä¸­èº«ã¯mainLoop()ã«ä¸¸æŠ•ã’
 namespace GameLib{
 	void Framework::update(){
 		mainLoop();
@@ -23,22 +23,22 @@ namespace GameLib{
 
 void mainLoop(){
 	Framework f = Framework::instance();
-	//Å‰‚ÌƒtƒŒ[ƒ€‚Í‰Šú‰»B
+	//æœ€åˆã®ãƒ•ãƒ¬ãƒ¼ãƒ ã¯åˆæœŸåŒ–ã€‚
 	if ( !gState ){ 
 		File file( "stageData.txt" );
-		if ( !( file.getData() ) ){ //ƒf[ƒ^‚È‚¢I
+		if ( !( file.getData() ) ){ //ãƒ‡ãƒ¼ã‚¿ãªã„ï¼
 			cout << "stage file could not be read." << endl;
 			return;
 		}
 		gState = new State( file.getData(), file.getSize() );
 	}
 	bool cleared = false;
-	//ƒƒCƒ“ƒ‹[ƒv
-	//ƒNƒŠƒAƒ`ƒFƒbƒN
+	//ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—
+	//ã‚¯ãƒªã‚¢ãƒã‚§ãƒƒã‚¯
 	if ( gState->hasCleared() ){
 		cleared = true;
 	}
-	//“ü—Íæ“¾
+	//å…¥åŠ›å–å¾—
 	int dx = 0;
 	int dy = 0;
 	bool inputA = f.isKeyOn( 'a' );
@@ -58,18 +58,18 @@ void mainLoop(){
 	gPrevInputS = inputS;
 	gPrevInputW = inputW;
 	gPrevInputZ = inputZ;
-	//XV
+	//æ›´æ–°
 	gState->update( dx, dy );
-	//•`‰æ
+	//æç”»
 	gState->draw();
 
 	if ( cleared ){
-		//j‚¢‚ÌƒƒbƒZ[ƒW
+		//ç¥ã„ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 		cout << "Congratulation! you win." << endl;
 		delete gState;
 		gState = 0;
 	}
-	//I—¹”»’è
+	//çµ‚äº†åˆ¤å®š
 	if ( f.isKeyOn( 'q' ) ){
 		f.requestEnd();
 	}

@@ -3,37 +3,37 @@
 
 namespace GameLib{
 
-///ƒLƒ…[B—v‘f”‚ªŒÀŠE‚ğ’´‚¦‚È‚¯‚ê‚ÎzŠÂ‚·‚é‚Ì‚Å‚¢‚Â‚Ü‚Å‚àg‚¦‚éB
+///ã‚­ãƒ¥ãƒ¼ã€‚è¦ç´ æ•°ãŒé™ç•Œã‚’è¶…ãˆãªã‘ã‚Œã°å¾ªç’°ã™ã‚‹ã®ã§ã„ã¤ã¾ã§ã‚‚ä½¿ãˆã‚‹ã€‚
 template< class T > class Queue{
 public:
-	///ƒfƒtƒHƒ‹ƒgBƒTƒCƒYAÅ‘å—e—Ê‚Í0B
+	///ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã€‚ã‚µã‚¤ã‚ºã€æœ€å¤§å®¹é‡ã¯0ã€‚
 	Queue();
-	///Å‘å—e—Ê‚ğw’èB
+	///æœ€å¤§å®¹é‡ã‚’æŒ‡å®šã€‚
 	explicit Queue( int capacity );
 	~Queue();
-	///ÄŠm•ÛB’†g‚ª‚ ‚éó‘Ô‚ÅŒÄ‚Ô‚ÆassertBclear()‚µ‚ëB
+	///å†ç¢ºä¿ã€‚ä¸­èº«ãŒã‚ã‚‹çŠ¶æ…‹ã§å‘¼ã¶ã¨assertã€‚clear()ã—ã‚ã€‚
 	void setCapacity( int size );
-	///Å‘å—e—Êæ“¾
+	///æœ€å¤§å®¹é‡å–å¾—
 	int capacity() const;
-	///Œ»İ‚Ì—v‘f”æ“¾
+	///ç¾åœ¨ã®è¦ç´ æ•°å–å¾—
 	int size() const;
-	///‘S‰ğ•ú
+	///å…¨è§£æ”¾
 	void clear();
-	///––”ö‚É‹ó‚Å’Ç‰ÁB‘«‚µ‚½‚à‚Ì‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğ•Ô‚·‚Ì‚ÅA‰Šúİ’è‚Í‚±‚ê‚ğg‚¤‚±‚ÆB
+	///æœ«å°¾ã«ç©ºã§è¿½åŠ ã€‚è¶³ã—ãŸã‚‚ã®ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’è¿”ã™ã®ã§ã€åˆæœŸè¨­å®šã¯ã“ã‚Œã‚’ä½¿ã†ã“ã¨ã€‚
 	T* pushBack();
-	///––”ö‚É’Ç‰Á
+	///æœ«å°¾ã«è¿½åŠ 
 	void pushBack( const T& );
-	///æ“ª‚ğíœ
+	///å…ˆé ­ã‚’å‰Šé™¤
 	void popFront();
-	///æ“ª‚ğíœ(Ì‚Ä‚é‚à‚Ì‚ÌƒRƒs[‚ğæ“¾)
+	///å…ˆé ­ã‚’å‰Šé™¤(æ¨ã¦ã‚‹ã‚‚ã®ã®ã‚³ãƒ”ãƒ¼ã‚’å–å¾—)
 	void popFront( T* out );
-	///æ“ª‚ğæ“¾(const)
+	///å…ˆé ­ã‚’å–å¾—(const)
 	const T* front() const;
-	///æ“ª‚ğæ“¾(”ñconst)
+	///å…ˆé ­ã‚’å–å¾—(éconst)
 	T* front();
 private:
-	void operator=( const Queue& ); //‘ã“ü‹Ö~
-	Queue( const Queue& ); //ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‹Ö~
+	void operator=( const Queue& ); //ä»£å…¥ç¦æ­¢
+	Queue( const Queue& ); //ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ç¦æ­¢
 
 	T* mElements;
 	int mSize;
@@ -42,7 +42,7 @@ private:
 };
 
 } //namespace GameLib
-#include "GameLib/Base/Impl/QueueImpl.h" //’†g‚Í‚±‚Ì’†
+#include "GameLib/Base/Impl/QueueImpl.h" //ä¸­èº«ã¯ã“ã®ä¸­
 
 #endif
 

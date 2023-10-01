@@ -8,16 +8,16 @@ using namespace std;
 
 class RefString;
 
-///std::ostringstream‚ğ’uŠ·‚·‚é‚½‚ß‚Ì•¨B‘¬“x‚Éd“_‚ğ’u‚«A‘½­‹@”\‚ª‹]µ‚É‚È‚Á‚Ä‚¢‚éB
+///std::ostringstreamã‚’ç½®æ›ã™ã‚‹ãŸã‚ã®ç‰©ã€‚é€Ÿåº¦ã«é‡ç‚¹ã‚’ç½®ãã€å¤šå°‘æ©Ÿèƒ½ãŒçŠ ç‰²ã«ãªã£ã¦ã„ã‚‹ã€‚
 /*!
-std::ostringstream‚Æ‚Ì‘Šˆá“_‚ÍA
-Estr()‚ª‚È‚¢Bget()‚ÅArray‚ğ“n‚µ‚Äæ‚èo‚·B
-Eclear()‚Å‘SÁ‹
-E‹@”\‚ª­‚È‚¢
+std::ostringstreamã¨ã®ç›¸é•ç‚¹ã¯ã€
+ãƒ»str()ãŒãªã„ã€‚get()ã§Arrayã‚’æ¸¡ã—ã¦å–ã‚Šå‡ºã™ã€‚
+ãƒ»clear()ã§å…¨æ¶ˆå»
+ãƒ»æ©Ÿèƒ½ãŒå°‘ãªã„
 */
 class OStringStream{
 public:
-	OStringStream( int blockSize = 1024 ); //ˆê‰ñ‚ÌnewƒTƒCƒYB‘å‚«‚¢‚Ù‚Ç•‰‰×‚ÍŒy‚¢‚ªAƒƒ‚ƒŠ‚ÍH‚¤B
+	OStringStream( int blockSize = 1024 ); //ä¸€å›ã®newã‚µã‚¤ã‚ºã€‚å¤§ãã„ã»ã©è² è·ã¯è»½ã„ãŒã€ãƒ¡ãƒ¢ãƒªã¯é£Ÿã†ã€‚
 	~OStringStream();
 	int precision( int );
 	OStringStream& operator<<( char );
@@ -34,7 +34,7 @@ public:
 	OStringStream& operator<<( const RefString& );
 	OStringStream& operator<<( OStringStream& ( *f )( OStringStream& ) );
 	void write( const char*, int size );
-	template< class T > void write( const T& ); //ƒoƒCƒiƒŠ‘‚«‚İ
+	template< class T > void write( const T& ); //ãƒã‚¤ãƒŠãƒªæ›¸ãè¾¼ã¿
 	OStringStream& endl();
 	OStringStream& hex();
 	OStringStream& dec();
@@ -44,8 +44,8 @@ public:
 	int size() const;
 	void clear();
 private:
-	OStringStream( const OStringStream& ); //ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‹Ö~
-	void operator=( const OStringStream& ); //‘ã“ü‹Ö~
+	OStringStream( const OStringStream& ); //ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ç¦æ­¢
+	void operator=( const OStringStream& ); //ä»£å…¥ç¦æ­¢
 	class Impl;
 	Impl* mImpl;
 };

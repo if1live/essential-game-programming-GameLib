@@ -9,7 +9,7 @@ public:
 
 	void setPosition( const Vector3& );
 	void setHalfSize( const Vector3& );
-	//Žó‚¯Žæ‚Á‚½ˆÚ“®ƒxƒNƒ^‚Ì¬•ª‚Ì‚¤‚¿‘ŠŽè‚É“–‚½‚ç‚È‚¢‚Å“®‚¯‚é¬•ª‚¾‚¯‚ðŽc‚·
+	//å—ã‘å–ã£ãŸç§»å‹•ãƒ™ã‚¯ã‚¿ã®æˆåˆ†ã®ã†ã¡ç›¸æ‰‹ã«å½“ãŸã‚‰ãªã„ã§å‹•ã‘ã‚‹æˆåˆ†ã ã‘ã‚’æ®‹ã™
 	void restrictMove( Vector3* moveVectorInOut, const Cuboid& ) const;
 private:
 	int mX;

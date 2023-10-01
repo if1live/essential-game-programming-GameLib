@@ -25,7 +25,7 @@ mChild( 0 ){
 	}else{
 		mStageID = 0;
 	}
-	//Å‰‚ÍReady
+	//æœ€åˆã¯Ready
 	mChild = new Ready();
 }
 
@@ -36,12 +36,12 @@ Parent::~Parent(){
 
 void Parent::update( GrandParent* parent ){
 	mChild->update( this );
-	//‘JˆÚ”»’è
+	//é·ç§»åˆ¤å®š
 	switch ( mNextSequence ){
 		case NEXT_CLEAR:
 			SAFE_DELETE( mChild );
 			mChild = new Clear();
-			++mStageID; //ŽŸ‚ÌƒXƒe[ƒW‚Ö
+			++mStageID; //æ¬¡ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã¸
 			break;
 		case NEXT_READY:
 			SAFE_DELETE( mChild );
@@ -97,7 +97,7 @@ int Parent::getLifeNumber() const {
 	return mLife;
 }
 
-//Parent::Mode‚ðParent::Mode‚É•ÏŠ·B‰º—¬ƒV[ƒPƒ“ƒX‚ÉParent‚ðŒ©‚¹‚È‚¢B
+//Parent::Modeã‚’Parent::Modeã«å¤‰æ›ã€‚ä¸‹æµã‚·ãƒ¼ã‚±ãƒ³ã‚¹ã«Parentã‚’è¦‹ã›ãªã„ã€‚
 Parent::Mode Parent::getMode() const {
 	Mode r = MODE_NONE;
 	switch ( GrandParent::instance()->getMode() ){

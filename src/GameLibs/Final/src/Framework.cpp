@@ -20,7 +20,7 @@ using namespace std;
 
 namespace GameLib{
 
-namespace { //–³–¼
+namespace { //ç„¡å
 
 class Impl{
 public:
@@ -43,9 +43,9 @@ public:
 	mIdealFrameInterval( 0 ),
 	mEndRequested( false ),
 	mStarted( false ){
-		//cout‰Šú‰»
+		//coutåˆæœŸåŒ–
 		cout.begin();
-		//ƒtƒŒ[ƒ€—š—ğƒŠƒZƒbƒg
+		//ãƒ•ãƒ¬ãƒ¼ãƒ å±¥æ­´ãƒªã‚»ãƒƒãƒˆ
 		unsigned t = time();
 		for ( int i = 0; i < TIME_HISTORY_SIZE; ++i ){
 			mTimeHistory[ i ] = t;
@@ -62,32 +62,32 @@ public:
 		Sound::Manager::destroy();
 		FileIO::Manager::destroy();
 		Threading::Manager::destroy();
-		//coutI—¹
+		//coutçµ‚äº†
 		cout.end();
 	}
 	void start( void* windowHandle ){
-		//ƒXƒŒƒbƒhƒVƒXƒeƒ€‰Šú‰»
+		//ã‚¹ãƒ¬ãƒƒãƒ‰ã‚·ã‚¹ãƒ†ãƒ åˆæœŸåŒ–
 		Threading::Manager::create( mExtraThreadNumber );
-		//ƒtƒ@ƒCƒ‹ƒ[ƒ_‰Šú‰»
+		//ãƒ•ã‚¡ã‚¤ãƒ«ãƒ­ãƒ¼ãƒ€åˆæœŸåŒ–
 		if ( mArchiveNumber > 0 ){
 			Array< const char* > names( mArchiveNumber );
 			for ( int i = 0; i < mArchiveNumber; ++i ){
 				names[ i ] = mArchiveNames[ i ].c_str();
 			}
 			FileIO::Manager::create( &names[ 0 ], mArchiveNumber, mLoadMode );
-			//ƒA[ƒJƒCƒu–¼”z—ñ‚Í•s—v‚È‚Ì‚Å”pŠü
+			//ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–åé…åˆ—ã¯ä¸è¦ãªã®ã§å»ƒæ£„
 			SAFE_DELETE_ARRAY( mArchiveNames );
 			mArchiveNumber = 0;
 		}else{
 			FileIO::Manager::create();
 		}
-		//‰¹‰Šú‰»
+		//éŸ³åˆæœŸåŒ–
 		Sound::Manager::create( windowHandle );
-		//“ü—Í‰Šú‰»
+		//å…¥åŠ›åˆæœŸåŒ–
 		Input::Manager::create( windowHandle );
-		//•`‰æ‰Šú‰»
+		//æç”»åˆæœŸåŒ–
 		Graphics::Manager::create( windowHandle, mWidth, mHeight, mFullScreen, mVSync, mAntiAlias );
-		//•¶š•`‰æ
+		//æ–‡å­—æç”»
 		gDebugScreenImpl = NEW DebugScreenImpl;
 
 		mStarted = true;
@@ -103,11 +103,11 @@ public:
 		}
 		mPreviousFrameTime = currentTime;
 
-		//ƒtƒŒ[ƒ€ŠÔXV
+		//ãƒ•ãƒ¬ãƒ¼ãƒ æ™‚é–“æ›´æ–°
 		mPreviousFrameInterval = currentTime - mTimeHistory[ TIME_HISTORY_SIZE - 1 ];
 		unsigned frameIntervalSum = currentTime - mTimeHistory[ 0 ];
 		mFrameRate = TIME_HISTORY_SIZE * 1000 / frameIntervalSum;
-		//—š—ğXV
+		//å±¥æ­´æ›´æ–°
 		for ( int i = 0; i < TIME_HISTORY_SIZE - 1; ++i ){
 			mTimeHistory[ i ] = mTimeHistory[ i + 1 ]; 
 		}
@@ -120,7 +120,7 @@ public:
 		Input::Manager().update( pointerScale, pointerOffset );
 	}
 	void postUpdate(){
-		gDebugScreenImpl->draw(); //•¶š•`‰æ
+		gDebugScreenImpl->draw(); //æ–‡å­—æç”»
 
 		Graphics::Manager().endDraw();
 	}
@@ -151,7 +151,7 @@ Impl* gImpl = 0;
 } //namespace{}
 
 Framework::Framework(){
-	//•ÊƒXƒŒƒbƒh‚©‚ç‚ÌŒÄ‚Ño‚µ‚Í‹–‚³‚È‚¢
+	//åˆ¥ã‚¹ãƒ¬ãƒƒãƒ‰ã‹ã‚‰ã®å‘¼ã³å‡ºã—ã¯è¨±ã•ãªã„
 	ASSERT( WindowCreator::isMainThread() && "you must call from MAIN thread" );
 }
 
@@ -230,17 +230,17 @@ void Framework::setFrameRate( int fr ){
 }
 
 void Framework::enableFullScreen( bool f ){ 
-	if ( gImpl->mFullScreenForbidden ){ //‹Ö~‚³‚ê‚Ä‚¢‚é
+	if ( gImpl->mFullScreenForbidden ){ //ç¦æ­¢ã•ã‚Œã¦ã„ã‚‹
 		return;
 	}
 	WindowCreator wc;
 	Graphics::Manager gm;
 	if ( gImpl->mStarted ){
-		//’†“r•ÏX
+		//ä¸­é€”å¤‰æ›´
 		if ( gImpl->mFullScreen != f ){
-			//ã—¬‚Ö
+			//ä¸Šæµã¸
 			wc.enableFullScreen( f );
-			//‰º—¬‚Ö
+			//ä¸‹æµã¸
 			gm.enableFullScreen( f );
 		}
 	}
@@ -329,10 +329,10 @@ void Framework::Configuration::setExtraThreadNumber( int n ){
 	gImpl->mExtraThreadNumber = n;
 }
 
-//WindowProcedure‚Ìƒ†[ƒUÀ‘•ŠÖ”
+//WindowProcedureã®ãƒ¦ãƒ¼ã‚¶å®Ÿè£…é–¢æ•°
 void WindowCreator::configure( Configuration* config ){
 	Framework::create();
-	//ƒ†[ƒUİ’è
+	//ãƒ¦ãƒ¼ã‚¶è¨­å®š
 	Framework f;
 	Framework::Configuration fwConfig;
 	f.configure( &fwConfig );
@@ -348,18 +348,18 @@ void WindowCreator::update(){
 	WindowCreator wc;
 	Graphics::Manager gm;
 	Framework f;
-	//WindowCreator‚Ìó‘ÔŸ‘æ‚Å‚¢‚ë‚¢‚ë‚·‚é
+	//WindowCreatorã®çŠ¶æ…‹æ¬¡ç¬¬ã§ã„ã‚ã„ã‚ã™ã‚‹
 	bool sleepFlag = false;
-	//Å¬‰»‚µ‚Ä‚¢‚ê‚ÎQ‚é
+	//æœ€å°åŒ–ã—ã¦ã„ã‚Œã°å¯ã‚‹
 	if ( wc.isMinimized() ){
 		sleepFlag = true;
 	}
-	//ƒfƒoƒCƒXƒƒXƒg‚±‚¢‚Ä‚¢‚é‚æ‚¤‚È‚ç•œ‹A‚ğ‚İ‚é‚ªAŠî–{“I‚ÉQ‚éB
+	//ãƒ‡ãƒã‚¤ã‚¹ãƒ­ã‚¹ãƒˆã“ã„ã¦ã„ã‚‹ã‚ˆã†ãªã‚‰å¾©å¸°ã‚’è©¦ã¿ã‚‹ãŒã€åŸºæœ¬çš„ã«å¯ã‚‹ã€‚
 	if ( !gm.canRender() ){
 		gm.restore();
 		sleepFlag = true;
 	}
-	//Window‚©‚çƒ‚[ƒhØ‘ÖƒVƒOƒiƒ‹
+	//Windowã‹ã‚‰ãƒ¢ãƒ¼ãƒ‰åˆ‡æ›¿ã‚·ã‚°ãƒŠãƒ«
 	bool wcFullScreen = wc.isFullScreen();
 	if ( f.isFullScreen() != wcFullScreen ){
 		f.enableFullScreen( wcFullScreen );
@@ -367,29 +367,29 @@ void WindowCreator::update(){
 	if ( !sleepFlag ){
 		f.preUpdate();
 	}
-	//ã—¬(~ƒ{ƒ^ƒ“‚Æ‚©)‚©‚çI—¹–½—ß‚ª—ˆ‚Ä‚¢‚é‚©ƒ`ƒFƒbƒN
-	if ( isEndRequested() ){ //—ˆ‚Ä‚¢‚ê‚ÎFramework‚ÉI—¹–½—ß‚ğ“`’B
+	//ä¸Šæµ(Ã—ãƒœã‚¿ãƒ³ã¨ã‹)ã‹ã‚‰çµ‚äº†å‘½ä»¤ãŒæ¥ã¦ã„ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
+	if ( isEndRequested() ){ //æ¥ã¦ã„ã‚Œã°Frameworkã«çµ‚äº†å‘½ä»¤ã‚’ä¼é”
 		f.requestEnd();
 	}
 	if ( sleepFlag ){
-		Threading::sleep( 50 ); //50msQ‚é
+		Threading::sleep( 50 ); //50mså¯ã‚‹
 	}else{
-		//ƒ†[ƒUƒR[ƒh‚©‚ç‚Ì—áŠOƒLƒƒƒbƒ`‚Í‘¦€ƒtƒ‰ƒO‚ğ‘—‚é
+		//ãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰ã‹ã‚‰ã®ä¾‹å¤–ã‚­ãƒ£ãƒƒãƒæ™‚ã¯å³æ­»ãƒ•ãƒ©ã‚°ã‚’é€ã‚‹
 		try{
 			f.update();
 		}
 		catch ( ... ){
 			f.postUpdate();
 			Framework::destroy();
-			end(); //ã—¬‚É‚à’m‚ç‚¹‚ğ
+			end(); //ä¸Šæµã«ã‚‚çŸ¥ã‚‰ã›ã‚’
 			throw EXCEPTION_EXIT;
 		}
 		f.postUpdate();
 	}
-	//I—¹”»’è
+	//çµ‚äº†åˆ¤å®š
 	if ( f.isEndRequested() ){
 		Framework::destroy();
-		end(); //ã—¬‚É‚à’m‚ç‚¹‚ğ
+		end(); //ä¸Šæµã«ã‚‚çŸ¥ã‚‰ã›ã‚’
 	}
 }
 

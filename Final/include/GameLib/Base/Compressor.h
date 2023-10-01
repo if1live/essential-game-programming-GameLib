@@ -5,20 +5,20 @@
 
 namespace GameLib{
 
-///ˆ³k“WŠJƒNƒ‰ƒX
+///åœ§ç¸®å±•é–‹ã‚¯ãƒ©ã‚¹
 /*
-‚»‚Ìê“WŠJ‚ğ‚â‚é‚É‚ÍAcompress()‚Å•Ô‚Á‚Ä‚«‚½getInPlaceDecompressionBufferSize
-‚¾‚¯ƒoƒbƒtƒ@‚ğŠm•Û‚µAˆ³kƒf[ƒ^‚ğŒã‚ë‚É‹l‚ß‚ÄŠi”[‚µAdecompress‚ğŒÄ‚ÔB
+ãã®å ´å±•é–‹ã‚’ã‚„ã‚‹ã«ã¯ã€compress()ã§è¿”ã£ã¦ããŸgetInPlaceDecompressionBufferSize
+ã ã‘ãƒãƒƒãƒ•ã‚¡ã‚’ç¢ºä¿ã—ã€åœ§ç¸®ãƒ‡ãƒ¼ã‚¿ã‚’å¾Œã‚ã«è©°ã‚ã¦æ ¼ç´ã—ã€decompressã‚’å‘¼ã¶ã€‚
 */
 class Compressor{
 public:
-	///ˆ³k
+	///åœ§ç¸®
 	static void compress(
 		Array< char >* compressed,
-		int* inPlaceDecompressionBufferSize, //‚»‚Ìê“WŠJ‚Ì•K—vƒoƒbƒtƒ@ƒTƒCƒY
+		int* inPlaceDecompressionBufferSize, //ãã®å ´å±•é–‹æ™‚ã®å¿…è¦ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º
 		const char* data,
 		int size );
-	///“WŠJB“WŠJ¸”s‚ÍoutSize‚ª³‚µ‚¢‚©‚Åƒ`ƒFƒbƒN‚¹‚æBoutSize‚ª‘å‚«‚·‚¬‚éê‡‚ÍAƒƒ‚ƒŠ‚ğ”j‰ó‚µ‚Ä‚¨‚èA’v–½B
+	///å±•é–‹ã€‚å±•é–‹å¤±æ•—ã¯outSizeãŒæ­£ã—ã„ã‹ã§ãƒã‚§ãƒƒã‚¯ã›ã‚ˆã€‚outSizeãŒå¤§ãã™ãã‚‹å ´åˆã¯ã€ãƒ¡ãƒ¢ãƒªã‚’ç ´å£Šã—ã¦ãŠã‚Šã€è‡´å‘½å‚·ã€‚
 	static void decompress(
 		char* outData,
 		int* outSize,

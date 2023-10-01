@@ -71,7 +71,7 @@ public:
 		STRONG_ASSERT( SUCCEEDED( hr ) );
 		buffer->Release();
 		buffer = 0;
-		//–³‰¹‚ğ‚Â‚ß‚é
+		//ç„¡éŸ³ã‚’ã¤ã‚ã‚‹
 		fillSilence( 0, size );
 	}
 	~Impl(){
@@ -89,7 +89,7 @@ public:
 		}
 	}
 	void play( bool looping ){
-		if ( mSize > 0 ){ //ƒXƒgƒŠ[ƒ~ƒ“ƒOƒoƒbƒtƒ@‚È‚Ì‚Åí‚Éƒ‹[ƒv
+		if ( mSize > 0 ){ //ã‚¹ãƒˆãƒªãƒ¼ãƒŸãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ãªã®ã§å¸¸ã«ãƒ«ãƒ¼ãƒ—
 			looping = true;
 		}
 		rewind();
@@ -112,7 +112,7 @@ public:
 	}
 	void setVolume( int volume ){
 		ASSERT( volume <= 0 && volume >= -100 && "Sound::Player::setVolume : value must be between 0 and -100" ); 
-		//0-100‚ğ10000-0‚É•ÏŠ·‚·‚é
+		//0-100ã‚’10000-0ã«å¤‰æ›ã™ã‚‹
 		LONG v = DSBVOLUME_MAX + ( DSBVOLUME_MAX - DSBVOLUME_MIN ) * volume / 100;
 		HRESULT hr = mBuffer->SetVolume( v );
 		ASSERT( hr != DSERR_CONTROLUNAVAIL && "Sound::Player::Impl::setVolume : DSERR_CONTROLUNAVAIL" );
@@ -129,12 +129,12 @@ public:
 	}
 	bool write( int pos, const char* data, int size ){
 		STRONG_ASSERT( mSize > 0 && "Sound::Player::Impl::write : this isn't streaming player!" );
-		//‘‚«‚ñ‚Å‚¢‚¢‚Ì‚©ƒ`ƒFƒbƒN
+		//æ›¸ãè¾¼ã‚“ã§ã„ã„ã®ã‹ãƒã‚§ãƒƒã‚¯
 		DWORD play, write;
 		getPosition( &play, &write );
 		DWORD uPos = static_cast< DWORD >( pos );
 
-		//‘‚«‚İ—\’èˆÊ’u‚ªplay<pos<write‚É‚È‚Á‚Ä‚Í‚È‚ç‚È‚¢
+		//æ›¸ãè¾¼ã¿äºˆå®šä½ç½®ãŒplay<pos<writeã«ãªã£ã¦ã¯ãªã‚‰ãªã„
 		if ( ( play < uPos ) && ( uPos < write ) ){
 			return false;
 		} 
@@ -160,12 +160,12 @@ public:
 	}
 	bool fillSilence( int pos, int size ){
 		STRONG_ASSERT( mSize > 0 && "Sound::Player::Impl::fillSilence : this isn't streaming player!" );
-		//‘‚«‚ñ‚Å‚¢‚¢‚Ì‚©ƒ`ƒFƒbƒN
+		//æ›¸ãè¾¼ã‚“ã§ã„ã„ã®ã‹ãƒã‚§ãƒƒã‚¯
 		DWORD play, write;
 		getPosition( &play, &write );
 		DWORD uPos = static_cast< DWORD >( pos );
 
-		//‘‚«‚İ—\’èˆÊ’u‚ªplay<pos<write‚É‚È‚Á‚Ä‚Í‚È‚ç‚È‚¢
+		//æ›¸ãè¾¼ã¿äºˆå®šä½ç½®ãŒplay<pos<writeã«ãªã£ã¦ã¯ãªã‚‰ãªã„
 		if ( ( play < uPos ) && ( uPos < write ) ){
 			return false;
 		} 
@@ -209,7 +209,7 @@ public:
 private:
 	IDirectSoundBuffer8* mBuffer;
 	Wave::Impl* mWave;
-	//ˆÈ‰ºƒXƒgƒŠ[ƒ~ƒ“ƒO—p
+	//ä»¥ä¸‹ã‚¹ãƒˆãƒªãƒ¼ãƒŸãƒ³ã‚°ç”¨
 	bool mIs8Bit;
 	int mSize;
 

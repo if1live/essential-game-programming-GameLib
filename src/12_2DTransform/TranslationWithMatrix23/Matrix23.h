@@ -5,11 +5,11 @@ class Vector2;
 
 class Matrix23{
 public:
-	//6—v‘f—^‚¦‚ÄƒRƒ“ƒXƒgƒ‰ƒNƒg
+	//6è¦ç´ ä¸ãˆã¦ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 	Matrix23( 
 		double e00, double e01, double e02,
 		double e10, double e11, double e12 );
-	//ƒxƒNƒ^‚ÆŠ|‚¯Z
+	//ãƒ™ã‚¯ã‚¿ã¨æ›ã‘ç®—
 	void multiply( Vector2* out, const Vector2& in ) const;
 private:
 	double m00, m01, m02;

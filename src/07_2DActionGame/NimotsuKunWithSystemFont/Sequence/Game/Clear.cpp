@@ -19,17 +19,17 @@ Clear::~Clear(){
 }
 
 void Clear::update( Parent* parent ){
-	if ( mCount == 60 ){ //60ƒtƒŒ[ƒ€‚ÅˆÚ“®
+	if ( mCount == 60 ){ //60ãƒ•ãƒ¬ãƒ¼ãƒ ã§ç§»å‹•
 		parent->moveTo( Parent::SEQ_STAGE_SELECT );
 	}
 
-	//•`‰æ
-	//‚Ü‚¸ƒQ[ƒ€‰æ–Ê‚ğ•`‰æ
+	//æç”»
+	//ã¾ãšã‚²ãƒ¼ãƒ ç”»é¢ã‚’æç”»
 	parent->state()->draw();
-	//ã‚Éj‚¢‚ÌƒƒbƒZ[ƒW‚ğ•`‰æ
+	//ä¸Šã«ç¥ã„ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’æç”»
 	mImage->draw();
-	//ƒNƒŠƒA[‚Æš‚ğ•`‚­
-	Framework::instance().drawDebugString( 0, 0, "¸Ø±°!" );
+	//ã‚¯ãƒªã‚¢ãƒ¼ã¨å­—ã‚’æã
+	Framework::instance().drawDebugString( 0, 0, "ï½¸ï¾˜ï½±ï½°!" );
 
 	++mCount;
 }

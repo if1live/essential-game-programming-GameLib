@@ -14,9 +14,9 @@ Robo* gRobo[ 2 ];
 Stage* gStage;
 int gTime;
 bool gPlaying = false;
-const int TIME_LIMIT = 90; //90•b
+const int TIME_LIMIT = 90; //90ç§’
 
-//ƒ†[ƒUÀ‘•ŠÖ”B’†g‚ÍmainLoop()‚É
+//ãƒ¦ãƒ¼ã‚¶å®Ÿè£…é–¢æ•°ã€‚ä¸­èº«ã¯mainLoop()ã«
 namespace GameLib{
 	void Framework::update(){
 		if ( !gStage ){
@@ -35,7 +35,7 @@ namespace GameLib{
 			++gTime;
 		}
 
-		//0”Ôƒƒ{‚©‚çƒJƒƒ‰s—ñƒQƒbƒg
+		//0ç•ªãƒ­ãƒœã‹ã‚‰ã‚«ãƒ¡ãƒ©è¡Œåˆ—ã‚²ãƒƒãƒˆ
 		Matrix44 pvm;
 		pvm.setPerspectiveTransform( 45.0, 
 			static_cast< double >( width() ),
@@ -43,14 +43,14 @@ namespace GameLib{
 			1.0,
 			10000.0 );
 		Matrix34 vm;
-		gRobo[ 0 ]->getViewMatrix( &vm ); //ƒrƒ…[s—ñ‚Íƒƒ{‚Éì‚Á‚Ä‚à‚ç‚¤
+		gRobo[ 0 ]->getViewMatrix( &vm ); //ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã¯ãƒ­ãƒœã«ä½œã£ã¦ã‚‚ã‚‰ã†
 		pvm *= vm; 
-		//•`‰æ
+		//æç”»
 		gStage->draw( pvm );
 		gRobo[ 0 ]->draw( pvm );
 		gRobo[ 1 ]->draw( pvm );
 
-		//‚Æ‚è‚ ‚¦‚¸ƒqƒbƒgƒ|ƒCƒ“ƒg‚ğ•\¦
+		//ã¨ã‚Šã‚ãˆãšãƒ’ãƒƒãƒˆãƒã‚¤ãƒ³ãƒˆã‚’è¡¨ç¤º
 		int hp0 = gRobo[ 0 ]->hitPoint();
 		int hp1 = gRobo[ 1 ]->hitPoint();
 		int e0 = gRobo[ 0 ]->energy();
@@ -81,7 +81,7 @@ namespace GameLib{
 				gTime = 0;
 			}
 		}
-		//I—¹”»’è(ƒ}ƒEƒX‚Å~ƒ{ƒ^ƒ“‚ª’@‚©‚ê‚½‚©)
+		//çµ‚äº†åˆ¤å®š(ãƒã‚¦ã‚¹ã§Ã—ãƒœã‚¿ãƒ³ãŒå©ã‹ã‚ŒãŸã‹)
 		if ( isEndRequested() ){
 			if ( gStage ){
 				Pad::destroy();

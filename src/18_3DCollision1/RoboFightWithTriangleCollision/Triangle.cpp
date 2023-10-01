@@ -9,7 +9,7 @@ void Triangle::setPosition( const Vector3& p0, const Vector3& p1, const Vector3&
 }
 
 bool Triangle::isIntersect( const Vector3& lineBegin, const Vector3& lineVector ) const {
-	//–{‚Æ“¯‚¶‹L†‚É’u‚«‚È‚¨‚·
+	//æœ¬ã¨åŒã˜è¨˜å·ã«ç½®ããªãŠã™
 	const Vector3& a = lineBegin;
 	const Vector3& b = lineVector;
 	const Vector3& c = mPosition[ 0 ];
@@ -18,20 +18,20 @@ bool Triangle::isIntersect( const Vector3& lineBegin, const Vector3& lineVector 
 	e.setSub( mPosition[ 2 ], c );
 	Vector3 f;
 	f.setSub( c, a );
-	//–@ü‚ğ‹‚ß‚æ‚¤B
+	//æ³•ç·šã‚’æ±‚ã‚ã‚ˆã†ã€‚
 	Vector3 n;
 	n.setCross( d, e );
-	//t‚ğ‹‚ß‚éB
+	//tã‚’æ±‚ã‚ã‚‹ã€‚
 	double nf = n.dot( f );
 	double nb = n.dot( b );
-	if ( nb == 0.f ){ //•½s
-	  return false; //‚Í‚¸‚ê‚É‚µ‚¿‚á‚¦B
+	if ( nb == 0.f ){ //å¹³è¡Œ
+	  return false; //ã¯ãšã‚Œã«ã—ã¡ã‚ƒãˆã€‚
 	}
 	double t = nf / nb;
 	if ( t < 0 || t > 1 ){ 
 	  return false;
 	}
-	///v‚ğ‹‚ß‚éB
+	///vã‚’æ±‚ã‚ã‚‹ã€‚
 	Vector3 p;
 	p.setMadd( b, t, a );
 	Vector3 g;
@@ -41,7 +41,7 @@ bool Triangle::isIntersect( const Vector3& lineBegin, const Vector3& lineVector 
 	double dd = d.dot( d );
 	double ee = e.dot( e );
 	double de = d.dot( e );
-	//•ª•ê‚Í0‚É‚È‚è‚¦‚È‚¢B‚¾‚©‚çƒ`ƒFƒbƒN‚µ‚È‚¢B
+	//åˆ†æ¯ã¯0ã«ãªã‚Šãˆãªã„ã€‚ã ã‹ã‚‰ãƒã‚§ãƒƒã‚¯ã—ãªã„ã€‚
 	double u = ( gd*de - ge*dd ) / ( de*de - ee*dd );
 	if ( u < 0 || u > 1 ){
 	  return false;
@@ -54,13 +54,13 @@ bool Triangle::isIntersect( const Vector3& lineBegin, const Vector3& lineVector 
 }
 
 void Triangle::restrictMove( Vector3* v, const Vector3& p ) const {
-	//‚Ü‚¸”»’è
+	//ã¾ãšåˆ¤å®š
 	bool r = isIntersect( p, *v );
 	if ( !r ){
-		return; //“–‚½‚ç‚È‚¢‚Ì‚Å‚»‚Ì‚Ü‚ÜI‚í‚é
+		return; //å½“ãŸã‚‰ãªã„ã®ã§ãã®ã¾ã¾çµ‚ã‚ã‚‹
 	}
-	//‚³‚Ä“–‚½‚Á‚Ä‚¢‚é‚È‚ç‚ÎAƒxƒNƒ^‚ğC³‚·‚éB
-	//®‚Í–@ün‚ğg‚Á‚ÄˆÈ‰º‚Ì‚æ‚¤‚É‘‚¯‚é
+	//ã•ã¦å½“ãŸã£ã¦ã„ã‚‹ãªã‚‰ã°ã€ãƒ™ã‚¯ã‚¿ã‚’ä¿®æ­£ã™ã‚‹ã€‚
+	//å¼ã¯æ³•ç·šnã‚’ä½¿ã£ã¦ä»¥ä¸‹ã®ã‚ˆã†ã«æ›¸ã‘ã‚‹
 	//a = v - dot( n, v ) * n / |n|^2
 	Vector3 d, e, n;
 	d.setSub( mPosition[ 1 ], mPosition[ 0 ] );

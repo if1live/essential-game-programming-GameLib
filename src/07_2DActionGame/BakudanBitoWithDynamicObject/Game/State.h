@@ -3,33 +3,33 @@
 
 #include "Array2D.h"
 
-class Image; //éŒ¾‚¾‚¯‚µ‚Ä‚¨‚¯‚Î‚¢‚¢BƒCƒ“ƒNƒ‹[ƒh‚µ‚È‚­‚Ä‚¢‚¢B
+class Image; //å®£è¨€ã ã‘ã—ã¦ãŠã‘ã°ã„ã„ã€‚ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã—ãªãã¦ã„ã„ã€‚
 class StaticObject;
 class DynamicObject;
 
 class State{
 public:
-	//ƒXƒe[ƒW”Ô†‚ğ—^‚¦‚ÄƒRƒ“ƒXƒgƒ‰ƒNƒgB0‚¾‚Æ“ñl—p
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·ã‚’ä¸ãˆã¦ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ãƒˆã€‚0ã ã¨äºŒäººç”¨
 	static const int STAGE_ID_2PLAYERS = 0;
 	State( int stageID );
 	~State();
-	//“ü—Í‚Í’†‚Å‚Æ‚é
+	//å…¥åŠ›ã¯ä¸­ã§ã¨ã‚‹
 	void update();
 	void draw() const;
-	//ŠO‚©‚çæ‚éî•ñ
+	//å¤–ã‹ã‚‰å–ã‚‹æƒ…å ±
 	bool hasCleared() const;
-	bool isAlive1P() const; //1P¶‚«‚Ä‚éH
-	bool isAlive2P() const; //2P¶‚«‚Ä‚éH
+	bool isAlive1P() const; //1Pç”Ÿãã¦ã‚‹ï¼Ÿ
+	bool isAlive2P() const; //2Pç”Ÿãã¦ã‚‹ï¼Ÿ
 private:
-	//“®‚©‚È‚¢ƒIƒuƒWƒFƒNƒg
+	//å‹•ã‹ãªã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	Array2D< StaticObject > mStaticObjects;
-	//“®‚­ƒIƒuƒWƒFƒNƒg
+	//å‹•ãã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	DynamicObject* mDynamicObjects;
 	int mDynamicObjectNumber;
 
 	int mStageID;
 
-	Image* mImage; //‰æ‘œ
+	Image* mImage; //ç”»åƒ
 };
 
 #endif

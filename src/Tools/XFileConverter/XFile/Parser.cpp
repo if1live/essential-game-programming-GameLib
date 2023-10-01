@@ -44,14 +44,14 @@ namespace {
 } //namespace {}
 
 Parser::Parser( const char* data, int size ) : mIsValid( false ), mRootElement( 0 ){
-	//ƒwƒbƒ_ƒ`ƒFƒbƒN
+	//ãƒ˜ãƒƒãƒ€ãƒã‚§ãƒƒã‚¯
 	const char* end = data + size;
 	if ( !checkHeader( data, end ) ){
 		return;
 	}
-	data += 16; //ƒwƒbƒ_”ò‚Î‚µ
+	data += 16; //ãƒ˜ãƒƒãƒ€é£›ã°ã—
 	size -= 16;
-	//‘Oˆ—(ƒRƒƒ“ƒgœ‹A‹ó”’‚Ì˜AŒ‹“™X)
+	//å‰å‡¦ç†(ã‚³ãƒ¡ãƒ³ãƒˆé™¤å»ã€ç©ºç™½ã®é€£çµç­‰ã€…)
 	mPreprocessed.setSize( size + 1 );
 	int preprocessedSize = preprocess( &mPreprocessed[ 0 ], data, size );
 	if ( preprocessedSize == 0 ){
@@ -62,14 +62,14 @@ Parser::Parser( const char* data, int size ) : mIsValid( false ), mRootElement( 
 	size = preprocessedSize;
 	end = data + size;
 
-	//š‹å‰ğÍ
+	//å­—å¥è§£æ
 	Tank< Token > tokensTank;
 	tokenize( &tokensTank, data, size );
-	//g‚¢‚â‚·‚­‚·‚é‚½‚ß‚É”z—ñ‚ÉˆÚ“®
+	//ä½¿ã„ã‚„ã™ãã™ã‚‹ãŸã‚ã«é…åˆ—ã«ç§»å‹•
 	Array< Token > tokens( tokensTank.size() );
 	tokensTank.copyTo( &tokens[ 0 ] );
 
-	//\•¶‰ğÍ
+	//æ§‹æ–‡è§£æ
 	bool failed = false;
 	try{
 		analyze( tokens );
@@ -99,7 +99,7 @@ void Parser::toString( string* s ) const {
 	o.precision( 8 ); 
 	o << "<?xml version=\"1.0\"?>" << endl;
 	o << "<XFile>" << endl;
-	//‡ŸƒeƒLƒXƒg‰»
+	//é †æ¬¡ãƒ†ã‚­ã‚¹ãƒˆåŒ–
 	RefString nullString;
 	CompositeElement* e = dynamic_cast< CompositeElement* >( mRootElement );
 	for ( int i = 0; i < e->childNumber(); ++i ){
@@ -129,29 +129,29 @@ void Parser::dieIf( bool f ){
 
 int Parser::toInt( const RefString& s ){
 	char* endPtr;
-	int r = strtol( s.get(), &endPtr, 10 ); //istringstream‚Í’x‚·‚¬‚é‚Ì‚Åstdtol()B
-	int convN = static_cast< int >( endPtr - s.get() ); //•ÏŠ·‚É¬Œ÷‚µ‚Ä‚¢‚ê‚ÎƒTƒCƒY•ª‚«‚Á‚©‚èi‚Ş‚Í‚¸Bistringstream‚ğg‚í‚È‚¢‚Ì‚Íqí‚¶‚á‚È‚­’x‚¢‚©‚çB
-	if ( convN != s.size() ){ //ƒTƒCƒY‚ªˆá‚¤I
+	int r = strtol( s.get(), &endPtr, 10 ); //istringstreamã¯é…ã™ãã‚‹ã®ã§stdtol()ã€‚
+	int convN = static_cast< int >( endPtr - s.get() ); //å¤‰æ›ã«æˆåŠŸã—ã¦ã„ã‚Œã°ã‚µã‚¤ã‚ºåˆ†ãã£ã‹ã‚Šé€²ã‚€ã¯ãšã€‚istringstreamã‚’ä½¿ã‚ãªã„ã®ã¯å°‹å¸¸ã˜ã‚ƒãªãé…ã„ã‹ã‚‰ã€‚
+	if ( convN != s.size() ){ //ã‚µã‚¤ã‚ºãŒé•ã†ï¼
 		r = 0;
 	}
 	return r;
 }
 
 
-/*\•¶‰ğÍ
+/*æ§‹æ–‡è§£æ
 FILE : TEMPLATE* DATA*
 TEMPLATE : template Identifier { Uuid TEMPLATE_LINE* Bracket?  }
 TEMPLATE_ENTRY : ( SINGLE_TEMPLATE | ARRAY_TEMPLATE )
 SINGLE_TEMPLATE : Identifier Identifier ;
 ARRAY_TEMPLATE : Array Identifier Identifier Brackets+ ;
 DATA : Identifier { DATA_ENTRY* DATA* }
-DATA_ENTRY : ( Identifier | DATA_ENTRY | ARRAY ) ; //‚±‚±‚©‚ç‰º‚Íƒeƒ“ƒvƒŒ[ƒgƒNƒ‰ƒX‚ÉÄ‹A‰ğÍ‚³‚¹‚é
+DATA_ENTRY : ( Identifier | DATA_ENTRY | ARRAY ) ; //ã“ã“ã‹ã‚‰ä¸‹ã¯ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚¯ãƒ©ã‚¹ã«å†å¸°è§£æã•ã›ã‚‹
 ARRAY : ( ( Identifier | DATA_ENTRY ), )+
 */
 
 void Parser::analyze( const Array< Token >& tokens ){
 	mPrimitiveTypes.setCapacity( 10 );
-	//‘g‚İ‚İŒ^‚ğset‚É“Š“üB
+	//çµ„ã¿è¾¼ã¿å‹ã‚’setã«æŠ•å…¥ã€‚
 	RefString s;
 	s = "CHAR";
 	mPrimitiveTypes.add( s );
@@ -171,9 +171,9 @@ void Parser::analyze( const Array< Token >& tokens ){
 	mPrimitiveTypes.add( s );
 	s = "CSTRING";
 	mPrimitiveTypes.add( s );
-	s = "UNICODE"; //ƒTƒ|[ƒg‚µ‚Ä‚È‚¢‚¯‚Ç‚È...
+	s = "UNICODE"; //ã‚µãƒãƒ¼ãƒˆã—ã¦ãªã„ã‘ã©ãª...
 	mPrimitiveTypes.add( s );
-	//\•¶‰ğÍ‚µ‚Ü‚·B
+	//æ§‹æ–‡è§£æã—ã¾ã™ã€‚
 	analyzeFile( tokens );
 }
 
@@ -181,7 +181,7 @@ void Parser::analyze( const Array< Token >& tokens ){
 void Parser::analyzeFile( const Array< Token >& tokens ){
 	map< RefString, Template* > templates;
 
-	//XSI‚ª“f‚¢‚½.x‚Ì‚½‚ß‚Ì‹Ù‹}”ñ“ïƒR[ƒhB’Ç‰Áƒeƒ“ƒvƒŒ[ƒg‚ğ“Ç‚İ‚Ş
+	//XSIãŒåã„ãŸ.xã®ãŸã‚ã®ç·Šæ€¥éé›£ã‚³ãƒ¼ãƒ‰ã€‚è¿½åŠ ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚’èª­ã¿è¾¼ã‚€
 	{
 		Tank< Token > templateTokenTank;
 		tokenize( &templateTokenTank, gStandardTemplates, sizeof( gStandardTemplates ) );
@@ -189,25 +189,25 @@ void Parser::analyzeFile( const Array< Token >& tokens ){
 		templateTokens.setSize( templateTokenTank.size() );
 		templateTokenTank.copyTo( &templateTokens[ 0 ] );
 		const int n2 = templateTokens.size();
-		int p2 = 0; //ˆÊ’u
+		int p2 = 0; //ä½ç½®
 		while ( p2 < n2 ){
-			if ( templateTokens[ p2 ] != Token::TEMPLATE ){ //‚±‚±‚ÅIdentifier‚ª—ˆ‚Ä‚ê‚ÎÀ‘Ì
+			if ( templateTokens[ p2 ] != Token::TEMPLATE ){ //ã“ã“ã§IdentifierãŒæ¥ã¦ã‚Œã°å®Ÿä½“
 				break;
 			}
 			p2 = analyzeTemplate( templateTokens, p2, &templates );
 		}
 	}
-	//ˆÈ‰º–{”Ô
+	//ä»¥ä¸‹æœ¬ç•ª
 	//TEMPLATE*
 	const int n = tokens.size();
-	int p = 0; //ˆÊ’u
+	int p = 0; //ä½ç½®
 	while ( p < n ){
-		if ( tokens[ p ] != Token::TEMPLATE ){ //‚±‚±‚ÅIdentifier‚ª—ˆ‚Ä‚ê‚ÎÀ‘Ì
+		if ( tokens[ p ] != Token::TEMPLATE ){ //ã“ã“ã§IdentifierãŒæ¥ã¦ã‚Œã°å®Ÿä½“
 			break;
 		}
 		p = analyzeTemplate( tokens, p, &templates );
 	}
-	//std::map‚©‚çHashMap‚ÉˆÚ‚µ•Ï‚¦‚Ä‚‘¬‰»‚ğ‘_‚¤
+	//std::mapã‹ã‚‰HashMapã«ç§»ã—å¤‰ãˆã¦é«˜é€ŸåŒ–ã‚’ç‹™ã†
 	mTemplates.setCapacity( static_cast< int >( templates.size() ) );
 	for ( map< RefString, Template* >::iterator i = templates.begin(); i != templates.end(); ++i ){
 		mTemplates.add( i->first, i->second );
@@ -227,14 +227,14 @@ int Parser::analyzeTemplate( const Array< Token >& t, int p, map< RefString, Tem
 	//template
 	++p;
 	//Identifier
-	dieIf( ( p >= n ) || ( t[ p ] != Token::IDENTIFIER ) ); //‚ ‚è‚¦‚È‚¢
+	dieIf( ( p >= n ) || ( t[ p ] != Token::IDENTIFIER ) ); //ã‚ã‚Šãˆãªã„
 	const Token& name = t[ p ];
 	++p;
 	//{
-	dieIf( ( p >= n ) || ( t[ p ] != Token::LEFT_BRACE ) ); //‚ ‚è‚¦‚È‚¢
+	dieIf( ( p >= n ) || ( t[ p ] != Token::LEFT_BRACE ) ); //ã‚ã‚Šãˆãªã„
 	++p;
 	//Uuid
-	dieIf( ( p >= n ) || ( t[ p ] != Token::UUID ) ); //‚ ‚è‚¦‚È‚¢
+	dieIf( ( p >= n ) || ( t[ p ] != Token::UUID ) ); //ã‚ã‚Šãˆãªã„
 	const Token& uuid = t[ p ];
 	++p;
 	//TEMPLATE_LINE*
@@ -252,11 +252,11 @@ int Parser::analyzeTemplate( const Array< Token >& t, int p, map< RefString, Tem
 		++p;
 	}
 	//}
-	dieIf( ( p >= n ) || ( t[ p ] != Token::RIGHT_BRACE ) ); //‚ ‚è‚¦‚È‚¢
+	dieIf( ( p >= n ) || ( t[ p ] != Token::RIGHT_BRACE ) ); //ã‚ã‚Šãˆãªã„
 	++p;
-	//‚à‚µ‚·‚Å‚É“¯‚¶–¼‘O‚Ìƒeƒ“ƒvƒŒ[ƒg‚ª‚ ‚é‚È‚ç‰½‚à‚µ‚È‚¢
+	//ã‚‚ã—ã™ã§ã«åŒã˜åå‰ã®ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãŒã‚ã‚‹ãªã‚‰ä½•ã‚‚ã—ãªã„
 	if ( templates->find( *name.get() ) == templates->end() ){
-		//ƒf[ƒ^æ‚èo‚µ‚Ü‚·
+		//ãƒ‡ãƒ¼ã‚¿å–ã‚Šå‡ºã—ã¾ã™
 		int lineNumber = templateLines.size();
 		Template* tmpl = NEW Template( 
 			*name.get(),
@@ -266,7 +266,7 @@ int Parser::analyzeTemplate( const Array< Token >& t, int p, map< RefString, Tem
 			tmpl->setChild( i, templateLines.get() );
 			templateLines.toNext();
 		}
-		//map‚ÉŠi”[
+		//mapã«æ ¼ç´
 		templates->insert( make_pair( *name.get(), tmpl ) );
 	}
 	return p;
@@ -278,7 +278,7 @@ int Parser::analyzeTemplateEntry( TemplateLine* templateLine, const Array< Token
 		p = analyzeSingleTemplate( templateLine, t, p, templates );
 	}else if ( t[ p ] == Token::ARRAY ){
 		p = analyzeArrayTemplate( templateLine, t, p, templates );
-	}else{ //ƒGƒ‰[
+	}else{ //ã‚¨ãƒ©ãƒ¼
 		dieIf( true );
 	}
 	return p;
@@ -287,17 +287,17 @@ int Parser::analyzeTemplateEntry( TemplateLine* templateLine, const Array< Token
 //SINGLE_TEMPLATE : Identifier Identifier ;
 int Parser::analyzeSingleTemplate( TemplateLine* templateLine, const Array< Token >& t, int p, map< RefString, Template* >* templates ){
 	const int n = t.size();
-	//Œ^–¼
+	//å‹å
 	const Token& typeName = t[ p ];
 	++p;
-	//•Ï”–¼
+	//å¤‰æ•°å
 	dieIf( ( p >= n ) || ( t[ p ] != Token::IDENTIFIER ) );
 	templateLine->mName = *( t[ p ].get() );
 	++p;
 	//;
 	dieIf( ( p >= n ) || ( t[ p ] != Token::SEMICOLON ) );
 	++p;
-	//ƒeƒ“ƒvƒŒ[ƒgæ‚èo‚µ
+	//ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆå–ã‚Šå‡ºã—
 	if ( isPrimitiveType( *typeName.get() ) ){
 		templateLine->mTemplate = 0;
 		templateLine->mPrimitiveType = *typeName.get();
@@ -314,10 +314,10 @@ int Parser::analyzeArrayTemplate( TemplateLine* templateLine, const Array< Token
 	const int n = t.size();
 	//array
 	++p;
-	//Œ^–¼
+	//å‹å
 	const Token& typeName = t[ p ];
 	++p;
-	//•Ï”–¼
+	//å¤‰æ•°å
 	dieIf( ( p >= n ) || ( t[ p ] != Token::IDENTIFIER ) );
 	templateLine->mName = *( t[ p ].get() );
 	++p;
@@ -334,7 +334,7 @@ int Parser::analyzeArrayTemplate( TemplateLine* templateLine, const Array< Token
 	//;
 	dieIf( ( p >= n ) || ( t[ p ] != Token::SEMICOLON ) );
 	++p;
-	//ƒeƒ“ƒvƒŒ[ƒgæ‚èo‚µ
+	//ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆå–ã‚Šå‡ºã—
 	if ( isPrimitiveType( *typeName.get() ) ){
 		templateLine->mTemplate = 0;
 		templateLine->mPrimitiveType = *typeName.get();
@@ -347,22 +347,22 @@ int Parser::analyzeArrayTemplate( TemplateLine* templateLine, const Array< Token
 }
 
 /*
-//1.ƒRƒƒ“ƒgœ‹
-//2.‰üsœ‹
-//3.˜A‘±‚µ‚½‹ó”’‚ğˆê‚Â‚É
+//1.ã‚³ãƒ¡ãƒ³ãƒˆé™¤å»
+//2.æ”¹è¡Œé™¤å»
+//3.é€£ç¶šã—ãŸç©ºç™½ã‚’ä¸€ã¤ã«
 
-0:‰Šúó‘Ô
-1:‹ó”’‚Ìã
-2:ƒRƒƒ“ƒg
-3:/‚Ìã
-4:""‚Ì’†
+0:åˆæœŸçŠ¶æ…‹
+1:ç©ºç™½ã®ä¸Š
+2:ã‚³ãƒ¡ãƒ³ãƒˆ
+3:/ã®ä¸Š
+4:""ã®ä¸­
 
-0,s,1 ->‚±‚Ì‹ó”’‚Ío—Í
+0,s,1 ->ã“ã®ç©ºç™½ã¯å‡ºåŠ›
 0,#,2
 0,/,3
 0,",4
 0,*,0
-1,s,1 ->–³‹
+1,s,1 ->ç„¡è¦–
 1,#,2
 1,/,3
 1,",4
@@ -376,7 +376,7 @@ int Parser::analyzeArrayTemplate( TemplateLine* templateLine, const Array< Token
 
 */
 int Parser::preprocess( char* dst, const char* src, int size ){
-	int m = 0; //ƒ‚[ƒh
+	int m = 0; //ãƒ¢ãƒ¼ãƒ‰
 	const char* end = src + size;
 	const char* origDst = dst;
 	while ( src < end ){
@@ -403,7 +403,7 @@ int Parser::preprocess( char* dst, const char* src, int size ){
 				break;
 			case 1:
 				if ( isSpace( c ) ){
-					; //–³‹
+					; //ç„¡è¦–
 				}else if ( c == '#' ){
 					m = 2;
 				}else if ( c == '/' ){
@@ -422,14 +422,14 @@ int Parser::preprocess( char* dst, const char* src, int size ){
 				if ( c == '\n' ){
 					m = 0;
 				}else{ 
-					; //ƒRƒƒ“ƒg‚Ì’†BƒXƒLƒbƒv
+					; //ã‚³ãƒ¡ãƒ³ãƒˆã®ä¸­ã€‚ã‚¹ã‚­ãƒƒãƒ—
 				}
 				break;
 			case 3:
 				if ( c == '/' ){
 					m = 2;
 				}else{
-					return 0; //ƒGƒ‰[‚Å‚·
+					return 0; //ã‚¨ãƒ©ãƒ¼ã§ã™
 				}
 				break;
 			case 4:
@@ -449,7 +449,7 @@ int Parser::preprocess( char* dst, const char* src, int size ){
 }
 
 bool Parser::checkHeader( const char* data, const char* end ){
-	//ƒwƒbƒ_ƒTƒCƒY‚ª‘«‚è‚È‚¢
+	//ãƒ˜ãƒƒãƒ€ã‚µã‚¤ã‚ºãŒè¶³ã‚Šãªã„
 	if ( end - data < 16 ){
 		return false;
 	}
@@ -469,53 +469,53 @@ bool Parser::checkHeader( const char* data, const char* end ){
 }
 
 /*
-š‹å•ª‰ğ‚µ‚Ü‚·B
+å­—å¥åˆ†è§£ã—ã¾ã™ã€‚
 
-0:‰Šúó‘Ô
-1:•¶š—ñ“à
-2:UUID“à
-3:[]“à
-4:[]“à•¶š—ñ
-5:""“à
+0:åˆæœŸçŠ¶æ…‹
+1:æ–‡å­—åˆ—å†…
+2:UUIDå†…
+3:[]å†…
+4:[]å†…æ–‡å­—åˆ—
+5:""å†…
 
 0,{,0 out(LEFT_BRACE)
 0,},0 out(RIGHT_BRACE)
 0,,,0 out(COMMA)
 0,;,0 out(SEMI_COLON)
-0,<,2 UUID‚Ö sƒNƒŠƒA
-0,[,3 []‚Ö sƒNƒŠƒA
-0,",5 •¶š—ñƒŠƒeƒ‰ƒ‹
-0,c,1 •¶š—ñ‚Ö sƒNƒŠƒA
+0,<,2 UUIDã¸ sã‚¯ãƒªã‚¢
+0,[,3 []ã¸ sã‚¯ãƒªã‚¢
+0,",5 æ–‡å­—åˆ—ãƒªãƒ†ãƒ©ãƒ«
+0,c,1 æ–‡å­—åˆ—ã¸ sã‚¯ãƒªã‚¢
 0,*,0
 
 1,{,0 out(LEFT_BRACE)
 1,},0 out(RIGHT_BRACE)
 1,,,0 out(COMMA)
 1,;,0 out(SEMI_COLON)
-1,<,2 UUID‚Ö sƒNƒŠƒA
-1,[,3 []‚Ö sƒNƒŠƒA
-1,c,1 •¶š—ñŒp‘±
+1,<,2 UUIDã¸ sã‚¯ãƒªã‚¢
+1,[,3 []ã¸ sã‚¯ãƒªã‚¢
+1,c,1 æ–‡å­—åˆ—ç¶™ç¶š
 1,*,0 out(IDENTIFIER | TEMPLATE)
 
 2,>,0 out(UUID)
-2,*,2 UUIDŒp‘±
+2,*,2 UUIDç¶™ç¶š
 
 3,],0 out(BRACKETS)
-3,c,4 []“à•¶š—ñ‚Ö
+3,c,4 []å†…æ–‡å­—åˆ—ã¸
 3,*,3
 
 4,],0 out(BRACKETS)
-4,c,4 Œp‘±
-4,*,3 ”²‚¯‚é
+4,c,4 ç¶™ç¶š
+4,*,3 æŠœã‘ã‚‹
 
 5,",0 out(STRING)
-5,*,5 Œp‘±
+5,*,5 ç¶™ç¶š
 
 */
 void Parser::tokenize( Tank< Token >* tokens, const char* p, int size ){
 	const char* end = p + size;
-	const char* s = 0; //•¶š—ñƒ|ƒCƒ“ƒ^
-	int l = 0; //•¶š—ñ’·
+	const char* s = 0; //æ–‡å­—åˆ—ãƒã‚¤ãƒ³ã‚¿
+	int l = 0; //æ–‡å­—åˆ—é•·
 	int m = 0;
 	while ( p < end ){
 		char c = *p;
@@ -546,14 +546,14 @@ void Parser::tokenize( Tank< Token >* tokens, const char* p, int size ){
 					s = p;
 					l = 1;
 				}else{
-					; //‚»‚Ì‚Ü‚Ü
+					; //ãã®ã¾ã¾
 				}
 				break;
 			case 1:
 				if ( isNormalChar( c ) ){
 					++l;
 				}else{
-					//‚Æ‚è‚ ‚¦‚¸•¶š—ñ‚ğo—Í‚·‚é
+					//ã¨ã‚Šã‚ãˆãšæ–‡å­—åˆ—ã‚’å‡ºåŠ›ã™ã‚‹
 					string str( s, l );
 					if ( str == "template" ){
 						tokens->add( Token( Token::TEMPLATE ) );
@@ -562,7 +562,7 @@ void Parser::tokenize( Tank< Token >* tokens, const char* p, int size ){
 					}else{
 						tokens->add( Token( Token::IDENTIFIER, s, l ) );
 					}
-					//‚»‚ÌŒã‚Ìˆ—
+					//ãã®å¾Œã®å‡¦ç†
 					if ( c == '{' ){
 						m = 0;
 						tokens->add( Token( Token::LEFT_BRACE ) );
@@ -604,7 +604,7 @@ void Parser::tokenize( Tank< Token >* tokens, const char* p, int size ){
 					++l;
 					m = 4;
 				}else{
-					; //‰½‚à‚µ‚È‚¢
+					; //ä½•ã‚‚ã—ãªã„
 				}
 				break;
 			case 4:

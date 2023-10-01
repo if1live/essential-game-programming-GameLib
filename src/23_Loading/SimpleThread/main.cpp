@@ -3,7 +3,7 @@
 using namespace GameLib;
 using namespace GameLib::Threading;
 
-//ƒXƒŒƒbƒh”h¶
+//ã‚¹ãƒ¬ãƒƒãƒ‰æ´¾ç”Ÿ
 class MyThread : public Thread{
 public:
 	void operator()(){
@@ -16,12 +16,12 @@ MyThread* gThread;
 namespace GameLib{
 	void Framework::update(){
 		if ( !gThread ){
-			//ƒXƒŒƒbƒh¶¬AŠJŽn
+			//ã‚¹ãƒ¬ãƒƒãƒ‰ç”Ÿæˆã€é–‹å§‹
 			gThread = new MyThread();
 			gThread->start();
 		}
 		if ( isEndRequested() ){
-			gThread->wait(); //I‚í‚Á‚Ä‚©‚çÁ‚·‚±‚ÆB
+			gThread->wait(); //çµ‚ã‚ã£ã¦ã‹ã‚‰æ¶ˆã™ã“ã¨ã€‚
 			SAFE_DELETE( gThread );
 		}
 	}

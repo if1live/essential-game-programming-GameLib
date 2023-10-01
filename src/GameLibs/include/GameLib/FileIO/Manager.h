@@ -8,24 +8,24 @@ namespace FileIO{
 
 class Manager{
 public:
-	//�A�[�J�C�u�̎g����
+	//アーカイブの使い方
 	enum AccessMode{
-		MODE_ARCHIVE_FIRST, //�A�[�J�C�u�D��B
-		MODE_DIRECT_FIRST, //���ڃA�N�Z�X�D��B
-		MODE_ARCHIVE_ONLY, //�A�[�J�C�u�̂݁B�z�鎞�ɂ͂���ɂ��Ă��������������B
+		MODE_ARCHIVE_FIRST, //アーカイブ優先。
+		MODE_DIRECT_FIRST, //直接アクセス優先。
+		MODE_ARCHIVE_ONLY, //アーカイブのみ。配る時にはこれにしておいた方がいい。
 	};
-	///�C���X�^���X�𓾂�B�������A�P��Manager().foo()�Ə����Ă��ǂ��B
+	///インスタンスを得る。しかし、単にManager().foo()と書いても良い。
 	static Manager instance();
-	///�n���h�����󂯎�炸�ɏ������݂��s���B�������s�̕ʂ͂킩��Ȃ��B
+	///ハンドルを受け取らずに書き込みを行う。成功失敗の別はわからない。
 	void write( const char* filename, const char* data, int size );
-	///���[�h���Ă�����̂����X�g�ɂ��ēf���o���B�f�o�O�p�B�J���R��𒲂ׂ悤�B
+	///ロードしているものをリストにして吐き出す。デバグ用。開放漏れを調べよう。
 	std::string createListString() const;
-	///�e�ʌ��E�̎w��Bwarning�𒴂���ƌx�����Aerror�𒴂���ƃG���[�ɂ���B�W���l�͗���2GB
+	///容量限界の指定。warningを超えると警告が、errorを超えるとエラーにする。標準値は両方2GB
 	void setLimit( int warning, int error );
-	///�G���[���N���������Ɏ~�܂邩�ǂ����B�W����true�B�c�[�����~�܂��č���Ȃ�false������B
+	///エラーを起こした時に止まるかどうか。標準はtrue。ツール等止まって困るならfalseを入れよ。
 	void enableHaltOnError( bool );
 
-	//�ȉ����[�U�͈ӎ����Ȃ�
+	//以下ユーザは意識しない
 	static void create( 
 		const char** archiveNames = 0, 
 		int archiveNumber = 0, 

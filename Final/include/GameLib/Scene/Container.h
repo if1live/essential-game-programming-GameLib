@@ -14,40 +14,40 @@ class Model;
 class Tree;
 class Animation;
 
-///•`‰æƒf[ƒ^‚ğ“ü‚ê‚éƒRƒ“ƒeƒiB
+///æç”»ãƒ‡ãƒ¼ã‚¿ã‚’å…¥ã‚Œã‚‹ã‚³ãƒ³ãƒ†ãƒŠã€‚
 /*!
-createModel()‚µ‚ÄAModel::draw()‚·‚ê‚Î‚¢‚¢B2s‚ÅŠG‚ªo‚éB
+createModel()ã—ã¦ã€Model::draw()ã™ã‚Œã°ã„ã„ã€‚2è¡Œã§çµµãŒå‡ºã‚‹ã€‚
 */
 class Container{
 public:
-	///ƒjƒZxml‚©‚ç¶¬B’Ç‰Áƒf[ƒ^ƒpƒX‚ÍÈ—ª‚³‚ê‚ê‚Îexe‚ÌêŠ‚É‚È‚é
+	///ãƒ‹ã‚»xmlã‹ã‚‰ç”Ÿæˆã€‚è¿½åŠ ãƒ‡ãƒ¼ã‚¿ãƒ‘ã‚¹ã¯çœç•¥ã•ã‚Œã‚Œã°exeã®å ´æ‰€ã«ãªã‚‹
 	static Container create( PseudoXml::ConstElement, const char* extraDataPath = 0 );
-	///ƒtƒ@ƒCƒ‹‚©‚ç’¼Ú¶¬B’Ç‰Áƒf[ƒ^ƒpƒX‚ª‚È‚¯‚ê‚Îƒtƒ@ƒCƒ‹‚Æ“¯‚¶êŠ‚ğg‚¤B
+	///ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ç›´æ¥ç”Ÿæˆã€‚è¿½åŠ ãƒ‡ãƒ¼ã‚¿ãƒ‘ã‚¹ãŒãªã‘ã‚Œã°ãƒ•ã‚¡ã‚¤ãƒ«ã¨åŒã˜å ´æ‰€ã‚’ä½¿ã†ã€‚
 	static Container create( const char* filename, const char* extraDataPath = 0 );
-	///ƒoƒbƒ`–¼‚ğw’è‚µ‚Äƒ‚ƒfƒ‹‚ğì‚é
+	///ãƒãƒƒãƒåã‚’æŒ‡å®šã—ã¦ãƒ¢ãƒ‡ãƒ«ã‚’ä½œã‚‹
 	Model createModel( const char* batchName ) const;
-	///ƒoƒbƒ`”Ô†‚ğw’è‚µ‚Äƒ‚ƒfƒ‹‚ğì‚é
+	///ãƒãƒƒãƒç•ªå·ã‚’æŒ‡å®šã—ã¦ãƒ¢ãƒ‡ãƒ«ã‚’ä½œã‚‹
 	Model createModel( int batchId ) const;
-	///ƒcƒŠ[–¼‚ğw’è‚µ‚ÄƒcƒŠ[‚ğì‚é
+	///ãƒ„ãƒªãƒ¼åã‚’æŒ‡å®šã—ã¦ãƒ„ãƒªãƒ¼ã‚’ä½œã‚‹
 	Tree createTree( const char* treeName ) const;
-	///ƒcƒŠ[‚Ì”Ô†‚ğw’è‚µ‚ÄƒcƒŠ[‚ğì‚é
+	///ãƒ„ãƒªãƒ¼ã®ç•ªå·ã‚’æŒ‡å®šã—ã¦ãƒ„ãƒªãƒ¼ã‚’ä½œã‚‹
 	Tree createTree( int treeId ) const;
 
-	///ƒ[ƒhI—¹ŒŸ’mB•K‚¸ŒÄ‚ñ‚Åtrue‚ª•Ô‚é‚±‚Æ‚ğŠm”F‚µ‚Ä‚©‚çg‚¤‚±‚ÆB
+	///ãƒ­ãƒ¼ãƒ‰çµ‚äº†æ¤œçŸ¥ã€‚å¿…ãšå‘¼ã‚“ã§trueãŒè¿”ã‚‹ã“ã¨ã‚’ç¢ºèªã—ã¦ã‹ã‚‰ä½¿ã†ã“ã¨ã€‚
 	bool isReady();
 
 	Batch batch( const char* batchName ) const;
 	Batch batch( int batchIndex ) const;
 	Animation animation( const char* animationName ) const;
 	Animation animation( int animationIndex ) const;
-	//Batch”‚ª‚í‚©‚éB“ü‚Á‚Ä‚¢‚é‘S•”‚Ì‚à‚Ì‚ğo‚µ‚½‚¢‚É‚Í‚±‚ê‚ÆgetBatch(int)‚ğ•¹—p‚·‚ê‚Î—Ç‚¢B
+	//Batchæ•°ãŒã‚ã‹ã‚‹ã€‚å…¥ã£ã¦ã„ã‚‹å…¨éƒ¨ã®ã‚‚ã®ã‚’å‡ºã—ãŸã„æ™‚ã«ã¯ã“ã‚Œã¨getBatch(int)ã‚’ä½µç”¨ã™ã‚Œã°è‰¯ã„ã€‚
 	int batchNumber() const;
-	//Tree”‚ª‚í‚©‚éB“ü‚Á‚Ä‚¢‚é‘S•”‚Ì‚à‚Ì‚ğo‚µ‚½‚¢‚É‚Í‚±‚ê‚ÆcreateTree(int)‚ğ•¹—p‚·‚ê‚Î—Ç‚¢B
+	//Treeæ•°ãŒã‚ã‹ã‚‹ã€‚å…¥ã£ã¦ã„ã‚‹å…¨éƒ¨ã®ã‚‚ã®ã‚’å‡ºã—ãŸã„æ™‚ã«ã¯ã“ã‚Œã¨createTree(int)ã‚’ä½µç”¨ã™ã‚Œã°è‰¯ã„ã€‚
 	int treeNumber() const;
-	//ƒAƒjƒ[ƒVƒ‡ƒ“”‚ª‚í‚©‚éB
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æ•°ãŒã‚ã‹ã‚‹ã€‚
 	int animationNumber() const;
 
-	//ˆÈ‰ºƒ†[ƒU‚ÍˆÓ¯‚µ‚È‚­‚Ä‚¢‚¢
+	//ä»¥ä¸‹ãƒ¦ãƒ¼ã‚¶ã¯æ„è­˜ã—ãªãã¦ã„ã„
 	Container();
 	~Container();
 	Container( const Container& );

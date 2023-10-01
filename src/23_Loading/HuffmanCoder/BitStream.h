@@ -1,34 +1,34 @@
 #ifndef INCLUDED_BITSTREAM_H
 #define INCLUDED_BITSTREAM_H
 
-//“Ç‚İ‚İê—p
+//èª­ã¿è¾¼ã¿å°‚ç”¨
 class IBitStream{
 public:
-	//—Ìˆæ‚ğƒZƒbƒg‚µ‚ÄƒRƒ“ƒXƒgƒ‰ƒNƒg
-	explicit IBitStream( const unsigned char* buffer ); //explicit‚Íˆø”‚ªˆêŒÂ‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚É‚Í•K‚¸‚Â‚¯‚é‚¨‚Ü‚¶‚È‚¢B‚±‚ê‚ğà–¾‚·‚éƒXƒy[ƒX‚Í‚È‚¢‚ªA’m‚ç‚È‚¢‚Æ‚Ü‚¸‚¢‚Ì‚Å’²‚×‚Ä‚¨‚­‚±‚ÆB
-	void read( unsigned char* data, int sizeInBit ); //w’è‚ÌƒoƒCƒg”“Ç‚İ‚Ş
-	bool read(); //1ƒrƒbƒg“Ç‚İ‚ñ‚ÅA1‚È‚çtrue‚ğ•Ô‚·B
-	unsigned readU4(); //unsigned int“Ç‚İ‚İ
-	int readS4(); //signed int“Ç‚İ‚İ
-	int positionInByte() const; //ƒoƒCƒg‚ÅˆÊ’u‚ğ•Ô‚·B
+	//é ˜åŸŸã‚’ã‚»ãƒƒãƒˆã—ã¦ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
+	explicit IBitStream( const unsigned char* buffer ); //explicitã¯å¼•æ•°ãŒä¸€å€‹ã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã«ã¯å¿…ãšã¤ã‘ã‚‹ãŠã¾ã˜ãªã„ã€‚ã“ã‚Œã‚’èª¬æ˜ã™ã‚‹ã‚¹ãƒšãƒ¼ã‚¹ã¯ãªã„ãŒã€çŸ¥ã‚‰ãªã„ã¨ã¾ãšã„ã®ã§èª¿ã¹ã¦ãŠãã“ã¨ã€‚
+	void read( unsigned char* data, int sizeInBit ); //æŒ‡å®šã®ãƒã‚¤ãƒˆæ•°èª­ã¿è¾¼ã‚€
+	bool read(); //1ãƒ“ãƒƒãƒˆèª­ã¿è¾¼ã‚“ã§ã€1ãªã‚‰trueã‚’è¿”ã™ã€‚
+	unsigned readU4(); //unsigned intèª­ã¿è¾¼ã¿
+	int readS4(); //signed intèª­ã¿è¾¼ã¿
+	int positionInByte() const; //ãƒã‚¤ãƒˆã§ä½ç½®ã‚’è¿”ã™ã€‚
 private:
 	const unsigned char* mBuffer;
-	int mPosition; //ƒrƒbƒg’PˆÊ‚Å‚·B
+	int mPosition; //ãƒ“ãƒƒãƒˆå˜ä½ã§ã™ã€‚
 };
 
-//‘‚«‚İê—p
+//æ›¸ãè¾¼ã¿å°‚ç”¨
 class OBitStream{
 public:
-	//—Ìˆæ‚ğƒZƒbƒg‚µ‚ÄƒRƒ“ƒXƒgƒ‰ƒNƒg
-	explicit OBitStream( unsigned char* buffer ); //explicit‚Íˆø”‚ªˆêŒÂ‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚É‚Í•K‚¸‚Â‚¯‚é‚¨‚Ü‚¶‚È‚¢B‚±‚ê‚ğà–¾‚·‚éƒXƒy[ƒX‚Í‚È‚¢‚ªA’m‚ç‚È‚¢‚Æ‚Ü‚¸‚¢‚Ì‚Å’²‚×‚Ä‚¨‚­‚±‚ÆB
-	void write( const unsigned char* data, int sizeInBit );//w’è‚Ìƒrƒbƒg”‘‚«‚Ş
-	void write( bool ); //1ƒrƒbƒg‘‚«‚İ
-	void write( unsigned ); //unsigned“Ç‚İ‚İ
-	void write( int ); //int“Ç‚İ‚İ
-	int sizeInByte() const; //ƒoƒCƒg‚ÅƒTƒCƒY‚ğ•Ô‚·B
+	//é ˜åŸŸã‚’ã‚»ãƒƒãƒˆã—ã¦ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
+	explicit OBitStream( unsigned char* buffer ); //explicitã¯å¼•æ•°ãŒä¸€å€‹ã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã«ã¯å¿…ãšã¤ã‘ã‚‹ãŠã¾ã˜ãªã„ã€‚ã“ã‚Œã‚’èª¬æ˜ã™ã‚‹ã‚¹ãƒšãƒ¼ã‚¹ã¯ãªã„ãŒã€çŸ¥ã‚‰ãªã„ã¨ã¾ãšã„ã®ã§èª¿ã¹ã¦ãŠãã“ã¨ã€‚
+	void write( const unsigned char* data, int sizeInBit );//æŒ‡å®šã®ãƒ“ãƒƒãƒˆæ•°æ›¸ãè¾¼ã‚€
+	void write( bool ); //1ãƒ“ãƒƒãƒˆæ›¸ãè¾¼ã¿
+	void write( unsigned ); //unsignedèª­ã¿è¾¼ã¿
+	void write( int ); //intèª­ã¿è¾¼ã¿
+	int sizeInByte() const; //ãƒã‚¤ãƒˆã§ã‚µã‚¤ã‚ºã‚’è¿”ã™ã€‚
 private:
 	unsigned char* mBuffer;
-	int mPosition; //ƒrƒbƒg’PˆÊ‚Å‚·B
+	int mPosition; //ãƒ“ãƒƒãƒˆå˜ä½ã§ã™ã€‚
 };
 
 #endif

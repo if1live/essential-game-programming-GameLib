@@ -3,12 +3,12 @@
 #include <sstream>
 using namespace GameLib::Threading;
 
-//‘«‚·•Ï”
+//è¶³ã™å¤‰æ•°
 int gCount;
-//Œ®B‚Æ‚¢‚¤‚©g—p’†‚ÌD
+//éµã€‚ã¨ã„ã†ã‹ä½¿ç”¨ä¸­ã®æœ­
 bool gLock;
 
-//ŠÖ”ƒNƒ‰ƒX
+//é–¢æ•°ã‚¯ãƒ©ã‚¹
 class IncrementThread : public Thread{
 public:
 	IncrementThread(){
@@ -17,15 +17,15 @@ public:
 	~IncrementThread(){
 		wait();
 	}
-	//100–œ‰ñƒCƒ“ƒNƒŠƒƒ“ƒg
+	//100ä¸‡å›ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 	void operator()(){
 		for ( int i = 0; i < 1000*1000; ++i ){
-			while ( gLock ){ //g—p’†B‚»‚í‚»‚í‚µ‚È‚ª‚ç‘Ò‚Ä
+			while ( gLock ){ //ä½¿ç”¨ä¸­ã€‚ãã‚ãã‚ã—ãªãŒã‚‰å¾…ã¦
 				;
 			}
-			gLock = true; //Œ®‚©‚¯‚Ä
-			gCount += 2; //—p‚ğ‘«‚µA
-			gLock = false; //‚·‚Á‚«‚èBŒ®‚ğŠJ‚¯‚éB
+			gLock = true; //éµã‹ã‘ã¦
+			gCount += 2; //ç”¨ã‚’è¶³ã—ã€
+			gLock = false; //ã™ã£ãã‚Šã€‚éµã‚’é–‹ã‘ã‚‹ã€‚
 		}
 	}
 };
@@ -37,7 +37,7 @@ namespace GameLib{
 		{
 			IncrementThread t0;
 			IncrementThread t1;
-		} //‚±‚±‚ÅƒXƒŒƒbƒhƒfƒXƒgƒ‰ƒNƒg
+		} //ã“ã“ã§ã‚¹ãƒ¬ãƒƒãƒ‰ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 		std::ostringstream o;
 		o << gCount;
 		drawDebugString( 0, 0, o.str().c_str() );

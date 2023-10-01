@@ -4,8 +4,8 @@
 
 bool gThrowWhenHalt = false;
 
-//‚±‚Ìƒtƒ@ƒCƒ‹‚Å‚Ínew‚µ‚È‚¢‚æ‚¤”z—¶‚·‚éB
-//new‚Ì’†‚©‚ç‚àŒÄ‚Î‚ê‚¤‚é‚©‚ç‚¾B
+//ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«ã§ã¯newã—ãªã„ã‚ˆã†é…æ…®ã™ã‚‹ã€‚
+//newã®ä¸­ã‹ã‚‰ã‚‚å‘¼ã°ã‚Œã†ã‚‹ã‹ã‚‰ã ã€‚
 namespace GameLib{
 
 void halt( const char* filename, int line, const char* message ){
@@ -14,11 +14,11 @@ void halt( const char* filename, int line, const char* message ){
 	if ( gThrowWhenHalt ){
 		::OutputDebugStringA( buf );
 		::OutputDebugStringA( "\n" );
-		throw EXCEPTION_IGNORE; //Šî–{‚Í–³‹
+		throw EXCEPTION_IGNORE; //åŸºæœ¬ã¯ç„¡è¦–
 	}else{
-		//ƒƒbƒZ[ƒWƒ{ƒbƒNƒX‚ğo‚µ‚Ä
+		//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒœãƒƒã‚¯ã‚¹ã‚’å‡ºã—ã¦
 		MessageBoxA( 0, buf, "Critical Error!", MB_OK | MB_ICONERROR );
-		//‘¦€
+		//å³æ­»
 		*reinterpret_cast< int* >( 0 ) = 0;
 	}
 }

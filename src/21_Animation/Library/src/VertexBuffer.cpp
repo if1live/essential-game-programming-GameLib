@@ -9,16 +9,16 @@ using namespace GameLib::PseudoXml;
 VertexBuffer::VertexBuffer( Element& e ) :
 mPositions( 0 ),
 mUVs( 0 ){
-	//ƒGƒ‰[ƒ`ƒFƒbƒN‘S‘R‚µ‚Ä‚Ü‚¹‚ñ
+	//ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯å…¨ç„¶ã—ã¦ã¾ã›ã‚“
 	mSize = e.childNumber();
 	if ( mSize > 0 ){
 		mPositions = new Vector3[ mSize ];
 		mUVs = new Vector2[ mSize ];
 		for ( int i = 0; i < mSize; ++i ){
 			Element vertex = e.child( i );
-			//ƒAƒgƒŠƒrƒ…[ƒg‚©‚ç”²‚«o‚·
+			//ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆã‹ã‚‰æŠœãå‡ºã™
 			int an = vertex.attributeNumber();
-			mUVs[ i ].set( 0.0, 0.0 ); //”O‚Ì‚½‚ß‰Šú‰» 
+			mUVs[ i ].set( 0.0, 0.0 ); //å¿µã®ãŸã‚åˆæœŸåŒ– 
 			for ( int j = 0; j < an; ++j ){
 				Attribute a = vertex.attribute( j );
 				string name = a.name();
@@ -30,7 +30,7 @@ mUVs( 0 ){
 			}
 		}
 	}
-	//–¼‘O‚ð”²‚­
+	//åå‰ã‚’æŠœã
 	int an = e.attributeNumber();
 	for ( int i = 0; i < an; ++i ){
 		Attribute a = e.attribute( i );

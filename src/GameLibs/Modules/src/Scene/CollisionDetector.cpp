@@ -9,7 +9,7 @@
 namespace {
 using namespace GameLib;
 using namespace GameLib::Scene;
-typedef CollisionDetector::Pair Pair; //—¬—p
+typedef CollisionDetector::Pair Pair; //æµç”¨
 
 class Sphere{
 public:
@@ -17,7 +17,7 @@ public:
 	float mRadius;
 };
 
-//Node::Build‚Ìˆø”ƒZƒbƒg
+//Node::Buildã®å¼•æ•°ã‚»ãƒƒãƒˆ
 class Args{
 public:
 	Args( 
@@ -39,18 +39,18 @@ public:
 	bool* mHitFlags;
 };
 
-//k-d tree‚Ì–{‘Ì
+//k-d treeã®æœ¬ä½“
 class Node{
 public:
 	Node() : mIndices( 0 ), mIndexNumber( 0 ){}
-	//\’z‚µ‚Ä‚Í’[‚©‚ç”»’è‚µ‚Ä‚¢‚­
+	//æ§‹ç¯‰ã—ã¦ã¯ç«¯ã‹ã‚‰åˆ¤å®šã—ã¦ã„ã
 	void build(
-	const Vector3& minV, //”ÍˆÍÅ¬’l(¶‰º‰œ)
-	const Vector3& maxV, //”ÍˆÍÅ‘å’l(‰Eã‘O)
+	const Vector3& minV, //ç¯„å›²æœ€å°å€¤(å·¦ä¸‹å¥¥)
+	const Vector3& maxV, //ç¯„å›²æœ€å¤§å€¤(å³ä¸Šå‰)
 	Args* args,
 	int restLevel ){
-		//Å—Ç‚Ì•ªŠ„‚ğ‚Ç‚¤Œˆ‚ß‚é‚©‚Í“ï‚µ‚¢–â‘è‚¾‚ªA‚±‚±‚Å‚ÍÅ‚à’·‚¢•ûŒü‚ğŠ„‚éB‚±‚ê‚ª•½‹Ï“I‚É‚Í‘Ã“–‚ÈŒ‹‰Ê‚ğo‚·B
-		int axis = -1; //•ªŠ„²
+		//æœ€è‰¯ã®åˆ†å‰²ã‚’ã©ã†æ±ºã‚ã‚‹ã‹ã¯é›£ã—ã„å•é¡Œã ãŒã€ã“ã“ã§ã¯æœ€ã‚‚é•·ã„æ–¹å‘ã‚’å‰²ã‚‹ã€‚ã“ã‚ŒãŒå¹³å‡çš„ã«ã¯å¦¥å½“ãªçµæœã‚’å‡ºã™ã€‚
+		int axis = -1; //åˆ†å‰²è»¸
 		Vector3 size;
 		size.setSub( maxV, minV );
 		float maxSize = -FLOAT_MAX;
@@ -60,28 +60,28 @@ public:
 				axis = i;
 			}
 		}
-		//•ªŠ„ü
+		//åˆ†å‰²ç·š
 		float div;
 		div = minV[ axis ] + maxV[ axis ];
 		div *= 0.5f;
-		//”»’èŒ‹‰Ê‚ÍŒã‚Åg‚¤‚Ì‚Åbool”z—ñ‚É•Û‚µ‚Ä‚¨‚­B—Ìˆæ‚Ínew‚·‚é‚Æ’x‚¢‚Ì‚ÅAˆø”‚Å‚à‚ç‚Á‚Ä‚¢‚éB
+		//åˆ¤å®šçµæœã¯å¾Œã§ä½¿ã†ã®ã§boolé…åˆ—ã«ä¿æŒã—ã¦ãŠãã€‚é ˜åŸŸã¯newã™ã‚‹ã¨é…ã„ã®ã§ã€å¼•æ•°ã§ã‚‚ã‚‰ã£ã¦ã„ã‚‹ã€‚
 		bool* hitL = args->mHitFlags;
 		bool* hitR = hitL + mIndexNumber;
-		//¶‰E‚Ì•¨‘Ì”
+		//å·¦å³ã®ç‰©ä½“æ•°
 		int cl = 0;
 		int cr = 0;
-		//‚Ç‚¿‚ç‚É‘®‚·‚©”»’è
+		//ã©ã¡ã‚‰ã«å±ã™ã‹åˆ¤å®š
 		const Sphere* spheres = args->mSpheres;
 		for ( int i = 0; i < mIndexNumber; ++i ){ 
 			const Sphere& s = spheres[ mIndices[ i ] ];
-			//²‚É‚Â‚¢‚ÄÅ¬Å‘å‚ğæ“¾
+			//è»¸ã«ã¤ã„ã¦æœ€å°æœ€å¤§ã‚’å–å¾—
 			float minP, maxP;
 			minP = s.mCenter[ axis ] - s.mRadius;
 			maxP = s.mCenter[ axis ] + s.mRadius;
 	
-			hitL[ i ] = ( minP < div ); //–¾‚ç‚©‚É¶‚ÉŠ‘® Œë·‚Íl—¶‚µ‚È‚¢B“®‚­‚à‚Ì‚Ìê‡Œë·‚Å‚Ç‚¤‚±‚¤‚È‚Á‚Ä‚à–â‘è‚È‚¢‚µAŒ…—‚¿‚ª¶‚¶‚éŒvZ‚à‚È‚¢B
-			hitR[ i ] = ( maxP > div ); //–¾‚ç‚©‚É‰E‚ÉŠ‘®
-			//•ªŠ„ü‚Ò‚Á‚½‚è‚Å‚ ‚éê‡B‚±‚Ìê‡‰E‚ÉŠ‘®‚³‚¹‚éB—¼•û‚ÉŠ‘®‚³‚¹‚é‚Æ‚©‚Ô‚é‚©‚ç‚¾B
+			hitL[ i ] = ( minP < div ); //æ˜ã‚‰ã‹ã«å·¦ã«æ‰€å± èª¤å·®ã¯è€ƒæ…®ã—ãªã„ã€‚å‹•ãã‚‚ã®ã®å ´åˆèª¤å·®ã§ã©ã†ã“ã†ãªã£ã¦ã‚‚å•é¡Œãªã„ã—ã€æ¡è½ã¡ãŒç”Ÿã˜ã‚‹è¨ˆç®—ã‚‚ãªã„ã€‚
+			hitR[ i ] = ( maxP > div ); //æ˜ã‚‰ã‹ã«å³ã«æ‰€å±
+			//åˆ†å‰²ç·šã´ã£ãŸã‚Šã§ã‚ã‚‹å ´åˆã€‚ã“ã®å ´åˆå³ã«æ‰€å±ã•ã›ã‚‹ã€‚ä¸¡æ–¹ã«æ‰€å±ã•ã›ã‚‹ã¨ã‹ã¶ã‚‹ã‹ã‚‰ã ã€‚
 			if ( ( minP == maxP ) && ( minP == div ) ){
 				hitR[ i ] = true;
 			}
@@ -92,15 +92,15 @@ public:
 				++cr;
 			}
 		}
-		//•ªŠ„ŠJn
+		//åˆ†å‰²é–‹å§‹
 
-		//ƒm[ƒh‚Íƒ[ƒJƒ‹•Ï”‚Å‚ ‚éBŠO“_“’B‚Æ“¯‚É”»’è‚ğs‚Á‚Ä–ß‚Á‚Ä‚«‚Ä‚µ‚Ü‚¤‚©‚çAæ‚Á‚Ä‚¨‚­•K—v‚Í‚È‚¢B
+		//ãƒãƒ¼ãƒ‰ã¯ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°ã§ã‚ã‚‹ã€‚å¤–ç‚¹åˆ°é”ã¨åŒæ™‚ã«åˆ¤å®šã‚’è¡Œã£ã¦æˆ»ã£ã¦ãã¦ã—ã¾ã†ã‹ã‚‰ã€å–ã£ã¦ãŠãå¿…è¦ã¯ãªã„ã€‚
 		Node left;
 		Node right;
 		left.mIndices = args->mIndexPool.allocate( cl );
 		right.mIndices = args->mIndexPool.allocate( cr );
 
-		for ( int i = 0; i < mIndexNumber; ++i ){ //ŠeOŠpŒ`‚É‚Â‚¢‚Ä’²‚×‚é
+		for ( int i = 0; i < mIndexNumber; ++i ){ //å„ä¸‰è§’å½¢ã«ã¤ã„ã¦èª¿ã¹ã‚‹
 			if ( hitL[ i ] ){
 				left.mIndices[ left.mIndexNumber ] = mIndices[ i ];
 				++( left.mIndexNumber );
@@ -112,8 +112,8 @@ public:
 		}
 		ASSERT( ( left.mIndexNumber == cl ) && ( right.mIndexNumber == cr ) );
 
-		//ƒqƒbƒgƒtƒ‰ƒO—Ìˆæ‚ğg‚¢‚Ü‚í‚·ŠÖŒW‚ÅAÄ‹AŒÄ‚Ño‚µ‚ÍU‚è•ª‚¯‚ªI‚í‚Á‚Ä‚©‚çB
-		if ( restLevel > 1 ){ //ÅIƒŒƒxƒ‹‚Í‚à‚¤ŒÄ‚Î‚È‚¢
+		//ãƒ’ãƒƒãƒˆãƒ•ãƒ©ã‚°é ˜åŸŸã‚’ä½¿ã„ã¾ã‚ã™é–¢ä¿‚ã§ã€å†å¸°å‘¼ã³å‡ºã—ã¯æŒ¯ã‚Šåˆ†ã‘ãŒçµ‚ã‚ã£ã¦ã‹ã‚‰ã€‚
+		if ( restLevel > 1 ){ //æœ€çµ‚ãƒ¬ãƒ™ãƒ«ã¯ã‚‚ã†å‘¼ã°ãªã„
 			if ( cl > 1 ){
 				Vector3 boxDiv = maxV;
 				boxDiv[ axis ] = div;
@@ -125,7 +125,7 @@ public:
 				right.build( boxDiv, maxV, args, restLevel - 1 );
 			}
 		}else{
-			//‚³‚ ”»’è‚·‚é‚æB
+			//ã•ã‚åˆ¤å®šã™ã‚‹ã‚ˆã€‚
 			left.test( args );
 			right.test( args );
 		}
@@ -143,7 +143,7 @@ public:
 				const Sphere& s1 = spheres[ mIndices[ j ] ];
 				const Vector3& p1 = s1.mCenter;
 				float r1 = s1.mRadius;
-				//‹…”»’èBŒë·‚Íl‚¦‚¸‚Æ‚à—Ç‚¢
+				//çƒåˆ¤å®šã€‚èª¤å·®ã¯è€ƒãˆãšã¨ã‚‚è‰¯ã„
 				Vector3 d;
 				d.setSub( p1, p0 );
 				float rsum = r0 + r1;
@@ -151,7 +151,7 @@ public:
 				float dist2 = d.squareLength();
 				if ( dist2 <= rsum2 ){
 					Pair* pair = args->mResults.add();
-					if ( i0 < i1 ){ //¬‚³‚¢•û‚ğmId0‚Æ‚·‚éB
+					if ( i0 < i1 ){ //å°ã•ã„æ–¹ã‚’mId0ã¨ã™ã‚‹ã€‚
 						pair->mId0 = i0;
 						pair->mId1 = i1;
 					}else{
@@ -197,9 +197,9 @@ public:
 		Args args( mSpheres, mSphereNumber );
 		root.mIndexNumber = mSphereNumber;
 		root.mIndices = args.mIndexPool.allocate( mSphereNumber );
-		//ªƒm[ƒh‚Éƒf[ƒ^[“UB“¯‚É”ÍˆÍ‚ğŒvZ
-		Vector3 minV( FLOAT_MAX ); //Å‘å‚Å‰Šú‰»
-		Vector3 maxV( -minV.x ); //Å¬‚Å‰Šú‰»
+		//æ ¹ãƒãƒ¼ãƒ‰ã«ãƒ‡ãƒ¼ã‚¿å……å¡«ã€‚åŒæ™‚ã«ç¯„å›²ã‚’è¨ˆç®—
+		Vector3 minV( FLOAT_MAX ); //æœ€å¤§ã§åˆæœŸåŒ–
+		Vector3 maxV( -minV.x ); //æœ€å°ã§åˆæœŸåŒ–
 		for ( int i = 0; i < mSphereNumber; ++i ){
 			const Sphere& s = mSpheres[ i ];
 			Vector3 tMin = s.mCenter;
@@ -207,23 +207,23 @@ public:
 			Vector3 r( s.mRadius );
 			tMin -= r;
 			tMin += r;
-			minV.min( tMin ); //min‚ÍXYZ‚ÅÅ¬’l‚ğæ‚Á‚Ä©•ª‚É“ü‚ê‚éB
-			maxV.max( tMax ); //max‚ÍXYZ‚ÅÅ‘å’l‚ğæ‚Á‚Ä©•ª‚É“ü‚ê‚éB
-			//”Ô†[“U
+			minV.min( tMin ); //minã¯XYZã§æœ€å°å€¤ã‚’å–ã£ã¦è‡ªåˆ†ã«å…¥ã‚Œã‚‹ã€‚
+			maxV.max( tMax ); //maxã¯XYZã§æœ€å¤§å€¤ã‚’å–ã£ã¦è‡ªåˆ†ã«å…¥ã‚Œã‚‹ã€‚
+			//ç•ªå·å……å¡«
 			root.mIndices[ i ] = i;
 		}
-		//ƒm[ƒh‚Í‹…‚ªˆêŒÂ‚Ã‚Â” ‚É“ü‚é”‚¾‚¯—pˆÓ‚·‚é‚ªAŒã‚Å‚¨‚»‚ç‚­•Ï‚í‚é‚¾‚ë‚¤B
-		//”nˆÈãÅ¬‚Ì2‚Ì™p‚ğ‹‚ßA‚»‚Ì“ñ”{‚¾‚¯—pˆÓ‚·‚ê‚Î‚æ‚¢B
+		//ãƒãƒ¼ãƒ‰ã¯çƒãŒä¸€å€‹ã¥ã¤ç®±ã«å…¥ã‚‹æ•°ã ã‘ç”¨æ„ã™ã‚‹ãŒã€å¾Œã§ãŠãã‚‰ãå¤‰ã‚ã‚‹ã ã‚ã†ã€‚
+		//æ•°nä»¥ä¸Šæœ€å°ã®2ã®å†ªã‚’æ±‚ã‚ã€ãã®äºŒå€ã ã‘ç”¨æ„ã™ã‚Œã°ã‚ˆã„ã€‚
 		int n = mSphereNumber;
 		int maxNodeNumber = 1;
-		int maxLevel = 0; //Å‘å•ªŠ„”
+		int maxLevel = 0; //æœ€å¤§åˆ†å‰²æ•°
 		while ( maxNodeNumber < n ){
 			maxNodeNumber <<= 1;
 			++maxLevel;
 		}
 		root.build( minV, maxV, &args, maxLevel );
-		//Tank“à‚Ìd•¡‚ğœ‹‚·‚éB
-		//1.ƒAƒNƒZƒX‚ğ‚‘¬‰»‚·‚é‚½‚ß‚É”z—ñ‚ÉˆÚ‚·
+		//Tankå†…ã®é‡è¤‡ã‚’é™¤å»ã™ã‚‹ã€‚
+		//1.ã‚¢ã‚¯ã‚»ã‚¹ã‚’é«˜é€ŸåŒ–ã™ã‚‹ãŸã‚ã«é…åˆ—ã«ç§»ã™
 		int resultSize = args.mResults.size();
 		Pair* resultsArray = NEW Pair[ resultSize ];
 		int pos = 0;
@@ -232,31 +232,31 @@ public:
 			++pos;
 			args.mResults.toNext();
 		}
-		//2.ˆê”Ô–Ú‚ªi‚Å‚ ‚é‚à‚Ì‚ª‚¢‚­‚Â‚ ‚é‚Ì‚©‚ğ”‚¦‚éB
+		//2.ä¸€ç•ªç›®ãŒiã§ã‚ã‚‹ã‚‚ã®ãŒã„ãã¤ã‚ã‚‹ã®ã‹ã‚’æ•°ãˆã‚‹ã€‚
 		int* counts = NEW int[ mSphereNumber * 2 ];
-		int* offsets = counts + mSphereNumber; //ˆê‚ÉŠm•ÛB‚±‚¤‚¢‚¤‚â‚â‚±‚µ‚¢‚±‚Æ‚ğ‚·‚é‚ÆƒoƒO‚ÌŒ³‚É‚È‚é
-		for ( int i = 0; i < mSphereNumber; ++i ){ //‰Šú‰»ƒ‹[ƒv
+		int* offsets = counts + mSphereNumber; //ä¸€ç·’ã«ç¢ºä¿ã€‚ã“ã†ã„ã†ã‚„ã‚„ã“ã—ã„ã“ã¨ã‚’ã™ã‚‹ã¨ãƒã‚°ã®å…ƒã«ãªã‚‹
+		for ( int i = 0; i < mSphereNumber; ++i ){ //åˆæœŸåŒ–ãƒ«ãƒ¼ãƒ—
 			counts[ i ] = 0;
 		}
 		for ( int i = 0; i < resultSize; ++i ){
 			++counts[ resultsArray[ i ].mId0 ];
 		}
-		//2.ƒIƒtƒZƒbƒg‚É•ÏŠ·
+		//2.ã‚ªãƒ•ã‚»ãƒƒãƒˆã«å¤‰æ›
 		int offset = 0;
 		for ( int i = 0; i < mSphereNumber; ++i ){
 			offsets[ i ] = offset;
 			offset += counts[ i ];
 			counts[ i ] = 0;
 		}
-		//1.ƒ\[ƒgŒã”z—ñ‚Éƒ\[ƒg‚µ‚È‚ª‚çŠi”[
-		int* sorted = NEW int[ offset ]; //offset‚É‚¿‚å‚¤‚Ç‡Œv‚ª“ü‚Á‚Ä‚¢‚éB
+		//1.ã‚½ãƒ¼ãƒˆå¾Œé…åˆ—ã«ã‚½ãƒ¼ãƒˆã—ãªãŒã‚‰æ ¼ç´
+		int* sorted = NEW int[ offset ]; //offsetã«ã¡ã‚‡ã†ã©åˆè¨ˆãŒå…¥ã£ã¦ã„ã‚‹ã€‚
 		for ( int i = 0; i < resultSize; ++i ){
 			int i0 = resultsArray[ i ].mId0;
 			sorted[ offsets[ i0 ] + counts[ i0 ] ] = resultsArray[ i ].mId1;
 			++counts[ i0 ];
 		}
-		//” ‚²‚Æ‚Éd•¡‚ğœ‚¢‚½‚à‚Ì‚ğ–ß‚è’l‚ÉƒZƒbƒg
-		resultsOut->setSize( offset ); //d•¡‚İ‚Å“ü‚é”‚¾‚¯Šm•Û
+		//ç®±ã”ã¨ã«é‡è¤‡ã‚’é™¤ã„ãŸã‚‚ã®ã‚’æˆ»ã‚Šå€¤ã«ã‚»ãƒƒãƒˆ
+		resultsOut->setSize( offset ); //é‡è¤‡è¾¼ã¿ã§å…¥ã‚‹æ•°ã ã‘ç¢ºä¿
 		pos = 0;
 		for ( int i = 0; i < mSphereNumber; ++i ){
 			int* box = &sorted[ offsets[ i ] ];
@@ -266,7 +266,7 @@ public:
 					( *resultsOut )[ pos ].mId0 = i;
 					( *resultsOut )[ pos ].mId1 = box[ j ];
 					++pos;
-					for ( int k = j + 1; k < n; ++k ){ //“¯‚¶‚Ì‚ªŒã‚ë‚É‚¢‚ê‚Î‚Â‚Ô‚·B
+					for ( int k = j + 1; k < n; ++k ){ //åŒã˜ã®ãŒå¾Œã‚ã«ã„ã‚Œã°ã¤ã¶ã™ã€‚
 						if ( box[ j ] == box[ k ] ){
 							box[ k ] = -1;
 						}
@@ -274,13 +274,13 @@ public:
 				}
 			}
 		}
-		//ÅIŒ‹‰Ê‚ÌƒTƒCƒY‚ğk¬Bˆø‰z‚µ‚Í‹N‚«‚È‚¢B
+		//æœ€çµ‚çµæœã®ã‚µã‚¤ã‚ºã‚’ç¸®å°ã€‚å¼•è¶Šã—ã¯èµ·ããªã„ã€‚
 		resultsOut->setSize( pos );
-		//Œãn––
+		//å¾Œå§‹æœ«
 		SAFE_DELETE_ARRAY( sorted );
 		SAFE_DELETE_ARRAY( counts );
 		SAFE_DELETE_ARRAY( resultsArray );
-#else //‘“–‚è
+#else //ç·å½“ã‚Š
 		Tank< Pair > results( mSphereNumber );
 		for ( int i = 0; i < mSphereNumber; ++i ){
 			const Sphere& s0 = mSpheres[ i ];
@@ -290,7 +290,7 @@ public:
 				const Sphere& s1 = mSpheres[ j ];
 				const Vector3& p1 = s1.mCenter;
 				float r1 = s1.mRadius;
-				//‹…”»’èBŒë·‚ÍŒã‚Ål‚¦‚é
+				//çƒåˆ¤å®šã€‚èª¤å·®ã¯å¾Œã§è€ƒãˆã‚‹
 				Vector3 d;
 				d.setSub( p1, p0 );
 				float rsum = r0 + r1;
@@ -303,14 +303,14 @@ public:
 				}
 			}
 		}
-		//”z—ñ‚É•ÏŠ·
+		//é…åˆ—ã«å¤‰æ›
 		results.copyTo( resultsOut );
 #endif
-		//”»’èŒã‚É‹…‚ÌŒÂ”‚ğ0‚ÉB
+		//åˆ¤å®šå¾Œã«çƒã®å€‹æ•°ã‚’0ã«ã€‚
 		mSphereNumber = 0;
 	}
 private:
-	void operator=( const Impl& ); //‹Ö~
+	void operator=( const Impl& ); //ç¦æ­¢
 
 	Sphere* mSpheres;
 	int mSphereNumber;

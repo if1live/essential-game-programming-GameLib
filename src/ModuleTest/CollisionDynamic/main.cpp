@@ -39,13 +39,13 @@ namespace GameLib{
 		if ( !gSpheres ){
 			gDetector = CollisionDetector::create( gSphereNumber );
 			gContainer = Container::create( "cube.txt" );
-			while ( !gContainer.isReady() ){ ; } //ƒ[ƒh‘Ò‚¿
+			while ( !gContainer.isReady() ){ ; } //ãƒ­ãƒ¼ãƒ‰å¾…ã¡
 			gSpheres = new Sphere[ gSphereNumber ];
-			//‰Šú”z’u
+			//åˆæœŸé…ç½®
 			Random ran = Random::create();
 			for ( int i = 0; i < gSphereNumber; ++i ){
 				Sphere& s = gSpheres[ i ];
-				s.mModel = gContainer.createModel( 0 ); //ƒ‚ƒfƒ‹ì¬
+				s.mModel = gContainer.createModel( 0 ); //ãƒ¢ãƒ‡ãƒ«ä½œæˆ
 				Vector3 p(
 					ran.getFloat( -100.f, 100.f ),
 					ran.getFloat( -100.f, 100.f ),
@@ -54,26 +54,26 @@ namespace GameLib{
 				s.mRadius = 5.f;
 			}
 		}
-		//‘¬“x‰Šú‰»
+		//é€Ÿåº¦åˆæœŸåŒ–
 		Array< Vector3 > velocities( gSphereNumber );
 		for ( int i = 0; i < gSphereNumber; ++i ){
-			//‘¬“x‚ğŒ´“_‚Ö‚Ìˆø—Í‚Å‰Šú‰»
+			//é€Ÿåº¦ã‚’åŸç‚¹ã¸ã®å¼•åŠ›ã§åˆæœŸåŒ–
 			velocities[ i ].setMul( *gSpheres[ i ].mModel.position(), -0.01f );
 		}
-		//Õ“ËŒŸo
-		//“o˜^B–ß‚è’l‚ÍID‚È‚Ì‚Å•Û‘¶‚µ‚Ä‚¨‚­B0‚©‚ç‡‚É•Ô‚é•Ûá‚Í‚È‚¢B
+		//è¡çªæ¤œå‡º
+		//ç™»éŒ²ã€‚æˆ»ã‚Šå€¤ã¯IDãªã®ã§ä¿å­˜ã—ã¦ãŠãã€‚0ã‹ã‚‰é †ã«è¿”ã‚‹ä¿éšœã¯ãªã„ã€‚
 		Array< int > idTable( gSphereNumber );
 		for ( int i = 0; i < gSphereNumber; ++i ){
 			idTable[ i ] = gDetector.add( *gSpheres[ i ].mModel.position(), gSpheres[ i ].mRadius );
 		}
-		//ŒŸo‚ğs‚¤
+		//æ¤œå‡ºã‚’è¡Œã†
 		Array< CollisionDetector::Pair > results;
 
-		unsigned t0 = time(); //ŠÔ‚ğŒv‚Á‚Ä‚¨‚­
+		unsigned t0 = time(); //æ™‚é–“ã‚’è¨ˆã£ã¦ãŠã
 		gDetector.detect( &results );
 		unsigned t1 = time();
 
-		//Õ“ËŒ‹‰Ê‚É‰‚¶‚Ä‘¬“x‚ğC³
+		//è¡çªçµæœã«å¿œã˜ã¦é€Ÿåº¦ã‚’ä¿®æ­£
 		for ( int i = 0; i < results.size(); ++i ){
 			const CollisionDetector::Pair& pair = results[ i ];
 			int i0 = idTable[ pair.mId0 ];
@@ -82,38 +82,38 @@ namespace GameLib{
 			Sphere& s1 = gSpheres[ i1 ];
 			const Vector3& p0 = *s0.mModel.position();
 			const Vector3& p1 = *s1.mModel.position();
-			Vector3 n; //Õ“Ë–@ü
+			Vector3 n; //è¡çªæ³•ç·š
 			n.setSub( p1, p0 );
 			float distance = n.length();
 			if ( distance != 0.f ){
 				n *= 1.f / distance;
 			}else{
-				n.set( 0.f, 1.f, 0.f ); //Š®‘S‚É‡‚í‚³‚Á‚½‚çY=1•ûŒü‚É’µ‚Ë•Ô‚·
+				n.set( 0.f, 1.f, 0.f ); //å®Œå…¨ã«åˆã‚ã•ã£ãŸã‚‰Y=1æ–¹å‘ã«è·³ã­è¿”ã™
 			}
-			n *= 1.f; //’µ‚Ë•Ô‚µ‹­“x
+			n *= 1.f; //è·³ã­è¿”ã—å¼·åº¦
 			velocities[ i0 ] -= n;
 			velocities[ i1 ] += n;
 		}
-		//ˆÊ’uXV
+		//ä½ç½®æ›´æ–°
 		for ( int i = 0; i < gSphereNumber; ++i ){
 			Sphere& s = gSpheres[ i ];
 			Vector3 p = *s.mModel.position();
 			p += velocities[ i ];
 			s.mModel.setPosition( p );
 		}
-		//‰æ–Ê•\¦
+		//ç”»é¢è¡¨ç¤º
 		DebugScreen sc;
 		sc << "FRAMERATE: " << frameRate() << " HIT:" << results.size() << " TIME:" << t1 - t0;
-//------ˆÈ‰º–{‹Ø‚ÉŠÖŒW‚È‚¢ƒR[ƒh------
+//------ä»¥ä¸‹æœ¬ç­‹ã«é–¢ä¿‚ãªã„ã‚³ãƒ¼ãƒ‰------
 
-		//“§‹•ÏŠ·
+		//é€è¦–å¤‰æ›
 		Matrix44 pm;
 		pm.setPerspectiveTransform( 
 			60.f, 
 			static_cast< float >( width() ),
 			static_cast< float >( height() ),
 			gEyeDistance * 0.01f, gEyeDistance * 10.f );
-		//ƒrƒ…[s—ñ‚ğì‚ë‚¤
+		//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã‚’ä½œã‚ã†
 		Matrix34 rm;
 		rm.setRotationY( gAngleY );
 		rm.rotateX( gAngleX );
@@ -123,11 +123,11 @@ namespace GameLib{
 		eyePosition.setMul( tv, gEyeDistance );
 		pm.multiplyViewTransform( eyePosition, Vector3( 0.f ), Vector3( 0.f, 1.f, 0.f ) );
 
-		//ƒJƒƒ‰“ü—Í”½‰f
-		Input::Mouse mouse; //À‚Í‚±‚ê‚Åg‚¦‚é
+		//ã‚«ãƒ¡ãƒ©å…¥åŠ›åæ˜ 
+		Input::Mouse mouse; //å®Ÿã¯ã“ã‚Œã§ä½¿ãˆã‚‹
 		float x = static_cast< float >( mouse.velocityX() );
 		float y = static_cast< float >( mouse.velocityY() );
-		if ( mouse.isOn( Input::Mouse::BUTTON_LEFT ) ){ //¶ƒ{ƒ^ƒ“‰ñ“]
+		if ( mouse.isOn( Input::Mouse::BUTTON_LEFT ) ){ //å·¦ãƒœã‚¿ãƒ³å›è»¢
 				gAngleX -= 0.1f * y;
 				if ( gAngleX > 89.f ){
 					gAngleX = 89.f;
@@ -143,7 +143,7 @@ namespace GameLib{
 			gEyeDistance *= 1.1f;
 		}
 
-		//•`‰æ
+		//æç”»
 		Graphics::Manager gm;
 		gm.setProjectionViewMatrix( pm );
 		gm.setLightingMode( Graphics::LIGHTING_NONE );

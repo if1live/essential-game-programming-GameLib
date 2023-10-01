@@ -4,7 +4,7 @@
 
 #include "Input/ManagerImpl.h"
 
-//ƒ}ƒEƒX‚ÌÀ‘Ì‚Íƒ}ƒl[ƒWƒƒ‚Å‚ ‚éB
+//ãƒã‚¦ã‚¹ã®å®Ÿä½“ã¯ãƒãƒãƒ¼ã‚¸ãƒ£ã§ã‚ã‚‹ã€‚
 namespace GameLib{
 namespace Input{
 

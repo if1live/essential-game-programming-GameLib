@@ -5,7 +5,7 @@ using namespace GameLib;
 #include "StringRenderer.h"
 #include "Image.h"
 
-//static•Ï”‚Ícpp‚ÉÀ‘Ì‚ª•K—v
+//staticå¤‰æ•°ã¯cppã«å®Ÿä½“ãŒå¿…è¦
 StringRenderer* StringRenderer::mInstance = 0;
 
 StringRenderer::StringRenderer( const char* fontFileName ) : mImage( 0 ){
@@ -17,7 +17,7 @@ StringRenderer::~StringRenderer(){
 }
 
 void StringRenderer::create( const char* fontFileName ){
-	//“ñ“x˜A‘±‚ÅŒÄ‚Ô‚Ì‚Í•s³B—‚Æ‚·B
+	//äºŒåº¦é€£ç¶šã§å‘¼ã¶ã®ã¯ä¸æ­£ã€‚è½ã¨ã™ã€‚
 	STRONG_ASSERT( !mInstance && "StringRenderer::create() called twice!" );
 	mInstance = new StringRenderer( fontFileName );
 }
@@ -31,30 +31,30 @@ StringRenderer* StringRenderer::instance(){
 }
 
 void StringRenderer::draw( int x, int y, const char* s, unsigned c ) const {
-	//“ñ‚Â‚Ì’è”B‚à‚µƒtƒHƒ“ƒg‚É‚æ‚Á‚Äˆá‚¤‚È‚çƒRƒ“ƒXƒgƒ‰ƒNƒ^‚Åó‚¯æ‚é•K—v‚ª‚ ‚é‚ªA¡‚ÍŒÅ’èB
+	//äºŒã¤ã®å®šæ•°ã€‚ã‚‚ã—ãƒ•ã‚©ãƒ³ãƒˆã«ã‚ˆã£ã¦é•ã†ãªã‚‰ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã§å—ã‘å–ã‚‹å¿…è¦ãŒã‚ã‚‹ãŒã€ä»Šã¯å›ºå®šã€‚
 	const int CHAR_WIDTH = 8;
 	const int CHAR_HEIGHT = 16;
-	//‘‚«‚İæ‚ğ‰Šú‰»
+	//æ›¸ãè¾¼ã¿å…ˆã‚’åˆæœŸåŒ–
 	int dstX = x * CHAR_WIDTH;
 	int dstY = y * CHAR_HEIGHT;
-	//Frameworkæ“¾
+	//Frameworkå–å¾—
 	Framework f = Framework::instance();
-	//”ÍˆÍŠOƒ`ƒFƒbƒN(Y‚ªŠO‚ê‚½‚ç–â“š–³—p‚Å”²‚¯‚é)
+	//ç¯„å›²å¤–ãƒã‚§ãƒƒã‚¯(YãŒå¤–ã‚ŒãŸã‚‰å•ç­”ç„¡ç”¨ã§æŠœã‘ã‚‹)
 	if ( dstY < 0 || dstY >= ( int )f.height() ){
 		return;
 	}
-	//‰æ‘œ•
+	//ç”»åƒå¹…
 	for ( int i = 0; s[ i ] != '\0'; ++i ){
-		//X”ÍˆÍ”»’è
+		//Xç¯„å›²åˆ¤å®š
 		if ( dstX >= 0 && ( dstX + CHAR_WIDTH ) < f.width() ){
-			//•¶š”ÍˆÍƒ`ƒFƒbƒN
+			//æ–‡å­—ç¯„å›²ãƒã‚§ãƒƒã‚¯
 			int t = s[ i ];
 			if ( t < 32 || t >= 128 ){
-				t = 127; //”ÍˆÍŠO‚ÍlŠp‚É•ÏŠ·
+				t = 127; //ç¯„å›²å¤–ã¯å››è§’ã«å¤‰æ›
 			}
-			t -= 32; //ƒtƒHƒ“ƒg‰æ‘œ‚Ì¶ã‚ª32”Ô‚È‚Ì‚ÅA32‚ğˆø‚­
-			int srcX = ( t % 16 ) * CHAR_WIDTH; //X‚Í•‚ÅŠ„‚Á‚½—]‚è
-			int srcY = ( t / 16 ) * CHAR_HEIGHT; //Y‚Í•‚ÅŠ„‚Á‚½¤
+			t -= 32; //ãƒ•ã‚©ãƒ³ãƒˆç”»åƒã®å·¦ä¸ŠãŒ32ç•ªãªã®ã§ã€32ã‚’å¼•ã
+			int srcX = ( t % 16 ) * CHAR_WIDTH; //Xã¯å¹…ã§å‰²ã£ãŸä½™ã‚Š
+			int srcY = ( t / 16 ) * CHAR_HEIGHT; //Yã¯å¹…ã§å‰²ã£ãŸå•†
 			mImage->drawWithFixedColor( dstX, dstY, srcX, srcY, CHAR_WIDTH, CHAR_HEIGHT, c );
 		}
 		dstX += CHAR_WIDTH;

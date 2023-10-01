@@ -25,9 +25,9 @@ public:
 	void operator*=( const Matrix22& );
 	void setMul( const Matrix22&, const Matrix22& );
 
-	///���S�Ɉ�v���Ă��邩�`�F�b�N
+	///完全に一致しているかチェック
 	bool operator==( const Matrix22& ) const;
-	///�����ł��Ⴄ�̂����`�F�b�N
+	///少しでも違うのかをチェック
 	bool operator!=( const Matrix22& ) const;
 
 	float& operator()( int row, int col );

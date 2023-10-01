@@ -12,8 +12,8 @@ public:
 	~StageSelect();
 	void update( Parent* );
 private:
-	Image* mImage; //–ÊƒZƒŒ‰æ‘œ
-	int mCursorPosition; //‘I‘ğƒJ[ƒ\ƒ‹ˆÊ’u
+	Image* mImage; //é¢ã‚»ãƒ¬ç”»åƒ
+	int mCursorPosition; //é¸æŠã‚«ãƒ¼ã‚½ãƒ«ä½ç½®
 };
 
 } //namespace Sequence

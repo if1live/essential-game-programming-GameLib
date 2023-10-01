@@ -4,57 +4,57 @@
 #undef max
 #endif
 
-#include <cstring> //sprintf‚È‚Ç‚È‚ÇBg‚¢‚½‚­‚È‚¢‚ªd•û‚È‚¢B
+#include <cstring> //sprintfãªã©ãªã©ã€‚ä½¿ã„ãŸããªã„ãŒä»•æ–¹ãªã„ã€‚
 #include <cstdio>
 #include <locale>
 #include "GameLib/GameLib.h"
 #include "GameLib/Base/MemoryManager.h"
 
-//#define STRONG_DEBUG //ì‚Á‚Ä‚él—pƒfƒoƒO
+//#define STRONG_DEBUG //ä½œã£ã¦ã‚‹äººç”¨ãƒ‡ãƒã‚°
 
-#ifndef NDEBUG //ƒfƒoƒO‚¾‚¯ƒfƒoƒOî•ñ
+#ifndef NDEBUG //ãƒ‡ãƒã‚°æ™‚ã ã‘ãƒ‡ãƒã‚°æƒ…å ±
 #define USE_DEBUG_INFO
 #endif
 
-//‚±‚Ìƒtƒ@ƒCƒ‹‚Ì’†‚ÍC++‚Ìƒ‰ƒCƒuƒ‰ƒŠ‚ğg‚í‚È‚¢‚Å‘‚©‚ê‚Ä‚¢‚éB
-//‰½ŒÌ‚©‚ÆŒ¾‚¦‚ÎAnew‚©‚çŒÄ‚Î‚ê‚éêŠ‚È‚Ì‚ÉA’†‚Ånew‚·‚é‚æ‚¤‚È‚±‚Æ‚ğ‚µ‚½‚ç–³ŒÀÄ‹A‚ÉŠ×‚é‚©‚ç‚¾B
-//C++‚Ìƒ‰ƒCƒuƒ‰ƒŠ‚Í’†‚ÅŸè‚Énew‚·‚é‚Ì‚Å‚Ç‚ê‚ğg‚Á‚Ä‚¢‚¢‚Æ‚Í”»’f‚µ‚ª‚½‚¢‚Ì‚Å‚ ‚éB
-//CŒ¾Œê‚ÌŠÖ”‚ÍŠî–{“I‚Ég‚¤‚È‚Æ‘‚¢‚½‚ªA‚Ç‚¤‚µ‚Ä‚àg‚¤‚×‚«‚Æ‚¢‚¤‚Ì‚Í‚ ‚é‚à‚Ì‚¾B
+//ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«ã®ä¸­ã¯C++ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‚’ä½¿ã‚ãªã„ã§æ›¸ã‹ã‚Œã¦ã„ã‚‹ã€‚
+//ä½•æ•…ã‹ã¨è¨€ãˆã°ã€newã‹ã‚‰å‘¼ã°ã‚Œã‚‹å ´æ‰€ãªã®ã«ã€ä¸­ã§newã™ã‚‹ã‚ˆã†ãªã“ã¨ã‚’ã—ãŸã‚‰ç„¡é™å†å¸°ã«é™¥ã‚‹ã‹ã‚‰ã ã€‚
+//C++ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã¯ä¸­ã§å‹æ‰‹ã«newã™ã‚‹ã®ã§ã©ã‚Œã‚’ä½¿ã£ã¦ã„ã„ã¨ã¯åˆ¤æ–­ã—ãŒãŸã„ã®ã§ã‚ã‚‹ã€‚
+//Cè¨€èªã®é–¢æ•°ã¯åŸºæœ¬çš„ã«ä½¿ã†ãªã¨æ›¸ã„ãŸãŒã€ã©ã†ã—ã¦ã‚‚ä½¿ã†ã¹ãæ™‚ã¨ã„ã†ã®ã¯ã‚ã‚‹ã‚‚ã®ã ã€‚
 
 namespace GameLib{
 
-namespace{ //‚ ‚é’ö“xˆÀ’è“®ì‚·‚é‚Ü‚Å‚Í‚¸‚µ‚Ä‚¨‚­BƒfƒoƒO‚µ‚É‚­‚­‚Äd•û‚È‚¢B
+namespace{ //ã‚ã‚‹ç¨‹åº¦å®‰å®šå‹•ä½œã™ã‚‹ã¾ã§ã¯ãšã—ã¦ãŠãã€‚ãƒ‡ãƒã‚°ã—ã«ããã¦ä»•æ–¹ãªã„ã€‚
 
 using namespace std;
 
-//Œ^•Ê–¼BƒR[ƒh‚ğ’Z‚­‚µ‚½‚¢B
-typedef unsigned U4; //ƒoƒCƒg–³•„†•Ê–¼
-typedef unsigned short U2; //2ƒoƒCƒg–³•„†•Ê–¼
+//å‹åˆ¥åã€‚ã‚³ãƒ¼ãƒ‰ã‚’çŸ­ãã—ãŸã„ã€‚
+typedef unsigned U4; //ãƒã‚¤ãƒˆç„¡ç¬¦å·åˆ¥å
+typedef unsigned short U2; //2ãƒã‚¤ãƒˆç„¡ç¬¦å·åˆ¥å
 
-//İ’è’è”ŒQ
-const U4 MAX_NORMAL_BLOCK_SIZE = 128 * 1024; //‚±‚êˆÈã‚ÍVirtualAlloc‚Å’¼ÚŠm•Û
-const U4 HEAP_REGION_SIZE_BIT = 24; //OS‚©‚çˆê‹C‚É‚¹‚µ‚ß‚é—ÌˆæƒTƒCƒY(—á‚¦‚Î20‚Å1MB, 24‚Å16MB)
-const U4 ALIGN = 8; //ƒAƒ‰ƒCƒ“ƒTƒCƒY4,8,16‚ ‚½‚è‚©‚ç‘I‚Ú‚¤B4‚ğ‘I‚Ô‚Ídouble‚ª‚È‚¢‚±‚Æ‚ğ•Ûá‚·‚é‚±‚ÆB
-//“±o’è”ŒQ
+//è¨­å®šå®šæ•°ç¾¤
+const U4 MAX_NORMAL_BLOCK_SIZE = 128 * 1024; //ã“ã‚Œä»¥ä¸Šã¯VirtualAllocã§ç›´æ¥ç¢ºä¿
+const U4 HEAP_REGION_SIZE_BIT = 24; //OSã‹ã‚‰ä¸€æ°—ã«ã›ã—ã‚ã‚‹é ˜åŸŸã‚µã‚¤ã‚º(ä¾‹ãˆã°20ã§1MB, 24ã§16MB)
+const U4 ALIGN = 8; //ã‚¢ãƒ©ã‚¤ãƒ³ã‚µã‚¤ã‚º4,8,16ã‚ãŸã‚Šã‹ã‚‰é¸ã¼ã†ã€‚4ã‚’é¸ã¶æ™‚ã¯doubleãŒãªã„ã“ã¨ã‚’ä¿éšœã™ã‚‹ã“ã¨ã€‚
+//å°å‡ºå®šæ•°ç¾¤
 const U4 HEAP_REGION_SIZE = ( 1 << HEAP_REGION_SIZE_BIT );
-const U4 TABLE_NUMBER = ( HEAP_REGION_SIZE_BIT - 3 ) * 4; //‹ó‚«ƒŠƒXƒg” ‚Ì”(4‚²‚Æ‚É”{‚É‚È‚é‚Ì‚ÅƒTƒCƒYƒrƒbƒg”‚Ì4”{‚¾‚ªA4,8,12,16‚Æn‚Ü‚é‚½‚ßA‚¢‚ë‚¢‚ë‚ ‚Á‚Ä-3)
+const U4 TABLE_NUMBER = ( HEAP_REGION_SIZE_BIT - 3 ) * 4; //ç©ºããƒªã‚¹ãƒˆç®±ã®æ•°(4ã”ã¨ã«å€ã«ãªã‚‹ã®ã§ã‚µã‚¤ã‚ºãƒ“ãƒƒãƒˆæ•°ã®4å€ã ãŒã€4,8,12,16ã¨å§‹ã¾ã‚‹ãŸã‚ã€ã„ã‚ã„ã‚ã‚ã£ã¦-3)
 
-//ƒuƒƒbƒNƒtƒ‰ƒO
+//ãƒ–ãƒ­ãƒƒã‚¯ãƒ•ãƒ©ã‚°
 /*
-‚Å‚©‚¢ƒuƒƒbƒN‚©‚ğ’m‚è‚½‚¢‚Ì‚ÍA‰ğ•úB‰ğ•ú‚·‚é‚Æ‚«‚¾‚©‚çAg—p’†‚ÉŒˆ‚Ü‚Á‚Ä‚¢‚éB
-ˆê•ûA‹ó‚©‚Ç‚¤‚©‚ğ’m‚è‚½‚¢‚Ì‚ÍHeap“à‚Æ‚í‚©‚Á‚Ä‚©‚ç‚¾‚©‚çA“¯‚¶ƒrƒbƒg‚ğg‚¢‚Ü‚í‚·B
+ã§ã‹ã„ãƒ–ãƒ­ãƒƒã‚¯ã‹ã‚’çŸ¥ã‚ŠãŸã„ã®ã¯ã€è§£æ”¾æ™‚ã€‚è§£æ”¾ã™ã‚‹ã¨ãã ã‹ã‚‰ã€ä½¿ç”¨ä¸­ã«æ±ºã¾ã£ã¦ã„ã‚‹ã€‚
+ä¸€æ–¹ã€ç©ºã‹ã©ã†ã‹ã‚’çŸ¥ã‚ŠãŸã„ã®ã¯Heapå†…ã¨ã‚ã‹ã£ã¦ã‹ã‚‰ã ã‹ã‚‰ã€åŒã˜ãƒ“ãƒƒãƒˆã‚’ä½¿ã„ã¾ã‚ã™ã€‚
 */
-const U4 FLAG_LARGE_BLOCK = ( 1 << 0 ); //‚Å‚©‚¢ƒuƒƒbƒN‚Å‚·B
-const U4 FLAG_EMPTY = ( 1 << 0 ); //‹ó‚¢‚Ä‚Ü‚·B
-const U4 FLAG_PREV_EMPTY = ( 1 << 1 ); //‘O‚ÌƒuƒƒbƒN‚Í‹ó‚«‚Å‚·
+const U4 FLAG_LARGE_BLOCK = ( 1 << 0 ); //ã§ã‹ã„ãƒ–ãƒ­ãƒƒã‚¯ã§ã™ã€‚
+const U4 FLAG_EMPTY = ( 1 << 0 ); //ç©ºã„ã¦ã¾ã™ã€‚
+const U4 FLAG_PREV_EMPTY = ( 1 << 1 ); //å‰ã®ãƒ–ãƒ­ãƒƒã‚¯ã¯ç©ºãã§ã™
 const U4 SIZE_MASK = ~( FLAG_PREV_EMPTY | FLAG_EMPTY );
 
 #ifdef USE_DEBUG_INFO
-//ƒtƒ@ƒCƒ‹–¼ƒnƒbƒVƒ…
+//ãƒ•ã‚¡ã‚¤ãƒ«åãƒãƒƒã‚·ãƒ¥
 /*
-ƒfƒoƒOî•ñ—p‚Ìƒtƒ@ƒCƒ‹–¼‚ÍAƒOƒ[ƒoƒ‹•Ï”‚É‚Ü‚Æ‚ß‚Ä’u‚¢‚Ä‚¨‚­B4ƒoƒCƒg‚ğÉ‚µ‚ñ‚¾‚½‚ß‚¾B
+ãƒ‡ãƒã‚°æƒ…å ±ç”¨ã®ãƒ•ã‚¡ã‚¤ãƒ«åã¯ã€ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ã«ã¾ã¨ã‚ã¦ç½®ã„ã¦ãŠãã€‚4ãƒã‚¤ãƒˆã‚’æƒœã—ã‚“ã ãŸã‚ã ã€‚
 */
-const U2 FILE_INDEX_MAX = 65521; //65536ˆÈ‰ºÅ‘å‚Ì‘f”
+const U2 FILE_INDEX_MAX = 65521; //65536ä»¥ä¸‹æœ€å¤§ã®ç´ æ•°
 const U2 FILE_INDEX_UNKNOWN = FILE_INDEX_MAX - 1;
 const char* gFileNames[ FILE_INDEX_MAX ];
 
@@ -62,17 +62,17 @@ U2 getFileNameIndex( const char* p ){
 	if ( !p ){
 		return FILE_INDEX_UNKNOWN;
 	}
-	//ƒnƒbƒVƒ…’lŒvZ
+	//ãƒãƒƒã‚·ãƒ¥å€¤è¨ˆç®—
 	ptrdiff_t address = p - static_cast< const char* >( 0 );
 	U2 h = static_cast< U2 >( address % FILE_INDEX_MAX );
-	//ƒnƒbƒVƒ…’l‚ğ“Y‚¦š‚Ì‰Šú’l‚Æ‚µ‚ÄƒCƒ“ƒfƒNƒXƒQƒbƒg
+	//ãƒãƒƒã‚·ãƒ¥å€¤ã‚’æ·»ãˆå­—ã®åˆæœŸå€¤ã¨ã—ã¦ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹ã‚²ãƒƒãƒˆ
 	for ( U2 i = h; i < FILE_INDEX_UNKNOWN; ++i ){
 		if ( !gFileNames[ i ] || ( gFileNames[ i ] == p ) ){
 			gFileNames[ i ] = p;
 			return i;
 		}
 	}
-	//‚±‚Á‚¿‚É—ˆ‚é‚æ‚¤‚¾‚Æ‘Š“–I‚í‚Á‚Ä‚éB‚½‚Ô‚ñ–‘«‚È‘¬“x‚Å‚Í“®‚©‚È‚¢B
+	//ã“ã£ã¡ã«æ¥ã‚‹ã‚ˆã†ã ã¨ç›¸å½“çµ‚ã‚ã£ã¦ã‚‹ã€‚ãŸã¶ã‚“æº€è¶³ãªé€Ÿåº¦ã§ã¯å‹•ã‹ãªã„ã€‚
 	for ( U2 i = 0; i < h; ++i ){
 		if ( !gFileNames[ i ] || ( gFileNames[ i ] == p ) ){
 			gFileNames[ i ] = p;
@@ -84,23 +84,23 @@ U2 getFileNameIndex( const char* p ){
 }
 #endif //DEBUG_INFO
 
-//char*ƒQƒbƒg
+//char*ã‚²ãƒƒãƒˆ
 template< class T > inline char* ptr( T* p ){
 	return reinterpret_cast< char* >( p );
 }
 
-//”CˆÓ‚ÌŒ^‚ÉƒLƒƒƒXƒg‚µ‚Ä•Ô‚·BƒoƒCƒg’PˆÊƒIƒtƒZƒbƒg‹@”\•t‚«
+//ä»»æ„ã®å‹ã«ã‚­ãƒ£ã‚¹ãƒˆã—ã¦è¿”ã™ã€‚ãƒã‚¤ãƒˆå˜ä½ã‚ªãƒ•ã‚»ãƒƒãƒˆæ©Ÿèƒ½ä»˜ã
 template< class T > inline T* cast( void* p, int offsetInByte ){
 	return reinterpret_cast< T* >( ptr( p ) + offsetInByte );
 }
 
-//ƒAƒhƒŒƒX·ƒQƒbƒg
+//ã‚¢ãƒ‰ãƒ¬ã‚¹å·®ã‚²ãƒƒãƒˆ
 template< class A, class B > inline U4 diff( A* p0, B* p1 ){
 	ptrdiff_t t = ptr( p0 ) - ptr( p1 );
 	return static_cast< U4 >( t );
 }
 
-//ƒ|ƒCƒ“ƒ^‚ğƒAƒ‰ƒCƒ“
+//ãƒã‚¤ãƒ³ã‚¿ã‚’ã‚¢ãƒ©ã‚¤ãƒ³
 template< class T > inline T* align( T* p, U4 n ){
 	ptrdiff_t address = ptr( p ) - static_cast< char* >( 0 );
 	address += n - 1;
@@ -108,7 +108,7 @@ template< class T > inline T* align( T* p, U4 n ){
 	return reinterpret_cast< T* >( address );
 }
 
-//®”‚ğƒAƒ‰ƒCƒ“
+//æ•´æ•°ã‚’ã‚¢ãƒ©ã‚¤ãƒ³
 inline U4 align( U4 size, U4 n ){
 	size += n - 1;
 	size &= ~( n - 1 );
@@ -116,36 +116,36 @@ inline U4 align( U4 size, U4 n ){
 }
 
 #ifdef _WIN32
-//OS‚©‚çƒAƒ‰ƒCƒ“‚³‚ê‚½ƒƒ‚ƒŠ‚ğ‚à‚ç‚¤
+//OSã‹ã‚‰ã‚¢ãƒ©ã‚¤ãƒ³ã•ã‚ŒãŸãƒ¡ãƒ¢ãƒªã‚’ã‚‚ã‚‰ã†
 void* allocateAlignedMemory( void** originalPointer, U4 size, U4 alignSize ){
-	//2”{ƒAƒhƒŒƒX‚ğ—\–ñ
+	//2å€ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’äºˆç´„
 	void* reserved = VirtualAlloc( NULL, size*2, MEM_RESERVE, PAGE_NOACCESS );
 	STRONG_ASSERT( reserved && "MemoryManager : Address Space Full!" );
-	//“KØ‚ÈƒAƒ‰ƒCƒ“ƒAƒhƒŒƒX‚ğæ“¾‚µ‚ÄA‚»‚±‚©‚çÀ—ÌˆæŠm•Û
+	//é©åˆ‡ãªã‚¢ãƒ©ã‚¤ãƒ³ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å–å¾—ã—ã¦ã€ãã“ã‹ã‚‰å®Ÿé ˜åŸŸç¢ºä¿
 	void* aligned = align( reserved, alignSize );
 	void* commited = VirtualAlloc( aligned, size, MEM_COMMIT, PAGE_READWRITE );
 	STRONG_ASSERT( commited && "MemoryManager : No Memory!" );
 	STRONG_ASSERT( ( commited == aligned ) && "MemoryManager : Unexpected Error! VirtualAlloc() returned invalid value." );
 
-	*originalPointer = reserved; //free—pƒAƒhƒŒƒX‚ğ•Ô‚·
+	*originalPointer = reserved; //freeç”¨ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’è¿”ã™
 	return commited;
 }
 
-//OS‚©‚çƒƒ‚ƒŠ‚ğ‚à‚ç‚¤BƒAƒ‰ƒCƒ“•s—v
+//OSã‹ã‚‰ãƒ¡ãƒ¢ãƒªã‚’ã‚‚ã‚‰ã†ã€‚ã‚¢ãƒ©ã‚¤ãƒ³ä¸è¦
 void* allocateMemory( U4 size ){
 	U4 alignedSize = align( size, 64 * 1024 );
 	void* p = VirtualAlloc( NULL, alignedSize , MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE );
 	STRONG_ASSERT( p && "MemoryManager : No Memory!" );
-#ifndef NDEBUG //–„‚ß
-	memset( p, 0xfb, size ); //–¢g—p—Ìˆæƒ}[ƒLƒ“ƒO
-	if ( size < alignedSize ){ //‹Ö~—Ìˆæƒ}[ƒLƒ“ƒO
+#ifndef NDEBUG //åŸ‹ã‚
+	memset( p, 0xfb, size ); //æœªä½¿ç”¨é ˜åŸŸãƒãƒ¼ã‚­ãƒ³ã‚°
+	if ( size < alignedSize ){ //ç¦æ­¢é ˜åŸŸãƒãƒ¼ã‚­ãƒ³ã‚°
 		memset( ptr( p ) + size, 0xf9, alignedSize - size );
 	}
 #endif
 	return p;
 }
 
-//OS‚Éƒƒ‚ƒŠ‚ğ•Ô‚·
+//OSã«ãƒ¡ãƒ¢ãƒªã‚’è¿”ã™
 void deallocateMemory( void* p ){
 	BOOL succeeded = VirtualFree( p, 0, MEM_RELEASE );
 	STRONG_ASSERT( ( succeeded != 0 ) && "MemoryManager : Deallocation failed! The pointer must be invalid." );
@@ -153,16 +153,16 @@ void deallocateMemory( void* p ){
 #endif
 
 struct Lock{
-	Lock(){} //ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^‚Í‰½‚à‚µ‚È‚¢BƒOƒ[ƒoƒ‹‚É’u‚©‚ê‚é–‘Ô‚ğ‘z’è‚·‚éB
+	Lock(){} //ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã¯ä½•ã‚‚ã—ãªã„ã€‚ã‚°ãƒ­ãƒ¼ãƒãƒ«ã«ç½®ã‹ã‚Œã‚‹äº‹æ…‹ã‚’æƒ³å®šã™ã‚‹ã€‚
 	Lock( bool f ){
 		mLock = ( f ) ? 1 : 0;
 	}
 	void lock(){
-		//‰½‰ñ‚©‚µ‚Äƒ_ƒ‚È‚çˆê’UƒXƒŒƒbƒh‚ğØ‚è‘Ö‚¦‚éB
+		//ä½•å›ã‹è©¦ã—ã¦ãƒ€ãƒ¡ãªã‚‰ä¸€æ—¦ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹ã€‚
 		int count = 0;
 		while ( InterlockedCompareExchange( &mLock, 1, 0 ) != 0 ){
 			++count;
-			if ( count == 10 ){ //10‰ñ‚­‚ç‚¢H
+			if ( count == 10 ){ //10å›ãã‚‰ã„ï¼Ÿ
 				count = 0;
 				Sleep( 0 );
 			}
@@ -178,10 +178,10 @@ struct Lock{
 };
 
 U4 getBitNumber( U4 a ){
-	//“ñ•ªŒŸõ‚Åƒrƒbƒg”‚ğŠm’è
+	//äºŒåˆ†æ¤œç´¢ã§ãƒ“ãƒƒãƒˆæ•°ã‚’ç¢ºå®š
 	U4 first = 0;
 	U4 last = HEAP_REGION_SIZE_BIT;
-	while ( last >= first + 2 ){ //·‚ª2ˆÈã‚ ‚ê‚ÎŒJ‚è•Ô‚·
+	while ( last >= first + 2 ){ //å·®ãŒ2ä»¥ä¸Šã‚ã‚Œã°ç¹°ã‚Šè¿”ã™
 		U4 middle = ( first + last ) / 2;
 		U4 middleV = ( 1 << middle ) - 1;
 		if ( middleV < a ){
@@ -192,48 +192,48 @@ U4 getBitNumber( U4 a ){
 			first = last = middle;
 		}
 	}
-	//·‚ª0‚©1‚É‚È‚Á‚Ä‚¢‚é‚Ì‚ÅAlast‚ğ•Ô‚·B
+	//å·®ãŒ0ã‹1ã«ãªã£ã¦ã„ã‚‹ã®ã§ã€lastã‚’è¿”ã™ã€‚
 	return last;
 }
 
 inline U4 getHeadIndex( U4 size ){
 	U4 r;
-	//ƒe[ƒuƒ‹‚Í
-	//Å‰‚Ì8ŒÂ‚Í4iB(0,4,8...)BØÌ‚ÄB
-	//‚»‚±‚©‚çã‚Í32,40,48,56‚Ì‚æ‚¤‚É4‚Â‚²‚Æ‚É”{B
-	if ( size <= 32 ){	//32ƒoƒCƒg‚Ü‚Å‚ÍüŒ`B4,8,12...‚Æ•À‚Ô
+	//ãƒ†ãƒ¼ãƒ–ãƒ«ã¯
+	//æœ€åˆã®8å€‹ã¯4iã€‚(0,4,8...)ã€‚åˆ‡æ¨ã¦ã€‚
+	//ãã“ã‹ã‚‰ä¸Šã¯32,40,48,56ã®ã‚ˆã†ã«4ã¤ã”ã¨ã«å€ã€‚
+	if ( size <= 32 ){	//32ãƒã‚¤ãƒˆã¾ã§ã¯ç·šå½¢ã€‚4,8,12...ã¨ä¸¦ã¶
 		r = size >> 2;
 	}else{
-		//‚Ü‚¸size‚ª‰½ƒrƒbƒg‚Ì”‚È‚Ì‚©‚ğŠm’è‚³‚¹‚éB
+		//ã¾ãšsizeãŒä½•ãƒ“ãƒƒãƒˆã®æ•°ãªã®ã‹ã‚’ç¢ºå®šã•ã›ã‚‹ã€‚
 		U4 bits = getBitNumber( size );
-		//4bit‚Ì”‚È‚çA[2bit*5, 2bit*8)‚Ì”ÍˆÍ‚É‚ ‚éB
-		//8-9,10-11,12-13,14-15‚Ì‚Ç‚Ì”ÍˆÍ‚©‚ÍA12ƒrƒbƒg–ÚA‚Â‚Ü‚è2‚Æ4‚ÌˆÊ‚ğŒ©‚ê‚Î‚¢‚¢B
-		//4bit‚Ì”‚È‚ç1bit‰EƒVƒtƒg‚µ‚Ä0-7‚É‚µA‚±‚Ì‰ºˆÊ2bit‚ğŒ©‚é
+		//4bitã®æ•°ãªã‚‰ã€[2bit*5, 2bit*8)ã®ç¯„å›²ã«ã‚ã‚‹ã€‚
+		//8-9,10-11,12-13,14-15ã®ã©ã®ç¯„å›²ã‹ã¯ã€12ãƒ“ãƒƒãƒˆç›®ã€ã¤ã¾ã‚Š2ã¨4ã®ä½ã‚’è¦‹ã‚Œã°ã„ã„ã€‚
+		//4bitã®æ•°ãªã‚‰1bitå³ã‚·ãƒ•ãƒˆã—ã¦0-7ã«ã—ã€ã“ã®ä¸‹ä½2bitã‚’è¦‹ã‚‹
 		U4 idx = ( size >> ( bits - 3 ) ) & 0x3;
 		r = ( bits - 4 ) * 4 + idx;
 	}
 	return r;
 }
 
-//[Lb]‚ÍLargeBlock‚Ì—ª
+//[Lb]ã¯LargeBlockã®ç•¥
 class Heap{
 public:
 	Heap( void* reserved ) :
 	mReserved( reserved ),
 	mNext( 0 ),
 	mLock( false ){
-		//Å‰‚Ì‚Å‚©‚¢ƒuƒƒbƒN‚ğì‚éB-4‚ÍprevSize•ªƒPƒ`‚Á‚Ä‚éBÅ‰‚ÌƒuƒƒbƒN‚æ‚è‘O‚È‚ñ‚Ä‚È‚¢‚©‚ç‚¾B
+		//æœ€åˆã®ã§ã‹ã„ãƒ–ãƒ­ãƒƒã‚¯ã‚’ä½œã‚‹ã€‚-4ã¯prevSizeåˆ†ã‚±ãƒã£ã¦ã‚‹ã€‚æœ€åˆã®ãƒ–ãƒ­ãƒƒã‚¯ã‚ˆã‚Šå‰ãªã‚“ã¦ãªã„ã‹ã‚‰ã ã€‚
 		U4 body = align( sizeof( Heap ) + VACANT_HEADER_SIZE - 4, ALIGN ) - VACANT_HEADER_SIZE;
-		U4 bodySize = HEAP_REGION_SIZE - body - 8; //8ƒoƒCƒgŒ¸‚ç‚·‚Ì‚ÍAŸ‚ÌƒuƒƒbƒN‚É–³—‚â‚è‘‚«‚Ş4ƒoƒCƒg‚ÆAƒtƒ‰ƒO‚ğƒZƒbƒg‚·‚éŸ‚Ì4”{ƒoƒCƒg‚Ì•ªB
+		U4 bodySize = HEAP_REGION_SIZE - body - 8; //8ãƒã‚¤ãƒˆæ¸›ã‚‰ã™ã®ã¯ã€æ¬¡ã®ãƒ–ãƒ­ãƒƒã‚¯ã«ç„¡ç†ã‚„ã‚Šæ›¸ãè¾¼ã‚€4ãƒã‚¤ãƒˆã¨ã€ãƒ•ãƒ©ã‚°ã‚’ã‚»ãƒƒãƒˆã™ã‚‹æ¬¡ã®4å€ãƒã‚¤ãƒˆã®åˆ†ã€‚
 
-		//ƒŠƒ“ƒN‰Šú‰»
+		//ãƒªãƒ³ã‚¯åˆæœŸåŒ–
 		for ( int i = 0; i < TABLE_NUMBER; ++i ){
 			U4 headAddr = diff( mHeads[ i ], this );
 			U4* head = mHeads[ i ];
-			head[ PREV_SIZE ] = head[ SIZE ] = 0xffffffff; //’N‚àŒ©‚È‚¢‚Æ‚±‚ë‚È‚Ì‚Å€‚É‚»‚¤‚È”‚ğ“ü‚ê‚Ä‚¨‚­B
-			head[ NEXT ] = head[ PREV ] = headAddr; //ƒ‹[ƒv
+			head[ PREV_SIZE ] = head[ SIZE ] = 0xffffffff; //èª°ã‚‚è¦‹ãªã„ã¨ã“ã‚ãªã®ã§æ­»ã«ãã†ãªæ•°ã‚’å…¥ã‚Œã¦ãŠãã€‚
+			head[ NEXT ] = head[ PREV ] = headAddr; //ãƒ«ãƒ¼ãƒ—
 		}
-		//Å‰‚Ìƒoƒbƒtƒ@‚ğƒŠƒXƒg‚É‘}“ü
+		//æœ€åˆã®ãƒãƒƒãƒ•ã‚¡ã‚’ãƒªã‚¹ãƒˆã«æŒ¿å…¥
 		insertToList( body, bodySize );
 		setEmptySize( body, bodySize );
 		U4 next = body + bodySize;
@@ -246,12 +246,12 @@ check();
 		void* reserved;
 		Heap* r = reinterpret_cast< Heap* >( allocateAlignedMemory( &reserved, HEAP_REGION_SIZE, HEAP_REGION_SIZE ) );
 
-		//©•ª‚Ìƒƒ“ƒo‚ğ–„‚ß‚é
+		//è‡ªåˆ†ã®ãƒ¡ãƒ³ãƒã‚’åŸ‹ã‚ã‚‹
 		new( r ) Heap( reserved );
 		return r;
 	}
 	void removeFromList( U4 addr ){
-		if ( getSize( addr ) >= VACANT_HEADER_SIZE ){ //ƒTƒCƒY‚ª‘«‚è‚Ä‚È‚¢‚à‚Ì‚Í’x‰„ŠJ•ú’†B
+		if ( getSize( addr ) >= VACANT_HEADER_SIZE ){ //ã‚µã‚¤ã‚ºãŒè¶³ã‚Šã¦ãªã„ã‚‚ã®ã¯é…å»¶é–‹æ”¾ä¸­ã€‚
 			U4 next = getNext( addr );
 			U4 prev = getPrev( addr );
 			setPrev( next, prev );
@@ -260,8 +260,8 @@ check();
 	}
 	void insertToList( U4 addr, U4 size ){
 		STRONG_ASSERT( addr < 0xfffff8 );
-		U4 index = getHeadIndex( size - OCCUPYED_HEADER_SIZE + 4 );//ƒwƒbƒ_•ªˆø‚¢‚ÄA4ƒoƒCƒg‚ÌƒuƒƒbƒN‚ÉH‚¢‚Ş‚Ì‚ÅA‚±‚ÌƒTƒCƒY‚ª³–¡B
-		//V‚µ‚¢ƒŠƒXƒg‚É·‚µ‚ŞBæ“ª‚É‘}“ü
+		U4 index = getHeadIndex( size - OCCUPYED_HEADER_SIZE + 4 );//ãƒ˜ãƒƒãƒ€åˆ†å¼•ã„ã¦ã€4ãƒã‚¤ãƒˆã®ãƒ–ãƒ­ãƒƒã‚¯ã«é£Ÿã„è¾¼ã‚€ã®ã§ã€ã“ã®ã‚µã‚¤ã‚ºãŒæ­£å‘³ã€‚
+		//æ–°ã—ã„ãƒªã‚¹ãƒˆã«å·®ã—è¾¼ã‚€ã€‚å…ˆé ­ã«æŒ¿å…¥
 		U4 first = mHeads[ index ][ NEXT ];
 		U4 last = getPrev( first );
 
@@ -280,7 +280,7 @@ check();
 check();
 #endif
 		void* r = 0;
-		U4 headIndex = getHeadIndex( size ) + 1; //‚±‚ÌƒTƒCƒY‚ª\•ª‚É“ü‚é” ‚ª—~‚µ‚¢‚Ì‚ÅA+1‚·‚é•K—v‚ª‚ ‚é
+		U4 headIndex = getHeadIndex( size ) + 1; //ã“ã®ã‚µã‚¤ã‚ºãŒååˆ†ã«å…¥ã‚‹ç®±ãŒæ¬²ã—ã„ã®ã§ã€+1ã™ã‚‹å¿…è¦ãŒã‚ã‚‹
 		for ( U4 i = headIndex; i < TABLE_NUMBER; ++i ){
 			U4 head = diff( mHeads[ i ], this );
 			U4 current = mHeads[ i ][ NEXT ];
@@ -288,52 +288,52 @@ check();
 				U4 currentSizeWithFlag = getSize( current );
 				U4 currentSize = currentSizeWithFlag & SIZE_MASK;
 				U4 next = current + currentSize;
-				//8ƒoƒCƒgƒAƒ‰ƒCƒ“‚µ‚½–ß‚èƒAƒhƒŒƒX‚ğŒvZ(+4‚ÍŸ‚Ìƒwƒbƒ_‚ÌÅ‰4ƒoƒCƒg‚ğ”j‰ó‚·‚é‹C‚¾‚©‚ç)
+				//8ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³ã—ãŸæˆ»ã‚Šã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’è¨ˆç®—(+4ã¯æ¬¡ã®ãƒ˜ãƒƒãƒ€ã®æœ€åˆ4ãƒã‚¤ãƒˆã‚’ç ´å£Šã™ã‚‹æ°—ã ã‹ã‚‰)
 				U4 user = ( next + 4 - size ) & ~( ALIGN - 1 );
-				//‚»‚±‚©‚çg—p’†ƒwƒbƒ_ƒTƒCƒY‚ğˆø‚¢‚½‚Ì‚ªƒuƒƒbƒNæ“ªƒAƒhƒŒƒX
+				//ãã“ã‹ã‚‰ä½¿ç”¨ä¸­ãƒ˜ãƒƒãƒ€ã‚µã‚¤ã‚ºã‚’å¼•ã„ãŸã®ãŒãƒ–ãƒ­ãƒƒã‚¯å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹
 				U4 newBlock = user - OCCUPYED_HEADER_SIZE;
-				//‚±‚ÌƒuƒƒbƒN‚Ìƒwƒbƒ_•ªˆÈã‚Ì‚±‚é‚Ì‚Å‚ ‚ê‚ÎA•ªŠ„
+				//ã“ã®ãƒ–ãƒ­ãƒƒã‚¯ã®ãƒ˜ãƒƒãƒ€åˆ†ä»¥ä¸Šã®ã“ã‚‹ã®ã§ã‚ã‚Œã°ã€åˆ†å‰²
 				if ( newBlock >= current + VACANT_HEADER_SIZE ){
-					//‚Ü‚¸ƒŠƒXƒg‚©‚çŠO‚·
+					//ã¾ãšãƒªã‚¹ãƒˆã‹ã‚‰å¤–ã™
 					removeFromList( current );
-					//©•ª‚ÌƒTƒCƒY‚ğÄİ’è
+					//è‡ªåˆ†ã®ã‚µã‚¤ã‚ºã‚’å†è¨­å®š
 					currentSize = newBlock - current;
 					setEmptySize( current, currentSize );
-					//Äİ’è‚µ‚½ƒTƒCƒY‚ÅƒŠƒXƒg‚ÉÄ“o˜^
+					//å†è¨­å®šã—ãŸã‚µã‚¤ã‚ºã§ãƒªã‚¹ãƒˆã«å†ç™»éŒ²
 					insertToList( current, currentSize );
-					//VƒuƒƒbƒNİ’è
+					//æ–°ãƒ–ãƒ­ãƒƒã‚¯è¨­å®š
 					setSize( newBlock, next - newBlock );
 #ifdef USE_DEBUG_INFO
 					setDebugInfo( newBlock, debugInfo );
 #endif
-					//ƒtƒ‰ƒOİ’è
-					setPrevEmptyFlag( newBlock, currentSize ); //‘O‚Íâ‘Î‹ó‚¢‚Ä‚é
-					resetPrevEmptyFlag( next ); //‚»‚ÌŸ‚Íg‚Á‚Ä‚é
+					//ãƒ•ãƒ©ã‚°è¨­å®š
+					setPrevEmptyFlag( newBlock, currentSize ); //å‰ã¯çµ¶å¯¾ç©ºã„ã¦ã‚‹
+					resetPrevEmptyFlag( next ); //ãã®æ¬¡ã¯ä½¿ã£ã¦ã‚‹
 #ifdef STRONG_DEBUG
 check();
 #endif
-				}else{ //c‚ç‚È‚¢B‚±‚ÌƒuƒƒbƒN‚ğ‚»‚Ì‚Ü‚Ü—p‚¢‚éB
-					removeFromList( current ); //ƒŠƒXƒg‚©‚çØ‚è—£‚·
+				}else{ //æ®‹ã‚‰ãªã„ã€‚ã“ã®ãƒ–ãƒ­ãƒƒã‚¯ã‚’ãã®ã¾ã¾ç”¨ã„ã‚‹ã€‚
+					removeFromList( current ); //ãƒªã‚¹ãƒˆã‹ã‚‰åˆ‡ã‚Šé›¢ã™
 #ifdef USE_DEBUG_INFO
 					setDebugInfo( current, debugInfo );
 #endif
-					//ƒtƒ‰ƒOİ’è
-					resetEmptyFlag( current ); //‹ó‚¢‚Ä‚È‚¢
-					resetPrevEmptyFlag( next ); //‹ó‚¢‚Ä‚È‚¢‚±‚Æ‚ğ“`‚¦‚é
-					//•Ô‹pƒAƒhƒŒƒX
+					//ãƒ•ãƒ©ã‚°è¨­å®š
+					resetEmptyFlag( current ); //ç©ºã„ã¦ãªã„
+					resetPrevEmptyFlag( next ); //ç©ºã„ã¦ãªã„ã“ã¨ã‚’ä¼ãˆã‚‹
+					//è¿”å´ã‚¢ãƒ‰ãƒ¬ã‚¹
 					user = current + OCCUPYED_HEADER_SIZE;
 #ifdef STRONG_DEBUG
 check();
 #endif
 				}
 				r = ptr( this ) + user;
-#ifndef NDEBUG //ƒfƒoƒO—p“h‚è‚Â‚Ô‚µ
-				memset( r, 0xfb, size ); //–¢g—p‚Ífb
+#ifndef NDEBUG //ãƒ‡ãƒã‚°ç”¨å¡—ã‚Šã¤ã¶ã—
+				memset( r, 0xfb, size ); //æœªä½¿ç”¨ã¯fb
 				char* paddingBegin = ptr( r ) + size;
-				U4 paddingSize = next + 4 - user - size; //+4‚Í‚Í‚İ‚¾‚·•ª
-				memset( paddingBegin, 0xf9, paddingSize ); //g—p‹Ö~—Ìˆæ‚Íf9
+				U4 paddingSize = next + 4 - user - size; //+4ã¯ã¯ã¿ã ã™åˆ†
+				memset( paddingBegin, 0xf9, paddingSize ); //ä½¿ç”¨ç¦æ­¢é ˜åŸŸã¯f9
 #endif
-				break; //Šm•ÛI—¹
+				break; //ç¢ºä¿çµ‚äº†
 			}
 		}
 		return r;
@@ -344,12 +344,12 @@ check();
 #endif
 		U4 addr = diff( p, this ) - OCCUPYED_HEADER_SIZE;
 		U4 sizeWithFlag = getSize( addr );
-		//íœ‚ÍA‚Ü‚¸‘OŒã‚Æ‚Ì—Z‡‚ª‰Â”\‚©‚Ç‚¤‚©‚ğ’²‚×‚éB
+		//å‰Šé™¤ã¯ã€ã¾ãšå‰å¾Œã¨ã®èåˆãŒå¯èƒ½ã‹ã©ã†ã‹ã‚’èª¿ã¹ã‚‹ã€‚
 		bool prevIsEmpty = ( ( sizeWithFlag & FLAG_PREV_EMPTY ) != 0 );
 		U4 size = ( sizeWithFlag & SIZE_MASK );
 		U4 next = addr + size;
 #ifndef NDEBUG 
-		//•t‹ß‚Ì®‡«ƒ`ƒFƒbƒN
+		//ä»˜è¿‘ã®æ•´åˆæ€§ãƒã‚§ãƒƒã‚¯
 		if ( prevIsEmpty ){
 			U4 prevSize = getPrevSize( addr );
 			U4 prev = addr - prevSize;
@@ -358,66 +358,66 @@ check();
 			STRONG_ASSERT( prevSize == ( prevSizeWithFlag & SIZE_MASK ) );
 		}
 		U4 nextSizeWithFlagDebug = getSize( next );
-		STRONG_ASSERT( !( nextSizeWithFlagDebug & FLAG_PREV_EMPTY ) ); //g‚Á‚Ä‚é‚ñ‚¾‚©‚ç‹ó‚¢‚Ä‚é‚í‚¯‚È‚¢‚Å‚·B
+		STRONG_ASSERT( !( nextSizeWithFlagDebug & FLAG_PREV_EMPTY ) ); //ä½¿ã£ã¦ã‚‹ã‚“ã ã‹ã‚‰ç©ºã„ã¦ã‚‹ã‚ã‘ãªã„ã§ã™ã€‚
 
-		//‰ğ•úÏ‚İƒ}[ƒN‚Å“h‚è‚Â‚Ô‚µ
+		//è§£æ”¾æ¸ˆã¿ãƒãƒ¼ã‚¯ã§å¡—ã‚Šã¤ã¶ã—
 		ptrdiff_t fillSize = ptr( this ) + next - ptr( p );
 		if ( fillSize > 0 ){
-			memset( p, 0xfd, fillSize ); //g—pÏ‚İ‚Ífb
+			memset( p, 0xfd, fillSize ); //ä½¿ç”¨æ¸ˆã¿ã¯fb
 		}
 #endif
 		U4 nextSizeWithFlag = getSize( next );
 		bool nextIsEmpty = ( ( nextSizeWithFlag & FLAG_EMPTY ) != 0 );
 		U4 nextSize = ( nextSizeWithFlag & SIZE_MASK );
 
-		if ( prevIsEmpty ){ //‘O‚ª‹ó‚¢‚Ä‚éB
+		if ( prevIsEmpty ){ //å‰ãŒç©ºã„ã¦ã‚‹ã€‚
 			U4 prevSize = getPrevSize( addr );
 			U4 prev = addr - prevSize;
-			if ( nextIsEmpty ){ //Ÿ‚à‹ó‚¢‚Ä‚é
-				//‘OŒã‚Æ‚àˆê‰ñŠO‚µ‚ÄA
+			if ( nextIsEmpty ){ //æ¬¡ã‚‚ç©ºã„ã¦ã‚‹
+				//å‰å¾Œã¨ã‚‚ä¸€å›å¤–ã—ã¦ã€
 				removeFromList( prev );
 				removeFromList( next );
-				//ƒTƒCƒYÄİ’è
+				//ã‚µã‚¤ã‚ºå†è¨­å®š
 				prevSize += size + nextSize;
 				setEmptySize( prev, prevSize );
 				insertToList( prev, prevSize );
-				//Ÿ‚ÌƒuƒƒbƒN‚É‹ó‚¢‚Ä‚¢‚é‚±‚Æ‚ğ“`‚¦‚é
+				//æ¬¡ã®ãƒ–ãƒ­ãƒƒã‚¯ã«ç©ºã„ã¦ã„ã‚‹ã“ã¨ã‚’ä¼ãˆã‚‹
 				U4 nextNext = prev + prevSize;
 				setPrevEmptyFlag( nextNext, prevSize );
 #ifdef STRONG_DEBUG
 check();
 #endif
-			}else{ //‘O‚¾‚¯‹ó‚¢‚Ä‚é
+			}else{ //å‰ã ã‘ç©ºã„ã¦ã‚‹
 				removeFromList( prev );
-				//ƒTƒCƒYÄİ’è
+				//ã‚µã‚¤ã‚ºå†è¨­å®š
 				prevSize += size;
 				setEmptySize( prev, prevSize );
 				insertToList( prev, prevSize );
-				//Ÿ‚ÌƒuƒƒbƒN‚É‹ó‚¢‚Ä‚¢‚é‚±‚Æ‚ğ“`‚¦‚é
+				//æ¬¡ã®ãƒ–ãƒ­ãƒƒã‚¯ã«ç©ºã„ã¦ã„ã‚‹ã“ã¨ã‚’ä¼ãˆã‚‹
 				setPrevEmptyFlag( next, prevSize );
 #ifdef STRONG_DEBUG
 check();
 #endif
 			}
 		}else{
-			if ( nextIsEmpty ){ //Ÿ‚à‹ó‚¢‚Ä‚é
+			if ( nextIsEmpty ){ //æ¬¡ã‚‚ç©ºã„ã¦ã‚‹
 				removeFromList( next );
-				//ƒTƒCƒYÄİ’è
+				//ã‚µã‚¤ã‚ºå†è¨­å®š
 				size += nextSize;
 				setEmptySize( addr, size );
 				insertToList( addr, size );
-				//Ÿ‚ÌƒuƒƒbƒN‚É‹ó‚¢‚Ä‚¢‚éƒTƒCƒY‚ğ“`‚¦‚é
+				//æ¬¡ã®ãƒ–ãƒ­ãƒƒã‚¯ã«ç©ºã„ã¦ã„ã‚‹ã‚µã‚¤ã‚ºã‚’ä¼ãˆã‚‹
 				U4 nextNext = addr + size;
 				setPrevSize( nextNext, size );
 #ifdef STRONG_DEBUG
 check();
 #endif
-			}else{ //‚­‚Á‚Â‚¢‚Ä‚È‚¢B
-				if ( size >= VACANT_HEADER_SIZE ){ //ƒŠƒXƒg‚É‚Â‚È‚°‚éó‹µ‚Å‚¾‚¯‚Â‚È‚®B‘«‚è‚È‚¢‚Æ‚«‚Í—×‚ª‰ğ•ú‚³‚ê‚é‚Ì‚ğ‘Ò‚ÂB
+			}else{ //ãã£ã¤ã„ã¦ãªã„ã€‚
+				if ( size >= VACANT_HEADER_SIZE ){ //ãƒªã‚¹ãƒˆã«ã¤ãªã’ã‚‹çŠ¶æ³ã§ã ã‘ã¤ãªãã€‚è¶³ã‚Šãªã„ã¨ãã¯éš£ãŒè§£æ”¾ã•ã‚Œã‚‹ã®ã‚’å¾…ã¤ã€‚
 					insertToList( addr, size );
 				}
 				setEmptyFlag( addr );
-				//Ÿ‚ÌƒuƒƒbƒN‚É‹ó‚¢‚Ä‚¢‚é‚±‚Æ‚ğ“`‚¦‚é
+				//æ¬¡ã®ãƒ–ãƒ­ãƒƒã‚¯ã«ç©ºã„ã¦ã„ã‚‹ã“ã¨ã‚’ä¼ãˆã‚‹
 				setPrevEmptyFlag( next, size );
 #ifdef STRONG_DEBUG
 check();
@@ -427,16 +427,16 @@ check();
 	}
 	void check(){
 		/*
-		‚±‚±‚Ås‚¤ƒ`ƒFƒbƒN‚ÍA
-		‚PDƒAƒhƒŒƒX‡‚Ìƒ`ƒFƒbƒNB‘OƒTƒCƒYAƒTƒCƒYAƒuƒƒbƒN‹«ŠE“™X‚Ì®‡«
-		‚QDƒŠƒ“ƒN¸‡‚Ìƒ`ƒFƒbƒNB‹ó‚¢‚Ä‚¢‚é‚©BƒTƒCƒY‚Í“K³‚©B
-		‚RDƒŠƒ“ƒN~‡‚Ìƒ`ƒFƒbƒNB‹ó‚¢‚Ä‚¢‚é‚©BƒTƒCƒY‚Í“K³‚©B
+		ã“ã“ã§è¡Œã†ãƒã‚§ãƒƒã‚¯ã¯ã€
+		ï¼‘ï¼ã‚¢ãƒ‰ãƒ¬ã‚¹é †ã®ãƒã‚§ãƒƒã‚¯ã€‚å‰ã‚µã‚¤ã‚ºã€ã‚µã‚¤ã‚ºã€ãƒ–ãƒ­ãƒƒã‚¯å¢ƒç•Œç­‰ã€…ã®æ•´åˆæ€§
+		ï¼’ï¼ãƒªãƒ³ã‚¯æ˜‡é †ã®ãƒã‚§ãƒƒã‚¯ã€‚ç©ºã„ã¦ã„ã‚‹ã‹ã€‚ã‚µã‚¤ã‚ºã¯é©æ­£ã‹ã€‚
+		ï¼“ï¼ãƒªãƒ³ã‚¯é™é †ã®ãƒã‚§ãƒƒã‚¯ã€‚ç©ºã„ã¦ã„ã‚‹ã‹ã€‚ã‚µã‚¤ã‚ºã¯é©æ­£ã‹ã€‚
 		*/
 		U4 begin = align( sizeof( Heap ) + VACANT_HEADER_SIZE - 4, ALIGN ) - VACANT_HEADER_SIZE;
 		U4 current = begin;
 		U4 prevSizeCheck = 0;
 		bool prevIsEmpty = false;
-		U4 end = HEAP_REGION_SIZE - OCCUPYED_HEADER_SIZE; //‚±‚±‚æ‚è‘O‚¾‚ëB‚Å‚È‚¢‚Æƒwƒbƒ_‚ª‚Í‚¢‚ç‚ñ
+		U4 end = HEAP_REGION_SIZE - OCCUPYED_HEADER_SIZE; //ã“ã“ã‚ˆã‚Šå‰ã ã‚ã€‚ã§ãªã„ã¨ãƒ˜ãƒƒãƒ€ãŒã¯ã„ã‚‰ã‚“
 		while ( current < end ){
 			U4 sizeWithFlag = getSize( current );
 			if ( sizeWithFlag & FLAG_PREV_EMPTY ){
@@ -452,23 +452,23 @@ check();
 		for ( U4 i = 0; i < TABLE_NUMBER; ++i ){
 			U4 head = diff( mHeads[ i ], this );
 			U4 current;
-			//ƒŠƒ“ƒN¸‡ƒ`ƒFƒbƒN
+			//ãƒªãƒ³ã‚¯æ˜‡é †ãƒã‚§ãƒƒã‚¯
 			current = mHeads[ i ][ NEXT ];
 			while ( current != head ){
 				U4 sizeWithFlag = getSize( current );
-				STRONG_ASSERT( sizeWithFlag & FLAG_EMPTY ); //‹ó‚¢‚Ä‚é‚Í‚¸‚¾‚ëB
+				STRONG_ASSERT( sizeWithFlag & FLAG_EMPTY ); //ç©ºã„ã¦ã‚‹ã¯ãšã ã‚ã€‚
 				U4 size = sizeWithFlag & SIZE_MASK;
-				U4 idx = getHeadIndex( size - OCCUPYED_HEADER_SIZE + 4 );//ƒwƒbƒ_•ªˆø‚¢‚ÄA4ƒoƒCƒg‚ÌƒuƒƒbƒN‚ÉH‚¢‚Ş‚Ì‚ÅA‚±‚ÌƒTƒCƒY‚ª³–¡B
+				U4 idx = getHeadIndex( size - OCCUPYED_HEADER_SIZE + 4 );//ãƒ˜ãƒƒãƒ€åˆ†å¼•ã„ã¦ã€4ãƒã‚¤ãƒˆã®ãƒ–ãƒ­ãƒƒã‚¯ã«é£Ÿã„è¾¼ã‚€ã®ã§ã€ã“ã®ã‚µã‚¤ã‚ºãŒæ­£å‘³ã€‚
 				STRONG_ASSERT( idx == i );
 				current = getNext( current );
 			}
-			//ƒŠƒ“ƒN~‡ƒ`ƒFƒbƒN
+			//ãƒªãƒ³ã‚¯é™é †ãƒã‚§ãƒƒã‚¯
 			current = mHeads[ i ][ PREV ];
 			while ( current != head ){
 				U4 sizeWithFlag = getSize( current );
-				STRONG_ASSERT( sizeWithFlag & FLAG_EMPTY ); //‹ó‚¢‚Ä‚é‚Í‚¸‚¾‚ëB
+				STRONG_ASSERT( sizeWithFlag & FLAG_EMPTY ); //ç©ºã„ã¦ã‚‹ã¯ãšã ã‚ã€‚
 				U4 size = sizeWithFlag & SIZE_MASK;
-				U4 idx = getHeadIndex( size - OCCUPYED_HEADER_SIZE + 4 );//ƒwƒbƒ_•ªˆø‚¢‚ÄA4ƒoƒCƒg‚ÌƒuƒƒbƒN‚ÉH‚¢‚Ş‚Ì‚ÅA‚±‚ÌƒTƒCƒY‚ª³–¡B
+				U4 idx = getHeadIndex( size - OCCUPYED_HEADER_SIZE + 4 );//ãƒ˜ãƒƒãƒ€åˆ†å¼•ã„ã¦ã€4ãƒã‚¤ãƒˆã®ãƒ–ãƒ­ãƒƒã‚¯ã«é£Ÿã„è¾¼ã‚€ã®ã§ã€ã“ã®ã‚µã‚¤ã‚ºãŒæ­£å‘³ã€‚
 				STRONG_ASSERT( idx == i );
 				current = getPrev( current );
 			}
@@ -478,7 +478,7 @@ check();
 		char str[ 8192 ];
 		U4 begin = align( sizeof( Heap ) + VACANT_HEADER_SIZE - 4, ALIGN ) - VACANT_HEADER_SIZE;
 		U4 current = begin;
-		U4 end = HEAP_REGION_SIZE - OCCUPYED_HEADER_SIZE; //‚±‚±‚æ‚è‘O‚¾‚ëB‚Å‚È‚¢‚Æƒwƒbƒ_‚ª‚Í‚¢‚ç‚ñ
+		U4 end = HEAP_REGION_SIZE - OCCUPYED_HEADER_SIZE; //ã“ã“ã‚ˆã‚Šå‰ã ã‚ã€‚ã§ãªã„ã¨ãƒ˜ãƒƒãƒ€ãŒã¯ã„ã‚‰ã‚“
 		while ( current < end ){
 			U4 sizeWithFlag = getSize( current );
 			U4 size = sizeWithFlag & SIZE_MASK;
@@ -521,10 +521,10 @@ check();
 		mLock.unlock();
 	}
 	enum Header{
-		PREV_SIZE = 0, //‚±‚¢‚Â‚Í‘O‚ÌƒuƒƒbƒN‚ª‹ó‚¢‚Ä‚é‚¾‚¯‚Â‚©‚¤B‚»‚êˆÈŠO‚Ì‚Í‰ó‚³‚ê‚Ä‚¢‚éB
+		PREV_SIZE = 0, //ã“ã„ã¤ã¯å‰ã®ãƒ–ãƒ­ãƒƒã‚¯ãŒç©ºã„ã¦ã‚‹æ™‚ã ã‘ã¤ã‹ã†ã€‚ãã‚Œä»¥å¤–ã®æ™‚ã¯å£Šã•ã‚Œã¦ã„ã‚‹ã€‚
 		SIZE = 1,
 #ifdef USE_DEBUG_INFO
-		DEBUG_INFO = 2, //Ÿ‚Æ‹¤—pB‚±‚¢‚Â‚Íg—p’†‚µ‚©g‚í‚È‚¢B
+		DEBUG_INFO = 2, //æ¬¡ã¨å…±ç”¨ã€‚ã“ã„ã¤ã¯ä½¿ç”¨ä¸­ã—ã‹ä½¿ã‚ãªã„ã€‚
 #endif
 		NEXT = 2,
 		PREV = 3,
@@ -537,7 +537,7 @@ check();
 	static const U4 OCCUPYED_HEADER_SIZE = 8;
 #endif
 	static const U4 VACANT_HEADER_SIZE = 16;
-	//‚±‚Ü‚²‚Ü‚Æ‚µ‚½ƒwƒbƒ_‘€ìŠÖ”ŒQ
+	//ã“ã¾ã”ã¾ã¨ã—ãŸãƒ˜ãƒƒãƒ€æ“ä½œé–¢æ•°ç¾¤
 	void setNext( U4 addr, U4 target ){
 		( cast< U4 >( this, addr ) )[ NEXT ] = target;
 	}
@@ -587,9 +587,9 @@ check();
 		return ( cast< U4 >( this, addr ) )[ DEBUG_INFO ];
 	}
 #endif
-	void* mReserved; //—\–ñ—Ìˆæƒ|ƒCƒ“ƒ^
-	Heap* mNext; //Ÿ‚Ìƒq[ƒv
-	U4 mHeads[ TABLE_NUMBER ][ HEADER_MAX ]; //ƒTƒCƒY‚²‚Æ‚Ì‹ó‚«ƒŠƒXƒg
+	void* mReserved; //äºˆç´„é ˜åŸŸãƒã‚¤ãƒ³ã‚¿
+	Heap* mNext; //æ¬¡ã®ãƒ’ãƒ¼ãƒ—
+	U4 mHeads[ TABLE_NUMBER ][ HEADER_MAX ]; //ã‚µã‚¤ã‚ºã”ã¨ã®ç©ºããƒªã‚¹ãƒˆ
 	Lock mLock;
 };
 
@@ -603,10 +603,10 @@ public:
 #ifdef _WIN64
 		STRONG_ASSERT( sizeoOrig <= 0xffffffff && "allocation over 4GB is forbidden" );
 #endif
-		U4 size = static_cast< U4 >( sizeOrig ); //4GBˆÈã‚Ì
-		//–ß‚è’l
+		U4 size = static_cast< U4 >( sizeOrig ); //4GBä»¥ä¸Šã®
+		//æˆ»ã‚Šå€¤
 		void* r = 0;
-		//size‚ªŒÀŠE‚ğ’´‚¦‚Ä‚¢‚éBê—pƒuƒƒbƒN‚ğ—pˆÓ
+		//sizeãŒé™ç•Œã‚’è¶…ãˆã¦ã„ã‚‹ã€‚å°‚ç”¨ãƒ–ãƒ­ãƒƒã‚¯ã‚’ç”¨æ„
 		if ( size > MAX_NORMAL_BLOCK_SIZE ){
 #ifdef USE_DEBUG_INFO
 			r = allocateLb( size, debugInfo );
@@ -614,8 +614,8 @@ public:
 			r = allocateLb( size );
 #endif
 		}else{
-			//ƒq[ƒv‚Éallocate()‚³‚¹‚éBƒ_ƒ‚È‚çŸ‚ÖB
-			Heap* current = mHead; //ƒƒbƒN•s—vB0‚È‚ç0‚ÅŒ‹\B0ˆÈŠO‚È‚ç‚Ç‚ê‚Å‚à‚©‚Ü‚í‚ñB
+			//ãƒ’ãƒ¼ãƒ—ã«allocate()ã•ã›ã‚‹ã€‚ãƒ€ãƒ¡ãªã‚‰æ¬¡ã¸ã€‚
+			Heap* current = mHead; //ãƒ­ãƒƒã‚¯ä¸è¦ã€‚0ãªã‚‰0ã§çµæ§‹ã€‚0ä»¥å¤–ãªã‚‰ã©ã‚Œã§ã‚‚ã‹ã¾ã‚ã‚“ã€‚
 			while ( current ){
 				if ( current->tryLock() ){
 #ifdef USE_DEBUG_INFO
@@ -632,14 +632,14 @@ public:
 			}
 
 			if ( !r ){
-				//‹ó‚«‚ª‚È‚¢Bƒq[ƒv‚ğ‘«‚³‚È‚¢‚Æ‚¢‚¯‚Ü‚¹‚ñB
+				//ç©ºããŒãªã„ã€‚ãƒ’ãƒ¼ãƒ—ã‚’è¶³ã•ãªã„ã¨ã„ã‘ã¾ã›ã‚“ã€‚
 				Heap* newHeap = Heap::create();
 #ifdef USE_DEBUG_INFO
 				r = newHeap->allocate( size, debugInfo );
 #else
 				r = newHeap->allocate( size );
 #endif
-				//æ“ª‚É‘«‚µ‚Ü‚·
+				//å…ˆé ­ã«è¶³ã—ã¾ã™
 				mHeapLock.lock();
 				Heap* first = mHead;
 				mHead = newHeap;
@@ -648,17 +648,17 @@ public:
 				mHeapLock.unlock();
 			}
 		}
-STRONG_ASSERT( r && "BUG!" ); //‚±‚±‚Í‚ ‚è‚¦‚È‚¢BƒoƒO‚¾
+STRONG_ASSERT( r && "BUG!" ); //ã“ã“ã¯ã‚ã‚Šãˆãªã„ã€‚ãƒã‚°ã 
 		return r;
 	}
 	void deallocate( void* p ){
-		if ( !p ){ //0‰ñ”ğ
+		if ( !p ){ //0å›é¿
 			return;
 		}
-		//mNext‚ª0‚È‚çA‚Å‚©‚¢ƒuƒƒbƒN‚Å‚·B
+		//mNextãŒ0ãªã‚‰ã€ã§ã‹ã„ãƒ–ãƒ­ãƒƒã‚¯ã§ã™ã€‚
 		if ( isLb( p ) ){
 			deallocateLb( p );
-		}else{ //‚»‚¤‚Å‚È‚¢ê‡A‚Ü‚¸Area‚Ìæ“ª‚ğŠ„‚èo‚µ‚ÄAArea‚Éíœ‚³‚¹‚é
+		}else{ //ãã†ã§ãªã„å ´åˆã€ã¾ãšAreaã®å…ˆé ­ã‚’å‰²ã‚Šå‡ºã—ã¦ã€Areaã«å‰Šé™¤ã•ã›ã‚‹
 			Heap* heap = getHeap( p );
 			heap->lock();
 			heap->deallocate( p );
@@ -666,9 +666,9 @@ STRONG_ASSERT( r && "BUG!" ); //‚±‚±‚Í‚ ‚è‚¦‚È‚¢BƒoƒO‚¾
 		}
 	}
 	void write( const char* filename ){
-		//‚±‚Ì’†‚Ånew‚ğg‚¤‚í‚¯‚É‚Ís‚©‚È‚¢B
-		//‚»‚ê‚Í‘¦À‚Éofstream‚à‚¾‚ß‚¾‚Æ‚¢‚¤‚±‚Æ‚ğˆÓ–¡‚·‚éB’†‚Ånew‚·‚é‚©‚ç‚¾B
-		//‚æ‚Á‚ÄA‚±‚Ìƒtƒ@ƒCƒ‹‚Ì’†‚Å‚ÍC•W€ƒ‰ƒCƒuƒ‰ƒŠ‚Å–‚ğs‚¤B
+		//ã“ã®ä¸­ã§newã‚’ä½¿ã†ã‚ã‘ã«ã¯è¡Œã‹ãªã„ã€‚
+		//ãã‚Œã¯å³åº§ã«ofstreamã‚‚ã ã‚ã ã¨ã„ã†ã“ã¨ã‚’æ„å‘³ã™ã‚‹ã€‚ä¸­ã§newã™ã‚‹ã‹ã‚‰ã ã€‚
+		//ã‚ˆã£ã¦ã€ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«ã®ä¸­ã§ã¯Cæ¨™æº–ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã§äº‹ã‚’è¡Œã†ã€‚
 		FILE* fp = 0;
 		if ( filename ){
 			setlocale( LC_ALL, "" );
@@ -677,7 +677,7 @@ STRONG_ASSERT( r && "BUG!" ); //‚±‚±‚Í‚ ‚è‚¦‚È‚¢BƒoƒO‚¾
 		}else{
 			::OutputDebugStringA( "\n" );
 		}
-		char str[ 8192 ]; //‘å‰ßè‚Éæ‚é‚æB‚±‚±‚ÅƒPƒ`‚Á‚Ä‚à‰½‚Ì“¾‚à‚È‚¢‚©‚ç‚ÈB–{“–sprintf‚Íƒ_ƒ‚¾‚È‚Æv‚¤B
+		char str[ 8192 ]; //å¤§éå‰°ã«å–ã‚‹ã‚ˆã€‚ã“ã“ã§ã‚±ãƒã£ã¦ã‚‚ä½•ã®å¾—ã‚‚ãªã„ã‹ã‚‰ãªã€‚æœ¬å½“sprintfã¯ãƒ€ãƒ¡ã ãªã¨æ€ã†ã€‚
 		int l = 0;
 		l += sprintf_s( str + l, 8192 - l, "[ MemoryManager::write() ]\n" );
 		l += sprintf_s( str + l, 8192 - l, "totalSize = %d ( %x ) : %.2fMB\n", mTotalSize, mTotalSize, static_cast< float >( mTotalSize ) / 1024.f / 1024.f );
@@ -689,7 +689,7 @@ STRONG_ASSERT( r && "BUG!" ); //‚±‚±‚Í‚ ‚è‚¦‚È‚¢BƒoƒO‚¾
 		}
 
 		mLbLock.lock();
-		//‚Ü‚¸‘åƒuƒƒbƒN‚©‚ç
+		//ã¾ãšå¤§ãƒ–ãƒ­ãƒƒã‚¯ã‹ã‚‰
 		if ( mLbHead ){
 			void* begin = mLbHead;
 			void* block = begin;
@@ -723,7 +723,7 @@ STRONG_ASSERT( r && "BUG!" ); //‚±‚±‚Í‚ ‚è‚¦‚È‚¢BƒoƒO‚¾
 			} while ( begin != block );
 		}
 		mLbLock.unlock();
-		//Ÿƒq[ƒv
+		//æ¬¡ãƒ’ãƒ¼ãƒ—
 		mHeapLock.lock();
 		Heap* current = mHead;
 		while ( current ){
@@ -747,7 +747,7 @@ STRONG_ASSERT( r && "BUG!" ); //‚±‚±‚Í‚ ‚è‚¦‚È‚¢BƒoƒO‚¾
 private:
 	void checkLb(){
 		mLbLock.lock();
-		//‚Ü‚¸‘åƒuƒƒbƒN‚©‚ç
+		//ã¾ãšå¤§ãƒ–ãƒ­ãƒƒã‚¯ã‹ã‚‰
 		if ( mLbHead ){
 			void* begin = mLbHead;
 			void* block = begin;
@@ -784,20 +784,20 @@ private:
 #ifdef STRONG_DEBUG
 checkLb();
 #endif
-		//ƒTƒCƒY‚Ì‰ºˆÊ2ƒrƒbƒg‚ğ0‚É‚·‚é‚½‚ß‚ÉƒAƒ‰ƒCƒ“
+		//ã‚µã‚¤ã‚ºã®ä¸‹ä½2ãƒ“ãƒƒãƒˆã‚’0ã«ã™ã‚‹ãŸã‚ã«ã‚¢ãƒ©ã‚¤ãƒ³
 		size = align( size, 8 );
-		//ƒwƒbƒ_ƒTƒCƒYŒvZBƒ|ƒCƒ“ƒ^O‚Â‚ÆU4“ñ‚Â
+		//ãƒ˜ãƒƒãƒ€ã‚µã‚¤ã‚ºè¨ˆç®—ã€‚ãƒã‚¤ãƒ³ã‚¿ä¸‰ã¤ã¨U4äºŒã¤
 		U4 alignedHeaderSize = align( LB_HEADER_SIZE, ALIGN );
 		void* p = allocateMemory( size + alignedHeaderSize );
 
-		//ƒ†[ƒU‚É•Ô‚·ƒ|ƒCƒ“ƒ^
+		//ãƒ¦ãƒ¼ã‚¶ã«è¿”ã™ãƒã‚¤ãƒ³ã‚¿
 		void* r = ptr( p ) + alignedHeaderSize; 
 		setLbSize( r, size );
 #ifdef USE_DEBUG_INFO
 		setLbDebugInfo( r, debugInfo );
 #endif
 
-		//ƒŠƒ“ƒN·‚µ‘Ö‚¦
+		//ãƒªãƒ³ã‚¯å·®ã—æ›¿ãˆ
 		mLbLock.lock();
 		void* prev;
 		void* next;
@@ -824,7 +824,7 @@ checkLb();
 checkLb();
 #endif
 
-		//ƒŠƒ“ƒN‰ğœ
+		//ãƒªãƒ³ã‚¯è§£é™¤
 		mLbLock.lock();
 		void* prev = getLbPrev( p );
 		void* next = getLbNext( p );
@@ -836,10 +836,10 @@ checkLb();
 #endif
 		setLbNext( prev, next );
 		setLbPrev( next, prev );
-		if ( mLbHead == p ){ //æ“ª‚Ìíœ‚ª—ˆ‚½B
-			mLbHead = next; //Ÿ‚Ìƒ|ƒCƒ“ƒ^‚É•ÏX
-			if ( mLbHead == p ){ //Ÿ‚É‚µ‚Ä‚à‚È‚¨“¯‚¶‚Æ‚¢‚¤‚±‚Æ‚ÍÅŒã‚ÌˆêŒÂ‚¾B
-				mLbHead = 0; //–•E
+		if ( mLbHead == p ){ //å…ˆé ­ã®å‰Šé™¤ãŒæ¥ãŸã€‚
+			mLbHead = next; //æ¬¡ã®ãƒã‚¤ãƒ³ã‚¿ã«å¤‰æ›´
+			if ( mLbHead == p ){ //æ¬¡ã«ã—ã¦ã‚‚ãªãŠåŒã˜ã¨ã„ã†ã“ã¨ã¯æœ€å¾Œã®ä¸€å€‹ã ã€‚
+				mLbHead = 0; //æŠ¹æ®º
 			}
 		}
 		mTotalSize -= getLbSize( p ) & SIZE_MASK;
@@ -847,17 +847,17 @@ checkLb();
 #ifdef STRONG_DEBUG
 checkLb();
 #endif
-		//ƒƒ‚ƒŠ‰ğ•ú
+		//ãƒ¡ãƒ¢ãƒªè§£æ”¾
 		char* origP = ptr( p ) - LB_HEADER_SIZE;
 		U4 alignedHeaderSize = align( LB_HEADER_SIZE, ALIGN );
-		origP -= alignedHeaderSize - LB_HEADER_SIZE; //ƒAƒ‰ƒCƒ“‚Å‚¸‚ç‚µ‚½‚È‚çA•Ô‹pƒAƒhƒŒƒX‚à‚¸‚ç‚·
+		origP -= alignedHeaderSize - LB_HEADER_SIZE; //ã‚¢ãƒ©ã‚¤ãƒ³ã§ãšã‚‰ã—ãŸãªã‚‰ã€è¿”å´ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚‚ãšã‚‰ã™
 		deallocateMemory( origP );
 	}
-/* //‘åƒuƒƒbƒN‚ÌƒŒƒCƒAƒEƒg
+/* //å¤§ãƒ–ãƒ­ãƒƒã‚¯ã®ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
 	void* next;
 	void* prev;
 	U4 size;
-	U4 debugInfo; //‚±‚Ì’¼Œã‚ğƒ†[ƒU‚É•Ô‚·
+	U4 debugInfo; //ã“ã®ç›´å¾Œã‚’ãƒ¦ãƒ¼ã‚¶ã«è¿”ã™
 */
 #ifdef USE_DEBUG_INFO
 	static const int DEBUG_INFO = sizeof( U4 );
@@ -869,7 +869,7 @@ checkLb();
 	static const int NEXT = PREV + sizeof( void* );
 	static const int LB_HEADER_SIZE = NEXT;
 
-	static bool isLb( void* p ){//ƒTƒCƒY‚Í•K‚¸4ƒoƒCƒg‘O‚É‚ ‚éB
+	static bool isLb( void* p ){//ã‚µã‚¤ã‚ºã¯å¿…ãš4ãƒã‚¤ãƒˆå‰ã«ã‚ã‚‹ã€‚
 		U4* up = cast< U4 >( p, -SIZE );
 		return ( *up & FLAG_LARGE_BLOCK );
 	}
@@ -900,14 +900,14 @@ checkLb();
 		*cast< void* >( p, -NEXT ) = next;
 	}
 
-	//ƒq[ƒvæ“ª
+	//ãƒ’ãƒ¼ãƒ—å…ˆé ­
 	Heap* mHead;
-	//‘åƒuƒƒbƒNæ“ª
+	//å¤§ãƒ–ãƒ­ãƒƒã‚¯å…ˆé ­
 	void* mLbHead;
-	//ƒƒbƒN
+	//ãƒ­ãƒƒã‚¯
 	Lock mLbLock;
 	Lock mHeapLock;
-	//‘SƒTƒCƒY
+	//å…¨ã‚µã‚¤ã‚º
 	int mTotalSize;
 };
 Impl gImpl;

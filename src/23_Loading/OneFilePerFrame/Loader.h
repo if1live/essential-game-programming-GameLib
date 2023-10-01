@@ -7,9 +7,9 @@ using namespace std;
 
 class File{
 public:
-	bool isReady() const; //ƒ[ƒhI‚í‚Á‚Ä‚éH
-	int getSize() const; //ƒtƒ@ƒCƒ‹ƒTƒCƒYæ“¾
-	const char* getData() const; //’†gæ“¾
+	bool isReady() const; //ãƒ­ãƒ¼ãƒ‰çµ‚ã‚ã£ã¦ã‚‹ï¼Ÿ
+	int getSize() const; //ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºå–å¾—
+	const char* getData() const; //ä¸­èº«å–å¾—
 private:
 	File( const char* filename );
 	~File();
@@ -31,7 +31,7 @@ public:
 	void update();
 private:
 	Loader();
-	Loader( const Loader& ); //••ˆó
+	Loader( const Loader& ); //å°å°
 	~Loader();
 
 	list< File* > mFiles;

@@ -19,7 +19,7 @@ mId( id ),
 mDatabase( 0 ),
 mModel( 0 ),
 mBullets( 0 ),
-mBulletNumber( 100 ){ //‚«‚ß‚¤‚¿
+mBulletNumber( 100 ){ //ãã‚ã†ã¡
 	mDatabase = new GraphicsDatabase( "robo.txt" );
 	mModel = mDatabase->createModel( "robo" );
 	mBullets = new Bullet[ mBulletNumber ];
@@ -27,7 +27,7 @@ mBulletNumber( 100 ){ //‚«‚ß‚¤‚¿
 
 Robo::~Robo(){
 	SAFE_DELETE_ARRAY( mBullets );
-	SAFE_DELETE( mModel ); //g‚Á‚Ä‚¢‚é•û‚ªg‚í‚ê‚Ä‚¢‚é•û‚æ‚èæ
+	SAFE_DELETE( mModel ); //ä½¿ã£ã¦ã„ã‚‹æ–¹ãŒä½¿ã‚ã‚Œã¦ã„ã‚‹æ–¹ã‚ˆã‚Šå…ˆ
 	SAFE_DELETE( mDatabase );
 }
 
@@ -44,18 +44,18 @@ void Robo::update( const Vector3& enemyPos ){
 	if ( pad->isOn( Pad::TURN, mId ) ){
 		if ( pad->isOn( Pad::LEFT, mId ) ){
 			mAngleY += 1.0;
-			if ( mAngleY > 180.0 ){ //-PI‚©‚çPI‚É‚¨‚³‚ß‚é
+			if ( mAngleY > 180.0 ){ //-PIã‹ã‚‰PIã«ãŠã•ã‚ã‚‹
 				mAngleY -= 360.0;
 			}
 		}
 		if ( pad->isOn( Pad::RIGHT, mId ) ){
 			mAngleY -= 1.0;
-			if ( mAngleY < -180.0 ){ //-PI‚©‚çPI‚É‚¨‚³‚ß‚é
+			if ( mAngleY < -180.0 ){ //-PIã‹ã‚‰PIã«ãŠã•ã‚ã‚‹
 				mAngleY += 360.0;
 			}
 		}
 	}else{
-		//ˆÚ“®ˆ—B‚Ü‚¸‹“_‚ğl—¶‚µ‚È‚¢‰Á‘¬“x‚ğo‚·
+		//ç§»å‹•å‡¦ç†ã€‚ã¾ãšè¦–ç‚¹ã‚’è€ƒæ…®ã—ãªã„åŠ é€Ÿåº¦ã‚’å‡ºã™
 		Vector3 move( 0.0, 0.0, 0.0 );
 		if ( pad->isOn( Pad::UP, mId ) ){
 			move.z = -1.0;
@@ -69,16 +69,16 @@ void Robo::update( const Vector3& enemyPos ){
 		if ( pad->isOn( Pad::RIGHT, mId ) ){
 			move.x = 1.0;
 		}
-		//‹ü•ûŒü‚ğ‰Á–¡‚µ‚Ä‰ñ“]
+		//è¦–ç·šæ–¹å‘ã‚’åŠ å‘³ã—ã¦å›è»¢
 		Matrix34 m;
 		m.setRotationY( mAngleY + 180.0 );
 		m.multiply( &move, move );
 		mPosition += move;
 	}
 
-	//•Ší¶¬
+	//æ­¦å™¨ç”Ÿæˆ
 	if ( pad->isOn( Pad::FIRE, mId ) ){
-		//‹ó‚«•Ší‚ğ’T‚·
+		//ç©ºãæ­¦å™¨ã‚’æ¢ã™
 		for ( int i = 0; i < mBulletNumber; ++i ){
 			if ( mBullets[ i ].isEmpty() ){
 				mBullets[ i ].create(
@@ -91,7 +91,7 @@ void Robo::update( const Vector3& enemyPos ){
 			}
 		}
 	}
-	//•ŠíXV
+	//æ­¦å™¨æ›´æ–°
 	for ( int i = 0; i < mBulletNumber; ++i ){
 		if ( !mBullets[ i ].isEmpty() ){
 			mBullets[ i ].update( enemyPos );
@@ -100,12 +100,12 @@ void Robo::update( const Vector3& enemyPos ){
 }
 
 void Robo::draw( const Matrix44& pvm ) const {
-	//ƒ‚ƒfƒ‹‚ÉˆÊ’uî•ñ‚ğƒZƒbƒg
+	//ãƒ¢ãƒ‡ãƒ«ã«ä½ç½®æƒ…å ±ã‚’ã‚»ãƒƒãƒˆ
 	mModel->setAngle( Vector3( 0.0, mAngleY, 0.0 ) );
 	mModel->setPosition( mPosition );
-	//•`‰æ
+	//æç”»
 	mModel->draw( pvm );
-	//•Ší
+	//æ­¦å™¨
 	for ( int i = 0; i < mBulletNumber; ++i ){
 		if ( !mBullets[ i ].isEmpty() ){
 			mBullets[ i ].draw( pvm );
@@ -118,26 +118,26 @@ const Vector3* Robo::position() const {
 }
 
 void Robo::getViewMatrix( Matrix34* vm ) const {
-	//‚Ü‚¸³–Ê•ûŒüƒxƒNƒ^‚ğì¬
+	//ã¾ãšæ­£é¢æ–¹å‘ãƒ™ã‚¯ã‚¿ã‚’ä½œæˆ
 	Vector3 d( 0.0, 0.0, 1.0 );
 	Matrix34 m;
 	m.setRotationY( mAngleY );
 	m.multiply( &d, d );
-	//‚±‚¢‚Â‚ğ‘O•û‚ÉmCameraTargetDistanceZ‚¾‚¯L‚Î‚·
+	//ã“ã„ã¤ã‚’å‰æ–¹ã«mCameraTargetDistanceZã ã‘ä¼¸ã°ã™
 	Vector3 t;
 	t.setMul( d, 20.0 );
-	//ƒƒ{‚ª‚‚¢‚Æ‚±‚ë‚É‚¢‚é‚È‚ç‚¿‚å‚Á‚Æ‰º‚ğŒ©‚Ä‚â‚éB‚±‚ê‚Íƒpƒ‰ƒ[ƒ^‚É‚È‚¢‚»‚ÌêH•vB
-	t.y -= mPosition.y * 0.12; //‚±‚Ì‚Ö‚ñ‚Ì’²®‚à“K“–
-	//‚±‚¢‚Â‚ğŒã•û‚ÉmCameraDistacneZ‚¾‚¯L‚Î‚·
+	//ãƒ­ãƒœãŒé«˜ã„ã¨ã“ã‚ã«ã„ã‚‹ãªã‚‰ã¡ã‚‡ã£ã¨ä¸‹ã‚’è¦‹ã¦ã‚„ã‚‹ã€‚ã“ã‚Œã¯ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã«ãªã„ãã®å ´å·¥å¤«ã€‚
+	t.y -= mPosition.y * 0.12; //ã“ã®ã¸ã‚“ã®èª¿æ•´ã‚‚é©å½“
+	//ã“ã„ã¤ã‚’å¾Œæ–¹ã«mCameraDistacneZã ã‘ä¼¸ã°ã™
 	Vector3 p;
 	p.setMul( d, -20.0 );
-	//Y‚ÉmCameraDistanceY‚ğƒvƒ‰ƒX
+	//Yã«mCameraDistanceYã‚’ãƒ—ãƒ©ã‚¹
 	p.y += 20.0;
-	//ƒƒ{‚ª‚‚¢‚Æ‚±‚ë‚É‚¢‚é‚È‚ç‚¿‚å‚Á‚Æ‚–Ú‚É‚µ‚Ä‰º‚ğŒ©‚Ä‚â‚éB‚±‚ê‚Íƒpƒ‰ƒ[ƒ^‚É‚È‚¢‚»‚ÌêH•vB
-	p.y += mPosition.y * 0.12; //‚±‚Ì‚Ö‚ñ‚Ì’²®‚à“K“–
-	//ƒƒ{Œ»İˆÊ’u‚ğƒvƒ‰ƒX
+	//ãƒ­ãƒœãŒé«˜ã„ã¨ã“ã‚ã«ã„ã‚‹ãªã‚‰ã¡ã‚‡ã£ã¨é«˜ç›®ã«ã—ã¦ä¸‹ã‚’è¦‹ã¦ã‚„ã‚‹ã€‚ã“ã‚Œã¯ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã«ãªã„ãã®å ´å·¥å¤«ã€‚
+	p.y += mPosition.y * 0.12; //ã“ã®ã¸ã‚“ã®èª¿æ•´ã‚‚é©å½“
+	//ãƒ­ãƒœç¾åœ¨ä½ç½®ã‚’ãƒ—ãƒ©ã‚¹
 	t += mPosition;
 	p += mPosition;
-	//ƒrƒ…[s—ñì¬
+	//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ä½œæˆ
 	vm->setViewTransform( p, t );
 }

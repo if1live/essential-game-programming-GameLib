@@ -17,16 +17,16 @@ Title::~Title(){
 }
 
 void Title::update( Parent* parent ){
-	//“ü—Íæ“¾
+	//å…¥åŠ›å–å¾—
 	Framework f = Framework::instance();;
 	if ( f.isKeyTriggered( 'w' ) ){
 		--mCursorPosistion;
-		if ( mCursorPosistion < 0 ){ //ƒ}ƒCƒiƒX‚ÍÅ‘å’l‚Éƒ‹[ƒv
+		if ( mCursorPosistion < 0 ){ //ãƒã‚¤ãƒŠã‚¹ã¯æœ€å¤§å€¤ã«ãƒ«ãƒ¼ãƒ—
  			mCursorPosistion = 1;
 		}
 	}else if ( f.isKeyTriggered( 'z' ) ){
 		++mCursorPosistion;
-		if ( mCursorPosistion > 1 ){ //1‚ğ‰z‚¦‚½‚ç0‚Éƒ‹[ƒv
+		if ( mCursorPosistion > 1 ){ //1ã‚’è¶ŠãˆãŸã‚‰0ã«ãƒ«ãƒ¼ãƒ—
 			mCursorPosistion = 0;
 		}
 	}else if ( f.isKeyTriggered( ' ' ) ){
@@ -39,13 +39,13 @@ void Title::update( Parent* parent ){
 			HALT( "arienai" );
 		}
 	}
-	//•`‰æ
+	//æç”»
 	mImage->draw();
-	//š‚ğo‚·
-	f.drawDebugString( 0, 0, "[À²ÄÙ] : ÊŞ¸ÀŞİËŞÄ" );
-	f.drawDebugString( 1, 2, "ËÄØ ÃŞ ±¿ÌŞ" );
-	f.drawDebugString( 1, 3, "ÌÀØ ÃŞ ºÛ¼±³" );
-	//ƒJ[ƒ\ƒ‹‚ğ‘‚­
+	//å­—ã‚’å‡ºã™
+	f.drawDebugString( 0, 0, "[ï¾€ï½²ï¾„ï¾™] : ï¾Šï¾ï½¸ï¾€ï¾ï¾ï¾‹ï¾ï¾„" );
+	f.drawDebugString( 1, 2, "ï¾‹ï¾„ï¾˜ ï¾ƒï¾ ï½±ï½¿ï¾Œï¾" );
+	f.drawDebugString( 1, 3, "ï¾Œï¾€ï¾˜ ï¾ƒï¾ ï½ºï¾›ï½¼ï½±ï½³" );
+	//ã‚«ãƒ¼ã‚½ãƒ«ã‚’æ›¸ã
 	f.drawDebugString( 0, mCursorPosistion + 2, ">" );
 }
 

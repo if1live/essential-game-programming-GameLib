@@ -30,7 +30,7 @@ public:
 			RefString tmp( extraDataPath );
 			mExtraDataPath = allocateString( tmp );
 		}else{
-			mExtraDataPath = allocateString( RefString( ".\\" ) ); //‚±‚±B
+			mExtraDataPath = allocateString( RefString( ".\\" ) ); //ã“ã“ã€‚
 		}
 		createFromElement( e );
 	}
@@ -39,8 +39,8 @@ public:
 			RefString tmp( extraDataPath );
 			mExtraDataPath = allocateString( tmp );
 		}else{
-			string t = filename; //ˆê’Uƒtƒ@ƒCƒ‹–¼‚ğ“ü‚ê‚Ä
-			// /‚ğ\‚É•ÏŠ·BÅŒã‚ÉŒ©‚Â‚¯‚½êŠ‚ğ‹L˜^
+			string t = filename; //ä¸€æ—¦ãƒ•ã‚¡ã‚¤ãƒ«åã‚’å…¥ã‚Œã¦
+			// /ã‚’\ã«å¤‰æ›ã€‚æœ€å¾Œã«è¦‹ã¤ã‘ãŸå ´æ‰€ã‚’è¨˜éŒ²
 			int slashPos = -1;
 			for ( size_t i = 0; i < t.size(); ++i ){
 				if ( t[ i ] == '/' ){
@@ -50,8 +50,8 @@ public:
 					slashPos = static_cast< int >( i );
 				}
 			}
-			if ( slashPos == -1 ){	//‚à‚µ-1‚È‚çÅŒã‚É\‚ğ‘«‚·
-				t = ""; //‚±‚±
+			if ( slashPos == -1 ){	//ã‚‚ã—-1ãªã‚‰æœ€å¾Œã«\ã‚’è¶³ã™
+				t = ""; //ã“ã“
 			}else{
 				t.erase( slashPos + 1, string::npos );
 			}
@@ -60,20 +60,20 @@ public:
 		mDocument = Document::create( filename );
 	}
 	~Impl(){
-		//VertexBuffer, IndexBuffer, Texture‚ÍQÆƒJƒEƒ“ƒg‚ÅŸè‚ÉŠÇ—‚³‚ê‚Ä‚¢‚éB‚Ù‚¤‚Á‚Ä‚¨‚¢‚Ä—Ç‚¢B
-		//‚Ü‚¸‚¢‚ë‚¢‚ëg‚Á‚Ä‚¢‚éTree
+		//VertexBuffer, IndexBuffer, Textureã¯å‚ç…§ã‚«ã‚¦ãƒ³ãƒˆã§å‹æ‰‹ã«ç®¡ç†ã•ã‚Œã¦ã„ã‚‹ã€‚ã»ã†ã£ã¦ãŠã„ã¦è‰¯ã„ã€‚
+		//ã¾ãšã„ã‚ã„ã‚ä½¿ã£ã¦ã„ã‚‹Tree
 		for ( int i = 0; i < mTrees.size(); ++i ){
 			SAFE_DELETE( mTrees[ i ] );
 		}
-		//Ÿ‚ªBatch‚ğÁ‚·B
+		//æ¬¡ãŒBatchã‚’æ¶ˆã™ã€‚
 		for ( int i = 0; i < mBatches.size(); ++i ){
 			SAFE_DELETE( mBatches[ i ] );
 		}
-		//ÅŒã‚ÉƒAƒjƒ
+		//æœ€å¾Œã«ã‚¢ãƒ‹ãƒ¡
 		for ( int i = 0; i < mAnimations.size(); ++i ){
 			SAFE_DELETE( mAnimations[ i ] );
 		}
-		mExtraDataPath = 0; //stringPool‚Ì’†‚¾‚©‚ç0‚ÅQÆ‚ğÁ‚·‚¾‚¯‚Å‚¢‚¢
+		mExtraDataPath = 0; //stringPoolã®ä¸­ã ã‹ã‚‰0ã§å‚ç…§ã‚’æ¶ˆã™ã ã‘ã§ã„ã„
 	}
 	Batch::Impl* batch( const char* name ) const {
 		int p = mIndices.find( name );
@@ -174,16 +174,16 @@ public:
 		if ( mDocument ){
 			if ( mDocument.isReady() ){
 				ConstElement e = mDocument.root();
-				//q‹Ÿ‚ªˆêl‚Å–¼‘O‚ªContainer‚Ì‚ÉŒÀ‚Á‚ÄAq‚ğ“n‚·B
+				//å­ä¾›ãŒä¸€äººã§åå‰ãŒContainerã®æ™‚ã«é™ã£ã¦ã€å­ã‚’æ¸¡ã™ã€‚
 				if ( ( e.childNumber() == 1 ) && ( RefString( "Container" ) != e.name() ) ){
 					e = e.child( 0 );
 				}
 				createFromElement( e );
-				e.release(); //æ‚É”jŠüB
+				e.release(); //å…ˆã«ç ´æ£„ã€‚
 				mDocument.release();
 			}
 		}
-		if ( !mDocument ){ //ƒ[ƒh‚ªI‚í‚Á‚Ä‚ÄAƒeƒNƒXƒ`ƒƒ‚ª‘S•”ƒ[ƒh‚³‚ê‚Ä‚¢‚ê‚Îtrue
+		if ( !mDocument ){ //ãƒ­ãƒ¼ãƒ‰ãŒçµ‚ã‚ã£ã¦ã¦ã€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãŒå…¨éƒ¨ãƒ­ãƒ¼ãƒ‰ã•ã‚Œã¦ã„ã‚Œã°true
 			for ( int i = 0; i < mTextures.size(); ++i ){
 				if ( !mTextures[ i ].isReady() ){
 					return false;
@@ -194,7 +194,7 @@ public:
 		return false;
 	}
 private:
-	//Hash‚©‚çæ‚Á‚Ä‚«‚½“Y‚¦š‚ª‰½‚Ì“Y‚¦š‚È‚Ì‚©‚ğ•\‚·ˆóB‰ºˆÊ16ƒrƒbƒg‚ª“Y‚¦š
+	//Hashã‹ã‚‰å–ã£ã¦ããŸæ·»ãˆå­—ãŒä½•ã®æ·»ãˆå­—ãªã®ã‹ã‚’è¡¨ã™å°ã€‚ä¸‹ä½16ãƒ“ãƒƒãƒˆãŒæ·»ãˆå­—
 	enum IndexPrefix{
 		PREFIX_VERTEX_BUFFER = 0x10000,
 		PREFIX_INDEX_BUFFER = 0x20000,
@@ -204,7 +204,7 @@ private:
 		PREFIX_TREE = 0x60000,
 	};
 	void createFromElement( ConstElement e ){
-		//‚Ü‚¸”‚ğ”‚¦‚é
+		//ã¾ãšæ•°ã‚’æ•°ãˆã‚‹
 		int vertexBufferN = 0;
 		int indexBufferN = 0;
 		int textureN = 0;
@@ -230,7 +230,7 @@ private:
 				++treeN;
 			}
 		}
-		//Šm•Û
+		//ç¢ºä¿
 		mVertexBuffers.setSize( vertexBufferN );
 		mIndexBuffers.setSize( indexBufferN );
 		mTextures.setSize( textureN );
@@ -240,7 +240,7 @@ private:
 
 		mIndices.setCapacity( n );
 
-		//ì¬ŠJnBˆê’U”‚ğ‰Šú‰»‚µ‚ÄˆÊ’u‚Ég‚¤
+		//ä½œæˆé–‹å§‹ã€‚ä¸€æ—¦æ•°ã‚’åˆæœŸåŒ–ã—ã¦ä½ç½®ã«ä½¿ã†
 		vertexBufferN = 0;
 		indexBufferN = 0;
 		textureN = 0;
@@ -248,7 +248,7 @@ private:
 		batchN = 0;
 		treeN = 0;
 
-		//ˆË‘¶‚Ì‚È‚¢‚à‚Ì‚ğì‚é
+		//ä¾å­˜ã®ãªã„ã‚‚ã®ã‚’ä½œã‚‹
 		for ( int i = 0; i < n; ++i ){
 			ConstElement child = e.child( i );
 			RefString name( child.name() );
@@ -278,7 +278,7 @@ private:
 				++animationN;
 			}
 		}
-		//ˆÈã3í‚ÉˆË‘¶‚·‚éƒoƒbƒ`‚ğì‚é
+		//ä»¥ä¸Š3ç¨®ã«ä¾å­˜ã™ã‚‹ãƒãƒƒãƒã‚’ä½œã‚‹
 		for ( int i = 0; i < n; ++i ){
 			ConstElement child = e.child( i );
 			RefString name( child.name() );
@@ -290,7 +290,7 @@ private:
 				++batchN;
 			}
 		}
-		//ƒoƒbƒ`‚ÉˆË‘¶‚·‚éƒcƒŠ[‚ğì‚é
+		//ãƒãƒƒãƒã«ä¾å­˜ã™ã‚‹ãƒ„ãƒªãƒ¼ã‚’ä½œã‚‹
 		for ( int i = 0; i < n; ++i ){
 			ConstElement child = e.child( i );
 			RefString name( child.name() );
@@ -304,29 +304,29 @@ private:
 		}
 	}
 
-	//ƒtƒ@ƒCƒ‹‚©‚çƒ[ƒh‚·‚é—p‚ÌDocument.InFile‚Å‚¢‚¿‚¢‚¿‚â‚Á‚Ä‚à‚¢‚¢‚Ì‚¾‚ªA–Ê“|‚È‚Ì‚Å‚±‚êB
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ãƒ­ãƒ¼ãƒ‰ã™ã‚‹æ™‚ç”¨ã®Document.InFileã§ã„ã¡ã„ã¡ã‚„ã£ã¦ã‚‚ã„ã„ã®ã ãŒã€é¢å€’ãªã®ã§ã“ã‚Œã€‚
 	Document mDocument;
 
-	//Graphics‚Ì‚ÍQÆŒ^‚ÅŠi”[
+	//Graphicsã®ã¯å‚ç…§å‹ã§æ ¼ç´
 	Array< VertexBuffer > mVertexBuffers;
 	Array< IndexBuffer > mIndexBuffers;
 	Array< Texture > mTextures;
 	Array< Animation::Impl* > mAnimations;
-	//Scene‚Ì‚ÍImpl‚¾‚Á‚½‚èŒ^‚»‚Ì‚à‚Ì‚¾‚Á‚½‚èB
+	//Sceneã®ã¯Implã ã£ãŸã‚Šå‹ãã®ã‚‚ã®ã ã£ãŸã‚Šã€‚
 	Array< Batch::Impl* > mBatches;
 	Array< TreeTemplate* > mTrees;
 
-	//–¼‘OŒŸõ—p‚ÌƒnƒbƒVƒ…B
-	//‘æˆê‚ÌŒ^‚ÍQÆ‚ÅAÀ‘Ì‚ª‘¶İ‚µ‘±‚¯‚é‚±‚Æ‚ÉˆË‘¶‚µ‚Ä‚¢‚éB’ˆÓB
-	//‘æ“ñŒ^‚Í”z—ñ‚Ì“Y‚¦šB•¨‚²‚Æ‚É•Ê‚ÌƒnƒbƒVƒ…‚ğì‚è‚½‚­‚È‚¢‚Ì‚ÅA
-	//HashMultiMap‚É‚µ‚Äint‚Ìã‚Ìƒrƒbƒg‚É‚»‚ê‚ª‰½‚È‚Ì‚©‚Ìˆó‚ğ‚Â‚¯‚Ä‚¢‚éB
-	//‚±‚ê‚ğ‚µ‚È‚¢‚Æ“¯‚¶–¼‘O‚ÌƒeƒNƒXƒ`ƒƒ‚ÆƒcƒŠ[‚ª‚ ‚Á‚½‚É¢‚é‚í‚¯‚¾B
+	//åå‰æ¤œç´¢ç”¨ã®ãƒãƒƒã‚·ãƒ¥ã€‚
+	//ç¬¬ä¸€ã®å‹ã¯å‚ç…§ã§ã€å®Ÿä½“ãŒå­˜åœ¨ã—ç¶šã‘ã‚‹ã“ã¨ã«ä¾å­˜ã—ã¦ã„ã‚‹ã€‚æ³¨æ„ã€‚
+	//ç¬¬äºŒå‹ã¯é…åˆ—ã®æ·»ãˆå­—ã€‚ç‰©ã”ã¨ã«åˆ¥ã®ãƒãƒƒã‚·ãƒ¥ã‚’ä½œã‚ŠãŸããªã„ã®ã§ã€
+	//HashMultiMapã«ã—ã¦intã®ä¸Šã®ãƒ“ãƒƒãƒˆã«ãã‚ŒãŒä½•ãªã®ã‹ã®å°ã‚’ã¤ã‘ã¦ã„ã‚‹ã€‚
+	//ã“ã‚Œã‚’ã—ãªã„ã¨åŒã˜åå‰ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¨ãƒ„ãƒªãƒ¼ãŒã‚ã£ãŸæ™‚ã«å›°ã‚‹ã‚ã‘ã ã€‚
 	HashMultiMap< const char*, int > mIndices;
 
-	//•¶š—ñŠi”[—p‚Ìƒv[ƒ‹BŒÂX‚ÌŒ^‚Ånew‚µ‚Ä‚é‚Æ’x‚¢‚©‚ç‚ÈB
+	//æ–‡å­—åˆ—æ ¼ç´ç”¨ã®ãƒ—ãƒ¼ãƒ«ã€‚å€‹ã€…ã®å‹ã§newã—ã¦ã‚‹ã¨é…ã„ã‹ã‚‰ãªã€‚
 	Pool< char > mStringPool;
 
-	//’Ç‰Áƒf[ƒ^ŒŸõƒpƒX
+	//è¿½åŠ ãƒ‡ãƒ¼ã‚¿æ¤œç´¢ãƒ‘ã‚¹
 	const char* mExtraDataPath;
 };
 

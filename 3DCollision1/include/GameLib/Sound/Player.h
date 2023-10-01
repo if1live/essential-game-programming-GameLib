@@ -9,24 +9,24 @@ class Wave;
 class Player{
 public:
 	static Player create( Wave );
-	///ƒXƒgƒŠ[ƒ~ƒ“ƒOÄ¶—pPlayer
+	///ã‚¹ãƒˆãƒªãƒ¼ãƒŸãƒ³ã‚°å†ç”Ÿç”¨Player
 	static Player create( int bitsPerSample, int bufferSizeInByte, int frequency, int channelNumber );
 
-	///Ä¶B–³ŒÀƒ‹[ƒvÄ¶‚³‚¹‚½‚¯‚ê‚Îtrue‚ğ“n‚·
+	///å†ç”Ÿã€‚ç„¡é™ãƒ«ãƒ¼ãƒ—å†ç”Ÿã•ã›ãŸã‘ã‚Œã°trueã‚’æ¸¡ã™
 	void play( bool looping = false );
 	void stop();
-	///ƒ{ƒŠƒ…[ƒ€İ’è(100‚ªÅ‘åA0‚ªÅ¬)
+	///ãƒœãƒªãƒ¥ãƒ¼ãƒ è¨­å®š(100ãŒæœ€å¤§ã€0ãŒæœ€å°)
 	void setVolume( int volume );
-	bool isPlaying() const; //Ä¶’†‚Å‚·‚©H
+	bool isPlaying() const; //å†ç”Ÿä¸­ã§ã™ã‹ï¼Ÿ
 
-	///ƒXƒgƒŠ[ƒ~ƒ“ƒOƒoƒbƒtƒ@‚É‘‚«‚ŞBÄ¶ˆÊ’u‚ª‹ß‚Ã‚«‚·‚¬‚Ä¸”s‚µ‚½ê‡‚Ífalse‚ğ•Ô‚·B‰¹”ò‚Ñ‚·‚éB
+	///ã‚¹ãƒˆãƒªãƒ¼ãƒŸãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã«æ›¸ãè¾¼ã‚€ã€‚å†ç”Ÿä½ç½®ãŒè¿‘ã¥ãã™ãã¦å¤±æ•—ã—ãŸå ´åˆã¯falseã‚’è¿”ã™ã€‚éŸ³é£›ã³ã™ã‚‹ã€‚
 	bool write( int position, const char* data, int size );
-	///ƒXƒgƒŠ[ƒ~ƒ“ƒOƒoƒbƒtƒ@‚É–³‰¹‚ğ‘‚«‚ŞBÄ¶ˆÊ’u‚ª‹ß‚Ã‚«‚·‚¬‚Ä¸”s‚µ‚½ê‡‚Ífalse‚ğ•Ô‚·B‰¹”ò‚Ñ‚·‚éB
+	///ã‚¹ãƒˆãƒªãƒ¼ãƒŸãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã«ç„¡éŸ³ã‚’æ›¸ãè¾¼ã‚€ã€‚å†ç”Ÿä½ç½®ãŒè¿‘ã¥ãã™ãã¦å¤±æ•—ã—ãŸå ´åˆã¯falseã‚’è¿”ã™ã€‚éŸ³é£›ã³ã™ã‚‹ã€‚
 	bool fillSilence( int position, int size );
-	///Ä¶’†‚Ìƒoƒbƒtƒ@ˆÊ’u‚ğƒoƒCƒg’PˆÊ‚Å•Ô‚·
+	///å†ç”Ÿä¸­ã®ãƒãƒƒãƒ•ã‚¡ä½ç½®ã‚’ãƒã‚¤ãƒˆå˜ä½ã§è¿”ã™
 	int position() const;
 
-	//ˆÈ‰ºƒ†[ƒU‚ÍˆÓ¯‚µ‚È‚¢ŠÖ”ŒQ
+	//ä»¥ä¸‹ãƒ¦ãƒ¼ã‚¶ã¯æ„è­˜ã—ãªã„é–¢æ•°ç¾¤
 	Player();
 	Player( const Player& );
 	~Player();

@@ -11,10 +11,10 @@ Document::Document() : mRoot( 0 ){
 }
 
 Document::Document( const char* filename ) : mRoot( 0 ){
-	//ƒtƒ@ƒCƒ‹‚ğ‘S•”“Ç‚İ‚İ
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚’å…¨éƒ¨èª­ã¿è¾¼ã¿
 	File file( filename );
-	//ƒ_ƒ~[‚ÌªŒ³ƒGƒŒƒƒ“ƒg—p‚Éƒ^ƒO‚ğ—pˆÓB–¼‘O‚Í<ROOT>
-	//<‚Í–¼‘O‚É‚Íg‚¦‚È‚¢•¶š‚È‚Ì‚ÅA‚±‚ê‚ª“Á•Ê‚Å‚ ‚é‚±‚Æ‚ª‚·‚®‚í‚©‚éB
+	//ãƒ€ãƒŸãƒ¼ã®æ ¹å…ƒã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆç”¨ã«ã‚¿ã‚°ã‚’ç”¨æ„ã€‚åå‰ã¯<ROOT>
+	//<ã¯åå‰ã«ã¯ä½¿ãˆãªã„æ–‡å­—ãªã®ã§ã€ã“ã‚ŒãŒç‰¹åˆ¥ã§ã‚ã‚‹ã“ã¨ãŒã™ãã‚ã‹ã‚‹ã€‚
 	Tag tag( "<ROOT>" );
 	const char* begin = file.data();
 	const char* end = begin + file.size();
@@ -27,7 +27,7 @@ Document::~Document(){
 
 void Document::write( const char* filename ) const {
 	string str;
-	//ƒ‹[ƒg—v‘f‚Í–³‹‚µ‚Ä‚©‚«‚±‚İ
+	//ãƒ«ãƒ¼ãƒˆè¦ç´ ã¯ç„¡è¦–ã—ã¦ã‹ãã“ã¿
 	for ( int i = 0; i < mRoot->childNumber(); ++i ){
 		mRoot->child( i )->convertToString( &str, 0 );
 	}

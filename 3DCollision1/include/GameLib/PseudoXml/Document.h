@@ -11,37 +11,37 @@ using namespace std;
 class Element;
 class ConstElement;
 
-///ƒtƒ@ƒCƒ‹ƒAƒNƒZƒX‹@”\‚ğ‚ÂƒjƒZxmlªŒ³ƒNƒ‰ƒX
+///ãƒ•ã‚¡ã‚¤ãƒ«ã‚¢ã‚¯ã‚»ã‚¹æ©Ÿèƒ½ã‚’æŒã¤ãƒ‹ã‚»xmlæ ¹å…ƒã‚¯ãƒ©ã‚¹
 class Document{
 public:
-	///‘‚«‚İ—p‚É‹ó‚Å¶¬
+	///æ›¸ãè¾¼ã¿ç”¨ã«ç©ºã§ç”Ÿæˆ
 	static Document create();
-	///ƒtƒ@ƒCƒ‹‚©‚çƒRƒ“ƒXƒgƒ‰ƒNƒg(—vFileIO‰Šú‰»)
+	///ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ(è¦FileIOåˆæœŸåŒ–)
 	static Document create( const char* filename );
-	///ƒ[ƒhÏ‚İ•¶š—ñ‚©‚çƒRƒ“ƒXƒgƒ‰ƒNƒg
+	///ãƒ­ãƒ¼ãƒ‰æ¸ˆã¿æ–‡å­—åˆ—ã‹ã‚‰ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 	static Document create( const char* data, int size );
-	///ªElementƒQƒbƒg
+	///æ ¹Elementã‚²ãƒƒãƒˆ
 	Element root();
-	///ªElementƒQƒbƒg
+	///æ ¹Elementã‚²ãƒƒãƒˆ
 	ConstElement root() const; 
-	///ƒ[ƒhÏ‚İ‚©”Û‚©
+	///ãƒ­ãƒ¼ãƒ‰æ¸ˆã¿ã‹å¦ã‹
 	bool isReady();
-	///“Ç‚İ‚İ’†ƒGƒ‰[‚ª”­¶‚µ‚½‚©
+	///èª­ã¿è¾¼ã¿ä¸­ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ãŸã‹
 	bool isError() const;
-	///ƒjƒZxmlƒeƒLƒXƒg‚ğ¶¬
+	///ãƒ‹ã‚»xmlãƒ†ã‚­ã‚¹ãƒˆã‚’ç”Ÿæˆ
 	void convertToString( string* out ) const;
-	///ƒjƒZxmlƒoƒCƒiƒŠ‚ğ¶¬
+	///ãƒ‹ã‚»xmlãƒã‚¤ãƒŠãƒªã‚’ç”Ÿæˆ
 	void convertToBinary( Array< char >* out ) const;
-	///ƒjƒZxmlƒtƒ@ƒCƒ‹‚ğ¶¬(—vFileIO‰Šú‰»)
+	///ãƒ‹ã‚»xmlãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç”Ÿæˆ(è¦FileIOåˆæœŸåŒ–)
 	void write( const char* filename, bool isBinary = false ) const;
-	///q‚Ì”ƒQƒbƒg
+	///å­ã®æ•°ã‚²ãƒƒãƒˆ
 	int childNumber() const;
-	///qƒQƒbƒg
+	///å­ã‚²ãƒƒãƒˆ
 	Element child( int i );
-	///qƒQƒbƒg
+	///å­ã‚²ãƒƒãƒˆ
 	ConstElement child( int i ) const;
 
-	//ˆÈ‰ºˆÓ¯‚µ‚È‚­‚Ä‚¢‚¢
+	//ä»¥ä¸‹æ„è­˜ã—ãªãã¦ã„ã„
 	Document();
 	Document( const Document& );
 	~Document();
@@ -56,25 +56,25 @@ private:
 	Impl* mImpl;
 };
 
-//const”Å
+//constç‰ˆ
 class ConstDocument{
 public:
-	///ªElementƒQƒbƒg
+	///æ ¹Elementã‚²ãƒƒãƒˆ
 	ConstElement root() const; 
-	///“Ç‚İ‚İ’†ƒGƒ‰[‚ª”­¶‚µ‚½‚©
+	///èª­ã¿è¾¼ã¿ä¸­ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ãŸã‹
 	bool isError() const;
-	///ƒjƒZxmlƒeƒLƒXƒg‚ğ¶¬
+	///ãƒ‹ã‚»xmlãƒ†ã‚­ã‚¹ãƒˆã‚’ç”Ÿæˆ
 	void convertToString( string* out ) const;
-	///ƒjƒZxmlƒoƒCƒiƒŠ‚ğ¶¬
+	///ãƒ‹ã‚»xmlãƒã‚¤ãƒŠãƒªã‚’ç”Ÿæˆ
 	void convertToBinary( Array< char >* out ) const;
-	///ƒjƒZxmlƒtƒ@ƒCƒ‹‚ğ¶¬(—vFileIO‰Šú‰»)
+	///ãƒ‹ã‚»xmlãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç”Ÿæˆ(è¦FileIOåˆæœŸåŒ–)
 	void write( const char* filename, bool isBinary = false ) const;
-	///q‚Ì”ƒQƒbƒg
+	///å­ã®æ•°ã‚²ãƒƒãƒˆ
 	int childNumber() const;
-	///qƒQƒbƒg
+	///å­ã‚²ãƒƒãƒˆ
 	ConstElement child( int i ) const;
 
-	//ˆÈ‰º’m‚ç‚È‚­‚Ä‚¢‚¢
+	//ä»¥ä¸‹çŸ¥ã‚‰ãªãã¦ã„ã„
 	ConstDocument();
 	ConstDocument( const Document& );
 	~ConstDocument();

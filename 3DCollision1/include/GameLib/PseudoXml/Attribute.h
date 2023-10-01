@@ -6,31 +6,31 @@ namespace PseudoXml{
 
 class Attribute{
 public:
-	///NULLI’[‚Å‚È‚¢‚È‚Ç‚µ‚ÄƒTƒCƒY‚ğ–¾¦“I‚É—^‚¦‚½‚¢B-1‚ğ“ü‚ê‚ê‚ÎŸè‚É‘ª‚é‚Ì‚ÅA•Ğ•û‚¾‚¯—^‚¦‚é‚±‚Æ‚à‚Å‚«‚é
+	///NULLçµ‚ç«¯ã§ãªã„ãªã©ã—ã¦ã‚µã‚¤ã‚ºã‚’æ˜ç¤ºçš„ã«ä¸ãˆãŸã„æ™‚ã€‚-1ã‚’å…¥ã‚Œã‚Œã°å‹æ‰‹ã«æ¸¬ã‚‹ã®ã§ã€ç‰‡æ–¹ã ã‘ä¸ãˆã‚‹ã“ã¨ã‚‚ã§ãã‚‹
 	void set( const char* name, int nameSize, const char* value, int valueSize );
 	void set( const char* name, const char* value );
-	void set( const char* name, int value ); //int’l
-	void set( const char* name, float value ); //float’l
-	void set( const char* name, double value ); //double’l
-	void set( const char* name, const int* values, int number ); //int”z—ñ
-	void set( const char* name, const float* values, int number ); //float”z—ñ
-	void set( const char* name, const double* values, int number ); //double”z—ñ
+	void set( const char* name, int value ); //intå€¤
+	void set( const char* name, float value ); //floatå€¤
+	void set( const char* name, double value ); //doubleå€¤
+	void set( const char* name, const int* values, int number ); //inté…åˆ—
+	void set( const char* name, const float* values, int number ); //floaté…åˆ—
+	void set( const char* name, const double* values, int number ); //doubleé…åˆ—
 	const char* value() const;
 	const char* name() const;
-	///¸”s‚·‚é‚Æ0‚ğ•Ô‚·‚ªA‚à‚Æ‚à‚Æ0‚ª“ü‚Á‚Ä‚¢‚½‚Ì‚Æ‚Í‹æ•Ê‚ª‚Â‚©‚È‚¢B
+	///å¤±æ•—ã™ã‚‹ã¨0ã‚’è¿”ã™ãŒã€ã‚‚ã¨ã‚‚ã¨0ãŒå…¥ã£ã¦ã„ãŸã®ã¨ã¯åŒºåˆ¥ãŒã¤ã‹ãªã„ã€‚
 	int getIntValue() const;
-	///¸”s‚·‚é‚Æ0.f‚ğ•Ô‚·‚ªA‚à‚Æ‚à‚Æ0.f‚ª“ü‚Á‚Ä‚¢‚½‚Ì‚Æ‚Í‹æ•Ê‚ª‚Â‚©‚È‚¢B
+	///å¤±æ•—ã™ã‚‹ã¨0.fã‚’è¿”ã™ãŒã€ã‚‚ã¨ã‚‚ã¨0.fãŒå…¥ã£ã¦ã„ãŸã®ã¨ã¯åŒºåˆ¥ãŒã¤ã‹ãªã„ã€‚
 	float getFloatValue() const;
-	///¸”s‚·‚é‚Æ0.0‚ğ•Ô‚·‚ªA‚à‚Æ‚à‚Æ0.0‚ª“ü‚Á‚Ä‚¢‚½‚Ì‚Æ‚Í‹æ•Ê‚ª‚Â‚©‚È‚¢B
+	///å¤±æ•—ã™ã‚‹ã¨0.0ã‚’è¿”ã™ãŒã€ã‚‚ã¨ã‚‚ã¨0.0ãŒå…¥ã£ã¦ã„ãŸã®ã¨ã¯åŒºåˆ¥ãŒã¤ã‹ãªã„ã€‚
 	double getDoubleValue() const;
-	///–ß‚è’l‚ÍÀÛ‚É“Ç‚ß‚½—v‘f”
+	///æˆ»ã‚Šå€¤ã¯å®Ÿéš›ã«èª­ã‚ãŸè¦ç´ æ•°
 	int getIntValues( int* out, int number ) const;
-	///–ß‚è’l‚ÍÀÛ‚É“Ç‚ß‚½—v‘f”
+	///æˆ»ã‚Šå€¤ã¯å®Ÿéš›ã«èª­ã‚ãŸè¦ç´ æ•°
 	int getFloatValues( float* out, int number ) const;
-	///–ß‚è’l‚ÍÀÛ‚É“Ç‚ß‚½—v‘f”
+	///æˆ»ã‚Šå€¤ã¯å®Ÿéš›ã«èª­ã‚ãŸè¦ç´ æ•°
 	int getDoubleValues( double* out, int number ) const;
 
-	//ˆÈ‰ºƒ†[ƒU‚ÍˆÓ¯‚µ‚È‚­‚Ä‚¢‚¢
+	//ä»¥ä¸‹ãƒ¦ãƒ¼ã‚¶ã¯æ„è­˜ã—ãªãã¦ã„ã„
 	Attribute();
 	~Attribute();
 	Attribute( const Attribute& );
@@ -49,25 +49,25 @@ private:
 	Impl* mImpl;
 };
 
-//const”Å
+//constç‰ˆ
 class ConstAttribute{
 public:
 	const char* value() const;
 	const char* name() const;
-	///¸”s‚·‚é‚Æ0‚ğ•Ô‚·‚ªA‚à‚Æ‚à‚Æ0‚ª“ü‚Á‚Ä‚¢‚½‚Ì‚Æ‚Í‹æ•Ê‚ª‚Â‚©‚È‚¢B
+	///å¤±æ•—ã™ã‚‹ã¨0ã‚’è¿”ã™ãŒã€ã‚‚ã¨ã‚‚ã¨0ãŒå…¥ã£ã¦ã„ãŸã®ã¨ã¯åŒºåˆ¥ãŒã¤ã‹ãªã„ã€‚
 	int getIntValue() const;
-	///¸”s‚·‚é‚Æ0.f‚ğ•Ô‚·‚ªA‚à‚Æ‚à‚Æ0.f‚ª“ü‚Á‚Ä‚¢‚½‚Ì‚Æ‚Í‹æ•Ê‚ª‚Â‚©‚È‚¢B
+	///å¤±æ•—ã™ã‚‹ã¨0.fã‚’è¿”ã™ãŒã€ã‚‚ã¨ã‚‚ã¨0.fãŒå…¥ã£ã¦ã„ãŸã®ã¨ã¯åŒºåˆ¥ãŒã¤ã‹ãªã„ã€‚
 	float getFloatValue() const;
-	///¸”s‚·‚é‚Æ0.0‚ğ•Ô‚·‚ªA‚à‚Æ‚à‚Æ0.0‚ª“ü‚Á‚Ä‚¢‚½‚Ì‚Æ‚Í‹æ•Ê‚ª‚Â‚©‚È‚¢B
+	///å¤±æ•—ã™ã‚‹ã¨0.0ã‚’è¿”ã™ãŒã€ã‚‚ã¨ã‚‚ã¨0.0ãŒå…¥ã£ã¦ã„ãŸã®ã¨ã¯åŒºåˆ¥ãŒã¤ã‹ãªã„ã€‚
 	double getDoubleValue() const;
-	///–ß‚è’l‚ÍÀÛ‚É“Ç‚ß‚½—v‘f”
+	///æˆ»ã‚Šå€¤ã¯å®Ÿéš›ã«èª­ã‚ãŸè¦ç´ æ•°
 	int getIntValues( int* out, int number ) const;
-	///–ß‚è’l‚ÍÀÛ‚É“Ç‚ß‚½—v‘f”
+	///æˆ»ã‚Šå€¤ã¯å®Ÿéš›ã«èª­ã‚ãŸè¦ç´ æ•°
 	int getFloatValues( float* out, int number ) const;
-	///–ß‚è’l‚ÍÀÛ‚É“Ç‚ß‚½—v‘f”
+	///æˆ»ã‚Šå€¤ã¯å®Ÿéš›ã«èª­ã‚ãŸè¦ç´ æ•°
 	int getDoubleValues( double* out, int number ) const;
 
-	//ˆÈ‰ºƒ†[ƒU‚ÍˆÓ¯‚µ‚È‚­‚Ä‚¢‚¢
+	//ä»¥ä¸‹ãƒ¦ãƒ¼ã‚¶ã¯æ„è­˜ã—ãªãã¦ã„ã„
 	ConstAttribute();
 	ConstAttribute( const Attribute& );
 	~ConstAttribute();

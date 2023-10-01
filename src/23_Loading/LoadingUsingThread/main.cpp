@@ -16,7 +16,7 @@ public:
 		start();
 	}
 	~LoadingThread(){
-		wait(); //‘Ò‚¿‚Ü‚·
+		wait(); //å¾…ã¡ã¾ã™
 		if ( mData ){
 			SAFE_DELETE_ARRAY( mData );
 		}
@@ -41,18 +41,18 @@ int gCount;
 
 namespace GameLib{
 	void Framework::update(){
-		//ƒ[ƒhŠJn
+		//ãƒ­ãƒ¼ãƒ‰é–‹å§‹
 		if ( !gThread ){
 			gThread = new LoadingThread( "../data/robo.dds" );
 			cout << "start loading!" << endl;
 		}
-		//ƒ[ƒhI‚í‚Á‚½I
+		//ãƒ­ãƒ¼ãƒ‰çµ‚ã‚ã£ãŸï¼
 		if ( gThread->mFinished ){
 			SAFE_DELETE( gThread );
 			cout << "loading finished!" << endl;
 		}
 
-		//•`‰æ
+		//æç”»
 		ostringstream oss;
 		int framerate = frameRate();
 		oss << "Framerate: " << frameRate();
@@ -64,7 +64,7 @@ namespace GameLib{
 		c = ( previousFrame > 63 ) ? 0 : ( 255 - previousFrame * 4 );
 		drawDebugString( 0, 1, oss.str().c_str(), 0xffff0000 | ( c << 8 ) | c );
 
-		//~‚Ü‚Á‚Ä‚é‚Ì‚ğ‚í‚©‚è‚â‚·‚­‚·‚é•`‰æ
+		//æ­¢ã¾ã£ã¦ã‚‹ã®ã‚’ã‚ã‹ã‚Šã‚„ã™ãã™ã‚‹æç”»
 		double p[ 4 ][ 4 ];
 		p[ 0 ][ 2 ] = p[ 1 ][ 2 ] = p[ 2 ][ 2 ] = p[ 3 ][ 2 ] = 0.0;
 		p[ 0 ][ 3 ] = p[ 1 ][ 3 ] = p[ 2 ][ 3 ] = p[ 3 ][ 3 ] = 1.0;

@@ -8,39 +8,39 @@ class Texture;
 class Framework{
 public:
 	Framework();
-	///ƒ†[ƒU’è‹`ŠÖ”B‚±‚ê‚ğ‘‚­B
+	///ãƒ¦ãƒ¼ã‚¶å®šç¾©é–¢æ•°ã€‚ã“ã‚Œã‚’æ›¸ãã€‚
 	void update();
-	///ƒCƒ“ƒXƒ^ƒ“ƒXæ“¾
+	///ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 	static Framework instance();
-	///‰æ–Ê•æ“¾
+	///ç”»é¢å¹…å–å¾—
 	int width() const;
-	///‰æ–Ê‚‚³æ“¾
+	///ç”»é¢é«˜ã•å–å¾—
 	int height() const;
-	///VRAMæ“¾
+	///VRAMå–å¾—
 	unsigned* videoMemory();
-	///Framework‚ÉI—¹–½—ß‚ğo‚·
+	///Frameworkã«çµ‚äº†å‘½ä»¤ã‚’å‡ºã™
 	void requestEnd();
-	///Framework‚ÉI—¹–½—ß‚ªo‚Ä‚¢‚é‚©’²‚×‚é
+	///Frameworkã«çµ‚äº†å‘½ä»¤ãŒå‡ºã¦ã„ã‚‹ã‹èª¿ã¹ã‚‹
 	bool isEndRequested() const;
-	///ƒ~ƒŠ•b’PˆÊ‚ÅQ‚é
+	///ãƒŸãƒªç§’å˜ä½ã§å¯ã‚‹
 	void sleep( int milliSeconds ) const;
-	///‚ğæ“¾‚·‚é(ƒ~ƒŠ•b’PˆÊ)
+	///æ™‚åˆ»ã‚’å–å¾—ã™ã‚‹(ãƒŸãƒªç§’å˜ä½)
 	unsigned time() const;
-	///ƒtƒŒ[ƒ€ƒŒ[ƒgæ“¾
+	///ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆå–å¾—
 	int frameRate() const;
-	///ƒtƒŒ[ƒ€ƒŒ[ƒgİ’è(“à•”‚Å‘Ò‚¿ƒ‹[ƒv‚ğ‰ñ‚µ‚Ä‚­‚ê‚é)
+	///ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆè¨­å®š(å†…éƒ¨ã§å¾…ã¡ãƒ«ãƒ¼ãƒ—ã‚’å›ã—ã¦ãã‚Œã‚‹)
 	void setFrameRate( int );
-	///’¼‘OƒtƒŒ[ƒ€ŠÔæ“¾(ƒ~ƒŠ•b’PˆÊ)
+	///ç›´å‰ãƒ•ãƒ¬ãƒ¼ãƒ æ™‚é–“å–å¾—(ãƒŸãƒªç§’å˜ä½)
 	int previousFrameInterval() const;
-	///ƒ‰ƒ“ƒ_ƒ€”ƒQƒbƒg
+	///ãƒ©ãƒ³ãƒ€ãƒ æ•°ã‚²ãƒƒãƒˆ
 	int getRandom( int max = 0 );
-	//•¶š‚ğ‘‚­
+	//æ–‡å­—ã‚’æ›¸ã
 	void drawDebugString( 
-		int column, //—ñ(x)
-		int row, //s(y)
+		int column, //åˆ—(x)
+		int row, //è¡Œ(y)
 		const char* string, 
 		unsigned color = 0xffffffff );
-	///OŠpŒ`‚ğ•`‚­Bp,t‚Í2—v‘f‚Ì”z—ñ
+	///ä¸‰è§’å½¢ã‚’æãã€‚p,tã¯2è¦ç´ ã®é…åˆ—
 	void drawTriangle2D(
 		const double* p0,
 		const double* p1,
@@ -51,7 +51,7 @@ public:
 		unsigned c0 = 0xffffffff,
 		unsigned c1 = 0xffffffff,
 		unsigned c2 = 0xffffffff );
-	//ƒeƒNƒXƒ`ƒƒ‚ğì‚é
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ä½œã‚‹
 	void createTexture(
 		Texture** textureOut,
 		int textureWidth, 
@@ -59,11 +59,11 @@ public:
 		const unsigned* imageData,
 		int imageWidth,
 		int imageHeight );
-	//ƒeƒNƒXƒ`ƒƒ‚ğ”jŠü‚·‚é
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ç ´æ£„ã™ã‚‹
 	void destroyTexture( Texture** );
-	//ƒeƒNƒXƒ`ƒƒ‚ğƒZƒbƒg‚·‚é
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	void setTexture( Texture* );
-	//ƒuƒŒƒ“ƒhƒ‚[ƒh
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰
 	enum BlendMode{ 
 		BLEND_LINEAR,
 		BLEND_ADDITIVE,
@@ -71,7 +71,7 @@ public:
 	};
 	void setBlendMode( BlendMode );
 
-	//ˆÈ‰ºƒ‰ƒCƒuƒ‰ƒŠg—pÒ‚Í’m‚ç‚È‚­‚Ä‚¢‚¢
+	//ä»¥ä¸‹ãƒ©ã‚¤ãƒ–ãƒ©ãƒªä½¿ç”¨è€…ã¯çŸ¥ã‚‰ãªãã¦ã„ã„
 	void start( void* windowHandle );
 	void preUpdate();
 	void postUpdate();

@@ -25,7 +25,7 @@ void Stage::draw( const Matrix44& pvm ) const {
 		{ 1.0, 1.0  },
 	};
 
-	//行列にベクタをかけて回る
+	//陦悟�励↓繝吶け繧ｿ繧偵°縺代※蝗槭ｋ
 	double p4[ 4 ][ 4 ];
 	for ( int i = 0; i < 4; ++i ){
 		pvm.multiply( p4[ i ], p[ i ] );

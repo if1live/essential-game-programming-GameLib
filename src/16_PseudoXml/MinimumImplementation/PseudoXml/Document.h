@@ -7,14 +7,14 @@ class Element;
 
 class Document{
 public:
-	Document(); //‹ó‚Ì‚à‚Ì‚ğì‚é
+	Document(); //ç©ºã®ã‚‚ã®ã‚’ä½œã‚‹
 	Document( const char* filename );
 	~Document();
-	//‘‚«o‚µ
+	//æ›¸ãå‡ºã—
 	void write( const char* filename ) const;
-	//ƒ‹[ƒgƒQƒbƒg
+	//ãƒ«ãƒ¼ãƒˆã‚²ãƒƒãƒˆ
 	const Element* root() const;
-	Element* root(); //‘‚«Š·‚¦—p
+	Element* root(); //æ›¸ãæ›ãˆç”¨
 private:
 	Element* mRoot;
 };

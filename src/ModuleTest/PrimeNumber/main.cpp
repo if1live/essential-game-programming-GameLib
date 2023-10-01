@@ -1,7 +1,7 @@
 #include "GameLib/Framework.h"
 #include "GameLib/Base/PrimeNumber.h"
 
-//‘f”¶¬ƒvƒƒOƒ‰ƒ€‚ÌƒeƒXƒg
+//ç´ æ•°ç”Ÿæˆãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®ãƒ†ã‚¹ãƒˆ
 namespace GameLib{
 	using namespace GameLib::PrimeNumber;
 

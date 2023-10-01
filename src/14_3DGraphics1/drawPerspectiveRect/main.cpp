@@ -18,16 +18,16 @@ namespace GameLib{
 			{ 500.0, 1500.0, 2000.0 },
 		};
 
-		//x,y��z�Ŋ���Az��[1,1000]����[0,1]�ɔ͈͕ϊ�����B
+		//x,yをzで割り、zを[1,1000]から[0,1]に範囲変換する。
 		for ( int i = 0; i < 4; ++i ){
-			//�ړ��ʉ��Z
+			//移動量加算
 			p[ i ][ 0 ] += gXMove;
 			p[ i ][ 2 ] += gZMove;
 			p[ i ][ 0 ] /= p[ i ][ 2 ];
 			p[ i ][ 1 ] /= p[ i ][ 2 ];
 			p[ i ][ 2 ] = ( 1.0/9999.0 ) * p[ i ][ 2 ] - ( 1.0/9999.0 );
 		}
-		//�l�p�`��`���B
+		//四角形を描く。
 		drawTriangle3D( p[ 0 ], p[ 1 ], p[ 2 ] );
 		drawTriangle3D( p[ 3 ], p[ 1 ], p[ 2 ] );
 
@@ -41,7 +41,7 @@ namespace GameLib{
 		}else if ( Input::Manager::instance().keyboard().isOn( 's' ) ){
 			gXMove += 10.f; 
 		}
-		//�\��
+		//表示
 		ostringstream oss;
 		oss << "[w-z] Z MOVEMENT: " << gZMove;
 		drawDebugString( 10, 0, oss.str().c_str() );

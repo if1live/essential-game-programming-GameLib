@@ -9,14 +9,14 @@ class Vector4;
 class Matrix34;
 
 /*!
-44‚Í•ÏŠ·‚ÌÅI’i‚É‚µ‚©g‚í‚È‚¢‚±‚Æ‚ğ‘z’è‚µ‚Ä‚¢‚éB‚¾‚©‚ç‹@”\‚ÍƒMƒŠƒMƒŠ‚µ‚©‚È‚¢B
-34‚Å‚Å‚«‚é‚±‚Æ‚Í34‚Å‚â‚é‚±‚ÆBl‚Ís—ñ‚ÌæZ‚Íd‚¢‘€ì‚Å‚ ‚é‚±‚Æ‚ğ‚µ‚Î‚µ‚Î–Y‚ê‚éB
+44ã¯å¤‰æ›ã®æœ€çµ‚æ®µã«ã—ã‹ä½¿ã‚ãªã„ã“ã¨ã‚’æƒ³å®šã—ã¦ã„ã‚‹ã€‚ã ã‹ã‚‰æ©Ÿèƒ½ã¯ã‚®ãƒªã‚®ãƒªã—ã‹ãªã„ã€‚
+34ã§ã§ãã‚‹ã“ã¨ã¯34ã§ã‚„ã‚‹ã“ã¨ã€‚äººã¯è¡Œåˆ—ã®ä¹—ç®—ã¯é‡ã„æ“ä½œã§ã‚ã‚‹ã“ã¨ã‚’ã—ã°ã—ã°å¿˜ã‚Œã‚‹ã€‚
 */
 class Matrix44{
 public:
 	Matrix44();
 	void setIdentity();
-	//“§‹•ÏŠ·s—ñ‚Ì¶¬
+	//é€è¦–å¤‰æ›è¡Œåˆ—ã®ç”Ÿæˆ
 	void setPerspectiveTransform( 
 		float fieldOfViewYInRadian,
 		float windowWidth,
@@ -24,7 +24,7 @@ public:
 		float nearClip,
 		float farClip,
 		bool zBufferIsLinear = false );
-	//³Ë‰es—ñ‚Ì¶¬
+	//æ­£å°„å½±è¡Œåˆ—ã®ç”Ÿæˆ
 	void setOrthogonalTransform(
 		float left,
 		float right,
@@ -32,7 +32,7 @@ public:
 		float top,
 		float front,
 		float back );
-	//views—ñ‚ğì‚Á‚Ä‚»‚Ìê‚ÅŠ|‚¯Z‚·‚é
+	//viewè¡Œåˆ—ã‚’ä½œã£ã¦ãã®å ´ã§æ›ã‘ç®—ã™ã‚‹
 	void multiplyViewTransform(
 		const Vector3& eyePosition,
 		const Vector3& eyeTarget,
@@ -41,9 +41,9 @@ public:
 	void mul( Vector4* out, const Vector3& in ) const;
 	void operator*=( const Matrix34& );
 	void setMul( const Matrix44&, const Matrix34& );
-	///Š®‘S‚Éˆê’v‚µ‚Ä‚¢‚é‚©ƒ`ƒFƒbƒN
+	///å®Œå…¨ã«ä¸€è‡´ã—ã¦ã„ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	bool operator==( const Matrix44& ) const;
-	///­‚µ‚Å‚àˆá‚¤‚Ì‚©‚ğƒ`ƒFƒbƒN
+	///å°‘ã—ã§ã‚‚é•ã†ã®ã‹ã‚’ãƒã‚§ãƒƒã‚¯
 	bool operator!=( const Matrix44& ) const;
 
 	float& operator()( int row, int col );

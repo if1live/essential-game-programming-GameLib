@@ -7,12 +7,12 @@ namespace FileIO{
 class OutFile{
 public:
 	static OutFile create( const char* filename, const char* data, int size );
-	///ƒZ[ƒuI‚í‚Á‚½H
+	///ã‚»ãƒ¼ãƒ–çµ‚ã‚ã£ãŸï¼Ÿ
 	bool isFinished() const;
-	///ƒGƒ‰[o‚Ä‚Ü‚·H
+	///ã‚¨ãƒ©ãƒ¼å‡ºã¦ã¾ã™ï¼Ÿ
 	bool isError() const;
 
-	//ˆÈ‰ºƒ†[ƒU‚ÍˆÓ¯‚µ‚È‚¢ŠÖ”ŒQ
+	//ä»¥ä¸‹ãƒ¦ãƒ¼ã‚¶ã¯æ„è­˜ã—ãªã„é–¢æ•°ç¾¤
 	OutFile();
 	OutFile( const OutFile& );
 	~OutFile();

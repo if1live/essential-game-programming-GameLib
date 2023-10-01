@@ -21,18 +21,18 @@ const Vector2& offset,
 double sine,
 double cosine ){
 	Vector2 p( x, y );
-	//ƒIƒtƒZƒbƒg‚Æ0.5‚ğ‚Ü‚Æ‚ß‚é
+	//ã‚ªãƒ•ã‚»ãƒƒãƒˆã¨0.5ã‚’ã¾ã¨ã‚ã‚‹
 	Vector2 tmpOffset( -0.5, -0.5 );
 	tmpOffset += offset; //tmpOffset = offset-(0.5,0.5)
-	//“Y‚¦š‚©‚çÀ•W‚É•ÏŠ·‚µ‚ÄAŒ´“_‚ğ‚¸‚ç‚·
+	//æ·»ãˆå­—ã‹ã‚‰åº§æ¨™ã«å¤‰æ›ã—ã¦ã€åŸç‚¹ã‚’ãšã‚‰ã™
 	p -= tmpOffset;
-	//®‚ğ‚Ü‚ñ‚Ü“–‚Ä‚Í‚ß‚é
+	//å¼ã‚’ã¾ã‚“ã¾å½“ã¦ã¯ã‚ã‚‹
 	Vector2 r;
 	r.x = cosine * p.x - sine * p.y;
 	r.y = sine * p.x + cosine * p.y;
-	//Œ´“_‚ğŒ³‚É–ß‚µ‚Ä“Y‚¦š‚Ö
+	//åŸç‚¹ã‚’å…ƒã«æˆ»ã—ã¦æ·»ãˆå­—ã¸
 	r += tmpOffset;
-	//lÌŒÜ“ü‚µ‚Ä®”‰»
+	//å››æ¨äº”å…¥ã—ã¦æ•´æ•°åŒ–
 	*rx = round( r.x );
 	*ry = round( r.y );
 }
@@ -50,7 +50,7 @@ namespace GameLib{
 		unsigned* vram = videoMemory();
 		int ww = width(); //window width
 		int wh = height(); //window height
-		//ˆê’U‘S•”^‚Á•‚É
+		//ä¸€æ—¦å…¨éƒ¨çœŸã£é»’ã«
 		for ( int i = 0; i < ww * wh; ++i ){
 			vram[ i ] = 0;
 		}
@@ -64,10 +64,10 @@ namespace GameLib{
 		double cosine = cos( rotation );
 		for ( int y = 0; y < ih; ++y ){
 			for ( int x = 0; x < iw; ++x ){
-				//‰ñ“]æ‚ğŒvZ
+				//å›è»¢å…ˆã‚’è¨ˆç®—
 				int rx, ry;
 				rotate( &rx, &ry, x, y, offset, sine, cosine );
-				//”ÍˆÍ“à‚È‚ç“\‚è•t‚¯
+				//ç¯„å›²å†…ãªã‚‰è²¼ã‚Šä»˜ã‘
 				if ( rx >= 0 && rx < ww && ry >= 0 && ry < wh ){
 					vram[ ry * ww + rx ] = gImage->pixel( x, y );
 				}

@@ -1,7 +1,7 @@
 #ifndef INCLUDED_CRITICAL_SECTION_H
 #define INCLUDED_CRITICAL_SECTION_H
 
-//クリティカルセクションクラス
+//繧ｯ繝ｪ繝�繧｣繧ｫ繝ｫ繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ繧ｯ繝ｩ繧ｹ
 class CriticalSection{
 public:
 	CriticalSection();

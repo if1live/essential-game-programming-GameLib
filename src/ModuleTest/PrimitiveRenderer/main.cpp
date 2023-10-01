@@ -23,19 +23,19 @@ namespace GameLib{
 	}
 	void Framework::update(){
 		if ( gCount == 0 ){
-			//•`‰æƒNƒ‰ƒX‚ğ1000’¸“_A100ƒoƒbƒ`‚Å‰Šú‰»
+			//æç”»ã‚¯ãƒ©ã‚¹ã‚’1000é ‚ç‚¹ã€100ãƒãƒƒãƒã§åˆæœŸåŒ–
 			gPrimitiveRenderer = PrimitiveRenderer::create( 1000, 100 );
-			//ƒeƒNƒXƒ`ƒƒƒ[ƒh
+			//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ­ãƒ¼ãƒ‰
 			gTexture = Texture::create( "test.tga" );
 			while ( !gTexture.isReady() ){
-				; //ƒ[ƒh‘Ò‚¿
+				; //ãƒ­ãƒ¼ãƒ‰å¾…ã¡
 			}
 		}
 
-		//Œ³‚Ì’¸“_”z—ñ
+		//å…ƒã®é ‚ç‚¹é…åˆ—
 		Vector3 p[ 4 ];
 		Vector2 t[ 4 ];
-		unsigned c[ 4 ]; //‚í‚©‚è‚â‚·‚¢‚æ‚¤‚ÉF
+		unsigned c[ 4 ]; //ã‚ã‹ã‚Šã‚„ã™ã„ã‚ˆã†ã«è‰²
 		p[ 0 ].set( -1.f, -1.f, 0.f );
 		p[ 1 ].set( -1.f, 1.f, 0.f );
 		p[ 2 ].set( 1.f, -1.f, 0.f );
@@ -45,15 +45,15 @@ namespace GameLib{
 		t[ 2 ].set( 1.f, 0.f );
 		t[ 3 ].set( 1.f, 1.f );
 
-		c[ 0 ] = 0xffff0000; //Ô
-		c[ 1 ] = 0xff00ff00; //—Î
-		c[ 2 ] = 0xff0000ff; //Â
-		c[ 3 ] = 0xffffffff; //”’
+		c[ 0 ] = 0xffff0000; //èµ¤
+		c[ 1 ] = 0xff00ff00; //ç·‘
+		c[ 2 ] = 0xff0000ff; //é’
+		c[ 3 ] = 0xffffffff; //ç™½
 
-		//ƒ[ƒ‹ƒh•ÏŠ·(Z‰ñ“])
+		//ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›(Zå›è»¢)
 		Matrix34 wm;
 		wm.setRotationZ( gCount * 2.f );
-		//ƒrƒ…[s—ñ‚ğì‚ë‚¤
+		//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã‚’ä½œã‚ã†
 		Vector3 eyePosition;
 		eyePosition.x = sin( gCount / 2.f ) * 4.f;
 		eyePosition.z = cos( gCount / 2.f ) * 4.f;
@@ -61,57 +61,57 @@ namespace GameLib{
 		Vector3 eyeTarget( 0.f, 0.f, 0.f );
 		Matrix34 vm;
 		vm.setViewTransform( eyePosition, eyeTarget, Vector3( 0.f, 1.f, 0.f ) );
-		//“§‹•ÏŠ·s—ñ
+		//é€è¦–å¤‰æ›è¡Œåˆ—
 		Matrix44 pm;
 		pm.setPerspectiveTransform( 
 			60.f, 
 			static_cast< float >( width() ),
 			static_cast< float >( height() ),
 			1.f, 100.f );
-		//‚Ü‚¸VW‚ğì‚é
+		//ã¾ãšVWã‚’ä½œã‚‹
 		vm *= wm;
-		//Ÿ‚ÉPVW‚ğì‚é
+		//æ¬¡ã«PVWã‚’ä½œã‚‹
 		pm *= vm;
-		//s—ñƒZƒbƒg
+		//è¡Œåˆ—ã‚»ãƒƒãƒˆ
 		gPrimitiveRenderer.setTransform( pm );
-		//ƒeƒNƒXƒ`ƒƒƒZƒbƒg
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚»ãƒƒãƒˆ
 		gPrimitiveRenderer.setTexture( gTexture );
 
 		gPrimitiveRenderer.setBlendMode( Graphics::BLEND_LINEAR );
 
-		//ƒJƒEƒ“ƒg‚Å‰½‚ğ•`‚­‚©•Ï‚¦‚Ä‚İ‚æ‚¤
-		if ( gCount % 300 > 200 ){ //OŠpŒ`
+		//ã‚«ã‚¦ãƒ³ãƒˆã§ä½•ã‚’æãã‹å¤‰ãˆã¦ã¿ã‚ˆã†
+		if ( gCount % 300 > 200 ){ //ä¸‰è§’å½¢
 			gPrimitiveRenderer.addTriangle( p[ 0 ], p[ 1 ], p[ 2 ], t[ 0 ], t[ 1 ], t[ 2 ], c[ 0 ], c[ 1 ], c[ 2 ] );
 			gPrimitiveRenderer.addTriangle( p[ 3 ], p[ 1 ], p[ 2 ], t[ 3 ], t[ 1 ], t[ 2 ], c[ 3 ], c[ 1 ], c[ 2 ] );
-		}else if ( gCount % 300 > 100 ){ //ü
-			//ü‚ğ‘«‚·
+		}else if ( gCount % 300 > 100 ){ //ç·š
+			//ç·šã‚’è¶³ã™
 			for ( int i = 0; i < 4; ++i ){
 				for ( int j = i + 1; j < 4; ++j ){
 					gPrimitiveRenderer.addLine( p[ i ], p[ j ], t[ i ], t[ j ], c[ i ], c[ j ] );
 				}
 			}
-		}else{ //“_
+		}else{ //ç‚¹
 			gPrimitiveRenderer.addPoint( p[ 0 ], t[ 0 ], c[ 0 ] );
 			gPrimitiveRenderer.addPoint( p[ 1 ], t[ 1 ], c[ 1 ] );
 			gPrimitiveRenderer.addPoint( p[ 2 ], t[ 2 ], c[ 2 ] );
 			gPrimitiveRenderer.addPoint( p[ 3 ], t[ 3 ], c[ 3 ] );
 		}
-		//ƒXƒvƒ‰ƒCƒg‚Æ‚©‘‚¢‚Ä‚İ‚æ‚¤‚©B
-		//ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒh—LŒø‰»
+		//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã¨ã‹æ›¸ã„ã¦ã¿ã‚ˆã†ã‹ã€‚
+		//ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰æœ‰åŠ¹åŒ–
 		gPrimitiveRenderer.setBlendMode( Graphics::BLEND_LINEAR );
 		Vector2 p2[ 2 ];
-		p2[ 0 ].set( 0.f, 0.f ); //¶ã
-		p2[ 1 ].set( 128.f, 256.f ); //‰E‰º
+		p2[ 0 ].set( 0.f, 0.f ); //å·¦ä¸Š
+		p2[ 1 ].set( 128.f, 256.f ); //å³ä¸‹
 		gPrimitiveRenderer.addRectangle( p2[ 0 ], p2[ 1 ], t[ 0 ], t[ 3 ], ( ( gCount % 256 ) << 24 ) | 0xffffff );
 
-		//‘«‚µI‚í‚Á‚½‚Ì‚Å•`‚­
+		//è¶³ã—çµ‚ã‚ã£ãŸã®ã§æã
 		gPrimitiveRenderer.draw();
 
 		DebugScreen() << frameRate();
 		++gCount;
 
 		if ( isEndRequested() ){
-			gPrimitiveRenderer.release(); //ƒOƒ[ƒoƒ‹‚È‚Ì‚ÅŠJ•úˆ—‚ª•K—v
+			gPrimitiveRenderer.release(); //ã‚°ãƒ­ãƒ¼ãƒãƒ«ãªã®ã§é–‹æ”¾å‡¦ç†ãŒå¿…è¦
 			gTexture.release();
 		}
 	}

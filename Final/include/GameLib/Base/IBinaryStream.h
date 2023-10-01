@@ -7,9 +7,9 @@ namespace GameLib{
 
 class RefString;
 
-///ƒoƒCƒiƒŠƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ‚ğŠy‚É‚·‚é‚½‚ß‚ÌƒNƒ‰ƒX
+///ãƒã‚¤ãƒŠãƒªãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿ã‚’æ¥½ã«ã™ã‚‹ãŸã‚ã®ã‚¯ãƒ©ã‚¹
 /*!
-Šî–{“I‚ÉƒRƒs[‚Ís‚í‚È‚¢B‚µ‚½‚ª‚Á‚ÄAŒ³‚Ì•¶š—ñ‚Í•Û‚³‚ê‚Ä‚¢‚é•K—v‚ª‚ ‚éB
+åŸºæœ¬çš„ã«ã‚³ãƒ”ãƒ¼ã¯è¡Œã‚ãªã„ã€‚ã—ãŸãŒã£ã¦ã€å…ƒã®æ–‡å­—åˆ—ã¯ä¿æŒã•ã‚Œã¦ã„ã‚‹å¿…è¦ãŒã‚ã‚‹ã€‚
 */
 class IBinaryStream{
 public:
@@ -17,9 +17,9 @@ public:
 	IBinaryStream( const char*, int size );
 	IBinaryStream( const RefString& );
 	~IBinaryStream();
-	///–ß‚è’l‚Í“Ç‚ß‚½ƒoƒCƒg”
+	///æˆ»ã‚Šå€¤ã¯èª­ã‚ãŸãƒã‚¤ãƒˆæ•°
 	int read( char*, int size );
-	///Šeí‘g‚İ‚İ®”Œ^—p‚Ìƒo[ƒWƒ‡ƒ“B¬Œ÷¸”s‚Íˆø”‚É•Ô‚é‚ªA“n‚³‚È‚¯‚ê‚Î‰½‚à‚µ‚È‚¢B
+	///å„ç¨®çµ„ã¿è¾¼ã¿æ•´æ•°å‹ç”¨ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã€‚æˆåŠŸå¤±æ•—ã¯å¼•æ•°ã«è¿”ã‚‹ãŒã€æ¸¡ã•ãªã‘ã‚Œã°ä½•ã‚‚ã—ãªã„ã€‚
 	int readInt( bool* succeeded = 0 );
 	unsigned readUnsigned( bool* succeeded = 0 );
 	short readShort( bool* succeeded = 0 );

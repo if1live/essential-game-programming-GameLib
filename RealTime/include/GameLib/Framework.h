@@ -6,29 +6,29 @@ namespace GameLib{
 class Framework{
 public:
 	Framework();
-	///ƒ†[ƒU’è‹`ŠÖ”B‚±‚ê‚ğ‘‚­B
+	///ãƒ¦ãƒ¼ã‚¶å®šç¾©é–¢æ•°ã€‚ã“ã‚Œã‚’æ›¸ãã€‚
 	void update();
-	///ƒCƒ“ƒXƒ^ƒ“ƒXæ“¾
+	///ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 	static Framework instance();
-	///‰æ–Ê•æ“¾
+	///ç”»é¢å¹…å–å¾—
 	int width() const;
-	///‰æ–Ê‚‚³æ“¾
+	///ç”»é¢é«˜ã•å–å¾—
 	int height() const;
-	///VRAMæ“¾
+	///VRAMå–å¾—
 	unsigned* videoMemory();
-	///Framework‚ÉI—¹–½—ß‚ğo‚·
+	///Frameworkã«çµ‚äº†å‘½ä»¤ã‚’å‡ºã™
 	void requestEnd();
-	///Framework‚ÉI—¹–½—ß‚ªo‚Ä‚¢‚é‚©’²‚×‚é
+	///Frameworkã«çµ‚äº†å‘½ä»¤ãŒå‡ºã¦ã„ã‚‹ã‹èª¿ã¹ã‚‹
 	bool isEndRequested() const;
-	//‚ğæ“¾‚·‚é(ƒ~ƒŠ•b’PˆÊ)
+	//æ™‚åˆ»ã‚’å–å¾—ã™ã‚‹(ãƒŸãƒªç§’å˜ä½)
 	unsigned time() const;
-	//Q‚é(ƒ~ƒŠ•b’PˆÊ)
+	//å¯ã‚‹(ãƒŸãƒªç§’å˜ä½)
 	void sleep( int milliSeconds ) const;
-	//“ü—Í
+	//å…¥åŠ›
 	bool isKeyOn( int c ) const;
 
 
-	//ˆÈ‰ºƒ‰ƒCƒuƒ‰ƒŠg—pÒ‚Í’m‚ç‚È‚­‚Ä‚¢‚¢
+	//ä»¥ä¸‹ãƒ©ã‚¤ãƒ–ãƒ©ãƒªä½¿ç”¨è€…ã¯çŸ¥ã‚‰ãªãã¦ã„ã„
 	void start( void* windowHandle );
 	void preUpdate();
 	void postUpdate();

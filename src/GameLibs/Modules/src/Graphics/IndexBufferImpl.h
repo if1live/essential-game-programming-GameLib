@@ -17,15 +17,15 @@ public:
 	mIndexNumber( 0 ),
 	mName( 0 ){
 		int n = e.childNumber();
-		mIndexNumber = n * 3; //OŠpŒ`”~3
+		mIndexNumber = n * 3; //ä¸‰è§’å½¢æ•°Ã—3
 		if ( mIndexNumber > 0 ){
 			createDxObject( device );
 			unsigned short* indices = lock();
 			for ( int i = 0; i < n; ++i ){
 				ConstElement triangle = e.child( i );
 				ASSERT( triangle.attributeNumber() > 0 && "IndexBuffer : It's not valid element." );
-				ConstAttribute a = triangle.attribute( 0 ); //indicesˆêŒÂ‚µ‚©‚È‚¢‚Ì‚ÅŒˆ‚ß‚¤‚¿
-				//unsigned short‚ğæ‚éŠÖ”‚ª‚È‚¢‚Ì‚Åint‚É“ü‚ê‚Ä‚©‚çƒRƒs[
+				ConstAttribute a = triangle.attribute( 0 ); //indicesä¸€å€‹ã—ã‹ãªã„ã®ã§æ±ºã‚ã†ã¡
+				//unsigned shortã‚’å–ã‚‹é–¢æ•°ãŒãªã„ã®ã§intã«å…¥ã‚Œã¦ã‹ã‚‰ã‚³ãƒ”ãƒ¼
 				int tmp[ 3 ];
 				int count = a.getIntValues( tmp, 3 );
 				ASSERT( count == 3 );
@@ -37,7 +37,7 @@ public:
 			unlock();
 			indices = 0;
 		}
-		//–¼‘O‚ğ”²‚­
+		//åå‰ã‚’æŠœã
 		int an = e.attributeNumber();
 		for ( int i = 0; i < an; ++i ){
 			ConstAttribute a = e.attribute( i );
@@ -89,7 +89,7 @@ public:
 	int mIndexNumber;
 	char* mName;
 private:
-	void operator=( const Impl& ); //‹Ö~
+	void operator=( const Impl& ); //ç¦æ­¢
 };
 
 } //namespace Graphics

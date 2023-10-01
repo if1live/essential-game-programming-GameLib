@@ -135,7 +135,7 @@ DebugStream& DebugStream::endl(){
 	mImpl->mBuffer << '\n';
 	Array< char > a;
 	mImpl->mBuffer.get( &a );
-	OutputDebugStringA( &a[ 0 ] ); //ƒAƒXƒL[”Å’¼ÚŒÄo‚µ
+	OutputDebugStringA( &a[ 0 ] ); //ã‚¢ã‚¹ã‚­ãƒ¼ç‰ˆç›´æŽ¥å‘¼å‡ºã—
 	mImpl->mBuffer.clear();
 	mImpl->mMutex.unlock();
 	return *this;

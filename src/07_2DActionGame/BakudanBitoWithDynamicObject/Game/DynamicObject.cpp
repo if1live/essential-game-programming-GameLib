@@ -8,14 +8,14 @@ using namespace GameLib;
 
 namespace{
 
-//“K“–ƒpƒ‰ƒ[ƒ^ŒQ
-//‘¬“xB’PˆÊ‚Í“à•”’PˆÊ/ƒtƒŒ[ƒ€
+//é©å½“ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ç¾¤
+//é€Ÿåº¦ã€‚å˜ä½ã¯å†…éƒ¨å˜ä½/ãƒ•ãƒ¬ãƒ¼ãƒ 
 const int PLAYER_SPEED = 1000;
 const int ENEMY_SPEED = 500;
 
 } //namespace 
 
-//‚Å‚«‚é‚¾‚¯•s³‚­‚³‚¢’l‚ğ“ü‚ê‚Ä‚¨‚­Bset‚ªŒÄ‚Î‚ê‚È‚¢‚Æ€‚Ê‚æ‚¤‚ÉB
+//ã§ãã‚‹ã ã‘ä¸æ­£ãã•ã„å€¤ã‚’å…¥ã‚Œã¦ãŠãã€‚setãŒå‘¼ã°ã‚Œãªã„ã¨æ­»ã¬ã‚ˆã†ã«ã€‚
 DynamicObject::DynamicObject() : 
 mType( TYPE_NONE ),
 mX( 0xffffffff ), 
@@ -23,11 +23,11 @@ mY( 0xffffffff ){
 }
 
 void DynamicObject::set( int x, int y, Type type ){
-	//“à•”À•W’l‚É•ÏŠ·
+	//å†…éƒ¨åº§æ¨™å€¤ã«å¤‰æ›
 	mX = x * 16000 + 8000;
 	mY = y * 16000 + 8000;
 	mType = type;
-	//“Gê—pBˆÚ“®•ûŒü‰Šú‰»
+	//æ•µå°‚ç”¨ã€‚ç§»å‹•æ–¹å‘åˆæœŸåŒ–
 	if ( mType == TYPE_ENEMY ){
 		mDirectionX = mDirectionY = 0;
 		Framework f = Framework::instance();
@@ -41,10 +41,10 @@ void DynamicObject::set( int x, int y, Type type ){
 }
 
 void DynamicObject::draw( const Image* image ) const {
-	//“à•”À•W‚ğ‰æ‘fÀ•W‚É•ÏŠ·(+500‚ÍlÌŒÜ“ü)
+	//å†…éƒ¨åº§æ¨™ã‚’ç”»ç´ åº§æ¨™ã«å¤‰æ›(+500ã¯å››æ¨äº”å…¥)
 	int dstX = ( mX - 8000 + 500 ) / 1000;
 	int dstY = ( mY - 8000 + 500 ) / 1000;
-	//‰æ‘œØ‚èo‚µˆÊ’u‚Ì“¯’è
+	//ç”»åƒåˆ‡ã‚Šå‡ºã—ä½ç½®ã®åŒå®š
 	int srcX, srcY;
 	srcX = srcY = -1;
 	switch ( mType ){
@@ -58,17 +58,17 @@ void DynamicObject::draw( const Image* image ) const {
 
 void DynamicObject::update(){
 	Framework f = Framework::instance();
-	//“G‹““®
+	//æ•µæŒ™å‹•
 	if ( mType == TYPE_ENEMY ){
-		//’PˆÊ‚ğ’Ç‚Á‚Ä‚İ‚æ‚¤B
-		//mDirectionX‚Í’PˆÊ‚È‚µBdt‚Íƒ~ƒŠ•bBENEMY_SPEED‚Í‰æ‘f/•bB
-		//‚±‚Ì’iŠK‚Å‚Íƒ~ƒŠ•b*‰æ‘f/•b
-		//•ª•ê‚É1000‚ğ‚©‚¯‚é‚Æ•ª•ê‚Æ•ªq‚ªƒ~ƒŠ•b‚É‚È‚Á‚Ä‘ŠEB
-		//‰æ‘f‚ğ“à•”À•W‚É•Ï‚¦‚é‚É‚Í1000”{‚·‚é•K—v‚ª‚ ‚éB•ªq‚Æ•ª•ê‚Å1000‚ª‘ŠEB
-		//ˆÈã‚©‚çˆÈ‰º‚Ì‚æ‚¤‚É‚È‚éB
+		//å˜ä½ã‚’è¿½ã£ã¦ã¿ã‚ˆã†ã€‚
+		//mDirectionXã¯å˜ä½ãªã—ã€‚dtã¯ãƒŸãƒªç§’ã€‚ENEMY_SPEEDã¯ç”»ç´ /ç§’ã€‚
+		//ã“ã®æ®µéšã§ã¯ãƒŸãƒªç§’*ç”»ç´ /ç§’
+		//åˆ†æ¯ã«1000ã‚’ã‹ã‘ã‚‹ã¨åˆ†æ¯ã¨åˆ†å­ãŒãƒŸãƒªç§’ã«ãªã£ã¦ç›¸æ®ºã€‚
+		//ç”»ç´ ã‚’å†…éƒ¨åº§æ¨™ã«å¤‰ãˆã‚‹ã«ã¯1000å€ã™ã‚‹å¿…è¦ãŒã‚ã‚‹ã€‚åˆ†å­ã¨åˆ†æ¯ã§1000ãŒç›¸æ®ºã€‚
+		//ä»¥ä¸Šã‹ã‚‰ä»¥ä¸‹ã®ã‚ˆã†ã«ãªã‚‹ã€‚
 		mX += mDirectionX * ENEMY_SPEED;
 		mY += mDirectionY * ENEMY_SPEED;
-	}else if ( mType == TYPE_1P ){ //ƒvƒŒƒCƒ„[‹““®
+	}else if ( mType == TYPE_1P ){ //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æŒ™å‹•
 		int dx, dy;
 		dx = dy = 0;
 		if ( f.isKeyOn( 'w' ) ){
@@ -82,7 +82,7 @@ void DynamicObject::update(){
 		}
 		mX += dx * PLAYER_SPEED;
 		mY += dy * PLAYER_SPEED;
-	}else if ( mType == TYPE_2P ){ //ƒvƒŒƒCƒ„[‹““®
+	}else if ( mType == TYPE_2P ){ //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æŒ™å‹•
 		int dx, dy;
 		dx = dy = 0;
 		if ( f.isKeyOn( 'i' ) ){
@@ -97,7 +97,7 @@ void DynamicObject::update(){
 		mX += dx * PLAYER_SPEED;
 		mY += dy * PLAYER_SPEED;
 	}
-	//ŒÀŠEˆ—
+	//é™ç•Œå‡¦ç†
 	const int X_MIN = 8000;
 	const int X_MAX = 320 * 1000 - 8000;
 	const int Y_MIN = 8000;
@@ -117,7 +117,7 @@ void DynamicObject::update(){
 		mY = Y_MAX;
 		hit = true;
 	}
-	//“G‚È‚çŒü‚«•Ï‚¦
+	//æ•µãªã‚‰å‘ãå¤‰ãˆ
 	if ( hit && mType == TYPE_ENEMY ){
 		mDirectionX = mDirectionY = 0;
 		switch ( f.getRandom( 4 ) ){

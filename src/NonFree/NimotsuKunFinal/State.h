@@ -3,9 +3,9 @@
 
 #include "Array2D.h"
 
-class Image; //éŒ¾‚¾‚¯‚µ‚Ä‚¨‚¯‚Î‚¢‚¢BƒCƒ“ƒNƒ‹[ƒh‚µ‚È‚­‚Ä‚¢‚¢B
+class Image; //å®£è¨€ã ã‘ã—ã¦ãŠã‘ã°ã„ã„ã€‚ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã—ãªãã¦ã„ã„ã€‚
 
-//ó‘ÔƒNƒ‰ƒX
+//çŠ¶æ…‹ã‚¯ãƒ©ã‚¹
 class State{
 public:
 	State( const char* stageData, int size );
@@ -13,7 +13,7 @@ public:
 	void update( int moveX, int moveY );
 	void draw() const;
 	bool hasCleared() const;
-	void reset(); //‰Šúó‘Ô‚É–ß‚·
+	void reset(); //åˆæœŸçŠ¶æ…‹ã«æˆ»ã™
 	static const int MAX_MOVE_COUNT = 15;
 private:
 	class Object;
@@ -22,7 +22,7 @@ private:
 	int mWidth;
 	int mHeight;
 	Array2D< Object > mObjects;
-	Image* mImage; //‰æ‘œ
+	Image* mImage; //ç”»åƒ
 	int mMoveCount;
 	char* mStageData;
 	int mStageDataSize;

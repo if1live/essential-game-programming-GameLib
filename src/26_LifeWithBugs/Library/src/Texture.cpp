@@ -7,7 +7,7 @@ using namespace GameLib;
 using namespace GameLib::PseudoXml;
 
 Texture::Texture( Element& e ){
-	//–¼‘O‚â‚çƒtƒ@ƒCƒ‹–¼‚â‚ç‚ğ”²‚­
+	//åå‰ã‚„ã‚‰ãƒ•ã‚¡ã‚¤ãƒ«åã‚„ã‚‰ã‚’æŠœã
 	int an = e.attributeNumber();
 	for ( int i = 0; i < an; ++i ){
 		Attribute a = e.attribute( i );
@@ -16,7 +16,7 @@ Texture::Texture( Element& e ){
 			mName = a.value();
 		}else if ( name == "filename" ){
 			mTexture = Graphics::Texture::create( a.value() );
-			//ƒ[ƒhI‚í‚é‚Ü‚Å‘Ò‚Â(‚¢‚¢‰ÁŒ¸ƒR[ƒh)
+			//ãƒ­ãƒ¼ãƒ‰çµ‚ã‚ã‚‹ã¾ã§å¾…ã¤(ã„ã„åŠ æ¸›ã‚³ãƒ¼ãƒ‰)
 			while ( !mTexture.isReady() ){
 				Threading::sleep( 1 );
 			}
@@ -26,14 +26,14 @@ Texture::Texture( Element& e ){
 
 Texture::Texture( const char* filename ){
 	mTexture = Graphics::Texture::create( filename );
-	//ƒ[ƒhI‚í‚é‚Ü‚Å‘Ò‚Â(‚¢‚¢‰ÁŒ¸ƒR[ƒh)
+	//ãƒ­ãƒ¼ãƒ‰çµ‚ã‚ã‚‹ã¾ã§å¾…ã¤(ã„ã„åŠ æ¸›ã‚³ãƒ¼ãƒ‰)
 	while ( !mTexture.isReady() ){
 		Threading::sleep( 1 );
 	}
 }
 
 Texture::~Texture(){
-	//ƒeƒNƒXƒ`ƒƒ‚Íe‚ªÁ‚¦‚é‚ÆŸè‚ÉÁ‚¦‚é
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¯è¦ªãŒæ¶ˆãˆã‚‹ã¨å‹æ‰‹ã«æ¶ˆãˆã‚‹
 }
 
 void Texture::set() const {

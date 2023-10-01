@@ -7,49 +7,49 @@
 
 namespace GameLib{
 
-///���E�e�ʎw��n�b�V���e�[�u��
+///限界容量指定ハッシュテーブル
 /*!
-�n�b�V���֐��͑S�r�b�g�̘a���e�[�u���T�C�Y�ŏ�]�����P���ȕ����ł���B
-�S�r�b�g�ł��邽�߁A�N���X�̃T�C�Y���傫���ƃR�X�g���傫���Ȃ�\���������B
-�Ȃ��A����v�f�͑}�����Ȃ��Bstd::mutli_set���K�v�ɂȂ����������Ƃ��Ȃ����炾�B
+ハッシュ関数は全ビットの和をテーブルサイズで剰余を取る単純な方式である。
+全ビットであるため、クラスのサイズが大きいとコストが大きくなる可能性が高い。
+なお、同一要素は挿入しない。std::mutli_setが必要になる例を見たことがないからだ。
 */
 template< class T, class H = Hash< T > > class HashSet{
 public:
-	///�f�t�H���g�BsetCapacity���Ă΂Ȃ��Ɠ����Ȃ�
+	///デフォルト。setCapacityを呼ばないと動かない
 	HashSet();
-	///�ő�e�ʂ��w��B�e�[�u���T�C�Y�̓f�t�H���g��capacity�ȏ�̍ŏ��̑f���B
+	///最大容量を指定。テーブルサイズはデフォルトでcapacity以上の最小の素数。
 	explicit HashSet( int capacity, int tableSize = 0 );
 	~HashSet();
-	///�Ċm�ہB���g�������ԂŌĂԂ�assert�Bclear()����B
+	///再確保。中身がある状態で呼ぶとassert。clear()しろ。
 	void setCapacity( int capacity, int tableSize = 0 );
-	///�ő�e�ʎ擾
+	///最大容量取得
 	int capacity() const;
-	///���݂̗v�f���擾
+	///現在の要素数取得
 	int size() const;
-	///�S���
+	///全解放
 	void clear();
-	///�ǉ��B�ǉ������ꏊ��Ԃ��B�������̂����łɂ���Ζ������Ė����C�e���[�^��Ԃ��B
+	///追加。追加した場所を返す。同じものがすでにあれば無視して無効イテレータを返す。
 	int add( const T& );
-	///�����B�Ԃ�̂̓C�e���[�^
+	///検索。返るのはイテレータ
 	int find( const T& );
-	///�����B�������A���邩�ǂ��������Ԃ�
+	///検索。ただし、あるかどうかだけ返す
 	bool isIn( const T& ) const;
-	///�C�e���[�^���w�肵�č폜�B�폜�����true��Ԃ��B
+	///イテレータを指定して削除。削除すればtrueを返す。
 	bool remove( int position );
-	///�l�擾�B���������͋����Ȃ��̂�const�ł����񋟂��Ȃ��B
+	///値取得。書き換えは許さないのでconst版しか提供しない。
 	const T* value( int position ) const;
-	//�ȉ��P���ȃ��X�g�Ƃ��ăA�N�Z�X����ۂ̃C���^�[�t�F�C�X�B�������Е���
+	//以下単純なリストとしてアクセスする際のインターフェイス。ただし片方向
 	int next( int position ) const;
 	int first() const;
-	///position�����[������B
+	///positionが末端か判定。
 	bool isEnd( int position ) const;
-	///�P�Ȃ�z��ɕϊ��B�O������size()�����T�C�Y��new�����̈��n�����ƁB
+	///単なる配列に変換。前もってsize()したサイズでnewした領域を渡すこと。
 	void copyTo( T* ) const;
-	///Array�ɃR�s�[�B��̂��̂�n���B
+	///Arrayにコピー。空のものを渡せ。
 	void copyTo( Array< T >* ) const;
 private:
-	void operator=( const HashSet& ); //����֎~
-	HashSet( const HashSet& ); //�R�s�[�R���X�g���N�^�֎~
+	void operator=( const HashSet& ); //代入禁止
+	HashSet( const HashSet& ); //コピーコンストラクタ禁止
 
 	int* mNexts;
 	T* mValues;
@@ -60,7 +60,7 @@ private:
 };
 
 } //namespace GameLib
-#include "GameLib/Base/Impl/HashSetImpl.h" //���g�͂��̒�
+#include "GameLib/Base/Impl/HashSetImpl.h" //中身はこの中
 
 #endif
 

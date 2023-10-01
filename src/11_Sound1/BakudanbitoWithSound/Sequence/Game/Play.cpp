@@ -13,16 +13,16 @@ namespace Sequence{
 namespace Game{
 
 Play::Play(){
-	//BGMŠJn
+	//BGMé–‹å§‹
 	SoundManager::instance()->playBgm( SoundManager::BGM_GAME );
 }
 
 Play::~Play(){ 
-	//BGM~‚ß‚é
+	//BGMæ­¢ã‚ã‚‹
 	SoundManager::instance()->stopBgm();
 }
 
-//ƒQ[ƒ€–{‘Ì
+//ã‚²ãƒ¼ãƒ æœ¬ä½“
 void Play::update( Parent* parent ){
 	Input::Keyboard kb = Input::Manager::instance().keyboard();
 
@@ -31,27 +31,27 @@ void Play::update( Parent* parent ){
 	bool cleared = state->hasCleared();
 	bool die1P = !state->isAlive( 0 );
 	bool die2P = !state->isAlive( 1 );
-	//‚Æ‚è‚ ‚¦‚¸ƒfƒoƒOƒRƒ}ƒ“ƒh‚ÅƒeƒXƒg‚·‚éB
-	if ( kb.isTriggered( '1' ) ){ //2PE‚µ
+	//ã¨ã‚Šã‚ãˆãšãƒ‡ãƒã‚°ã‚³ãƒãƒ³ãƒ‰ã§ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
+	if ( kb.isTriggered( '1' ) ){ //2Pæ®ºã—
 		die2P = true;
-	}else if ( kb.isTriggered( '2' ) ){ //1PE‚µ
+	}else if ( kb.isTriggered( '2' ) ){ //1Pæ®ºã—
 		die1P = true;
 	}else if ( kb.isTriggered( 'c' ) ){
 		cleared = true;
 	}
-	//SPACE‰Ÿ‚³‚ê‚½‚çƒ|[ƒY‚Ös‚­
-	//ƒNƒŠƒA‚µ‚½‚È‚çã‚Ö•ñ
+	//SPACEæŠ¼ã•ã‚ŒãŸã‚‰ãƒãƒ¼ã‚ºã¸è¡Œã
+	//ã‚¯ãƒªã‚¢ã—ãŸãªã‚‰ä¸Šã¸å ±å‘Š
 	if ( parent->mode() == Parent::MODE_1P ){
 		if ( cleared && !die1P ){
 			parent->moveTo( Parent::NEXT_CLEAR );
 		}else if ( die1P ){
 			parent->moveTo( Parent::NEXT_FAILURE );
 		}
-	}else{ //“ñl—p
-		if ( die1P || die2P ){ //‚Ç‚Á‚¿‚©€‚ñ‚Å‚ê‚ÎŸ”s”»’è
+	}else{ //äºŒäººç”¨
+		if ( die1P || die2P ){ //ã©ã£ã¡ã‹æ­»ã‚“ã§ã‚Œã°å‹æ•—åˆ¤å®š
 			parent->moveTo( Parent::NEXT_JUDGE );
 			if ( die1P && die2P ){
-				parent->setWinner( Parent::PLAYER_NONE ); //—¼•û€–S
+				parent->setWinner( Parent::PLAYER_NONE ); //ä¸¡æ–¹æ­»äº¡
 			}else if ( die1P ){
 				parent->setWinner( Parent::PLAYER_2 );
 			}else{
@@ -59,13 +59,13 @@ void Play::update( Parent* parent ){
 			}
 		}
 	}
-	//Bƒ{ƒ^ƒ“‚Åƒ|[ƒY‚Ös‚­
+	//Bãƒœã‚¿ãƒ³ã§ãƒãƒ¼ã‚ºã¸è¡Œã
 	if ( Pad::isTriggered( Pad::B ) ){
 		parent->moveTo( Parent::NEXT_PAUSE );
 	}
-	//XV
+	//æ›´æ–°
 	state->update();
-	//•`‰æ
+	//æç”»
 	state->draw();
 }
 

@@ -27,7 +27,7 @@ public:
 
 	void convertToString( OStringStream* out ) const;
 
-	//�ȉ��g�p�҂͈ӎ����Ȃ��ėǂ��B
+	//以下使用者は意識しなくて良い。
 	Element();
 	Element( const Element& );
 	~Element();
@@ -54,7 +54,7 @@ public:
 	const char* name() const;
 	void convertToString( OStringStream* out ) const;
 
-	//�ȉ��m��Ȃ��Ă���
+	//以下知らなくていい
 	ConstElement();
 	ConstElement( const Element& );
 	~ConstElement();

@@ -5,35 +5,35 @@ class Vector3;
 
 class Matrix34{
 public:
-	Matrix34(); //ƒfƒtƒHƒ‹ƒg‚ÅƒRƒ“ƒXƒgƒ‰ƒNƒg
-	//ˆÚ“®s—ñ¶¬
+	Matrix34(); //ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
+	//ç§»å‹•è¡Œåˆ—ç”Ÿæˆ
 	void setTranslation( const Vector3& );
-	//Šg‘åk¬s—ñ¶¬
+	//æ‹¡å¤§ç¸®å°è¡Œåˆ—ç”Ÿæˆ
 	void setScaling( const Vector3& );
-	//‰ñ“]s—ñ¶¬X
+	//å›è»¢è¡Œåˆ—ç”ŸæˆX
 	void setRotationX( double radian );
-	//‰ñ“]s—ñ¶¬Y
+	//å›è»¢è¡Œåˆ—ç”ŸæˆY
 	void setRotationY( double radian );
-	//‰ñ“]s—ñ¶¬Z
+	//å›è»¢è¡Œåˆ—ç”ŸæˆZ
 	void setRotationZ( double radian );
-	//ƒrƒ…[s—ñ¶¬
+	//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ç”Ÿæˆ
 	void setViewTransform( const Vector3& position, const Vector3& target );
-	//ƒxƒNƒ^‚ÆŠ|‚¯Z
+	//ãƒ™ã‚¯ã‚¿ã¨æ›ã‘ç®—
 	void multiply( Vector3* out, const Vector3& in ) const;
-	//s—ñ‚ÆŠ|‚¯Z
+	//è¡Œåˆ—ã¨æ›ã‘ç®—
 	void operator*=( const Matrix34& );
-	//ˆÚ“®s—ñ‚ÆæZ
+	//ç§»å‹•è¡Œåˆ—ã¨ä¹—ç®—
 	void translate( const Vector3& );
-	//Šg‘åk¬s—ñ‚ÆæZ
+	//æ‹¡å¤§ç¸®å°è¡Œåˆ—ã¨ä¹—ç®—
 	void scale( const Vector3& );
-	//X‰ñ“]s—ñ‚ÆæZ
+	//Xå›è»¢è¡Œåˆ—ã¨ä¹—ç®—
 	void rotateX( double radian );
-	//Y‰ñ“]s—ñ‚ÆæZ
+	//Yå›è»¢è¡Œåˆ—ã¨ä¹—ç®—
 	void rotateY( double radian );
-	//Z‰ñ“]s—ñ‚ÆæZ
+	//Zå›è»¢è¡Œåˆ—ã¨ä¹—ç®—
 	void rotateZ( double radian );
 private:
-	friend class Matrix44; //Matrix44‚¾‚¯‚ª’†‚ğG‚Á‚Ä‚¢‚¢B
+	friend class Matrix44; //Matrix44ã ã‘ãŒä¸­ã‚’è§¦ã£ã¦ã„ã„ã€‚
 
 	double m00, m01, m02, m03;
 	double m10, m11, m12, m13;

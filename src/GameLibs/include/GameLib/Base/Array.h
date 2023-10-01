@@ -3,36 +3,36 @@
 
 namespace GameLib{
 
-///‰ğ•ú‚ğ–Y‚ê‚ª‚¿‚È‚ ‚í‚Ä‚ñ‚Ú‚³‚ñ‚Ì‚½‚ß‚Ì©“®‰ğ•ú”z—ñ
+///è§£æ”¾ã‚’å¿˜ã‚ŒãŒã¡ãªã‚ã‚ã¦ã‚“ã¼ã•ã‚“ã®ãŸã‚ã®è‡ªå‹•è§£æ”¾é…åˆ—
 template< class T > class Array{
 public:
-	///ƒfƒtƒHƒ‹ƒgBƒTƒCƒY‚Í0B
+	///ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã€‚ã‚µã‚¤ã‚ºã¯0ã€‚
 	Array();
-	///‰ŠúƒTƒCƒYB‘S—v‘f‚ÍƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^‚Å‰Šú‰»‚³‚ê‚éB
+	///åˆæœŸã‚µã‚¤ã‚ºã€‚å…¨è¦ç´ ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã§åˆæœŸåŒ–ã•ã‚Œã‚‹ã€‚
 	explicit Array( int size );
-	//‰ŠúƒTƒCƒYA‰Šú’l‚ğ“n‚·
+	//åˆæœŸã‚µã‚¤ã‚ºã€åˆæœŸå€¤ã‚’æ¸¡ã™
 	explicit Array( int size, const T& );
 	~Array();
-	///Œã‚©‚çŠm•ÛBk¬‚Í‰Â”\‚¾‚ªAŠg‘å‚Í•s‰ÂBˆê’Uclear()‚·‚é‚±‚ÆB
+	///å¾Œã‹ã‚‰ç¢ºä¿ã€‚ç¸®å°ã¯å¯èƒ½ã ãŒã€æ‹¡å¤§ã¯ä¸å¯ã€‚ä¸€æ—¦clear()ã™ã‚‹ã“ã¨ã€‚
 	void setSize( int size );
-	///ƒTƒCƒYæ“¾
+	///ã‚µã‚¤ã‚ºå–å¾—
 	int size() const;
-	///‘S‰ğ•ú
+	///å…¨è§£æ”¾
 	void clear();
-	///“Y‚¦š(const)
+	///æ·»ãˆå­—(const)
 	const T& operator[]( int i ) const;
-	///“Y‚¦š(”ñconst)
+	///æ·»ãˆå­—(éconst)
 	T& operator[]( int i );
 private:
-	void operator=( const Array& ); //‘ã“ü‹Ö~
-	Array( const Array& ); //ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‹Ö~
+	void operator=( const Array& ); //ä»£å…¥ç¦æ­¢
+	Array( const Array& ); //ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ç¦æ­¢
 
 	T* mElements;
 	int mSize;
 };
 
 } //namespace GameLib
-#include "GameLib/Base/Impl/ArrayImpl.h" //’†g‚Í‚±‚Ì’†
+#include "GameLib/Base/Impl/ArrayImpl.h" //ä¸­èº«ã¯ã“ã®ä¸­
 
 #endif
 

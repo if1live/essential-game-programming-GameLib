@@ -5,23 +5,23 @@
 using namespace PseudoXml;
 
 IndexBuffer::IndexBuffer( const Element* e ){
-	//ƒGƒ‰[ƒ`ƒFƒbƒN‘S‘R‚µ‚Ä‚Ü‚¹‚ñ
+	//ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯å…¨ç„¶ã—ã¦ã¾ã›ã‚“
 	int n = e->childNumber();
-	mSize = n * 3; //ŽOŠpŒ`”~3
+	mSize = n * 3; //ä¸‰è§’å½¢æ•°Ã—3
 	if ( mSize > 0 ){
 		mIndices = new unsigned[ mSize ];
 		for ( int i = 0; i < n; ++i ){
 			const Element* triangle = e->child( i );
-			const Attribute* a = triangle->attribute( 0 ); //indicesˆêŒÂ‚µ‚©‚È‚¢‚Ì‚ÅŒˆ‚ß‚¤‚¿
-			//unsigned‚ðŽæ‚éŠÖ”‚ª‚È‚¢‚Ì‚Åint‚É“ü‚ê‚Ä‚©‚çƒRƒs[
+			const Attribute* a = triangle->attribute( 0 ); //indicesä¸€å€‹ã—ã‹ãªã„ã®ã§æ±ºã‚ã†ã¡
+			//unsignedã‚’å–ã‚‹é–¢æ•°ãŒãªã„ã®ã§intã«å…¥ã‚Œã¦ã‹ã‚‰ã‚³ãƒ”ãƒ¼
 			int tmp[ 3 ];
-			a->getIntValues( tmp, 3 ); //ƒGƒ‰[ƒ`ƒFƒbƒN‚µ‚È‚¢‚Æ‚¢‚¯‚È‚¢‚ñ‚Å‚·‚æH–{“–‚ÍB
+			a->getIntValues( tmp, 3 ); //ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯ã—ãªã„ã¨ã„ã‘ãªã„ã‚“ã§ã™ã‚ˆï¼Ÿæœ¬å½“ã¯ã€‚
 			mIndices[ i * 3 + 0 ] = tmp[ 0 ];
 			mIndices[ i * 3 + 1 ] = tmp[ 1 ];
 			mIndices[ i * 3 + 2 ] = tmp[ 2 ];
 		}
 	}
-	//–¼‘O‚ð”²‚­
+	//åå‰ã‚’æŠœã
 	int an = e->attributeNumber();
 	for ( int i = 0; i < an; ++i ){
 		const Attribute* a = e->attribute( i );

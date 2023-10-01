@@ -127,7 +127,7 @@ void Matrix23::operator*=( const Matrix22& a ){
 }
 
 void Matrix23::setMul( const Matrix23& a, const Matrix23& b ){
-	//a==*this, b==*this�������l���Ȃ��Ƃ����Ȃ�
+	//a==*this, b==*this両方を考えないといけない
 	float t00, t01, t02;
 	t00 = a.m00 * b.m00 + a.m01 * b.m10;
 	t01 = a.m00 * b.m01 + a.m01 * b.m11;
@@ -182,48 +182,48 @@ void Matrix23::setTransposed22( const Matrix23& a ){
 
 
 
-//�N���[�����@�ł̋t�s��
+//クラーメル法での逆行列
 /*
-�܂�2x3�s��Ƃ����̂�
-2x2���������������ƁA����x�N�^�ňړ�����s�񂾂����B
+まず2x3行列というのは
+2x2部分をかけたあと、あるベクタで移動する行列だった。
 
 q = Ap + b
 
-���̋t�s��Ƃ����̂́A
-�x�N�^�̋t�����ňړ����Ă���A2x2����A�̋t�s������������̂ɂȂ�B
-�܂�A
+この逆行列というのは、
+ベクタの逆向きで移動してから、2x2部分Aの逆行列をかけたものになる。
+つまり、
 
 p = A'(q - b)
 
-���B�W�J����ƁA
+だ。展開すると、
 
 p = A'q - A'b
 
-�ƂȂ�B�v����ɁAA'����������ő����x�N�^��-A'b�ŁA
-���ꂪ2x3�s��ɓ����Ă���ړ��x�N�^���B
+となる。要するに、A'をかけた後で足すベクタは-A'bで、
+これが2x3行列に入っている移動ベクタだ。
 
-�n��������3x3�Ɋg�����Ă��K�v�͂Ȃ��Ƃ������Ƃł���B
+馬鹿正直に3x3に拡張してやる必要はないということである。
 
-���Ȃ݂�2x2������ad-bc=D�ƒu����(�s��)
+ちなみに2x2部分はad-bc=Dと置けば(行列式)
 
 x = d/D
 y = -b/D
 z = -c/D
 w = a/D
 
-�ł���B�ڍׂ�Matrix22.cpp���Q�Ƃ̂���
+である。詳細はMatrix22.cppを参照のこと
 */
 void Matrix23::setInverse( const Matrix23& a ){
-	//�܂�2x2����
+	//まず2x2部分
 	float delta = a.m00 * a.m11 - a.m01 * a.m10;
 	float rcpDelta = 1.f / delta;
-	float t = a.m00; //�o�b�N�A�b�v(a==*this�ɔ�����)
+	float t = a.m00; //バックアップ(a==*thisに備える)
 	m00 = a.m11 * rcpDelta;
 	m01 = -a.m01 * rcpDelta;
 	m10 = -a.m10 * rcpDelta;
 	m11 = t * rcpDelta;
 
-	//���Ɉړ������B�ł���2x2�t�s������̈ړ��x�N�^�ɂ����Ă��΂���
+	//次に移動成分。できた2x2逆行列を元の移動ベクタにかけてやればいい
 	t = a.m02;
 	m02 = -( m00 * t + m01 * a.m12 );
 	m12 = -( m10 * t + m11 * a.m12 );

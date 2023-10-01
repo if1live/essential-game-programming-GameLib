@@ -20,9 +20,9 @@ Thread::Thread() : mImpl( 0 ){
 }
 
 void Thread::start(){
-	wait(); //ëOÇÃÇ™Ç†ÇÍÇŒë“Ç¬
+	wait(); //Ââç„ÅÆ„Åå„ÅÇ„Çå„Å∞ÂæÖ„Å§
 	mImpl = new Impl;
-	gManagerImpl->add( this, &mImpl->mFinished ); //é¿çsäJén
+	gManagerImpl->add( this, &mImpl->mFinished ); //ÂÆüË°åÈñãÂßã
 }
 
 void Thread::wait(){
@@ -35,7 +35,7 @@ void Thread::wait(){
 bool Thread::isFinished(){
 	bool r = false;
 	if ( mImpl ){
-		if ( mImpl->mFinished.isSet() ){ //èIÇÌÇ¡ÇƒÇÈ
+		if ( mImpl->mFinished.isSet() ){ //ÁµÇ„Çè„Å£„Å¶„Çã
 			SAFE_DELETE( mImpl );
 			r = true;
 		}

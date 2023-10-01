@@ -2,19 +2,19 @@
 #include <fstream>
 using namespace std;
 
-//�֐��v���g�^�C�v
+//関数プロトタイプ
 void readFile( char** buffer, int* size, const char* filename );
 
-//�񎟌��z��N���X
-//�e���v���[�g�ɂȂ��݂͂��邾�낤���H�Ȃ���Ί�b�����ł��׋����Ă������B
-//���̃N���X�錾�̒��ł�T�Ƃ����N���X�����邩�̂悤�Ɉ����A
-//������g�����ɂ�T�̂Ƃ����int�Ƃ�bool�Ƃ�����Ďg���B
+//二次元配列クラス
+//テンプレートになじみはあるだろうか？なければ基礎だけでも勉強しておこう。
+//このクラス宣言の中ではTというクラスがあるかのように扱われ、
+//これを使う時にはTのところにintとかboolとか入れて使う。
 template< class T > class Array2D{
 public:
 	Array2D() : mArray( 0 ){}
 	~Array2D(){
 		delete[] mArray;
-		mArray = 0;  //�|�C���^��0������̂̓N�Z�ɂ��悤�B
+		mArray = 0;  //ポインタに0を入れるのはクセにしよう。
 	}
 	void setSize( int size0, int size1 ){
 		mSize0 = size0;
@@ -33,7 +33,7 @@ private:
 	int mSize1;
 };
 
-//��ԃN���X
+//状態クラス
 class State{
 public:
 	State( const char* stageData, int size );
@@ -71,35 +71,35 @@ int main( int argc, char** argv ){
 	}
 	State* state = new State( stageData, fileSize );
 
-	//���C�����[�v
+	//メインループ
 	while ( true ){
-		//�܂��`��
+		//まず描画
 		state->draw();
-		//�N���A�`�F�b�N
+		//クリアチェック
 		if ( state->hasCleared() ){
-			break; //�N���A�`�F�b�N
+			break; //クリアチェック
 		}
-		//���͎擾
-		cout << "a:left s:right w:up z:down. command?" << endl; //�������
+		//入力取得
+		cout << "a:left s:right w:up z:down. command?" << endl; //操作説明
 		char input;
 		cin >> input;
-		//�X�V
+		//更新
 		state->update( input ); 	
 	}
-	//�j���̃��b�Z�[�W
+	//祝いのメッセージ
 	cout << "Congratulation's! you won." << endl;
-	//��n��
+	//後始末
 	delete[] stageData;
 	stageData = 0;
 
-	//�������[�v(ctrl-C�ȊO�ŏ���ɏI���Ȃ����߂̂���)
+	//無限ループ(ctrl-C以外で勝手に終わらないためのもの)
 	while ( true ){
 		;
 	}
 	return 0;
 }
 
-//---------------------�ȉ��֐���`------------------------------------------
+//---------------------以下関数定義------------------------------------------
 
 void readFile( char** buffer, int* size, const char* filename ){
 	ifstream in( filename );
@@ -116,16 +116,16 @@ void readFile( char** buffer, int* size, const char* filename ){
 }
 
 State::State( const char* stageData, int size ){	
-	//�T�C�Y����
+	//サイズ測定
 	setSize( stageData, size );
-	//�z��m��
+	//配列確保
 	mObjects.setSize( mWidth, mHeight );
 	mGoalFlags.setSize( mWidth, mHeight );
-	//�����l�Ŗ��߂Ƃ�
+	//初期値で埋めとく
 	for ( int y = 0; y < mHeight; ++y ){
 		for ( int x = 0; x < mWidth; ++x ){
-			mObjects( x, y ) = OBJ_WALL; //���܂��������͕�
-			mGoalFlags( x, y ) = false; //�S�[������Ȃ�
+			mObjects( x, y ) = OBJ_WALL; //あまった部分は壁
+			mGoalFlags( x, y ) = false; //ゴールじゃない
 		}
 	}
 	int x = 0;
@@ -141,20 +141,20 @@ State::State( const char* stageData, int size ){
 			case '.': t = OBJ_SPACE; goalFlag = true; break;
 			case 'p': t = OBJ_MAN; break;
 			case 'P': t = OBJ_MAN; goalFlag = true; break;
-			case '\n': x = 0; ++y; t = OBJ_UNKNOWN; break; //���s����
+			case '\n': x = 0; ++y; t = OBJ_UNKNOWN; break; //改行処理
 			default: t = OBJ_UNKNOWN; break;
 		}
-		if ( t != OBJ_UNKNOWN ){ //�m��Ȃ������Ȃ疳������̂ł���if��������
-			mObjects( x, y ) = t; //��������
-			mGoalFlags( x, y ) = goalFlag; //�S�[�����
+		if ( t != OBJ_UNKNOWN ){ //知らない文字なら無視するのでこのif文がある
+			mObjects( x, y ) = t; //書き込み
+			mGoalFlags( x, y ) = goalFlag; //ゴール情報
 			++x;
 		}
 	}
 }
 
 void State::setSize( const char* stageData, int size ){
-	mWidth = mHeight = 0; //������
-	//���݈ʒu
+	mWidth = mHeight = 0; //初期化
+	//現在位置
 	int x = 0;
 	int y = 0;
 	for ( int i = 0; i < size; ++i ){
@@ -165,7 +165,7 @@ void State::setSize( const char* stageData, int size ){
 				break;
 			case '\n': 
 				++y;
-				//�ő�l�X�V
+				//最大値更新
 				mWidth = max( mWidth, x );
 				mHeight = max( mHeight, y );
 				x = 0; 
@@ -200,22 +200,22 @@ void State::draw() const {
 }
 
 void State::update( char input ){
-	//�ړ������ɕϊ�
+	//移動差分に変換
 	int dx = 0;
 	int dy = 0;
 	switch ( input ){
-		case 'a': dx = -1; break; //��
-		case 's': dx = 1; break; //�E
-		case 'w': dy = -1; break; //��BY�͉����v���X
-		case 'z': dy = 1; break; //���B
+		case 'a': dx = -1; break; //左
+		case 's': dx = 1; break; //右
+		case 'w': dy = -1; break; //上。Yは下がプラス
+		case 'z': dy = 1; break; //下。
 	}
-	//�Z���ϐ���������B
+	//短い変数名をつける。
 	int w = mWidth;
 	int h = mHeight;
 	Array2D< Object >& o = mObjects;
-	//�l���W������
+	//人座標を検索
 	int x, y;
-	x = y = -1; //�댯�Ȓl
+	x = y = -1; //危険な値
 	bool found = false;
 	for ( y = 0; y < mHeight; ++y ){
 		for ( x = 0; x < mWidth; ++x ){
@@ -228,28 +228,28 @@ void State::update( char input ){
 			break;
 		}
 	}
-	//�ړ�
-	//�ړ�����W
+	//移動
+	//移動後座標
 	int tx = x + dx;
 	int ty = y + dy;
-	//���W�̍ő�ŏ��`�F�b�N�B�O��Ă���Εs����
+	//座標の最大最小チェック。外れていれば不許可
 	if ( tx < 0 || ty < 0 || tx >= w || ty >= h ){
 		return;
 	}
-	//A.���̕������󔒂܂��̓S�[���B�l���ړ��B
+	//A.その方向が空白またはゴール。人が移動。
 	if ( o( tx, ty ) == OBJ_SPACE ){
 		o( tx, ty ) = OBJ_MAN;
 		o( x, y ) = OBJ_SPACE;
-	//B.���̕��������B���̕����̎��̃}�X���󔒂܂��̓S�[���ł���Έړ��B
+	//B.その方向が箱。その方向の次のマスが空白またはゴールであれば移動。
 	}else if ( o( tx, ty ) == OBJ_BLOCK ){
-		//2�}�X�悪�͈͓����`�F�b�N
+		//2マス先が範囲内かチェック
 		int tx2 = tx + dx;
 		int ty2 = ty + dy; 
-		if ( tx2 < 0 || ty2 < 0 || tx2 >= w || ty2 >= h ){ //�����Ȃ�
+		if ( tx2 < 0 || ty2 < 0 || tx2 >= w || ty2 >= h ){ //押せない
 			return;
 		}
 		if ( o( tx2, ty2 ) == OBJ_SPACE ){
-			//��������ւ�
+			//順次入れ替え
 			o( tx2, ty2 ) = OBJ_BLOCK;
 			o( tx, ty ) = OBJ_MAN;
 			o( x, y ) = OBJ_SPACE;
@@ -257,8 +257,8 @@ void State::update( char input ){
 	}
 }
 
-//�u���b�N�̂Ƃ����goalFlag����ł�false�Ȃ�
-//�܂��N���A���ĂȂ�
+//ブロックのところのgoalFlagが一つでもfalseなら
+//まだクリアしてない
 bool State::hasCleared() const {
 	for ( int y = 0; y < mHeight; ++y ){
 		for ( int x = 0; x < mWidth; ++x ){

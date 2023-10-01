@@ -19,11 +19,11 @@ Menu::~Menu(){
 }
 
 void Menu::update( Parent* parent ){
-	//1:‚â‚è‚È‚¨‚µ
-	//2:–ÊƒZƒŒ‚Ö
-	//3:ƒ^ƒCƒgƒ‹‰æ–Ê‚Ö
-	//4:–ß‚é
-	//“Y‚¦š‚ª‚¸‚ê‚é‚Æ–Ê“|‚È‚Ì‚Å0‚à“ü‚ê‚Ä‚¨‚­
+	//1:ã‚„ã‚ŠãªãŠã—
+	//2:é¢ã‚»ãƒ¬ã¸
+	//3:ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ã¸
+	//4:æˆ»ã‚‹
+	//æ·»ãˆå­—ãŒãšã‚Œã‚‹ã¨é¢å€’ãªã®ã§0ã‚‚å…¥ã‚Œã¦ãŠã
 	char numberChars[] = { '0', '1', '2', '3', '4' };
 	int inputNumber = 0;
 	for ( int i = 0; i < 5; ++i ){
@@ -32,27 +32,27 @@ void Menu::update( Parent* parent ){
 		}
 	}
 	switch ( inputNumber ){
-		case 1: //‚â‚è‚È‚¨‚µ
+		case 1: //ã‚„ã‚ŠãªãŠã—
 			parent->getState()->reset();
 			parent->moveTo( Parent::SEQ_PLAY );
 			break;
-		case 2: //–ÊƒZƒŒ‚Ö
+		case 2: //é¢ã‚»ãƒ¬ã¸
 			parent->moveTo( Parent::SEQ_STAGE_SELECT );
 			break;
-		case 3: //ƒ^ƒCƒgƒ‹‚Ö
+		case 3: //ã‚¿ã‚¤ãƒˆãƒ«ã¸
 			parent->moveTo( Parent::SEQ_TITLE );
 			break;
-		case 4: //‚»‚Ì‚Ü‚Ü–ß‚é
+		case 4: //ãã®ã¾ã¾æˆ»ã‚‹
 			parent->moveTo( Parent::SEQ_PLAY );
 			break;
-		default: //‚»‚Ì‘¼‚Í–³‹
+		default: //ãã®ä»–ã¯ç„¡è¦–
 			break;
 	}
 
-	//•`‰æ
-	//‚Ü‚¸ƒQ[ƒ€‰æ–Ê
+	//æç”»
+	//ã¾ãšã‚²ãƒ¼ãƒ ç”»é¢
 	parent->getState()->draw();
-	//ã‚Éd‚Ë‚é
+	//ä¸Šã«é‡ã­ã‚‹
 	mImage->draw();
 }
 

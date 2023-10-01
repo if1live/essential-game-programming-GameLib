@@ -9,16 +9,16 @@
 using namespace GameLib;
 
 namespace{
-//ƒ}ƒbƒv‚ÌL‚³
+//ãƒãƒƒãƒ—ã®åºƒã•
 const int WIDTH = 19;
 const int HEIGHT = 15;
 
-//“K“–ƒXƒe[ƒWƒf[ƒ^
+//é©å½“ã‚¹ãƒ†ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿
 struct StageData{
-	int mEnemyNumber; //“G‚Ì”
-	int mBrickRate; //—ùŠ¢—¦(ƒp[ƒZƒ“ƒg)
-	int mItemPowerNumber; //”š•—ƒAƒCƒeƒ€‚Ì”
-	int mItemBombNumber; //”š’eƒAƒCƒeƒ€‚Ì”
+	int mEnemyNumber; //æ•µã®æ•°
+	int mBrickRate; //ç…‰ç“¦ç‡(ãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆ)
+	int mItemPowerNumber; //çˆ†é¢¨ã‚¢ã‚¤ãƒ†ãƒ ã®æ•°
+	int mItemBombNumber; //çˆ†å¼¾ã‚¢ã‚¤ãƒ†ãƒ ã®æ•°
 };
 
 StageData gStageData[] = {
@@ -34,17 +34,17 @@ mImage( 0 ),
 mDynamicObjects( 0 ),
 mDynamicObjectNumber( 0 ),
 mStageID( stageID ){
-	Framework f = Framework::instance(); //Œã‚Å‰½“x‚©g‚¤‚Ì‚Å
+	Framework f = Framework::instance(); //å¾Œã§ä½•åº¦ã‹ä½¿ã†ã®ã§
 	mStaticObjects.setSize( WIDTH, HEIGHT );
 
 	mImage = new Image( "data/image/bakudanBitoImage.dds" );
 
 	const StageData& stageData = gStageData[ mStageID ];
-	int n = HEIGHT * WIDTH; //ƒ}ƒX–Ú‚Ì”
+	int n = HEIGHT * WIDTH; //ãƒã‚¹ç›®ã®æ•°
 
-	//—ùŠ¢‚ÌƒuƒƒbƒN‚ğ‹L˜^B
+	//ç…‰ç“¦ã®ãƒ–ãƒ­ãƒƒã‚¯ã‚’è¨˜éŒ²ã€‚
 	unsigned* brickList = new unsigned[ n ];
-	int brickNumber = 0; //–{“–‚ÉƒŒƒ“ƒK‚É‚È‚Á‚½”‚ğƒJƒEƒ“ƒg
+	int brickNumber = 0; //æœ¬å½“ã«ãƒ¬ãƒ³ã‚¬ã«ãªã£ãŸæ•°ã‚’ã‚«ã‚¦ãƒ³ãƒˆ
 	unsigned* floorList = new unsigned[ n ];
 	int floorNumber = 0;
 
@@ -53,17 +53,17 @@ mStageID( stageID ){
 			StaticObject& o = mStaticObjects( x, y );
 			if ( x == 0 || y == 0 || ( x == WIDTH-1 ) || ( y == HEIGHT-1 ) ){
 				o.setFlag( StaticObject::FLAG_WALL );
-			}else if ( ( x % 2 == 0 ) && ( y % 2 == 0 ) ){ //ƒRƒ“ƒNƒŠ[ƒg
+			}else if ( ( x % 2 == 0 ) && ( y % 2 == 0 ) ){ //ã‚³ãƒ³ã‚¯ãƒªãƒ¼ãƒˆ
 				o.setFlag( StaticObject::FLAG_WALL );
 			}else if ( y + x < 4 ){
-				//¶ã3ƒ}ƒX‚Í°
+				//å·¦ä¸Š3ãƒã‚¹ã¯åºŠ
 			}else if ( ( stageID == 0 ) && ( y + x > ( WIDTH + HEIGHT - 6 ) ) ){
-				; //“ñl—p‚È‚ç‰E‰º3ƒ}ƒX‚à‹ó‚¯‚éB
+				; //äºŒäººç”¨ãªã‚‰å³ä¸‹3ãƒã‚¹ã‚‚ç©ºã‘ã‚‹ã€‚
 
-			}else{ //c‚è‚Í—ùŠ¢‚©°B100–ÊƒTƒCƒRƒ‚ğU‚Á‚ÄŒˆ‚ß‚é
+			}else{ //æ®‹ã‚Šã¯ç…‰ç“¦ã‹åºŠã€‚100é¢ã‚µã‚¤ã‚³ãƒ­ã‚’æŒ¯ã£ã¦æ±ºã‚ã‚‹
 				if ( f.getRandom( 100 ) < stageData.mBrickRate  ){
 					o.setFlag( StaticObject::FLAG_BRICK );
-					//—ùŠ¢‚¾‚Á‚½‚ç‹L˜^‚µ‚Ä‚¨‚­B
+					//ç…‰ç“¦ã ã£ãŸã‚‰è¨˜éŒ²ã—ã¦ãŠãã€‚
 					brickList[ brickNumber ] = ( x << 16 ) + y;
 					++brickNumber;
 				}else{
@@ -73,12 +73,12 @@ mStageID( stageID ){
 			}
 		}
 	}
-	//—ùŠ¢‚ÉƒAƒCƒeƒ€‚ğd‚Ş
+	//ç…‰ç“¦ã«ã‚¢ã‚¤ãƒ†ãƒ ã‚’ä»•è¾¼ã‚€
 	int powerNumber = stageData.mItemPowerNumber;
 	int bombNumber = stageData.mItemBombNumber;
-	//‚â‚è•û‚ÍA—ùŠ¢ƒŠƒXƒg‚Ìi”Ô–Ú‚ğ“K“–‚È‚à‚Ì‚Ææ‚è‘Ö‚¦‚ÄA‚»‚±‚ÉƒAƒCƒeƒ€‚ğ“ü‚ê‚éB
+	//ã‚„ã‚Šæ–¹ã¯ã€ç…‰ç“¦ãƒªã‚¹ãƒˆã®iç•ªç›®ã‚’é©å½“ãªã‚‚ã®ã¨å–ã‚Šæ›¿ãˆã¦ã€ãã“ã«ã‚¢ã‚¤ãƒ†ãƒ ã‚’å…¥ã‚Œã‚‹ã€‚
 	for ( int i = 0; i < powerNumber + bombNumber; ++i ){
- 		int swapped = f.getRandom( brickNumber - 1 - i ) + i; //©•ª‚©A©•ª‚æ‚èŒã‚ë‚Ææ‚è‘Ö‚¦‚éB‚Å‚È‚¢‚Æ‚·‚Å‚É“ü‚ê‚½ƒ}ƒX‚ª‚à‚¤ˆê‰ño‚Ä‚«‚Ä‚µ‚Ü‚¤B
+ 		int swapped = f.getRandom( brickNumber - 1 - i ) + i; //è‡ªåˆ†ã‹ã€è‡ªåˆ†ã‚ˆã‚Šå¾Œã‚ã¨å–ã‚Šæ›¿ãˆã‚‹ã€‚ã§ãªã„ã¨ã™ã§ã«å…¥ã‚ŒãŸãƒã‚¹ãŒã‚‚ã†ä¸€å›å‡ºã¦ãã¦ã—ã¾ã†ã€‚
 		unsigned t = brickList[ i ];
 		brickList[ i ] = brickList[ swapped ];
 		brickList[ swapped ] = t;
@@ -94,18 +94,18 @@ mStageID( stageID ){
 	}
 	SAFE_DELETE_ARRAY( brickList );
 
-	//“®“IƒIƒuƒWƒFƒNƒg‚ğŠm•Û
+	//å‹•çš„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç¢ºä¿
 	int playerNumber = ( mStageID == 0 ) ? 2 : 1;
 	int enemyNumber = stageData.mEnemyNumber;
 	mDynamicObjectNumber = playerNumber + enemyNumber;
 	mDynamicObjects = new DynamicObject[ mDynamicObjectNumber ];
 
-	//ƒvƒŒƒCƒ„[”z’u
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼é…ç½®
 	mDynamicObjects[ 0 ].set( 1, 1, DynamicObject::TYPE_1P );
 	if ( mStageID == 0 ){
 		mDynamicObjects[ 1 ].set( WIDTH-2, HEIGHT-2, DynamicObject::TYPE_2P );
 	}
-	//°‚É“G‚ğd‚ŞB‚â‚è•û‚ÍƒAƒCƒeƒ€‚Æ‚Ù‚Æ‚ñ‚Ç“¯‚¶
+	//åºŠã«æ•µã‚’ä»•è¾¼ã‚€ã€‚ã‚„ã‚Šæ–¹ã¯ã‚¢ã‚¤ãƒ†ãƒ ã¨ã»ã¨ã‚“ã©åŒã˜
 	for ( int i = 0; i < enemyNumber; ++i ){
  		int swapped = f.getRandom( floorNumber - 1 - i ) + i;
 		unsigned t = floorList[ i ];
@@ -125,22 +125,22 @@ State::~State(){
 }
 
 void State::draw() const {
-	//”wŒi•`‰æ
+	//èƒŒæ™¯æç”»
 	for ( int y = 0; y < HEIGHT; ++y ){
 		for ( int x = 0; x < WIDTH; ++x ){
 			mStaticObjects( x, y ).draw( x, y, mImage );
 		}
 	}
-	//‘OŒi•`‰æ
+	//å‰æ™¯æç”»
 	for ( int i = 0; i < mDynamicObjectNumber; ++i ){
 		mDynamicObjects[ i ].draw( mImage );
 	}
-	//”š•—•`‰æ
+	//çˆ†é¢¨æç”»
 	//TODO:
 }
 
 void State::update(){
-	//‚Æ‚è‚ ‚¦‚¸‚»‚ê‚¼‚ê‚ÉˆÚ“®ˆ—
+	//ã¨ã‚Šã‚ãˆãšãã‚Œãã‚Œã«ç§»å‹•å‡¦ç†
 	for ( int i = 0; i < mDynamicObjectNumber; ++i ){
 		mDynamicObjects[ i ].update();
 	}

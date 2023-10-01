@@ -33,10 +33,10 @@ bool Square::isIntersect( const Square& b ) const {
 }
 
 void Square::getMoveLimit( int* dx, int* dy, const Square& wall, int iteration ) const {
-	int numerator = 1; //•ªq
-	int lastSucceededNumerator = 0; //ÅŒã‚És‚¯‚½numerator
-	int denominator = 1; //•ª•ê
-	Square tSquare; //ƒeƒ“ƒ|ƒ‰ƒŠ
+	int numerator = 1; //åˆ†å­
+	int lastSucceededNumerator = 0; //æœ€å¾Œã«è¡Œã‘ãŸnumerator
+	int denominator = 1; //åˆ†æ¯
+	Square tSquare; //ãƒ†ãƒ³ãƒãƒ©ãƒª
 	for ( int i = 0; i < iteration; ++i ){
 		int tDx = *dx * numerator / denominator;
 		int tDy = *dy * numerator / denominator;
@@ -46,7 +46,7 @@ void Square::getMoveLimit( int* dx, int* dy, const Square& wall, int iteration )
 		if ( tSquare.isIntersect( wall ) ){
 			numerator -= 1;
 		}else{
-			lastSucceededNumerator = numerator; //¬Œ÷’lXV
+			lastSucceededNumerator = numerator; //æˆåŠŸå€¤æ›´æ–°
 			numerator += 1;
 		}
 	}

@@ -4,46 +4,46 @@
 #include "GameLib/Sound/Wave.h"
 #include "GameLib/Sound/Player.h"
 
-//ƒVƒ“ƒOƒ‹ƒgƒ“
+//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³
 class SoundManager{
 public:
 	static SoundManager* instance();
 	static void create();
 	static void destroy();
-	bool isReady(); //ƒ[ƒhI‚í‚Á‚½H
+	bool isReady(); //ãƒ­ãƒ¼ãƒ‰çµ‚ã‚ã£ãŸï¼Ÿ
 
 	enum Bgm{
-		BGM_TITLE, //ƒ^ƒCƒgƒ‹‰æ–Ê
-		BGM_GAME, //ƒQ[ƒ€’†
+		BGM_TITLE, //ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢
+		BGM_GAME, //ã‚²ãƒ¼ãƒ ä¸­
 
 		BGM_MAX,
 	};
 	enum Se{
-		SE_EXPLOSION, //”š”­
-		SE_DEATH, //€–S
-		SE_CURSOR_MOVE, //ƒJ[ƒ\ƒ‹ˆÚ“®
-		SE_SELECTION, //€–ÚŒˆ’è
-		SE_SET_BOMB, //”š’eİ’u‰¹
+		SE_EXPLOSION, //çˆ†ç™º
+		SE_DEATH, //æ­»äº¡
+		SE_CURSOR_MOVE, //ã‚«ãƒ¼ã‚½ãƒ«ç§»å‹•
+		SE_SELECTION, //é …ç›®æ±ºå®š
+		SE_SET_BOMB, //çˆ†å¼¾è¨­ç½®éŸ³
 
 		SE_MAX,
 	};
-	//BGM‚ğ–Â‚ç‚·BBGM‚Í“¯‚ÉˆêŒÂ‚µ‚©–Â‚ç‚È‚¢B‚Ü‚½AŸè‚Éƒ‹[ƒv‚·‚éB
+	//BGMã‚’é³´ã‚‰ã™ã€‚BGMã¯åŒæ™‚ã«ä¸€å€‹ã—ã‹é³´ã‚‰ãªã„ã€‚ã¾ãŸã€å‹æ‰‹ã«ãƒ«ãƒ¼ãƒ—ã™ã‚‹ã€‚
 	void playBgm( Bgm );
 	void stopBgm();
-	//SE‚ğ–Â‚ç‚·BSE‚Í–Â‚ç‚¹‚Æ‚¢‚í‚ê‚½‚¾‚¯–Â‚éB
+	//SEã‚’é³´ã‚‰ã™ã€‚SEã¯é³´ã‚‰ã›ã¨ã„ã‚ã‚ŒãŸã ã‘é³´ã‚‹ã€‚
 	void playSe( Se );
 private:
 	SoundManager();
 	~SoundManager();
 
-	//Wave‚Í‘O‚à‚Á‚Äƒ[ƒh‚µ‚Ä‚µ‚Ü‚¤B
+	//Waveã¯å‰ã‚‚ã£ã¦ãƒ­ãƒ¼ãƒ‰ã—ã¦ã—ã¾ã†ã€‚
 	GameLib::Sound::Wave mBgmWaves[ BGM_MAX ];
 	GameLib::Sound::Wave mSeWaves[ SE_MAX ];
-	//Player‚ÍÄ¶¶¬
-	GameLib::Sound::Player mBgmPlayer; //ˆêŒÂ‚¾‚¯ì‚Á‚Ä‚¨‚­
-	static const int SE_PLAYER_MAX = 4; //“¯‚É–Â‚ç‚·SE‚Í4‚Â‚Ü‚ÅBŒÃ‚¢‡‚ÉÁ‚µ‚Ä‚¢‚­B
-	GameLib::Sound::Player mSePlayers[ SE_PLAYER_MAX ]; //‚±‚ê‚Í”z—ñ‚Å–ˆƒtƒŒ[ƒ€ƒ`ƒFƒbƒN‚µ‚ÄI‚í‚Á‚Ä‚½‚çíœB
-	int mSePlayerPos; //Ÿ‚ÉSE‚ğ“ü‚ê‚éêŠB
+	//Playerã¯å†ç”Ÿæ™‚ç”Ÿæˆ
+	GameLib::Sound::Player mBgmPlayer; //ä¸€å€‹ã ã‘ä½œã£ã¦ãŠã
+	static const int SE_PLAYER_MAX = 4; //åŒæ™‚ã«é³´ã‚‰ã™SEã¯4ã¤ã¾ã§ã€‚å¤ã„é †ã«æ¶ˆã—ã¦ã„ãã€‚
+	GameLib::Sound::Player mSePlayers[ SE_PLAYER_MAX ]; //ã“ã‚Œã¯é…åˆ—ã§æ¯ãƒ•ãƒ¬ãƒ¼ãƒ ãƒã‚§ãƒƒã‚¯ã—ã¦çµ‚ã‚ã£ã¦ãŸã‚‰å‰Šé™¤ã€‚
+	int mSePlayerPos; //æ¬¡ã«SEã‚’å…¥ã‚Œã‚‹å ´æ‰€ã€‚
 
 	static SoundManager* mInstance;
 };

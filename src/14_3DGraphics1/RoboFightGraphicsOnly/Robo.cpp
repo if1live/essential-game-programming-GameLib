@@ -37,7 +37,7 @@ void Robo::setAngleY( double a ){
 }
 
 void Robo::update( const Vector3& enemyPos, const Vector3& viewVector ){
-	//ˆÚ“®B‹ü•ûŒü‚ğ‰Á–¡B
+	//ç§»å‹•ã€‚è¦–ç·šæ–¹å‘ã‚’åŠ å‘³ã€‚
 	Vector3 move( 0.0, 0.0, 0.0 );
 	Pad* pad = Pad::instance();
 	if ( pad->isOn( Pad::UP, mId ) ){
@@ -57,18 +57,18 @@ void Robo::update( const Vector3& enemyPos, const Vector3& viewVector ){
 	m.setRotationY( ay );
 	m.multiply( &move, move );
 	mPosition += move;
-	//ƒWƒƒƒ“ƒv‚¾[
+	//ã‚¸ãƒ£ãƒ³ãƒ—ã ãƒ¼
 	if ( pad->isOn( Pad::JUMP, mId ) ){
 		mPosition.y += 1.0;
-		//“G‚Ì•û‚ÉŒü‚¯‚éB
+		//æ•µã®æ–¹ã«å‘ã‘ã‚‹ã€‚
 		Vector3 dir;
-		dir.setSub( enemyPos, mPosition ); //©•ª‚©‚ç“G‚Ö
-		//Y²Šp“x‚Íatan2( x, z )B
+		dir.setSub( enemyPos, mPosition ); //è‡ªåˆ†ã‹ã‚‰æ•µã¸
+		//Yè»¸è§’åº¦ã¯atan2( x, z )ã€‚
 		mAngleY = atan2( dir.x, dir.z );
 	}else{
 		mPosition.y -= 1.0;
 		if ( mPosition.y < 0.0 ){
-			mPosition.y = 0.0; //’n–ÊˆÈ‰º‚Í‚È‚¢B
+			mPosition.y = 0.0; //åœ°é¢ä»¥ä¸‹ã¯ãªã„ã€‚
 		}
 	}
 }
@@ -105,7 +105,7 @@ void Robo::draw( const Matrix44& pvm ) const {
 		{ 0.25, 0.75 },//11
 		{ 0.5, 0.75 },//12
 	};
-	//‚Ç‚Ì’¸“_‚ÅOŠpŒ`‚ğ•`‚­‚©‚Ì•\B}‚ğ•`‚¢‚Ä‚İ‚æ‚¤B‚Å‚È‚¢‚Æ‚í‚©‚ç‚È‚¢B
+	//ã©ã®é ‚ç‚¹ã§ä¸‰è§’å½¢ã‚’æãã‹ã®è¡¨ã€‚å›³ã‚’æã„ã¦ã¿ã‚ˆã†ã€‚ã§ãªã„ã¨ã‚ã‹ã‚‰ãªã„ã€‚
 	const int vIdx[ 36 ] = {
 		0,1,4,//-x
 		5,1,4,
@@ -120,7 +120,7 @@ void Robo::draw( const Matrix44& pvm ) const {
 		1,3,5,//+z
 		7,3,5,
 	};
-	//‚Ç‚ÌUV‚ÅOŠpŒ`‚ğ•`‚­‚©‚Ì•\B}‚ğ•`‚¢‚Ä‚İ‚æ‚¤B‚Å‚È‚¢‚Æ‚í‚©‚ç‚È‚¢B
+	//ã©ã®UVã§ä¸‰è§’å½¢ã‚’æãã‹ã®è¡¨ã€‚å›³ã‚’æã„ã¦ã¿ã‚ˆã†ã€‚ã§ãªã„ã¨ã‚ã‹ã‚‰ãªã„ã€‚
 	const int tIdx[ 36 ] = {
 		8,9,3,
 		4,9,3,
@@ -135,14 +135,14 @@ void Robo::draw( const Matrix44& pvm ) const {
 		5,6,0,
 		1,6,0,
 	};
-	//ƒ[ƒ‹ƒhs—ñ
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
 	Matrix34 wm;
 	wm.setTranslation( mPosition );
 	wm.rotateY( mAngleY );
-	//“§‹•ÏŠ·ƒrƒ…[s—ñ‚ÆæZ
+	//é€è¦–å¤‰æ›ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã¨ä¹—ç®—
 	Matrix44 pvwm;
 	pvwm.setMul( pvm, wm );
-	//s—ñƒxƒNƒ^æZ
+	//è¡Œåˆ—ãƒ™ã‚¯ã‚¿ä¹—ç®—
 	double p4[ 8 ][ 4 ];
 	for ( int i = 0; i < 8; ++i ){
 		pvwm.multiply( p4[ i ], p[ i ] );
@@ -150,7 +150,7 @@ void Robo::draw( const Matrix44& pvm ) const {
 
 	Framework f = GameLib::Framework::instance();
 	f.enableDepthTest( true );
-	f.setTexture( mTexture ); //ƒeƒNƒXƒ`ƒƒƒZƒbƒg
+	f.setTexture( mTexture ); //ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚»ãƒƒãƒˆ
 	for ( int i = 0; i < 12; ++i ){
 		int vi0 = vIdx[ 3 * i + 0 ];
 		int vi1 = vIdx[ 3 * i + 1 ];

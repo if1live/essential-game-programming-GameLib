@@ -9,10 +9,10 @@ public:
 	Manager();
 	static Manager instance();
 
-	//ƒRƒA”æ“¾(˜_—ƒRƒA”‚È‚Ì‚ÅAÀ‘Ì‚Æ‚Íˆá‚¤‰Â”\«‚ª‚ ‚é)
+	//ã‚³ã‚¢æ•°å–å¾—(è«–ç†ã‚³ã‚¢æ•°ãªã®ã§ã€å®Ÿä½“ã¨ã¯é•ã†å¯èƒ½æ€§ãŒã‚ã‚‹)
 	int getCoreNumber() const;
 
-	//ˆÈ‰ºƒ†[ƒU‚ªŒÄ‚Ô‚±‚Æ‚Í‚È‚¢
+	//ä»¥ä¸‹ãƒ¦ãƒ¼ã‚¶ãŒå‘¼ã¶ã“ã¨ã¯ãªã„
 	static void create( int additionalThreadNumber );
 	static void destroy();
 };

@@ -4,7 +4,7 @@
 #include "GameLib/Framework.h"
 using namespace GameLib;
 
-//ƒIƒuƒWƒFƒNƒgƒNƒ‰ƒX
+//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚¯ãƒ©ã‚¹
 class State::Object{
 public:
 	enum Type{
@@ -15,7 +15,7 @@ public:
 
 		OBJ_UNKNOWN,
 	};
-	//ƒ}ƒX•`‰æŠÖ”
+	//ãƒã‚¹æç”»é–¢æ•°
 	enum ImageID{
 		IMAGE_ID_PLAYER,
 		IMAGE_ID_WALL,
@@ -24,7 +24,7 @@ public:
 		IMAGE_ID_SPACE,
 	};
 	Object() : mType( OBJ_WALL ), mGoalFlag( false ), mMoveX( 0 ), mMoveY( 0 ){}
-	//ƒXƒe[ƒWƒf[ƒ^‚Ì•¶š‚Å©•ª‚ğ‰Šú‰»
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ã®æ–‡å­—ã§è‡ªåˆ†ã‚’åˆæœŸåŒ–
 	void set( char c ){
 		switch ( c ){
 			case '#': mType = OBJ_WALL; break;
@@ -36,10 +36,10 @@ public:
 			case 'P': mType = Object::OBJ_MAN; mGoalFlag = true; break;
 		}
 	}
-	//•`‰æB”wŒi•`‰æ
+	//æç”»ã€‚èƒŒæ™¯æç”»
 	void drawBackground( int x, int y, const Image* image ) const {
 		ImageID id = IMAGE_ID_SPACE;
-		//•Ç‚È‚ç•Ç
+		//å£ãªã‚‰å£
 		if ( mType == OBJ_WALL ){
 			drawCell( x, y, IMAGE_ID_WALL, image );
 		}else{
@@ -51,16 +51,16 @@ public:
 		}
 	}
 	void drawForeground( int x, int y, const Image* image, int moveCount ) const {
-		//“®‚­‚Ì‚Íl‚Æ‰×•¨‚¾‚¯B
-		ImageID id = IMAGE_ID_SPACE; //‘OŒi‚ª‚È‚¢ƒtƒ‰ƒO‚Æ‚µ‚Äg‚¤
+		//å‹•ãã®ã¯äººã¨è·ç‰©ã ã‘ã€‚
+		ImageID id = IMAGE_ID_SPACE; //å‰æ™¯ãŒãªã„ãƒ•ãƒ©ã‚°ã¨ã—ã¦ä½¿ã†
 		if ( mType == OBJ_BLOCK ){
 			id = IMAGE_ID_BLOCK;
 		}else if ( mType == OBJ_MAN ){
 			id = IMAGE_ID_PLAYER;
 		}
-		if ( id != IMAGE_ID_SPACE ){ //”wŒiˆÈŠO‚È‚ç
-			const int m = State::MAX_MOVE_COUNT; //’·‚¢‚Ì‚Å•Ê–¼
-			//ˆÚ“®‚ğŒvZ
+		if ( id != IMAGE_ID_SPACE ){ //èƒŒæ™¯ä»¥å¤–ãªã‚‰
+			const int m = State::MAX_MOVE_COUNT; //é•·ã„ã®ã§åˆ¥å
+			//ç§»å‹•ã‚’è¨ˆç®—
 			int dx = ( mMoveX * ( m - moveCount ) * 32 ) / m;
 			int dy = ( mMoveY * ( m - moveCount ) * 32 ) / m;
 			image->draw( x*32 - dx, y*32 - dy, id*32, 0, 32, 32 );
@@ -73,7 +73,7 @@ public:
 	const Image* image ){
 		image->draw( x*32, y*32, id*32, 0, 32, 32 );
 	}
-	//ˆÚ“®‚ğƒZƒbƒgB‘æ3ˆø”‚Í’u‚«Š·‚í‚éƒ^ƒCƒv
+	//ç§»å‹•ã‚’ã‚»ãƒƒãƒˆã€‚ç¬¬3å¼•æ•°ã¯ç½®ãæ›ã‚ã‚‹ã‚¿ã‚¤ãƒ—
 	void move( int dx, int dy, Type replaced ){
 		mMoveX = dx;
 		mMoveY = dy;
@@ -86,11 +86,11 @@ public:
 };
 
 State::State( const char* stageData, int size ) : mImage( 0 ),mMoveCount( 0 ){	
-	//ƒTƒCƒY‘ª’è
+	//ã‚µã‚¤ã‚ºæ¸¬å®š
 	setSize( stageData, size );
-	//”z—ñŠm•Û
+	//é…åˆ—ç¢ºä¿
 	mObjects.setSize( mWidth, mHeight );
-	//ƒXƒe[ƒW‰Šúİ’è
+	//ã‚¹ãƒ†ãƒ¼ã‚¸åˆæœŸè¨­å®š
 	int x = 0;
 	int y = 0;
 	for ( int i = 0; i < size; ++i ){
@@ -102,10 +102,10 @@ State::State( const char* stageData, int size ) : mImage( 0 ),mMoveCount( 0 ){
 				mObjects( x, y ).set( stageData[ i ] );
 				++x;
 				break;
-			case '\n': x = 0; ++y; break; //‰üsˆ—
+			case '\n': x = 0; ++y; break; //æ”¹è¡Œå‡¦ç†
 		}
 	}
-	//‰æ‘œ“Ç‚İ‚İ
+	//ç”»åƒèª­ã¿è¾¼ã¿
 	mImage = new Image( "nimotsuKunImage2.dds" );
 }
 
@@ -114,8 +114,8 @@ State::~State(){
 }
 
 void State::setSize( const char* stageData, int size ){
-	mWidth = mHeight = 0; //‰Šú‰»
-	//Œ»İˆÊ’u
+	mWidth = mHeight = 0; //åˆæœŸåŒ–
+	//ç¾åœ¨ä½ç½®
 	int x = 0;
 	int y = 0;
 	for ( int i = 0; i < size; ++i ){
@@ -126,7 +126,7 @@ void State::setSize( const char* stageData, int size ){
 				break;
 			case '\n': 
 				++y;
-				//Å‘å’lXV
+				//æœ€å¤§å€¤æ›´æ–°
 				mWidth = ( mWidth > x ) ? mWidth : x;
 				mHeight = ( mHeight > y ) ? mHeight : y;
 				x = 0; 
@@ -136,13 +136,13 @@ void State::setSize( const char* stageData, int size ){
 }
 
 void State::draw() const {
-	//“ñ’iŠK‚É•ª‚¯‚Ä•`‰æ‚·‚éB‚Ü‚¸”wŒi‚ğ•`‰æB
+	//äºŒæ®µéšã«åˆ†ã‘ã¦æç”»ã™ã‚‹ã€‚ã¾ãšèƒŒæ™¯ã‚’æç”»ã€‚
 	for ( int y = 0; y < mHeight; ++y ){
 		for ( int x = 0; x < mWidth; ++x ){
 			mObjects( x, y ).drawBackground( x, y, mImage );
 		}
 	}
-	//Ÿ‚É‘OŒi‚ğ•`‰æ
+	//æ¬¡ã«å‰æ™¯ã‚’æç”»
 	for ( int y = 0; y < mHeight; ++y ){
 		for ( int x = 0; x < mWidth; ++x ){
 			mObjects( x, y ).drawForeground( x, y, mImage, mMoveCount );
@@ -151,10 +151,10 @@ void State::draw() const {
 }
 
 void State::update( int dx, int dy ){
-	//ˆÚ“®’†ƒJƒEƒ“ƒg‚ªMAX_MOVE_COUNT‚É’B‚µ‚½‚ç
+	//ç§»å‹•ä¸­ã‚«ã‚¦ãƒ³ãƒˆãŒMAX_MOVE_COUNTã«é”ã—ãŸã‚‰
 	if ( mMoveCount >= MAX_MOVE_COUNT ){
-		mMoveCount = 0; //Šª‚«–ß‚µ‚ÄA
-		//ˆÚ“®‚ğ‰Šú‰»
+		mMoveCount = 0; //å·»ãæˆ»ã—ã¦ã€
+		//ç§»å‹•ã‚’åˆæœŸåŒ–
 		for ( int y = 0; y < mHeight; ++y ){
 			for ( int x = 0; x < mWidth; ++x ){
 				mObjects( x, y ).mMoveX = 0;
@@ -162,16 +162,16 @@ void State::update( int dx, int dy ){
 			}
 		}
 	}
-	//ˆÚ“®’†‚ÍXV‚µ‚È‚¢B
+	//ç§»å‹•ä¸­ã¯æ›´æ–°ã—ãªã„ã€‚
 	if ( mMoveCount > 0 ){
 		++mMoveCount;
 		return;
 	}
-	//’Z‚¢•Ï”–¼‚ğ‚Â‚¯‚éB
+	//çŸ­ã„å¤‰æ•°åã‚’ã¤ã‘ã‚‹ã€‚
 	int w = mWidth;
 	int h = mHeight;
 	Array2D< Object >& o = mObjects;
-	//lÀ•W‚ğŒŸõ
+	//äººåº§æ¨™ã‚’æ¤œç´¢
 	int x, y;
 	bool found = false;
 	for ( y = 0; y < mHeight; ++y ){
@@ -185,39 +185,39 @@ void State::update( int dx, int dy ){
 			break;
 		}
 	}
-	//ˆÚ“®
-	//ˆÚ“®ŒãÀ•W
+	//ç§»å‹•
+	//ç§»å‹•å¾Œåº§æ¨™
 	int tx = x + dx;
 	int ty = y + dy;
-	//À•W‚ÌÅ‘åÅ¬ƒ`ƒFƒbƒNBŠO‚ê‚Ä‚¢‚ê‚Î•s‹–‰Â
+	//åº§æ¨™ã®æœ€å¤§æœ€å°ãƒã‚§ãƒƒã‚¯ã€‚å¤–ã‚Œã¦ã„ã‚Œã°ä¸è¨±å¯
 	if ( tx < 0 || ty < 0 || tx >= w || ty >= h ){
 		return;
 	}
-	//A.‚»‚Ì•ûŒü‚ª‹ó”’‚Ü‚½‚ÍƒS[ƒ‹Bl‚ªˆÚ“®B
+	//A.ãã®æ–¹å‘ãŒç©ºç™½ã¾ãŸã¯ã‚´ãƒ¼ãƒ«ã€‚äººãŒç§»å‹•ã€‚
 	if ( o( tx, ty ).mType == Object::OBJ_SPACE ){
 		o( tx, ty ).move( dx, dy, Object::OBJ_MAN );
 		o( x, y ).move( dx, dy, Object::OBJ_SPACE );
-		mMoveCount = 1; //ˆÚ“®ŠJn
-	//B.‚»‚Ì•ûŒü‚ª” B‚»‚Ì•ûŒü‚ÌŸ‚Ìƒ}ƒX‚ª‹ó”’‚Ü‚½‚ÍƒS[ƒ‹‚Å‚ ‚ê‚ÎˆÚ“®B
+		mMoveCount = 1; //ç§»å‹•é–‹å§‹
+	//B.ãã®æ–¹å‘ãŒç®±ã€‚ãã®æ–¹å‘ã®æ¬¡ã®ãƒã‚¹ãŒç©ºç™½ã¾ãŸã¯ã‚´ãƒ¼ãƒ«ã§ã‚ã‚Œã°ç§»å‹•ã€‚
 	}else if ( o( tx, ty ).mType == Object::OBJ_BLOCK ){
-		//2ƒ}ƒXæ‚ª”ÍˆÍ“à‚©ƒ`ƒFƒbƒN
+		//2ãƒã‚¹å…ˆãŒç¯„å›²å†…ã‹ãƒã‚§ãƒƒã‚¯
 		int tx2 = tx + dx;
 		int ty2 = ty + dy; 
-		if ( tx2 < 0 || ty2 < 0 || tx2 >= w || ty2 >= h ){ //‰Ÿ‚¹‚È‚¢
+		if ( tx2 < 0 || ty2 < 0 || tx2 >= w || ty2 >= h ){ //æŠ¼ã›ãªã„
 			return;
 		}
 		if ( o( tx2, ty2 ).mType == Object::OBJ_SPACE ){
-			//‡Ÿ“ü‚ê‘Ö‚¦
+			//é †æ¬¡å…¥ã‚Œæ›¿ãˆ
 			o( tx2, ty2 ).move( dx, dy, Object::OBJ_BLOCK );
 			o( tx, ty ).move( dx, dy, Object::OBJ_MAN );
 			o( x, y ).move( dx, dy, Object::OBJ_SPACE );
-			mMoveCount = 1; //ˆÚ“®ŠJn
+			mMoveCount = 1; //ç§»å‹•é–‹å§‹
 		}
 	}
 }
 
-//ƒuƒƒbƒN‚Ì‚Æ‚±‚ë‚ÌgoalFlag‚ªˆê‚Â‚Å‚àfalse‚È‚ç
-//‚Ü‚¾ƒNƒŠƒA‚µ‚Ä‚È‚¢
+//ãƒ–ãƒ­ãƒƒã‚¯ã®ã¨ã“ã‚ã®goalFlagãŒä¸€ã¤ã§ã‚‚falseãªã‚‰
+//ã¾ã ã‚¯ãƒªã‚¢ã—ã¦ãªã„
 bool State::hasCleared() const {
 	for ( int y = 0; y < mHeight; ++y ){
 		for ( int x = 0; x < mWidth; ++x ){

@@ -29,13 +29,13 @@ Pad* Pad::instance(){
 
 bool Pad::isOn( Button b, int id ) const {
 	bool r = false;
-	//ƒWƒ‡ƒCƒXƒeƒBƒbƒN‚ ‚éH
+	//ã‚¸ãƒ§ã‚¤ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚ã‚‹ï¼Ÿ
 	Manager m = Manager::instance();
 	if ( m.joystickNumber() > id ){
 		Joystick j = m.joystick( id );
 		switch ( b ){
 			case JUMP:
-				r = ( j.isOn( 0 ) ) ? 1 : 0; //0”Ôƒ{ƒ^ƒ“‚ªƒWƒƒƒ“ƒv
+				r = ( j.isOn( 0 ) ) ? 1 : 0; //0ç•ªãƒœã‚¿ãƒ³ãŒã‚¸ãƒ£ãƒ³ãƒ—
 				break;
 			case UP:
 				r = ( j.isOn( Joystick::BUTTON_UP ) ) ? 1 : 0;
@@ -52,7 +52,7 @@ bool Pad::isOn( Button b, int id ) const {
 			default: ASSERT( false ); break;
 		}
 	}
-	//ƒL[ƒ{[ƒh‚ğ’Ç‰Á
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã‚’è¿½åŠ 
 	Keyboard k = m.keyboard();
 	if ( id == 0 ){ //1P
 		char c = 0;
@@ -82,13 +82,13 @@ bool Pad::isOn( Button b, int id ) const {
 
 bool Pad::isTriggered( Button b, int id ) const {
 	bool r = false;
-	//ƒWƒ‡ƒCƒXƒeƒBƒbƒN‚ ‚éH
+	//ã‚¸ãƒ§ã‚¤ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚ã‚‹ï¼Ÿ
 	Manager m = Manager::instance();
 	if ( m.joystickNumber() > id ){
 		Joystick j = m.joystick( id );
 		switch ( b ){
 			case JUMP:
-				r = ( j.isTriggered( 0 ) ) ? 1 : 0; //0”Ôƒ{ƒ^ƒ“‚ªƒWƒƒƒ“ƒv
+				r = ( j.isTriggered( 0 ) ) ? 1 : 0; //0ç•ªãƒœã‚¿ãƒ³ãŒã‚¸ãƒ£ãƒ³ãƒ—
 				break;
 			case UP:
 				r = ( j.isTriggered( Joystick::BUTTON_UP ) ) ? 1 : 0;
@@ -105,7 +105,7 @@ bool Pad::isTriggered( Button b, int id ) const {
 			default: ASSERT( false ); break;
 		}
 	}
-	//ƒL[ƒ{[ƒh‚ğ’Ç‰Á
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã‚’è¿½åŠ 
 	Keyboard k = m.keyboard();
 	if ( id == 0 ){ //1P
 		char c = 0;

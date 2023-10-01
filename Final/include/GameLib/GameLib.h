@@ -9,14 +9,14 @@ namespace GameLib{
 	void halt( const char* filename, int line, const char* message );
 }
 
-//ƒ}ƒNƒ—Ş
-#define STRONG_ASSERT( exp ) ( ( !! ( exp ) ) || ( GameLib::halt( __FILE__, __LINE__, #exp ), 0 ) ) //‚±‚Ìs‚ÌˆÓ–¡‚ğ—‰ğ‚·‚é‚Ì‚Í‘Š“–“ï‚µ‚¢
+//ãƒã‚¯ãƒ­é¡
+#define STRONG_ASSERT( exp ) ( ( !! ( exp ) ) || ( GameLib::halt( __FILE__, __LINE__, #exp ), 0 ) ) //ã“ã®è¡Œã®æ„å‘³ã‚’ç†è§£ã™ã‚‹ã®ã¯ç›¸å½“é›£ã—ã„
 #define HALT( exp ) { GameLib::halt( __FILE__, __LINE__, #exp ); }
 #define SAFE_DELETE( x ) { delete ( x ); ( x ) = 0; }
 #define SAFE_DELETE_ARRAY( x ) { delete[] ( x ); ( x ) = 0; }
 #define OPERATOR_DELETE( x ) { operator delete( x ); ( x ) = 0; }
 
-//ƒfƒoƒO‚ÆƒŠƒŠ[ƒX‚Å•ªŠò‚·‚é‚à‚Ì
+//ãƒ‡ãƒã‚°ã¨ãƒªãƒªãƒ¼ã‚¹ã§åˆ†å²ã™ã‚‹ã‚‚ã®
 #ifndef NDEBUG
 #define NEW new( __FILE__, __LINE__ )
 #define OPERATOR_NEW( x ) operator new( ( x ), __FILE__, __LINE__ ) 
@@ -27,7 +27,7 @@ namespace GameLib{
 #define ASSERT( exp ) 
 #endif //NDEBUG
 
-//ƒx[ƒXƒT[ƒrƒXƒwƒbƒ_
+//ãƒ™ãƒ¼ã‚¹ã‚µãƒ¼ãƒ“ã‚¹ãƒ˜ãƒƒãƒ€
 #include "Base/DebugStream.h"
 #include "Base/Array.h"
 #include "Base/AutoPtr.h"

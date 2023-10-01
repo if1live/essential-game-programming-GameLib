@@ -35,17 +35,17 @@ const Vector3& diffuseColor,
 const Vector3& position0,
 const Vector3& position1,
 const Vector3& position2 ){
-	//–@ü‚ğŒvZ‚µ‚æ‚¤B
+	//æ³•ç·šã‚’è¨ˆç®—ã—ã‚ˆã†ã€‚
 	Vector3 n;
 	Vector3 p01, p02;
 	p01.setSub( position1, position0 );
 	p02.setSub( position2, position0 );
 	n.setCross( p01, p02 );
-	//‚±‚ê‚Æƒ‰ƒCƒgƒxƒNƒ^‚Ì“àÏ‚ğæ‚éB
+	//ã“ã‚Œã¨ãƒ©ã‚¤ãƒˆãƒ™ã‚¯ã‚¿ã®å†…ç©ã‚’å–ã‚‹ã€‚
 	double cosine = lightVector.dot( n );
-	cosine /= n.length(); //–@ü‚Ì’·‚³‚ÅŠ„‚é
+	cosine /= n.length(); //æ³•ç·šã®é•·ã•ã§å‰²ã‚‹
 	if ( cosine < 0.0 ){
-		cosine = 0.0; //•‰‚Í‚È‚¢
+		cosine = 0.0; //è² ã¯ãªã„
 	}
 	Vector3 c;
 	c.x = lightColor.x * diffuseColor.x * cosine + ambient.x;
@@ -67,7 +67,7 @@ mVertexBuffer( 0 ),
 mIndexBuffer( 0 ),
 mTexture( 0 ),
 mBlendMode( Framework::BLEND_OPAQUE ){
-	//–¼‘O‚â‚ç‚È‚É‚â‚ç‚ğ”²‚­
+	//åå‰ã‚„ã‚‰ãªã«ã‚„ã‚‰ã‚’æŠœã
 	int an = e.attributeNumber();
 	for ( int i = 0; i < an; ++i ){
 		Attribute a = e.attribute( i );
@@ -118,29 +118,29 @@ const Vector3& lightColor,
 const Vector3& ambient,
 const Vector3& diffuseColor ) const {
 	Framework f = Framework::instance();
-	//ƒeƒNƒXƒ`ƒƒƒZƒbƒg
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚»ãƒƒãƒˆ
 	if ( mTexture ){
 		mTexture->set();
 	}else{
-		f.setTexture( 0 ); //‹ó‚ÌƒeƒNƒXƒ`ƒƒ
+		f.setTexture( 0 ); //ç©ºã®ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	}
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhƒZƒbƒg
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰ã‚»ãƒƒãƒˆ
 	f.setBlendMode( mBlendMode );
-	//ƒuƒŒƒ“ƒhƒ‚[ƒh‚É‚æ‚Á‚ÄZƒoƒbƒtƒ@‘‚«‚İ‚Ìƒtƒ‰ƒO‚ğOn,Off
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰ã«ã‚ˆã£ã¦Zãƒãƒƒãƒ•ã‚¡æ›¸ãè¾¼ã¿ã®ãƒ•ãƒ©ã‚°ã‚’On,Off
 	if ( mBlendMode == Framework::BLEND_OPAQUE ){
 		f.enableDepthWrite( true );
 	}else{
 		f.enableDepthWrite( false );
 	}
-	//ZƒeƒXƒg‚Í‚¢‚Â‚àOn
+	//Zãƒ†ã‚¹ãƒˆã¯ã„ã¤ã‚‚On
 	f.enableDepthTest( true );
-	//’¸“_‚ğƒ[ƒ‹ƒh‚É•ÏŠ·
+	//é ‚ç‚¹ã‚’ãƒ¯ãƒ¼ãƒ«ãƒ‰ã«å¤‰æ›
 	int vertexNumber = mVertexBuffer->size();
 	Vector3* wv = new Vector3[ vertexNumber ];
 	for ( int i = 0;i < vertexNumber; ++i ){
 		wm.multiply( &wv[ i ], *mVertexBuffer->position( i ) );
 	}
-	//’¸“_‚ğÅI•ÏŠ·
+	//é ‚ç‚¹ã‚’æœ€çµ‚å¤‰æ›
 	double* fv = new double[ vertexNumber * 4 ]; //final vertices
 	for ( int i = 0;i < vertexNumber; ++i ){
 		pvm.multiply( &fv[ i * 4 ], wv[ i ] );
@@ -150,13 +150,13 @@ const Vector3& diffuseColor ) const {
 		unsigned i0 = mIndexBuffer->index( i * 3 + 0 );
 		unsigned i1 = mIndexBuffer->index( i * 3 + 1 );
 		unsigned i2 = mIndexBuffer->index( i * 3 + 2 );
-		//ƒ[ƒJƒ‹’¸“_‚Åƒ‰ƒCƒeƒBƒ“ƒO‚ğs‚¤BŒ‹‰Ê‚Íunsigned‚É‚È‚é
+		//ãƒ­ãƒ¼ã‚«ãƒ«é ‚ç‚¹ã§ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°ã‚’è¡Œã†ã€‚çµæœã¯unsignedã«ãªã‚‹
 		unsigned c = light(
 			lightVector,
 			lightColor,
 			ambient,
 			diffuseColor,
-			wv[ i0 ],  //ƒ[ƒ‹ƒh’¸“_‚ğ“n‚·
+			wv[ i0 ],  //ãƒ¯ãƒ¼ãƒ«ãƒ‰é ‚ç‚¹ã‚’æ¸¡ã™
 			wv[ i1 ], 
 			wv[ i2 ] );
 		f.drawTriangle3DH(

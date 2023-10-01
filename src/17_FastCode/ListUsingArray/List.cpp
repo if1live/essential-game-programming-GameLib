@@ -1,28 +1,28 @@
 #include "List.h"
 
-//�_�~�[�v�f���g�����ƂŃR�[�h���Ƃ��Ă��ȒP�ɁI
+//ダミー要素を使うことでコードがとっても簡単に！
 static const int DUMMY_HEAD = 0;
 static const int DUMMY_TAIL = 1;
 
-//�擪�Ɩ��������ʈ�������Ȃ��悤�ɂ�����ƍH�v�����Ă���B
+//先頭と末尾が特別扱いされないようにちょっと工夫をしている。
 List::List( int capacity ) : 
 mNodes( 0 ),
 mAddPosition( 0 ),
 mCapacity( capacity + 2 ){
 	mNodes = new Node[ capacity + 2 ];
-	//0�Ԃ͓��ʁB�ŏ��̗v�f�̑O�ɂ���_�~�[�v�f�B
+	//0番は特別。最初の要素の前にあるダミー要素。
 	Node* e;
 	e = &mNodes[ DUMMY_HEAD ];
 	e->mNext = 1;
 	e->mPrev = -1;
 	e->mValue = 0.0;
-	//1�Ԃ����ʁB�Ō�̗v�f�̂���Ɍ�ɂ���_�~�[�v�f�B
+	//1番も特別。最後の要素のさらに後にあるダミー要素。
 	e = &mNodes[ DUMMY_TAIL ];
 	e->mNext = -1;
 	e->mPrev = 0;
 	e->mValue = 0.0;
 
-	mAddPosition = 2; //2�Ԗڂ���ǉ��J�n
+	mAddPosition = 2; //2番目から追加開始
 }
 
 List::~List(){
@@ -31,19 +31,19 @@ List::~List(){
 }
 
 int List::addAfter( int position, double v ){
-	//�����ꏊ��addPosition
+	//足す場所はaddPosition
 	Node* e = &mNodes[ mAddPosition ];
-	//�w��̓z�����o��
+	//指定の奴を取り出す
 	Node* cur = &mNodes[ position ];
-	//���̓z�����o��
+	//次の奴を取り出す
 	Node* next = &mNodes[ cur->mNext ];
-	//�l�i�[
+	//値格納
 	e->mValue = v;
-	e->mPrev = position; //�w��ꏊ���O��
-	e->mNext = cur->mNext; //�w��̎��̂�����
-	//�w��̓z�͑O�ɂȂ�̂ŁA���͑������z�ɂȂ�
+	e->mPrev = position; //指定場所が前に
+	e->mNext = cur->mNext; //指定の次のが次に
+	//指定の奴は前になるので、次は足した奴になる
 	cur->mNext = mAddPosition;
-	//�w��̎��̓z�͌�ɂȂ�̂ŁA�O�͑������z�ɂȂ�
+	//指定の次の奴は後になるので、前は足した奴になる
 	next->mPrev = mAddPosition;
 	++mAddPosition;
 
@@ -51,19 +51,19 @@ int List::addAfter( int position, double v ){
 }
 
 int List::addBefore( int position, double v ){
-	//�����ꏊ��addPosition
+	//足す場所はaddPosition
 	Node* e = &mNodes[ mAddPosition ];
-	//�w��̓z�����o��
+	//指定の奴を取り出す
 	Node* cur = &mNodes[ position ];
-	//�O�̓z�����o��
+	//前の奴を取り出す
 	Node* prev = &mNodes[ cur->mPrev ];
-	//�l�i�[
+	//値格納
 	e->mValue = v;
-	e->mPrev = cur->mPrev; //�w��̑O�̓z���O
-	e->mNext = position; //�w��̓z����
-	//�w��̓z�͌�ɂȂ�̂ŁA�O�͑������z�ɂȂ�
+	e->mPrev = cur->mPrev; //指定の前の奴が前
+	e->mNext = position; //指定の奴が次
+	//指定の奴は後になるので、前は足した奴になる
 	cur->mPrev = mAddPosition;
-	//�w��̑O�̓z�͑O�ɂȂ�̂ŁA��͑������z�ɂȂ�
+	//指定の前の奴は前になるので、後は足した奴になる
 	prev->mNext = mAddPosition;
 	++mAddPosition;
 
@@ -71,37 +71,37 @@ int List::addBefore( int position, double v ){
 }
 
 int List::addHead( double v ){
-	return addBefore( first(), v ); //�_�~�[�v�f�̂������ł���������B
+	return addBefore( first(), v ); //ダミー要素のおかげでこう書ける。
 }
 
 int List::addTail( double v ){
-	return addAfter( last(), v ); //�_�~�[�v�f�̂������ł���������
+	return addAfter( last(), v ); //ダミー要素のおかげでこう書ける
 }
 
 void List::remove( int position ){
-	//�w��̓z
+	//指定の奴
 	Node* cur = &mNodes[ position ];
-	//��
+	//次
 	Node* next = &mNodes[ cur->mNext ];
-	//�O
+	//前
 	Node* prev = &mNodes[ cur->mPrev ];
-	//�O�̓z�̎����A���ɂ���B
+	//前の奴の次を、次にする。
 	prev->mNext = cur->mNext;
-	//���̓z�̑O���A�O�ɂ���B
+	//次の奴の前を、前にする。
 	next->mPrev = cur->mPrev;
 
-	//���܂��B�Ō���������悤�Ȃ�addPosition�������߂��Ă��B
-	//�����͑���������悤�ɂȂ邩���ȁB
+	//おまけ。最後を消したようならaddPositionを巻き戻してやる。
+	//少しは多く足せるようになるかもな。
 	if ( position == mAddPosition - 1 ){
 		--mAddPosition;
 	}
 }
 
-void List::removeHead(){ //����͂قƂ�Ǖʖ��B
+void List::removeHead(){ //これはほとんど別名。
 	remove( first() );
 }
 
-void List::removeTail(){ //����͂قƂ�Ǖʖ��B
+void List::removeTail(){ //これはほとんど別名。
 	remove( last() );
 }
 
@@ -111,18 +111,18 @@ double List::value( int position ) const {
 
 int List::next( int position ) const {
 	int r = mNodes[ position ].mNext;
-	return ( r >= 2 ) ? r : -1; //�_�~�[���w���Ă��-1�ɒu��
+	return ( r >= 2 ) ? r : -1; //ダミーを指してれば-1に置換
 }
 
 int List::previous( int position ) const {
 	int r = mNodes[ position ].mPrev;
-	return ( r >= 2 ) ? r : -1; //�_�~�[���w���Ă��-1�ɒu��
+	return ( r >= 2 ) ? r : -1; //ダミーを指してれば-1に置換
 }
 
 int List::first() const {
-	return mNodes[ DUMMY_HEAD ].mNext; //0�Ԗڂ̓_�~�[�擪�Ȃ̂ŁA���̎����{���̐擪
+	return mNodes[ DUMMY_HEAD ].mNext; //0番目はダミー先頭なので、その次が本当の先頭
 }
 
 int List::last() const {
-	return mNodes[ DUMMY_TAIL ].mPrev; //1�Ԗڂ̓_�~�[�����Ȃ̂ŁA���̑O���{���̖���
+	return mNodes[ DUMMY_TAIL ].mPrev; //1番目はダミー末尾なので、その前が本当の末尾
 }

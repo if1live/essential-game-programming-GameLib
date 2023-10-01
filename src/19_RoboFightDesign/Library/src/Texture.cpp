@@ -5,7 +5,7 @@
 using namespace GameLib::PseudoXml;
 
 Texture::Texture( Element& e ) : mTexture( 0 ){
-	//名前やらファイル名やらを抜く
+	//蜷榊燕繧�繧峨ヵ繧｡繧､繝ｫ蜷阪ｄ繧峨ｒ謚懊￥
 	int an = e.attributeNumber();
 	for ( int i = 0; i < an; ++i ){
 		Attribute a = e.attribute( i );

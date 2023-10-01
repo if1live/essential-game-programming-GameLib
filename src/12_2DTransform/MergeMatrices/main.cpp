@@ -25,46 +25,46 @@ namespace GameLib{
 		unsigned* vram = videoMemory();
 		int ww = width(); //window width
 		int wh = height(); //window height
-		//ˆê’U‘S•”^‚Á•‚É
+		//ä¸€æ—¦å…¨éƒ¨çœŸã£é»’ã«
 		for ( int i = 0; i < ww * wh; ++i ){
 			vram[ i ] = 0;
 		}
 		int iw = gImage->width(); //image width
 		int ih = gImage->height(); //image height
 
-		//s—ñ‚ğì‚ë‚¤
+		//è¡Œåˆ—ã‚’ä½œã‚ã†
 		double rotation = static_cast< double >( gCount );
-		//‰æ‘œ’†S‚ğŒ´“_‚ÉAŠg‘åA‰ñ“]A’†S‚ğ–ß‚·A‚Ì‡B
+		//ç”»åƒä¸­å¿ƒã‚’åŸç‚¹ã«ã€æ‹¡å¤§ã€å›è»¢ã€ä¸­å¿ƒã‚’æˆ»ã™ã€ã®é †ã€‚
 		Matrix23 translationMatrix1;
 		Matrix23 scalingMatrix;
 		Matrix23 rotationMatrix;
 		Matrix23 translationMatrix2;
-		//ˆÚ“®1(‰æ‘œ’†S‚ğŒ´“_‚É)
+		//ç§»å‹•1(ç”»åƒä¸­å¿ƒã‚’åŸç‚¹ã«)
 		translationMatrix1.setTranslation( Vector2( -iw/2, -ih/2 ) );
-		//Šg‘å
+		//æ‹¡å¤§
 		Vector2 scale( sin( rotation )*2.0 + 1.0, cos( rotation )*2.0 + 1.0 );
 		scalingMatrix.setScaling( Vector2( scale.x, scale.y ) );
-		//‰ñ“]
+		//å›è»¢
 		rotationMatrix.setRotation( rotation );
-		//–ß‚·
+		//æˆ»ã™
 		translationMatrix2.setTranslation( Vector2( iw/2, ih/2 ) );
-		//s—ñ‚Ì“‡(‹t‡)
+		//è¡Œåˆ—ã®çµ±åˆ(é€†é †)
 		Matrix23 transform;
 		transform = translationMatrix2;
 		transform *= rotationMatrix;
 		transform *= scalingMatrix;
 		transform *= translationMatrix1;
 
-		//3“_ì‚é
+		//3ç‚¹ä½œã‚‹
 		Vector2 a, b, c;
 		transform.multiply( &a, Vector2( 0, 0 ) );
 		transform.multiply( &b, Vector2( iw, 0 ) );
 		transform.multiply( &c, Vector2( 0, ih ) );
-		//b-a,c-a‚ğŒvZ
+		//b-a,c-aã‚’è¨ˆç®—
 		Vector2 ab, ac;
 		ab.setSub( b, a );
 		ac.setSub( c, a );
-		//•âŠÔŠJn
+		//è£œé–“é–‹å§‹
 		double rcpWidth = 1.0 / static_cast< double >( iw );
 		double rcpHeight = 1.0 / static_cast< double >( ih );
 		for ( int y = 0; y < ih; ++y ){
@@ -75,11 +75,11 @@ namespace GameLib{
 				double u = xf * rcpWidth;
 				Vector2 p;
 				p.setInterporation( a, ab, ac, u, v );
-				p -= Vector2( 0.5, 0.5 ); //“Y‚¦š‚Ö
+				p -= Vector2( 0.5, 0.5 ); //æ·»ãˆå­—ã¸
 				int rx, ry;
 				rx = round( p.x );
 				ry = round( p.y );
-				//”ÍˆÍ“à‚È‚ç“\‚è•t‚¯
+				//ç¯„å›²å†…ãªã‚‰è²¼ã‚Šä»˜ã‘
 				if ( rx >= 0 && rx < ww && ry >= 0 && ry < wh ){
 					vram[ ry * ww + rx ] = gImage->pixel( x, y );
 				}

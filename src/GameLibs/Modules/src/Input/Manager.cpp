@@ -9,10 +9,10 @@
 namespace GameLib{
 namespace Input{
 
-ManagerImpl* gManagerImpl; //—BˆêƒCƒ“ƒXƒ^ƒ“ƒX
+ManagerImpl* gManagerImpl; //å”¯ä¸€ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 
 Manager::Manager(){
-	//•ÊƒXƒŒƒbƒh‚©‚ç‚ÌŒÄ‚Ño‚µ‚Í‹–‚³‚È‚¢
+	//åˆ¥ã‚¹ãƒ¬ãƒƒãƒ‰ã‹ã‚‰ã®å‘¼ã³å‡ºã—ã¯è¨±ã•ãªã„
 	ASSERT( WindowCreator::isMainThread() && "you must call from MAIN thread" );
 }
 

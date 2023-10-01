@@ -9,14 +9,14 @@ int gCount = 0;
 namespace GameLib{
 	void Framework::update(){
 		sleep( 16 );
-		//1–‡–Ú‚Í•s“§–¾
+		//1æšç›®ã¯ä¸é€æ˜
 		setBlendMode( BLEND_OPAQUE );
 		double p00[ 2 ] = { 100.0, 100.0 };
 		double p01[ 2 ] = { 200.0, 120.0 };
 		double p02[ 2 ] = { 120.0, 200.0 };
 		drawTriangle2D( p00, p01, p02, 0, 0, 0, 0xffff8080, 0xff80ff80, 0xff8080ff );
 
-		//2–‡–Ú‚Í‚¨D‚İ‚Å
+		//2æšç›®ã¯ãŠå¥½ã¿ã§
 		setBlendMode( gBlendMode );  
 		double p10[ 2 ] = { 110.0, 110.0 };
 		double p11[ 2 ] = { 210.0, 130.0 };
@@ -30,7 +30,7 @@ namespace GameLib{
 			0x8080ff | alpha, 
 			0xff8080 | alpha );
 
-		//ƒXƒy[ƒX‚ÅØ‚è‘Ö‚¦
+		//ã‚¹ãƒšãƒ¼ã‚¹ã§åˆ‡ã‚Šæ›¿ãˆ
 		if ( Input::Manager::instance().keyboard().isTriggered( ' ' ) ){
 			switch ( gBlendMode ){
 				case BLEND_LINEAR: gBlendMode = BLEND_ADDITIVE; break;

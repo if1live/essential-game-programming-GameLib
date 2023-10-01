@@ -14,21 +14,21 @@ struct Circle{
 	Vector2 mVelocity;
 };
 Circle* gCircles = 0;
-const int N = 40; //‚±‚ê‚Ì“ñæŒÂ‚Å‚â‚é
-const double R = 2.0; //”¼Œa2‚Ë
-const double RSUM2 = ( R + R ) * ( R + R ); //”¼Œa˜a‚Ì“ñæ
+const int N = 40; //ã“ã‚Œã®äºŒä¹—å€‹ã§ã‚„ã‚‹
+const double R = 2.0; //åŠå¾„2ã­
+const double RSUM2 = ( R + R ) * ( R + R ); //åŠå¾„å’Œã®äºŒä¹—
 const Vector2 gMinimum( -160.0, -160.0 );
 const Vector2 gMaximum( 160.0, 160.0 );
-const int gHitListBlockSize = 10000; //‚Ä‚«‚Æ‚¤
-bool testCircles( int index0, int index1 ); //1ŒÂ‚Ã‚Â‚Ì”»’èŠÖ”(’:’†‚Å—Í‚Í—^‚¦‚È‚¢)
-void addForce( int i0, int i1 ); //—Í‚ğ‘«‚·‚Ì‚Í‚±‚Á‚¿
-const int MAX_LEVEL = 13; //Å‘å•ªŠ„’i”
+const int gHitListBlockSize = 10000; //ã¦ãã¨ã†
+bool testCircles( int index0, int index1 ); //1å€‹ã¥ã¤ã®åˆ¤å®šé–¢æ•°(æ³¨:ä¸­ã§åŠ›ã¯ä¸ãˆãªã„)
+void addForce( int i0, int i1 ); //åŠ›ã‚’è¶³ã™ã®ã¯ã“ã£ã¡
+const int MAX_LEVEL = 13; //æœ€å¤§åˆ†å‰²æ®µæ•°
 
-//----------------------‚±‚±‚ª‚±‚ÌÍ‚Ìƒ~ƒ\--------------Z--------------------------
+//----------------------ã“ã“ãŒã“ã®ç« ã®ãƒŸã‚½--------------Z--------------------------
 
-//“–‚½‚Á‚½ƒyƒA
+//å½“ãŸã£ãŸãƒšã‚¢
 struct HitPair{ 
-	bool operator<( const HitPair& a ) const { //ƒ\[ƒg‚É•K—v‚È•s“™†
+	bool operator<( const HitPair& a ) const { //ã‚½ãƒ¼ãƒˆã«å¿…è¦ãªä¸ç­‰å·
 		if ( mI0 < a.mI0 ){
 			return true;
 		}else if ( mI0 > a.mI0 ){
@@ -37,7 +37,7 @@ struct HitPair{
 			return ( mI1 < a.mI1 );
 		}
 	}
-	bool operator==( const HitPair& a ) const {//unique‚É•K—v‚È“‡
+	bool operator==( const HitPair& a ) const {//uniqueã«å¿…è¦ãªçµ±åˆ
 		return ( ( mI0 == a.mI0 ) && ( mI1 == a.mI1 ) );
 	}
 	int mI0;
@@ -57,7 +57,7 @@ struct Node{
 	mIndices( 0 ),
 	mIndexNumber ( 0 ){
 	}
-	//Ä‹A\’z(ˆø”‚Íx,y‚Ì”ÍˆÍ)
+	//å†å¸°æ§‹ç¯‰(å¼•æ•°ã¯x,yã®ç¯„å›²)
 	void build( 
 		double x0, 
 		double x1,
@@ -67,9 +67,9 @@ struct Node{
 		int* indexPos,
 		Node* nodes,
 		int* nodePos,
-		int restLevel, //‚ ‚Æ‰½‰ñ•ª—ô‚·‚é‚Ì‚©H
+		int restLevel, //ã‚ã¨ä½•å›åˆ†è£‚ã™ã‚‹ã®ã‹ï¼Ÿ
 		bool drawLine );
-	//Ä‹A”»’è
+	//å†å¸°åˆ¤å®š
 	void detect( list< HitPair* >& hitList, int* hitListBlockPos, int* test, int* hit ) const; 
 
 	Direction mDirection;
@@ -79,7 +79,7 @@ struct Node{
 	int mIndexNumber;
 };
 
-//” ”Ô†‚Æ‰~”Ô†‚ÌƒyƒA
+//ç®±ç•ªå·ã¨å††ç•ªå·ã®ãƒšã‚¢
 struct ObjPair{
 	void set( int box, int circle ){
 		mBox = box;
@@ -94,31 +94,31 @@ void processCollision( int* test, int* hit ){
 	*test = 0;
 	*hit = 0;
 #if 1
-	int n = N*N; //ŒÂ”‚Ë
+	int n = N*N; //å€‹æ•°ã­
 
-	//ƒm[ƒh”z—ñ‚ğ—pˆÓB
-	//Å‘åMAX_LEVEL’i‚É‚È‚é‚Ì‚ÅAƒm[ƒh‚Ì”‚Í2^MAX_LEVEL-1
-	//1’i‚È‚ç1A2’i‚È‚ç1+2A3’i‚È‚ç1+2+4A‚Æl‚¦‚Ä‚¢‚¯‚Î‚¢‚¢B
+	//ãƒãƒ¼ãƒ‰é…åˆ—ã‚’ç”¨æ„ã€‚
+	//æœ€å¤§MAX_LEVELæ®µã«ãªã‚‹ã®ã§ã€ãƒãƒ¼ãƒ‰ã®æ•°ã¯2^MAX_LEVEL-1
+	//1æ®µãªã‚‰1ã€2æ®µãªã‚‰1+2ã€3æ®µãªã‚‰1+2+4ã€ã¨è€ƒãˆã¦ã„ã‘ã°ã„ã„ã€‚
 	int nodePosMax = 1;
 	for ( int i = 0; i < MAX_LEVEL; ++i ){
 		nodePosMax *= 2;
 	}
 	nodePosMax -= 1;
-	//ƒCƒ“ƒfƒNƒX”‚ÌÅ‘å’l‚Í‚¢‚­‚Â‚É‚È‚é‚©H
-	//‘O‚à‚Á‚Ä‚Í‚í‚©‚ç‚È‚¢‚Ì‚Å100”{d•¡‚·‚é‚Æ‚µ‚Ä‚¨‚­B‚±‚ê‚Í‰ßèB
+	//ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹æ•°ã®æœ€å¤§å€¤ã¯ã„ãã¤ã«ãªã‚‹ã‹ï¼Ÿ
+	//å‰ã‚‚ã£ã¦ã¯ã‚ã‹ã‚‰ãªã„ã®ã§100å€é‡è¤‡ã™ã‚‹ã¨ã—ã¦ãŠãã€‚ã“ã‚Œã¯éå‰°ã€‚
 	int indexPosMax = n * 100;
 	Node* nodes = new Node[ nodePosMax ];
 	int* indices = new int[ indexPosMax ];
-	//‘æˆêƒm[ƒh‚ğ—pˆÓ‚·‚éB
+	//ç¬¬ä¸€ãƒãƒ¼ãƒ‰ã‚’ç”¨æ„ã™ã‚‹ã€‚
 	Node root;
 	root.mIndices = indices;
 	for ( int i = 0; i < n; ++i ){
 		root.mIndices[ i ] = i;
 	}
 	root.mIndexNumber = n;
-	int indexPos = n; //Ø‚èo‚µˆÊ’u
-	int nodePos = 1; //Ø‚èo‚µˆÊ’u
-	//Ä‹A\’z(‚±‚ÌŠÖ”‚Ì’†‚ª¡‰ñ‚Ìƒ~ƒ\)
+	int indexPos = n; //åˆ‡ã‚Šå‡ºã—ä½ç½®
+	int nodePos = 1; //åˆ‡ã‚Šå‡ºã—ä½ç½®
+	//å†å¸°æ§‹ç¯‰(ã“ã®é–¢æ•°ã®ä¸­ãŒä»Šå›ã®ãƒŸã‚½)
 	bool draw = true;
 	if ( Input::Manager::instance().keyboard().isOn( ' ' ) ){
 		draw = false;
@@ -132,69 +132,69 @@ void processCollision( int* test, int* hit ){
 		&indexPos, 
 		nodes, 
 		&nodePos, 
-		MAX_LEVEL - 1, //ŒãMAX_LEVEL-1‰ñ•ªŠ„‚·‚éA‚ÌˆÓ–¡B
+		MAX_LEVEL - 1, //å¾ŒMAX_LEVEL-1å›åˆ†å‰²ã™ã‚‹ã€ã®æ„å‘³ã€‚
 		draw );
-	//Ä‹A”»’è(‚±‚ÌŠÖ”‚Ì’†‚Í‚»‚ñ‚È‚É“ï‚µ‚­‚È‚¢)
+	//å†å¸°åˆ¤å®š(ã“ã®é–¢æ•°ã®ä¸­ã¯ãã‚“ãªã«é›£ã—ããªã„)
 	list< HitPair* > hitList;
 	int hitListBlockPos = gHitListBlockSize;
-	root.detect( hitList, &hitListBlockPos, test, hit ); //‘æ“ñˆø”‚ÍXV‚·‚é‚Ì‚Åƒ|ƒCƒ“ƒ^
+	root.detect( hitList, &hitListBlockPos, test, hit ); //ç¬¬äºŒå¼•æ•°ã¯æ›´æ–°ã™ã‚‹ã®ã§ãƒã‚¤ãƒ³ã‚¿
 
-	//d•¡”rœ‚µ‚ÄÕ“Ë‰“šB‚±‚±‚©‚ç‰º‚ÍArrayList3‚Æ“¯ˆêB
-	//ƒR[ƒh‚ğƒVƒ“ƒvƒ‹‚É‚µ‚Ä‚©‚Â‚‘¬‰»‚·‚é‚½‚ßA
-	//”z—ñ‚ÌƒŠƒXƒg‚ğ•’Ê‚Ì”z—ñ‚É’¼‚·
+	//é‡è¤‡æ’é™¤ã—ã¦è¡çªå¿œç­”ã€‚ã“ã“ã‹ã‚‰ä¸‹ã¯ArrayList3ã¨åŒä¸€ã€‚
+	//ã‚³ãƒ¼ãƒ‰ã‚’ã‚·ãƒ³ãƒ—ãƒ«ã«ã—ã¦ã‹ã¤é«˜é€ŸåŒ–ã™ã‚‹ãŸã‚ã€
+	//é…åˆ—ã®ãƒªã‚¹ãƒˆã‚’æ™®é€šã®é…åˆ—ã«ç›´ã™
 	HitPair* hitListArray = new HitPair[ hitList.size() * gHitListBlockSize ];
 	int hitListArraySize = 0;
-	typedef list< HitPair* >::iterator HIt; //•Ê–¼
+	typedef list< HitPair* >::iterator HIt; //åˆ¥å
 	int blockPos = 0;
 	int blockNumber = static_cast< int >( hitList.size() );
 	for ( HIt i = hitList.begin(); i != hitList.end(); ++i ){
-		//Œ»ƒuƒƒbƒN‚ÌƒTƒCƒY‚ğ‹‚ß‚éBÅŒã‚¾‚¯”‚ªˆá‚¤B“ü‚ê‚Ä‚¢‚é“r’†‚¾‚Á‚½‚©‚ç‚¾B
+		//ç¾ãƒ–ãƒ­ãƒƒã‚¯ã®ã‚µã‚¤ã‚ºã‚’æ±‚ã‚ã‚‹ã€‚æœ€å¾Œã ã‘æ•°ãŒé•ã†ã€‚å…¥ã‚Œã¦ã„ã‚‹é€”ä¸­ã ã£ãŸã‹ã‚‰ã ã€‚
 		int blockSize = ( blockPos == ( blockNumber - 1 ) ) ? hitListBlockPos : gHitListBlockSize;
 		for ( int j = 0; j < blockSize; ++j ){
 			hitListArray[ hitListArraySize ] = ( *i )[ j ];
 			++hitListArraySize;
 		}
-		SAFE_DELETE_ARRAY( *i ); //‚à‚¤‚¢‚ç‚È‚¢‚Ì‚ÅÁ‹
+		SAFE_DELETE_ARRAY( *i ); //ã‚‚ã†ã„ã‚‰ãªã„ã®ã§æ¶ˆå»
 		++blockPos;
 	}
 
-	//‚Ü‚¸ƒyƒA‚Ìˆê”Ô–Ú‚ªi‚Å‚ ‚é‚à‚Ì‚ª‚¢‚­‚Â‚ ‚é‚©‚ğ”‚¦‚é
+	//ã¾ãšãƒšã‚¢ã®ä¸€ç•ªç›®ãŒiã§ã‚ã‚‹ã‚‚ã®ãŒã„ãã¤ã‚ã‚‹ã‹ã‚’æ•°ãˆã‚‹
 	int* hitListSize = new int[ n ];
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	for ( int i = 0; i < n; ++i ){
 		hitListSize[ i ] = 0;
 	}
-	//ƒ‹[ƒv‚Å”‚¦‚é
+	//ãƒ«ãƒ¼ãƒ—ã§æ•°ãˆã‚‹
 	for ( int i = 0; i < hitListArraySize; ++i ){
 		++hitListSize[ hitListArray[ i ].mI0 ];
 	}
-	//hitListSize‚Í”‚¾‚ªA‚±‚ê‚ğæ“ª‚©‚çƒIƒtƒZƒbƒg‚É•ÏŠ·‚·‚éB
+	//hitListSizeã¯æ•°ã ãŒã€ã“ã‚Œã‚’å…ˆé ­ã‹ã‚‰ã‚ªãƒ•ã‚»ãƒƒãƒˆã«å¤‰æ›ã™ã‚‹ã€‚
 	int* hitListOffset = new int[ n ];
 	int offset = 0;
 	for ( int i = 0; i < n; ++i ){
 		hitListOffset[ i ] = offset;
 		offset += hitListSize[ i ];
-		hitListSize[ i ] = 0; //ƒTƒCƒY”z—ñ‚Í0‚É‚µ‚Ä‚µ‚Ü‚¤B
-		//Ÿ‚É“ü‚ê‚Ä‚¢‚­‚É‚±‚±‚É”‚¦‚È‚¨‚¹‚Î‚Ü‚½“¯‚¶‚à‚Ì‚ªŠ®¬‚·‚éB
-		//‘æO’iŠK‚Å‚Ç‚±‚Ü‚Å“ü‚ê‚½‚©‚ğŠo‚¦‚Ä‚¨‚­‚½‚ß‚Ì”z—ñ‚ğ•Ê‚Éì‚ç‚È‚¢‚½‚ß‚ÌŒÆ‘§‚ÈH•vB
+		hitListSize[ i ] = 0; //ã‚µã‚¤ã‚ºé…åˆ—ã¯0ã«ã—ã¦ã—ã¾ã†ã€‚
+		//æ¬¡ã«å…¥ã‚Œã¦ã„ãæ™‚ã«ã“ã“ã«æ•°ãˆãªãŠã›ã°ã¾ãŸåŒã˜ã‚‚ã®ãŒå®Œæˆã™ã‚‹ã€‚
+		//ç¬¬ä¸‰æ®µéšã§ã©ã“ã¾ã§å…¥ã‚ŒãŸã‹ã‚’è¦šãˆã¦ãŠããŸã‚ã®é…åˆ—ã‚’åˆ¥ã«ä½œã‚‰ãªã„ãŸã‚ã®å§‘æ¯ãªå·¥å¤«ã€‚
 	}
-	//•¨‘Ì”z—ñ‚ğŠm•ÛB‚¿‚å‚¤‚Çã‚Ìoffset‚É‡Œv‚ª“ü‚Á‚Ä‚¢‚éB
+	//ç‰©ä½“é…åˆ—ã‚’ç¢ºä¿ã€‚ã¡ã‚‡ã†ã©ä¸Šã®offsetã«åˆè¨ˆãŒå…¥ã£ã¦ã„ã‚‹ã€‚
 	int* hitArray = new int[ offset ];
 	for ( int i = 0; i < hitListArraySize; ++i ){
 		const HitPair& o = hitListArray[ i ];
 		hitArray[ hitListOffset[ o.mI0 ] + hitListSize[ o.mI0 ] ] = o.mI1;
-		++hitListSize[ o.mI0 ];//ƒTƒCƒY‚ğ+1B‚±‚Ìƒ‹[ƒv‚ğ”²‚¯‚½‚É‚ÍÅ‰‚É”‚¦‚½‚Æ“¯‚¶ó‘Ô‚É‚È‚Á‚Ä‚¢‚éB
+		++hitListSize[ o.mI0 ];//ã‚µã‚¤ã‚ºã‚’+1ã€‚ã“ã®ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ãŸæ™‚ã«ã¯æœ€åˆã«æ•°ãˆãŸæ™‚ã¨åŒã˜çŠ¶æ…‹ã«ãªã£ã¦ã„ã‚‹ã€‚
 	}
 	SAFE_DELETE_ARRAY( hitListArray );
 
-	//Œã‚Í” ‚²‚Æ‚Éˆ—Bsort‚àunique‚à‚µ‚È‚¢‚ªA” ˆê‚Âˆê‚Â‚ª¬‚³‚¢‚Ì‚Å‚¢‚ç‚È‚¢H•v‚ğ‚·‚é‚æ‚è’Pƒ‚É‚â‚Á‚½•û‚ª‘¬‚¢‚Ì‚¾B
+	//å¾Œã¯ç®±ã”ã¨ã«å‡¦ç†ã€‚sortã‚‚uniqueã‚‚ã—ãªã„ãŒã€ç®±ä¸€ã¤ä¸€ã¤ãŒå°ã•ã„ã®ã§ã„ã‚‰ãªã„å·¥å¤«ã‚’ã™ã‚‹ã‚ˆã‚Šå˜ç´”ã«ã‚„ã£ãŸæ–¹ãŒé€Ÿã„ã®ã ã€‚
 	for ( int i = 0; i < n; ++i ){
 		int* box = &hitArray[ hitListOffset[ i ] ];
 		int boxSize = hitListSize[ i ];
 		for ( int j = 0; j < boxSize; ++j ){
 			if ( box[ j ] >= 0 ){
 				addForce( i, box[ j ] );
-				//¡‚â‚Á‚½“z‚ªŒã‚ë‚É‚¢‚é‚æ‚¤‚È‚ç‚»‚¢‚Â‚ğ‚Â‚Ô‚·B
+				//ä»Šã‚„ã£ãŸå¥´ãŒå¾Œã‚ã«ã„ã‚‹ã‚ˆã†ãªã‚‰ãã„ã¤ã‚’ã¤ã¶ã™ã€‚
 				for ( int k = j + 1; k < boxSize; ++k ){
 					if ( box[ k ] == box[ j ] ){
 						box[ k ] = -1;
@@ -203,13 +203,13 @@ void processCollision( int* test, int* hit ){
 			}
 		}
 	}
-	//Œãn––
+	//å¾Œå§‹æœ«
 	SAFE_DELETE_ARRAY( hitArray );
 	SAFE_DELETE_ARRAY( hitListSize );
 	SAFE_DELETE_ARRAY( hitListOffset );
 	SAFE_DELETE_ARRAY( indices );
 	SAFE_DELETE_ARRAY( nodes );
-#else //ƒfƒoƒO—p‘“–‚è”Å
+#else //ãƒ‡ãƒã‚°ç”¨ç·å½“ã‚Šç‰ˆ
 	for ( int i = 0; i < N*N; ++i ){
 		for ( int j = i + 1; j < N*N; ++j ){
 			++( *test );
@@ -221,7 +221,7 @@ void processCollision( int* test, int* hit ){
 #endif
 }
 
-//‚±‚±‚ª¡‰ñ‚Ìƒ~ƒ\‚Å‚·‚æ
+//ã“ã“ãŒä»Šå›ã®ãƒŸã‚½ã§ã™ã‚ˆ
 void Node::build( 
 double x0, 
 double x1, 
@@ -231,11 +231,11 @@ int* indices,
 int* indexPos,
 Node* nodes,
 int* nodePos,
-int restLevel, //Œã‰½‰ñŠ„‚é‚©
+int restLevel, //å¾Œä½•å›å‰²ã‚‹ã‹
 bool draw ){
-	//‚±‚±‚Å‚Íˆê”Ô’Pƒ‚È•û–@‚ÅŠ„‚éB
-	//x,y‚Ì’·‚¢•û‚ÅŠ„‚é‚Ì‚¾B
-	double div; //•ªŠ„ü
+	//ã“ã“ã§ã¯ä¸€ç•ªå˜ç´”ãªæ–¹æ³•ã§å‰²ã‚‹ã€‚
+	//x,yã®é•·ã„æ–¹ã§å‰²ã‚‹ã®ã ã€‚
+	double div; //åˆ†å‰²ç·š
 	if ( ( x1 - x0 ) > ( y1 - y0 ) ){
 		mDirection = DIR_X;
 		div = ( x0 + x1 ) * 0.5;
@@ -243,30 +243,30 @@ bool draw ){
 		mDirection = DIR_Y;
 		div = ( y0 + y1 ) * 0.5;
 	}
-	//”‚¦‚é€”õ
+	//æ•°ãˆã‚‹æº–å‚™
 	int c0, c1;
-	c0 = c1 = 0; //¶‰Eƒm[ƒh‚ÉŠ„‚èU‚éOŠpŒ`‚Ì”
-	//qƒm[ƒhŠm•Û
+	c0 = c1 = 0; //å·¦å³ãƒãƒ¼ãƒ‰ã«å‰²ã‚ŠæŒ¯ã‚‹ä¸‰è§’å½¢ã®æ•°
+	//å­ãƒãƒ¼ãƒ‰ç¢ºä¿
 	mLeft = &nodes[ *nodePos + 0 ];
 	mRight = &nodes[ *nodePos + 1 ];
 	*nodePos += 2;
-	//Œã‚Í•ûŒü‚É‰‚¶‚Ä•ªŠò
+	//å¾Œã¯æ–¹å‘ã«å¿œã˜ã¦åˆ†å²
 	if ( mDirection == DIR_X ){
 		for ( int i = 0; i < mIndexNumber; ++i ){
-			const Circle& c = gCircles[ mIndices[ i ] ]; //ƒOƒ[ƒoƒ‹‚ÍŒ™‚¾‚ËBƒ}ƒl‚·‚é‚ñ‚¶‚á‚È‚¢‚æH
+			const Circle& c = gCircles[ mIndices[ i ] ]; //ã‚°ãƒ­ãƒ¼ãƒãƒ«ã¯å«Œã ã­ã€‚ãƒãƒã™ã‚‹ã‚“ã˜ã‚ƒãªã„ã‚ˆï¼Ÿ
 			const Vector2& p = c.mPosition;
-			if ( p.x - R <= div ){ ++c0; } //‚±‚±‚ÌƒR[ƒh‚Í”’l‰‰ZŒë·‚ğl‚¦‚é‚Æ•s“K“–Bl‚¦‚Ä‚İ‚æ‚¤B
-			if ( p.x + R >= div ){ ++c1; } //³‚µ‚­‚Í<= divX+e, >= divX-e‚Æ‚È‚éBe‚ÍŒë·‹–—e”ÍˆÍ‚¾B
+			if ( p.x - R <= div ){ ++c0; } //ã“ã“ã®ã‚³ãƒ¼ãƒ‰ã¯æ•°å€¤æ¼”ç®—èª¤å·®ã‚’è€ƒãˆã‚‹ã¨ä¸é©å½“ã€‚è€ƒãˆã¦ã¿ã‚ˆã†ã€‚
+			if ( p.x + R >= div ){ ++c1; } //æ­£ã—ãã¯<= divX+e, >= divX-eã¨ãªã‚‹ã€‚eã¯èª¤å·®è¨±å®¹ç¯„å›²ã ã€‚
 		}
-		//q”z—ñØ‚èo‚µ
+		//å­é…åˆ—åˆ‡ã‚Šå‡ºã—
 		mLeft->mIndices = indices + *indexPos;
 		*indexPos += c0;
 		mRight->mIndices = indices + *indexPos;
 		*indexPos += c1;
-		//•ª”z
+		//åˆ†é…
 		for ( int i = 0; i < mIndexNumber; ++i ){
 			int idx = mIndices[ i ];
-			const Circle& c = gCircles[ idx ]; //ƒOƒ[ƒoƒ‹‚ÍŒ™‚¾‚ËBƒ}ƒl‚·‚é‚ñ‚¶‚á‚È‚¢‚æH
+			const Circle& c = gCircles[ idx ]; //ã‚°ãƒ­ãƒ¼ãƒãƒ«ã¯å«Œã ã­ã€‚ãƒãƒã™ã‚‹ã‚“ã˜ã‚ƒãªã„ã‚ˆï¼Ÿ
 			const Vector2& p = c.mPosition;
 			if ( p.x - R <= div ){
 				mLeft->mIndices[ mLeft->mIndexNumber ] = idx;
@@ -277,15 +277,15 @@ bool draw ){
 				++mRight->mIndexNumber;
 			}
 		}
-		if ( restLevel > 1 ){ //q‚É‚Ü‚¾•ªŠ„‚³‚¹‚é‚È‚ç(>0‚Å‚È‚¢——R‚ğl‚¦‚Ä‚İ‚æ‚¤)
-			if ( c0 > 1 ){ //2ŒÂˆÈã‚È‚¢‚ÆŠ„‚éˆÓ–¡‚Í‚È‚¢
+		if ( restLevel > 1 ){ //å­ã«ã¾ã åˆ†å‰²ã•ã›ã‚‹ãªã‚‰(>0ã§ãªã„ç†ç”±ã‚’è€ƒãˆã¦ã¿ã‚ˆã†)
+			if ( c0 > 1 ){ //2å€‹ä»¥ä¸Šãªã„ã¨å‰²ã‚‹æ„å‘³ã¯ãªã„
 				mLeft->build( x0, div, y0, y1, indices, indexPos, nodes, nodePos, restLevel - 1, draw );
 			}
 			if ( c1 > 1 ){
 				mRight->build( div, x1, y0, y1, indices, indexPos, nodes, nodePos, restLevel - 1, draw );
 			}
 		}
-		if ( draw ){ //•ªŠ„ü•`‰æB
+		if ( draw ){ //åˆ†å‰²ç·šæç”»ã€‚
 			double p[ 4 ][ 2 ];
 			p[ 0 ][ 0 ] = p[ 1 ][ 0 ] = div - 0.25 + 160.0;
 			p[ 2 ][ 0 ] = p[ 3 ][ 0 ] = div + 0.25 + 160.0;
@@ -296,20 +296,20 @@ bool draw ){
 		}
 	}else{
 		for ( int i = 0; i < mIndexNumber; ++i ){
-			const Circle& c = gCircles[ mIndices[ i ] ]; //ƒOƒ[ƒoƒ‹‚ÍŒ™‚¾‚ËBƒ}ƒl‚·‚é‚ñ‚¶‚á‚È‚¢‚æH
+			const Circle& c = gCircles[ mIndices[ i ] ]; //ã‚°ãƒ­ãƒ¼ãƒãƒ«ã¯å«Œã ã­ã€‚ãƒãƒã™ã‚‹ã‚“ã˜ã‚ƒãªã„ã‚ˆï¼Ÿ
 			const Vector2& p = c.mPosition;
-			if ( p.y - R <= div ){ ++c0; } //‚±‚±‚ÌƒR[ƒh‚Í”’l‰‰ZŒë·‚ğl‚¦‚é‚Æ•s“K“–Bl‚¦‚Ä‚İ‚æ‚¤B
-			if ( p.y + R >= div ){ ++c1; } //³‚µ‚­‚Í<= divX+e, >= divX-e‚Æ‚È‚éBe‚ÍŒë·‹–—e”ÍˆÍ‚¾B
+			if ( p.y - R <= div ){ ++c0; } //ã“ã“ã®ã‚³ãƒ¼ãƒ‰ã¯æ•°å€¤æ¼”ç®—èª¤å·®ã‚’è€ƒãˆã‚‹ã¨ä¸é©å½“ã€‚è€ƒãˆã¦ã¿ã‚ˆã†ã€‚
+			if ( p.y + R >= div ){ ++c1; } //æ­£ã—ãã¯<= divX+e, >= divX-eã¨ãªã‚‹ã€‚eã¯èª¤å·®è¨±å®¹ç¯„å›²ã ã€‚
 		}
-		//q”z—ñØ‚èo‚µ
+		//å­é…åˆ—åˆ‡ã‚Šå‡ºã—
 		mLeft->mIndices = indices + *indexPos;
 		*indexPos += c0;
 		mRight->mIndices = indices + *indexPos;
 		*indexPos += c1;
-		//•ª”z
+		//åˆ†é…
 		for ( int i = 0; i < mIndexNumber; ++i ){
 			int idx = mIndices[ i ];
-			const Circle& c = gCircles[ idx ]; //ƒOƒ[ƒoƒ‹‚ÍŒ™‚¾‚ËBƒ}ƒl‚·‚é‚ñ‚¶‚á‚È‚¢‚æH
+			const Circle& c = gCircles[ idx ]; //ã‚°ãƒ­ãƒ¼ãƒãƒ«ã¯å«Œã ã­ã€‚ãƒãƒã™ã‚‹ã‚“ã˜ã‚ƒãªã„ã‚ˆï¼Ÿ
 			const Vector2& p = c.mPosition;
 			if ( p.y - R <= div ){
 				mLeft->mIndices[ mLeft->mIndexNumber ] = idx;
@@ -320,15 +320,15 @@ bool draw ){
 				++mRight->mIndexNumber;
 			}
 		}
-		if ( restLevel > 1 ){ //q‚É‚Ü‚¾•ªŠ„‚³‚¹‚é‚È‚ç(>0‚Å‚È‚¢——R‚ğl‚¦‚Ä‚İ‚æ‚¤)
-			if ( c0 > 1 ){ //2ŒÂˆÈã‚È‚¢‚ÆŠ„‚éˆÓ–¡‚Í‚È‚¢
+		if ( restLevel > 1 ){ //å­ã«ã¾ã åˆ†å‰²ã•ã›ã‚‹ãªã‚‰(>0ã§ãªã„ç†ç”±ã‚’è€ƒãˆã¦ã¿ã‚ˆã†)
+			if ( c0 > 1 ){ //2å€‹ä»¥ä¸Šãªã„ã¨å‰²ã‚‹æ„å‘³ã¯ãªã„
 				mLeft->build( x0, x1, y0, div, indices, indexPos, nodes, nodePos, restLevel - 1, draw );
 			}
 			if ( c1 > 1 ){
 				mRight->build( x0, x1, div, y1, indices, indexPos, nodes, nodePos, restLevel - 1, draw );
 			}
 		}
-		if ( draw ){ //•ªŠ„ü•`‰æB
+		if ( draw ){ //åˆ†å‰²ç·šæç”»ã€‚
 			double p[ 4 ][ 2 ];
 			p[ 0 ][ 0 ] = p[ 1 ][ 0 ] = x0 + 160.0;
 			p[ 2 ][ 0 ] = p[ 3 ][ 0 ] = x1 + 160.0;
@@ -338,16 +338,16 @@ bool draw ){
 			Framework::instance().drawTriangle2D( p[ 3 ], p[ 1 ], p[ 2 ], 0, 0, 0, 0xff00ff00, 0xff00ff00, 0xff00ff00 );
 		}
 	}
-	//©•ª‚Ì”z—ñ‚Í—v‚ç‚È‚¢B‚µ‚©‚µŠJ•ú‚Í‚Å‚«‚È‚¢‚Ì‚ÅAŠÔˆá‚¢‚ª‹N‚±‚ç‚Ê‚æ‚¤0‚É‚µ‚Ä‚¨‚­B
-	//‚È‚¨A‚±‚±‚ğŒã‚Ì•”•ª‚ÅÄ—˜—p‚·‚é‚æ‚¤‚ÉƒR[ƒh‚ğ‘‚­‚±‚Æ‚ào—ˆA
-	//‚»‚¤‚·‚ê‚Î‘O‚à‚Á‚ÄŠm•Û‚·‚é”z—ñ‚ğ‚©‚È‚è’Z‚­‚Å‚«‚é‚ªA‚©‚È‚è•¡G‚É‚È‚éB
+	//è‡ªåˆ†ã®é…åˆ—ã¯è¦ã‚‰ãªã„ã€‚ã—ã‹ã—é–‹æ”¾ã¯ã§ããªã„ã®ã§ã€é–“é•ã„ãŒèµ·ã“ã‚‰ã¬ã‚ˆã†0ã«ã—ã¦ãŠãã€‚
+	//ãªãŠã€ã“ã“ã‚’å¾Œã®éƒ¨åˆ†ã§å†åˆ©ç”¨ã™ã‚‹ã‚ˆã†ã«ã‚³ãƒ¼ãƒ‰ã‚’æ›¸ãã“ã¨ã‚‚å‡ºæ¥ã€
+	//ãã†ã™ã‚Œã°å‰ã‚‚ã£ã¦ç¢ºä¿ã™ã‚‹é…åˆ—ã‚’ã‹ãªã‚ŠçŸ­ãã§ãã‚‹ãŒã€ã‹ãªã‚Šè¤‡é›‘ã«ãªã‚‹ã€‚
 	mIndices = 0;
 	mIndexNumber = 0;
 }
 
-//g‚¤•û‚ÍŠÈ’P
+//ä½¿ã†æ–¹ã¯ç°¡å˜
 void Node::detect( list< HitPair* >& hitList, int* hitListBlockPos, int* test, int* hit ) const{
-	if ( mDirection == DIR_NONE ){ //•ªŠ„‚ª‚È‚¢ƒCƒR[ƒ‹‚±‚±‚ªI“_B
+	if ( mDirection == DIR_NONE ){ //åˆ†å‰²ãŒãªã„ã‚¤ã‚³ãƒ¼ãƒ«ã“ã“ãŒçµ‚ç‚¹ã€‚
 		for ( int i = 0; i < mIndexNumber; ++i ){
 			int i0 = mIndices[ i ];
 			for ( int j = i + 1; j < mIndexNumber; ++j ){
@@ -356,7 +356,7 @@ void Node::detect( list< HitPair* >& hitList, int* hitListBlockPos, int* test, i
 				if ( testCircles( i0, i1 ) ){
 					++( *hit );
 					HitPair hit;
-					//“¯‚¶ƒyƒA‚Í“¯‚¶‚Å‚È‚¢‚Æ¢‚é‚Ì‚ÅA¬‚³‚¢•û‚ğ‘O‚É‚·‚é
+					//åŒã˜ãƒšã‚¢ã¯åŒã˜ã§ãªã„ã¨å›°ã‚‹ã®ã§ã€å°ã•ã„æ–¹ã‚’å‰ã«ã™ã‚‹
 					if ( i0 < i1 ){
 						hit.mI0 = i0;
 						hit.mI1 = i1;
@@ -373,26 +373,26 @@ void Node::detect( list< HitPair* >& hitList, int* hitListBlockPos, int* test, i
 				}
 			}
 		}
-	}else{ //q‚ª‚¢‚é‚Ì‚Åq‚É“n‚·B
+	}else{ //å­ãŒã„ã‚‹ã®ã§å­ã«æ¸¡ã™ã€‚
 		mLeft->detect( hitList, hitListBlockPos, test, hit );
 		mRight->detect( hitList, hitListBlockPos, test, hit );
 	}
 }
 
 
-//----------------------‚±‚±‚©‚ç‰º‚Í‚±‚ÌÍ‚Ì–{‹Ø‚Å‚Í‚È‚¢ƒR[ƒh---------------------------
+//----------------------ã“ã“ã‹ã‚‰ä¸‹ã¯ã“ã®ç« ã®æœ¬ç­‹ã§ã¯ãªã„ã‚³ãƒ¼ãƒ‰---------------------------
 
-//2ŒÂ‚Ìcircle‚ğˆ—‚·‚é’†gB“–‚½‚é‚Ætrue
+//2å€‹ã®circleã‚’å‡¦ç†ã™ã‚‹ä¸­èº«ã€‚å½“ãŸã‚‹ã¨true
 bool testCircles( int i0, int i1 ){
 	Circle& c0 = gCircles[ i0 ];
 	const Vector2& p0 = c0.mPosition;
 	Circle& c1 = gCircles[ i1 ];
 	const Vector2& p1 = c1.mPosition;
-	//‹——£‚ÍH
+	//è·é›¢ã¯ï¼Ÿ
 	Vector2 t;
 	t.setSub( p1, p0 );
 	double sql = t.squareLength();
-	if ( sql < RSUM2 ){ //”¼Œa‚Í4‚Å‚¢‚¢‚¾‚ë
+	if ( sql < RSUM2 ){ //åŠå¾„ã¯4ã§ã„ã„ã ã‚
 		return true;
 	}else{
 		return false;
@@ -403,8 +403,8 @@ void addForce( int i0, int i1 ){
 	Vector2 t;
 	t.setSub( gCircles[ i0 ].mPosition, gCircles[ i1 ].mPosition );
 	double l = t.length();
-	t *= 0.25 / l; //“K“–‚É’·‚³‚ğ’²®
-	//‚Í‚¶‚«•Ô‚·Bt‚Íp0->p1‚ÌƒxƒNƒ^‚¾‚©‚çA‚±‚ê‚ğc1‚É‘«‚µAc0‚©‚çˆø‚­B
+	t *= 0.25 / l; //é©å½“ã«é•·ã•ã‚’èª¿æ•´
+	//ã¯ã˜ãè¿”ã™ã€‚tã¯p0->p1ã®ãƒ™ã‚¯ã‚¿ã ã‹ã‚‰ã€ã“ã‚Œã‚’c1ã«è¶³ã—ã€c0ã‹ã‚‰å¼•ãã€‚
 	gCircles[ i0 ].mVelocity += t;
 	gCircles[ i1 ].mVelocity -= t;
 }
@@ -413,27 +413,27 @@ namespace GameLib{
 	void Framework::update(){
 		if ( !gCircles ){
 			gCircles = new Circle[ N*N ];
-			//‰Šú”z’u
+			//åˆæœŸé…ç½®
 			for ( int i = 0; i < N*N; ++i ){
 				gCircles[ i ].mPosition.set( 
-					static_cast< double >( ( ( i % N ) - N/2 ) * 4 ) + 0.001 * i, //‚¿‚å‚Á‚Æ‚¸‚ç‚·
+					static_cast< double >( ( ( i % N ) - N/2 ) * 4 ) + 0.001 * i, //ã¡ã‚‡ã£ã¨ãšã‚‰ã™
 					static_cast< double >( ( ( i / N ) - N/2 ) * 4 ) );
 			}
 		}
-		//‘¬“x‰Šú‰»
+		//é€Ÿåº¦åˆæœŸåŒ–
 		for ( int i = 0;i < N*N; ++i ){
-			//‘¬“x‚ğŒ´“_•ûŒü‚Å‰Šú‰»
+			//é€Ÿåº¦ã‚’åŸç‚¹æ–¹å‘ã§åˆæœŸåŒ–
 			gCircles[ i ].mVelocity.setMul( gCircles[ i ].mPosition, -0.001 );
 		}
 		int test;
 		int hit;
-		processCollision( &test, &hit ); //Õ“ËŒŸoŠÖ”
+		processCollision( &test, &hit ); //è¡çªæ¤œå‡ºé–¢æ•°
 
-		//XV
+		//æ›´æ–°
 		for ( int i = 0;i < N*N; ++i ){
 			gCircles[ i ].mPosition += gCircles[ i ].mVelocity;
 
-			//•`‰æ
+			//æç”»
 			double p[ 4 ][ 2 ];
 			p[ 0 ][ 0 ] = p[ 1 ][ 0 ] = gCircles[ i ].mPosition.x - 0.5 + 160.0;
 			p[ 2 ][ 0 ] = p[ 3 ][ 0 ] = gCircles[ i ].mPosition.x + 0.5 + 160.0;

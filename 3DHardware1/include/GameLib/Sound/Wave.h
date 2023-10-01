@@ -7,14 +7,14 @@ namespace Sound{
 class Wave{
 public:
 	static Wave create( const char* filename );
-	///”gŒ`’¼“ü—Í(8bit)
+	///æ³¢å½¢ç›´å…¥åŠ›(8bit)
 	static Wave create( const unsigned char* data, int size, int frequency, int channelNumber ); 
-	///”gŒ`’¼“ü—Í(16bit)
+	///æ³¢å½¢ç›´å…¥åŠ›(16bit)
 	static Wave create( const short* data, int size, int frequency, int channelNumber );
-	bool isReady(); //ƒ[ƒhI‚í‚Á‚½H(const‚Å‚È‚¢‚Ì‚Í’†‚Åˆ—‚·‚é‚½‚ß)
-	bool isError() const; //ƒGƒ‰[‹N‚±‚Á‚Ä‚È‚¢H
+	bool isReady(); //ãƒ­ãƒ¼ãƒ‰çµ‚ã‚ã£ãŸï¼Ÿ(constã§ãªã„ã®ã¯ä¸­ã§å‡¦ç†ã™ã‚‹ãŸã‚)
+	bool isError() const; //ã‚¨ãƒ©ãƒ¼èµ·ã“ã£ã¦ãªã„ï¼Ÿ
 
-	//ˆÈ‰ºƒ†[ƒU‚ÍˆÓ¯‚µ‚È‚¢ŠÖ”ŒQ
+	//ä»¥ä¸‹ãƒ¦ãƒ¼ã‚¶ã¯æ„è­˜ã—ãªã„é–¢æ•°ç¾¤
 	Wave();
 	Wave( const Wave& );
 	~Wave();

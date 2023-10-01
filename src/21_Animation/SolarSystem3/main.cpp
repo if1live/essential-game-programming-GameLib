@@ -13,7 +13,7 @@ GraphicsDatabase* gDatabase;
 Tree* gSolarSystem;
 Node* gSun;
 Node* gEarth;
-Node* gMoonRevolution; //ŒŽŒö“](ƒ_ƒ~[)
+Node* gMoonRevolution; //æœˆå…¬è»¢(ãƒ€ãƒŸãƒ¼)
 
 int gCount;
 Vector3 gLightVector;
@@ -27,7 +27,7 @@ namespace GameLib{
 			setFrameRate( 60 );
 			gDatabase = new GraphicsDatabase( "solarSystem.txt" );
 			gSolarSystem = gDatabase->createTree( "solarSystem" );
-			/* eŽqŠÖŒW}B
+			/* è¦ªå­é–¢ä¿‚å›³ã€‚
 			                        +- earth
 			sun - earthTranslation -+
 			                        +- moonRevolution - moon
@@ -36,18 +36,18 @@ namespace GameLib{
 			gEarth = gSolarSystem->node( "earth" );
 			gMoonRevolution = gSolarSystem->node( "moonRevolution" );
 		}
-		//ƒJƒƒ‰‚Æƒ‰ƒCƒg‚ð“®‚©‚µ‚Ä‚Ý‚é
+		//ã‚«ãƒ¡ãƒ©ã¨ãƒ©ã‚¤ãƒˆã‚’å‹•ã‹ã—ã¦ã¿ã‚‹
 		gLightVector.x = sin( gCount ) * cos( gCount );
 		gLightVector.y = sin( gCount ) * sin( gCount );
 		gLightVector.z = cos( gCount );
-		//ƒrƒ…[s—ñA“§Ž‹•ÏŠ·s—ñ
+		//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã€é€è¦–å¤‰æ›è¡Œåˆ—
 		Matrix44 pm;
 		pm.setPerspectiveTransform( 45.0, width(), height(), 1.0, 10000.0 );
 		Matrix34 vm;
 		vm.setViewTransform( gEyePosition, Vector3( 0.0, 0.0, 0.0 ) );
 		pm *= vm;
 
-		//Šeƒm[ƒh‚É•ÏŠ·ƒZƒbƒg
+		//å„ãƒŽãƒ¼ãƒ‰ã«å¤‰æ›ã‚»ãƒƒãƒˆ
 		gSun->setRotation( Vector3( 0.0, gCount * 100.0 / 365.0, 0.0 ) );
 		gEarth->setRotation( Vector3( 0.0, gCount * 100.0 / 3.0, 0.0 ) );
 		gMoonRevolution->setRotation( Vector3( 0.0, gCount * 100.0 / 30.0, 0.0 ) );

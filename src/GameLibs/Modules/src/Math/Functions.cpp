@@ -46,9 +46,9 @@ float pow( float a, float b ){
 }
 
 float log2( float a ){
-	//’ê‚Ì•ÏŠ·Œö®‚ğg‚¤B
+	//åº•ã®å¤‰æ›å…¬å¼ã‚’ä½¿ã†ã€‚
 	//log_a(x) = ln(x) / ln(a)
-	//¡a=2‚È‚Ì‚ÅAln(x) / ln(2)‚ğŒvZ‚·‚ê‚Î‚¢‚¢
+	//ä»Ša=2ãªã®ã§ã€ln(x) / ln(2)ã‚’è¨ˆç®—ã™ã‚Œã°ã„ã„
 	float logE = logf( a );
 	static const float rcpLogE2 = 1.4426950408889634073599246810019f;
 	return logE * rcpLogE2;

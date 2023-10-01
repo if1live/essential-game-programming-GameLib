@@ -9,26 +9,26 @@ Player gPlayer;
 namespace GameLib{
 	void Framework::update(){
 		sleep( 16 );
-		//gWave‚ª‹ó‚È‚çƒ[ƒhŠJn
+		//gWaveãŒç©ºãªã‚‰ãƒ­ãƒ¼ãƒ‰é–‹å§‹
 		if ( !gWave ){
 			gWave = Sound::Wave::create( "dokaan.wav" );
 		}
-		if ( !gPlayer && gWave.isReady() ){ //ƒvƒŒƒCƒ„[‚ª‹ó‚Åƒ[ƒh‚ªI‚í‚Á‚Ä‚¢‚é‚È‚ç
-			if ( !gWave.isError() ){ //ƒGƒ‰[‚©ƒ`ƒFƒbƒN‚µ‚æ‚¤‚ËBƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‘¹‚Ë‚Ä‚à~‚Ü‚ç‚È‚¢‚Ì‚ÅB
+		if ( !gPlayer && gWave.isReady() ){ //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒç©ºã§ãƒ­ãƒ¼ãƒ‰ãŒçµ‚ã‚ã£ã¦ã„ã‚‹ãªã‚‰
+			if ( !gWave.isError() ){ //ã‚¨ãƒ©ãƒ¼ã‹ãƒã‚§ãƒƒã‚¯ã—ã‚ˆã†ã­ã€‚ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿æã­ã¦ã‚‚æ­¢ã¾ã‚‰ãªã„ã®ã§ã€‚
 				gPlayer = Sound::Player::create( gWave );
 				gPlayer.play();
 			}
 		}
-		if ( gPlayer ){ //gPlayer‚ªì‚ç‚ê‚Ä‚¢‚é‚È‚ç
+		if ( gPlayer ){ //gPlayerãŒä½œã‚‰ã‚Œã¦ã„ã‚‹ãªã‚‰
 			static int a = 0;
 			static int b = 1;
-			//ƒ{ƒŠƒ…[ƒ€‚¢‚¶‚Á‚Ä‚İ‚éÀŒ±
+			//ãƒœãƒªãƒ¥ãƒ¼ãƒ ã„ã˜ã£ã¦ã¿ã‚‹å®Ÿé¨“
 			gPlayer.setVolume( a );
 			if ( a == 0 || a == -100 ){
 				b *= -1;
 			}
 			a += b;
-			if ( !gPlayer.isPlaying() ){ //I‚í‚Á‚½‚Ì‚Å‰ğ•úB
+			if ( !gPlayer.isPlaying() ){ //çµ‚ã‚ã£ãŸã®ã§è§£æ”¾ã€‚
 				gPlayer.release();
 				gWave.release();
 			}

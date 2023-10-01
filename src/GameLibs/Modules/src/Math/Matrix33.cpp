@@ -171,7 +171,7 @@ void Matrix33::operator*=( const Matrix33& a ){
 }
 
 void Matrix33::setMul( const Matrix33& a, const Matrix33& b ){
-	//a==*this, b==*this�������l���Ȃ��Ƃ����Ȃ�
+	//a==*this, b==*this両方を考えないといけない
 	float t00, t01, t02;
 	t00 = a.m00 * b.m00 + a.m01 * b.m10 + a.m02 * b.m20;
 	t01 = a.m00 * b.m01 + a.m01 * b.m11 + a.m02 * b.m21;
@@ -223,53 +223,53 @@ void Matrix33::setTransposed( const Matrix33& a ){
 	m22 = a.m22;
 }
 
-//�N���[�����@�ł̋t�s��
+//クラーメル法での逆行列
 /*
-2x2�̎��̂������g�����Ă݂悤�B
+2x2の時のやり方を拡張してみよう。
 |x00 x01 x02| |a00 a01 a02| |1 0 0|
 |x10 x11 x12|*|a10 a11 a12|=|0 1 0|
 |x20 x21 x22| |a20 a21 a22| |0 0 1|
 
-���l����B�������߂�t�s��A�E�͍�����s�񂾁B
-���s���������
+を考える。左が求める逆行列、右は今ある行列だ。
+第一行だけ見ると
 
 a00x00 + a10x01 + a20x02 = 1
 a01x00 + a11x01 + a21x02 = 0
 a02x00 + a12x01 + a22x02 = 0
 
-������������Ă���2x2�̎��Ɠ����悤�ɋK�����̂���֌W���o�Ă���
-�����͂���̂����A��������ǂ�����B
-�����͐�l�̒m�b���؂�悤�B
+無理矢理消去してやれば2x2の時と同じように規則性のある関係が出てきて
+解けはするのだが、何分しんどすぎる。
+ここは先人の知恵を借りよう。
 
-�E�s��
-�E�]���q
+・行列式
+・余因子
 
-���̓�̌��t��m��Ȃ��l�͌�������Ȃ�{��ǂނȂ肵�Ăق����B
-�����Ő�������͓̂ǂ݂ɂ����������̂��ʓ|���B
+この二つの言葉を知らない人は検索するなり本を読むなりしてほしい。
+ここで説明するのは読みにくいし書くのも面倒だ。
 
-det(A)���s�񎮁AA_ij��i�sj��̗]���q�Ƃ���΁A
-�t�s��A'��
+det(A)を行列式、A_ijをi行j列の余因子とすれば、
+逆行列A'は
         1   | A_00 A_10 A_20 |
 A' = ------ | A_01 A_11 A_21 |
      det(A) | A_02 A_12 A_22 |
 
-�Ə�����B�s�񂪓]�u����Ă��邱�Ƃɒ��ӁI
+と書ける。行列が転置されていることに注意！
 
-3x3�̍s�񎮂�
+3x3の行列式は
 
 00*( 11*22 - 12*21 ) - 01*( 10*22 - 12*20 ) + 02*( 10*21 - 11*20 )
 
-�ŏ���(�Y��������������)�A�]���q��i�sj��������Ăł���2x2�s��̍s�񎮂ɁA
-���Ɏc�����s��
+で書け(添え字だけ示した)、余因子はi行j列を除いてできる2x2行列の行列式に、
+仮に残った行列が
 |a b|
 |c d|
-�Ȃ�΍s��ad-bc��i+j����Ȃ�-1���|���邱�ƂɂȂ�B
+ならば行列式ad-bcにi+jが奇数なら-1を掛けることになる。
 
-�Ⴆ��A_00��0�s0��������Ăł���s��
+例えばA_00は0行0列を除いてできる行列
 |11 12|
 |21 22|
-�ŁA�s�񎮂�11*22-12*21�ɂȂ�B�����9���Ƃ߂Ă��΂����Ƃ������ƂŁA
-����Ă��΁A
+で、行列式は11*22-12*21になる。これを9個もとめてやればいいということで、
+やってやれば、
 
 A_00 = 11*22-21*12
 A_01 = -(10*22-12*20)
@@ -281,10 +281,10 @@ A_20 = 01*12-02*11
 A_21 = -(00*12-02*10)
 A_22 = 00*11-01*10
 
-�ƂȂ�B
+となる。
 */
 void Matrix33::setInverse( const Matrix33& a ){
-	//�񍀐ς��܂Ƃ߂č��(�Y���������������ɕ��ׂĂ݂��̂ŊԈႢ�����Ȃ����Ǝv��)
+	//二項積をまとめて作る(添え字が小さい順に並べてみたので間違いが少ないかと思う)
 	float m0011 = a.m00 * a.m11;
 	float m0012 = a.m00 * a.m12;
 	float m0021 = a.m00 * a.m21;
@@ -307,32 +307,32 @@ void Matrix33::setInverse( const Matrix33& a ){
 	float m1122 = a.m11 * a.m22;
 
 	float m1220 = a.m12 * a.m20;
-	float m1221 = a.m12 * a.m21; //18��
+	float m1221 = a.m12 * a.m21; //18個
 
-	//2���ς̍����O�B�s�񎮗p�����A��Ŏg���܂킹��B
+	//2項積の差を三つ。行列式用だが、後で使いまわせる。
 	float m1122_m1221 = m1122 - m1221;
-	float m1220_m1022 = m1220 - m1022; //�}�C�i�X
+	float m1220_m1022 = m1220 - m1022; //マイナス
 	float m1021_m1120 = m1021 - m1120;
 
-	//�s��
+	//行列式
 	//00*( 11*22 - 12*21 ) - 01*( 10*22 - 12*20 ) + 02*( 10*21 - 11*20 )
 	float delta = a.m00*( m1122_m1221 ) + a.m01*( m1220_m1022 ) + a.m02*( m1021_m1120 );
-	float rcpDelta = 1.f / delta; //0������\���͂��邪�A�����ł͂͂����Ȃ��B
+	float rcpDelta = 1.f / delta; //0割する可能性はあるが、ここでははじかない。
 
-	//�v�f�𖄂߂�B�]�u�ɒ��ӁI���ӂ͓Y�������Ђ�����Ԃ��Ă���I
+	//要素を埋める。転置に注意！左辺は添え字がひっくり返っている！
 	m00 = ( m1122_m1221 ) * rcpDelta;
-	m10 = ( m1220_m1022 ) * rcpDelta; //�}�C�i�X
+	m10 = ( m1220_m1022 ) * rcpDelta; //マイナス
 	m20 = ( m1021_m1120 ) * rcpDelta;
-	m01 = ( m0221-m0122 ) * rcpDelta; //�}�C�i�X
+	m01 = ( m0221-m0122 ) * rcpDelta; //マイナス
 	m11 = ( m0022-m0220 ) * rcpDelta;
-	m21 = ( m0120-m0021 ) * rcpDelta; //�}�C�i�X
+	m21 = ( m0120-m0021 ) * rcpDelta; //マイナス
 	m02 = ( m0112-m0211 ) * rcpDelta;
-	m12 = ( m0210-m0012 ) * rcpDelta; //�}�C�i�X
+	m12 = ( m0210-m0012 ) * rcpDelta; //マイナス
 	m22 = ( m0011-m0110 ) * rcpDelta;
 }
 
 void Matrix33::invert(){
-	setInverse( *this ); //setInverse()�������ł����v�ȍ��Ȃ̂ł��̂܂ܓn���B
+	setInverse( *this ); //setInverse()が自分でも大丈夫な作りなのでそのまま渡す。
 }
 
 bool Matrix33::operator==( const Matrix33& a ) const {

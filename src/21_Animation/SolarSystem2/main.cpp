@@ -12,8 +12,8 @@ GraphicsDatabase* gDatabase;
 Node* gSun;
 Node* gEarth;
 Node* gMoon;
-Node* gEarthTranslation; //’n‹…ˆÚ“®(ƒ_ƒ~[)
-Node* gMoonRevolution; //ŒŽŒö“](ƒ_ƒ~[)
+Node* gEarthTranslation; //åœ°çƒç§»å‹•(ãƒ€ãƒŸãƒ¼)
+Node* gMoonRevolution; //æœˆå…¬è»¢(ãƒ€ãƒŸãƒ¼)
 
 int gCount;
 Vector3 gLightVector;
@@ -26,7 +26,7 @@ namespace GameLib{
 		if ( !gDatabase ){
 			setFrameRate( 60 );
 			gDatabase = new GraphicsDatabase( "cube.txt" );
-			/* eŽqŠÖŒW}BƒRƒ“ƒXƒgƒ‰ƒNƒ^‘æ“ñˆø”‚ÍŽq‚Ì”‚¾B
+			/* è¦ªå­é–¢ä¿‚å›³ã€‚ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ç¬¬äºŒå¼•æ•°ã¯å­ã®æ•°ã ã€‚
 			                        +- earth
 			sun - earthTranslation -+
 			                        +- moonRevolution - moon
@@ -36,17 +36,17 @@ namespace GameLib{
 			gEarth = new Node( gDatabase->batch( "cube" ), 0 );
 			gMoonRevolution = new Node( 0, 1 );
 			gMoon = new Node( gDatabase->batch( "cube" ), 0 );
-			//eŽqŠÖŒW‚ð‚Â‚¯‚Ä‚â‚é
+			//è¦ªå­é–¢ä¿‚ã‚’ã¤ã‘ã¦ã‚„ã‚‹
 			gSun->setChild( 0, gEarthTranslation );
 			gEarthTranslation->setChild( 0, gEarth );
 			gEarthTranslation->setChild( 1, gMoonRevolution );
 			gMoonRevolution->setChild( 0, gMoon );
 		}
-		//ƒJƒƒ‰‚Æƒ‰ƒCƒg‚ð“®‚©‚µ‚Ä‚Ý‚é
+		//ã‚«ãƒ¡ãƒ©ã¨ãƒ©ã‚¤ãƒˆã‚’å‹•ã‹ã—ã¦ã¿ã‚‹
 		gLightVector.x = sin( gCount ) * cos( gCount );
 		gLightVector.y = sin( gCount ) * sin( gCount );
 		gLightVector.z = cos( gCount );
-		//ƒrƒ…[s—ñA“§Ž‹•ÏŠ·s—ñ
+		//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã€é€è¦–å¤‰æ›è¡Œåˆ—
 		Matrix44 pm;
 		pm.setPerspectiveTransform( 45.0, width(), height(), 1.0, 10000.0 );
 		Matrix34 vm;
@@ -54,7 +54,7 @@ namespace GameLib{
 		Matrix44 pvm;
 		pvm.setMul( pm, vm );
 
-		//Šeƒm[ƒh‚É•ÏŠ·ƒZƒbƒg
+		//å„ãƒŽãƒ¼ãƒ‰ã«å¤‰æ›ã‚»ãƒƒãƒˆ
 		gEarthTranslation->setTranslation( Vector3( 10.0, 0.0, 0.0 ) );
 		gSun->setRotation( Vector3( 0.0, gCount * 100.0 / 365.0, 0.0 ) );
 		gEarth->setRotation( Vector3( 0.0, gCount * 100.0 / 3.0, 0.0 ) );

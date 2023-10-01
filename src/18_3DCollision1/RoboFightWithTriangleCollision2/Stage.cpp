@@ -16,7 +16,7 @@ Stage::Stage() : mDatabase( 0 ), mModel( 0 ), mTriangles( 0 ){
 	mDatabase = new GraphicsDatabase( "stage.txt" );
 	mModel = mDatabase->createModel( "draw" );
 
-	//Õ“Ëˆ——pƒf[ƒ^ì¬
+	//è¡çªå‡¦ç†ç”¨ãƒ‡ãƒ¼ã‚¿ä½œæˆ
 	const Batch* batch = mDatabase->batch( "collision" );
 	const IndexBuffer* ib = batch->indexBuffer();
 	const VertexBuffer* vb = batch->vertexBuffer();
@@ -45,7 +45,7 @@ void Stage::draw( const Matrix44& pvm ) const {
 }
 
 void Stage::restrictMove( Vector3* v, const Vector3& p ) const {
-	//ˆêü–Ú‚Í•’Ê‚ÉB‚½‚¾‚µˆÚ“®—Ê‚ÍƒRƒs[‚ğ‚Æ‚éB
+	//ä¸€å‘¨ç›®ã¯æ™®é€šã«ã€‚ãŸã ã—ç§»å‹•é‡ã¯ã‚³ãƒ”ãƒ¼ã‚’ã¨ã‚‹ã€‚
 	Vector3 vCopy = *v;
 	bool hit = false;
 	for ( int i = 0; i < mTriangleNumber; ++i ){
@@ -54,12 +54,12 @@ void Stage::restrictMove( Vector3* v, const Vector3& p ) const {
 			break;
 		}
 	}
-	//“–‚½‚Á‚Ä‚È‚¢B‚»‚Ì‚Ü‚Ü
+	//å½“ãŸã£ã¦ãªã„ã€‚ãã®ã¾ã¾
 	if ( !hit ){
 		return;
 	}
-	//“–‚½‚Á‚½ê‡AC³Œã‚ÌƒxƒNƒ^‚Å“ñü–Ú‚Ìƒ‹[ƒv‚ğ‰ñ‚·B
-	//“–‚½‚é‚È‚çC³ˆÚ“®‚ÍÌ‚Ä‚é
+	//å½“ãŸã£ãŸå ´åˆã€ä¿®æ­£å¾Œã®ãƒ™ã‚¯ã‚¿ã§äºŒå‘¨ç›®ã®ãƒ«ãƒ¼ãƒ—ã‚’å›ã™ã€‚
+	//å½“ãŸã‚‹ãªã‚‰ä¿®æ­£ç§»å‹•ã¯æ¨ã¦ã‚‹
 	hit = false;
 	for ( int i = 0; i < mTriangleNumber; ++i ){
 		hit = mTriangles[ i ].isIntersect( p, vCopy );

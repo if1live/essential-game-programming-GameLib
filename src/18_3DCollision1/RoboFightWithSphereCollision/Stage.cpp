@@ -10,7 +10,7 @@
 Stage::Stage() : mDatabase( 0 ), mModel( 0 ){
 	mDatabase = new GraphicsDatabase( "stage.txt" );
 	mModel = mDatabase->createModel( "stage" );
-	mSphere.setPosition( Vector3( 0.0, -10000.0, 0.0 ) ); //1000ƒ[ƒgƒ‹’n‰º‚É’†S
+	mSphere.setPosition( Vector3( 0.0, -10000.0, 0.0 ) ); //1000ãƒ¡ãƒ¼ãƒˆãƒ«åœ°ä¸‹ã«ä¸­å¿ƒ
 	mSphere.setRadius( 10000.0 );
 }
 

@@ -29,7 +29,7 @@ int Image::height() const {
 	return mHeight;
 }
 
-namespace{ //–¼‘O‚È‚µ–¼‘O‹óŠÔ
+namespace{ //åå‰ãªã—åå‰ç©ºé–“
 
 unsigned blend( unsigned src, unsigned dst ){
 	unsigned srcA = ( src & 0xff000000 ) >> 24;
@@ -48,7 +48,7 @@ unsigned blend( unsigned src, unsigned dst ){
 }
 
 
-//ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒh•t‚«
+//ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰ä»˜ã
 void Image::draw(
 int dstX, 
 int dstY, 

@@ -2,16 +2,16 @@
 #include "Image.h"
 
 State::State( const char* stageData, int size ) : mImage( 0 ){	
-	//ƒTƒCƒY‘ª’è
+	//ã‚µã‚¤ã‚ºæ¸¬å®š
 	setSize( stageData, size );
-	//”z—ñŠm•Û
+	//é…åˆ—ç¢ºä¿
 	mObjects.setSize( mWidth, mHeight );
 	mGoalFlags.setSize( mWidth, mHeight );
-	//‰Šú’l‚Å–„‚ß‚Æ‚­
+	//åˆæœŸå€¤ã§åŸ‹ã‚ã¨ã
 	for ( int y = 0; y < mHeight; ++y ){
 		for ( int x = 0; x < mWidth; ++x ){
-			mObjects( x, y ) = OBJ_WALL; //‚ ‚Ü‚Á‚½•”•ª‚Í•Ç
-			mGoalFlags( x, y ) = false; //ƒS[ƒ‹‚¶‚á‚È‚¢
+			mObjects( x, y ) = OBJ_WALL; //ã‚ã¾ã£ãŸéƒ¨åˆ†ã¯å£
+			mGoalFlags( x, y ) = false; //ã‚´ãƒ¼ãƒ«ã˜ã‚ƒãªã„
 		}
 	}
 	int x = 0;
@@ -27,16 +27,16 @@ State::State( const char* stageData, int size ) : mImage( 0 ){
 			case '.': t = OBJ_SPACE; goalFlag = true; break;
 			case 'p': t = OBJ_MAN; break;
 			case 'P': t = OBJ_MAN; goalFlag = true; break;
-			case '\n': x = 0; ++y; t = OBJ_UNKNOWN; break; //‰üsˆ—
+			case '\n': x = 0; ++y; t = OBJ_UNKNOWN; break; //æ”¹è¡Œå‡¦ç†
 			default: t = OBJ_UNKNOWN; break;
 		}
-		if ( t != OBJ_UNKNOWN ){ //’m‚ç‚È‚¢•¶š‚È‚ç–³‹‚·‚é‚Ì‚Å‚±‚Ìif•¶‚ª‚ ‚é
-			mObjects( x, y ) = t; //‘‚«‚İ
-			mGoalFlags( x, y ) = goalFlag; //ƒS[ƒ‹î•ñ
+		if ( t != OBJ_UNKNOWN ){ //çŸ¥ã‚‰ãªã„æ–‡å­—ãªã‚‰ç„¡è¦–ã™ã‚‹ã®ã§ã“ã®ifæ–‡ãŒã‚ã‚‹
+			mObjects( x, y ) = t; //æ›¸ãè¾¼ã¿
+			mGoalFlags( x, y ) = goalFlag; //ã‚´ãƒ¼ãƒ«æƒ…å ±
 			++x;
 		}
 	}
-	//‰æ‘œ“Ç‚İ‚İ
+	//ç”»åƒèª­ã¿è¾¼ã¿
 	mImage = new Image( "nimotsuKunImage.dds" );
 }
 
@@ -46,9 +46,9 @@ State::~State(){
 }
 
 void State::setSize( const char* stageData, int size ){
-	const char* d = stageData; //“Ç‚İ‚İƒ|ƒCƒ“ƒ^
-	mWidth = mHeight = 0; //‰Šú‰»
-	//Œ»İˆÊ’u
+	const char* d = stageData; //èª­ã¿è¾¼ã¿ãƒã‚¤ãƒ³ã‚¿
+	mWidth = mHeight = 0; //åˆæœŸåŒ–
+	//ç¾åœ¨ä½ç½®
 	int x = 0;
 	int y = 0;
 	for ( int i = 0; i < size; ++i ){
@@ -59,7 +59,7 @@ void State::setSize( const char* stageData, int size ){
 				break;
 			case '\n': 
 				++y;
-				//Å‘å’lXV
+				//æœ€å¤§å€¤æ›´æ–°
 				mWidth = ( mWidth > x ) ? mWidth : x;
 				mHeight = ( mHeight > y ) ? mHeight : y;
 				x = 0; 
@@ -100,20 +100,20 @@ void State::drawCell( int x, int y, ImageID id ) const {
 
 
 void State::update( char input ){
-	//ˆÚ“®·•ª‚É•ÏŠ·
+	//ç§»å‹•å·®åˆ†ã«å¤‰æ›
 	int dx = 0;
 	int dy = 0;
 	switch ( input ){
-		case 'a': dx = -1; break; //¶
-		case 's': dx = 1; break; //‰E
-		case 'w': dy = -1; break; //ãBY‚Í‰º‚ªƒvƒ‰ƒX
-		case 'z': dy = 1; break; //‰ºB
+		case 'a': dx = -1; break; //å·¦
+		case 's': dx = 1; break; //å³
+		case 'w': dy = -1; break; //ä¸Šã€‚Yã¯ä¸‹ãŒãƒ—ãƒ©ã‚¹
+		case 'z': dy = 1; break; //ä¸‹ã€‚
 	}
-	//’Z‚¢•Ï”–¼‚ğ‚Â‚¯‚éB
+	//çŸ­ã„å¤‰æ•°åã‚’ã¤ã‘ã‚‹ã€‚
 	int w = mWidth;
 	int h = mHeight;
 	Array2D< Object >& o = mObjects;
-	//lÀ•W‚ğŒŸõ
+	//äººåº§æ¨™ã‚’æ¤œç´¢
 	int x, y;
 	bool found = false;
 	for ( y = 0; y < mHeight; ++y ){
@@ -127,28 +127,28 @@ void State::update( char input ){
 			break;
 		}
 	}
-	//ˆÚ“®
-	//ˆÚ“®ŒãÀ•W
+	//ç§»å‹•
+	//ç§»å‹•å¾Œåº§æ¨™
 	int tx = x + dx;
 	int ty = y + dy;
-	//À•W‚ÌÅ‘åÅ¬ƒ`ƒFƒbƒNBŠO‚ê‚Ä‚¢‚ê‚Î•s‹–‰Â
+	//åº§æ¨™ã®æœ€å¤§æœ€å°ãƒã‚§ãƒƒã‚¯ã€‚å¤–ã‚Œã¦ã„ã‚Œã°ä¸è¨±å¯
 	if ( tx < 0 || ty < 0 || tx >= w || ty >= h ){
 		return;
 	}
-	//A.‚»‚Ì•ûŒü‚ª‹ó”’‚Ü‚½‚ÍƒS[ƒ‹Bl‚ªˆÚ“®B
+	//A.ãã®æ–¹å‘ãŒç©ºç™½ã¾ãŸã¯ã‚´ãƒ¼ãƒ«ã€‚äººãŒç§»å‹•ã€‚
 	if ( o( tx, ty ) == OBJ_SPACE ){
 		o( tx, ty ) = OBJ_MAN;
 		o( x, y ) = OBJ_SPACE;
-	//B.‚»‚Ì•ûŒü‚ª” B‚»‚Ì•ûŒü‚ÌŸ‚Ìƒ}ƒX‚ª‹ó”’‚Ü‚½‚ÍƒS[ƒ‹‚Å‚ ‚ê‚ÎˆÚ“®B
+	//B.ãã®æ–¹å‘ãŒç®±ã€‚ãã®æ–¹å‘ã®æ¬¡ã®ãƒã‚¹ãŒç©ºç™½ã¾ãŸã¯ã‚´ãƒ¼ãƒ«ã§ã‚ã‚Œã°ç§»å‹•ã€‚
 	}else if ( o( tx, ty ) == OBJ_BLOCK ){
-		//2ƒ}ƒXæ‚ª”ÍˆÍ“à‚©ƒ`ƒFƒbƒN
+		//2ãƒã‚¹å…ˆãŒç¯„å›²å†…ã‹ãƒã‚§ãƒƒã‚¯
 		int tx2 = tx + dx;
 		int ty2 = ty + dy; 
-		if ( tx2 < 0 || ty2 < 0 || tx2 >= w || ty2 >= h ){ //‰Ÿ‚¹‚È‚¢
+		if ( tx2 < 0 || ty2 < 0 || tx2 >= w || ty2 >= h ){ //æŠ¼ã›ãªã„
 			return;
 		}
 		if ( o( tx2, ty2 ) == OBJ_SPACE ){
-			//‡Ÿ“ü‚ê‘Ö‚¦
+			//é †æ¬¡å…¥ã‚Œæ›¿ãˆ
 			o( tx2, ty2 ) = OBJ_BLOCK;
 			o( tx, ty ) = OBJ_MAN;
 			o( x, y ) = OBJ_SPACE;
@@ -156,8 +156,8 @@ void State::update( char input ){
 	}
 }
 
-//ƒuƒƒbƒN‚Ì‚Æ‚±‚ë‚ÌgoalFlag‚ªˆê‚Â‚Å‚àfalse‚È‚ç
-//‚Ü‚¾ƒNƒŠƒA‚µ‚Ä‚È‚¢
+//ãƒ–ãƒ­ãƒƒã‚¯ã®ã¨ã“ã‚ã®goalFlagãŒä¸€ã¤ã§ã‚‚falseãªã‚‰
+//ã¾ã ã‚¯ãƒªã‚¢ã—ã¦ãªã„
 bool State::hasCleared() const {
 	for ( int y = 0; y < mHeight; ++y ){
 		for ( int x = 0; x < mWidth; ++x ){

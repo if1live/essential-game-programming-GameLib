@@ -28,7 +28,7 @@ mTitle( 0 ),
 mGame( 0 ),
 mGameOver( 0 ),
 mEnding( 0 ){
-	//Å‰‚Éì‚é‚Ì‚Íƒ^ƒCƒgƒ‹
+	//æœ€åˆã«ä½œã‚‹ã®ã¯ã‚¿ã‚¤ãƒˆãƒ«
 	mTitle = new Sequence::TitleSequence();
 }
 
@@ -49,38 +49,38 @@ void MainLoop::update(){
 	}else if ( mEnding ){
 		mEnding->update( this );
 	}else{
-		halt( "bakana!" ); //‚ ‚è‚¦‚È‚¢
+		halt( "bakana!" ); //ã‚ã‚Šãˆãªã„
 	}
-	//‘JˆÚ”»’è
-	//–ÊƒZƒŒ‚Ö
+	//é·ç§»åˆ¤å®š
+	//é¢ã‚»ãƒ¬ã¸
 	switch ( mNextSequence ){
 		case NEXT_TITLE:
-			assert( !mTitle && ( mGame || mGameOver || mEnding ) ); //ƒ`ƒFƒbƒN
+			assert( !mTitle && ( mGame || mGameOver || mEnding ) ); //ãƒã‚§ãƒƒã‚¯
 			SAFE_DELETE( mGame );
 			SAFE_DELETE( mGameOver );
 			SAFE_DELETE( mEnding );
 			mTitle = new Sequence::TitleSequence();
 			break;
 		case NEXT_GAME:
-			assert( mTitle && !mGameOver && !mGame && !mEnding ); //ƒ`ƒFƒbƒN
+			assert( mTitle && !mGameOver && !mGame && !mEnding ); //ãƒã‚§ãƒƒã‚¯
 			SAFE_DELETE( mTitle );
 			mGame = new Sequence::GameSequence();
 			break;
 		case NEXT_GAME_OVER:
-			assert( mGame && !mGameOver && !mEnding && !mTitle ); //ƒ`ƒFƒbƒN
+			assert( mGame && !mGameOver && !mEnding && !mTitle ); //ãƒã‚§ãƒƒã‚¯
 			SAFE_DELETE( mGame );
 			mGameOver = new Sequence::GameOverSequence();
 			break;
 		case NEXT_ENDING:
-			assert( mGame && !mGameOver && !mEnding && !mTitle ); //ƒ`ƒFƒbƒN
+			assert( mGame && !mGameOver && !mEnding && !mTitle ); //ãƒã‚§ãƒƒã‚¯
 			SAFE_DELETE( mGame );
 			mEnding = new Sequence::EndingSequence();
 	}
-	mNextSequence = NEXT_NONE; //–ß‚·
+	mNextSequence = NEXT_NONE; //æˆ»ã™
 }
 
 void MainLoop::moveTo( NextSequence next ){
-	assert( mNextSequence == NEXT_NONE ); //‚±‚êˆÈŠO‚ ‚è‚¦‚È‚¢
+	assert( mNextSequence == NEXT_NONE ); //ã“ã‚Œä»¥å¤–ã‚ã‚Šãˆãªã„
 	mNextSequence = next;
 }
 

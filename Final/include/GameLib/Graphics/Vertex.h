@@ -11,10 +11,10 @@ namespace Graphics{
 
 class Vertex{
 public:
-	Vector4 mPosition; //ˆÊ’u
-	Vector3 mNormal; //–@ü
-	unsigned mColor; //’¸“_F
-	Vector2 mUv; //ƒeƒNƒXƒ`ƒƒÀ•W
+	Vector4 mPosition; //ä½ç½®
+	Vector3 mNormal; //æ³•ç·š
+	unsigned mColor; //é ‚ç‚¹è‰²
+	Vector2 mUv; //ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™
 };
 
 } //namespace Graphics

@@ -19,10 +19,10 @@ using namespace GameLib::Math;
 
 class Batch::Impl{
 public:
-	//‚±‚ÌŠÖ”‚ÍƒRƒ“ƒeƒi‚ğg‚¤‚Ì‚ÅAƒCƒ“ƒNƒ‹[ƒhƒ‹[ƒv‚ğ”ğ‚¯‚é‚½‚ß‚ÉBatch.cpp‚É‚¨‚¢‚Ä‚ ‚éB
+	//ã“ã®é–¢æ•°ã¯ã‚³ãƒ³ãƒ†ãƒŠã‚’ä½¿ã†ã®ã§ã€ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ«ãƒ¼ãƒ—ã‚’é¿ã‘ã‚‹ãŸã‚ã«Batch.cppã«ãŠã„ã¦ã‚ã‚‹ã€‚
 	Impl( PseudoXml::ConstElement& e, Container::Impl& );
 	~Impl(){
-		mName = 0; //ƒRƒ“ƒeƒi‚ª‚Á‚Ä‚¢‚é•¶š—ñ‚È‚Ì‚Å‚±‚±‚Å‚ÍQÆ‚ğ‚Í‚¸‚·‚¾‚¯
+		mName = 0; //ã‚³ãƒ³ãƒ†ãƒŠãŒæŒã£ã¦ã„ã‚‹æ–‡å­—åˆ—ãªã®ã§ã“ã“ã§ã¯å‚ç…§ã‚’ã¯ãšã™ã ã‘
 		mContainer = 0;
 	}
 	void draw() const {
@@ -34,7 +34,7 @@ public:
 		}
 		m.setDiffuseColor( mDiffuseColor );
 		if ( mLighting ){
-			m.setLightingMode( LIGHTING_PER_PIXEL ); //‚Æ‚è‚ ‚¦‚¸Œˆ‚ß‘Å‚¿
+			m.setLightingMode( LIGHTING_PER_PIXEL ); //ã¨ã‚Šã‚ãˆãšæ±ºã‚æ‰“ã¡
 			m.setSpecularColor( mSpecularColor );
 			m.setEmissionColor( mEmissionColor );
 			m.setSpecularSharpness( mSpecularSharpness );
@@ -61,7 +61,7 @@ public:
 		dc.setMul( mDiffuseColor, color );
 		m.setDiffuseColor( dc );
 		if ( mLighting ){
-			m.setLightingMode( LIGHTING_PER_PIXEL ); //‚Æ‚è‚ ‚¦‚¸Œˆ‚ß‘Å‚¿
+			m.setLightingMode( LIGHTING_PER_PIXEL ); //ã¨ã‚Šã‚ãˆãšæ±ºã‚æ‰“ã¡
 			m.setSpecularColor( mSpecularColor );
 			m.setEmissionColor( mEmissionColor );
 			m.setSpecularSharpness( mSpecularSharpness );

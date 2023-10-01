@@ -32,11 +32,11 @@ public:
 	DebugScreen& endl();
 	DebugScreen& hex();
 	DebugScreen& dec();
-	//F‚ğ•ÏX‚·‚éBƒAƒ‹ƒtƒ@‚ª0‚¾‚ÆŸè‚É255‚É‚·‚é‚Ì‚ÅA0xff4477‚Ì‚æ‚¤‚É“n‚¹‚ÄŠy
+	//è‰²ã‚’å¤‰æ›´ã™ã‚‹ã€‚ã‚¢ãƒ«ãƒ•ã‚¡ãŒ0ã ã¨å‹æ‰‹ã«255ã«ã™ã‚‹ã®ã§ã€0xff4477ã®ã‚ˆã†ã«æ¸¡ã›ã¦æ¥½
 	DebugScreen& setColor( unsigned );
-	//ˆÊ’u‚ğˆÚ“®‚³‚¹‚éBrow‚Ís“ª‚ÌˆÊ’u‚ğ•\‚µA‰üs‚·‚é‚Ærow‚©‚çn‚Ü‚éB
+	//ä½ç½®ã‚’ç§»å‹•ã•ã›ã‚‹ã€‚rowã¯è¡Œé ­ã®ä½ç½®ã‚’è¡¨ã—ã€æ”¹è¡Œã™ã‚‹ã¨rowã‹ã‚‰å§‹ã¾ã‚‹ã€‚
 	DebugScreen& setPosition( int row, int column );
-	//FAˆÊ’u‚ÌŒ»İ’l‚ğ‚¢‚¶‚ç‚¸‚É’P”­‚Å•`‰æ
+	//è‰²ã€ä½ç½®ã®ç¾åœ¨å€¤ã‚’ã„ã˜ã‚‰ãšã«å˜ç™ºã§æç”»
 	void draw( int col, int row, const char* s, unsigned color = 0xffffffff );
 };
 

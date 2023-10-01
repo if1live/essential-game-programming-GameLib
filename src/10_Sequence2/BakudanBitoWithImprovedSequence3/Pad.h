@@ -4,15 +4,15 @@
 class Pad{
 public:
 	enum Button{
-		A, //0ƒ{ƒ^ƒ“‚©'d'
-		B, //1ƒ{ƒ^ƒ“‚©'x'
+		A, //0ãƒœã‚¿ãƒ³ã‹'d'
+		B, //1ãƒœã‚¿ãƒ³ã‹'x'
 		U, //up
 		D, //down
 		L, //left
 		R, //right
-		Q, //quitBI—¹ƒ{ƒ^ƒ“
+		Q, //quitã€‚çµ‚äº†ãƒœã‚¿ãƒ³
 	};
-	//‚È‚ñ‚Å‚à‚¢‚¢‚©‚çƒ{ƒ^ƒ“
+	//ãªã‚“ã§ã‚‚ã„ã„ã‹ã‚‰ãƒœã‚¿ãƒ³
 	static bool isOn( Button, int playerID = 0 );
 	static bool isTriggered( Button, int playerID = 0 );
 };

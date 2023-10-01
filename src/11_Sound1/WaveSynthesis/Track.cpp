@@ -22,16 +22,16 @@ void Track::setData( const Note* notes, int noteNumber ){
 }
 
 void Track::addWave( short* buffer, int bufferSize, int frequency ) const {
-	int time = 0; //1/100’PˆÊŽžŠÔ
-	int pos = 0; //ƒTƒ“ƒvƒ‹”’PˆÊŽžŠÔ
+	int time = 0; //1/100å˜ä½æ™‚é–“
+	int pos = 0; //ã‚µãƒ³ãƒ—ãƒ«æ•°å˜ä½æ™‚é–“
 	for ( int i = 0; i < mNoteNumber; ++i ){
 		const Note& n = mNotes[ i ];
 		int endTime = time + n.mLength;
 		int length = ( endTime * frequency / 100 ) - pos;
 		if ( pos + length >= bufferSize ){
-			length = bufferSize - pos; //‚ ‚Ó‚ê‚Ä‚Ü‚·
+			length = bufferSize - pos; //ã‚ãµã‚Œã¦ã¾ã™
 		}
-		if ( n.mVolume > 0 ){ //–³‰¹‚È‚çˆ—”ò‚Î‚·
+		if ( n.mVolume > 0 ){ //ç„¡éŸ³ãªã‚‰å‡¦ç†é£›ã°ã™
 			addNote( 
 				buffer + pos,
 				n.mVolume * 32767 / 100,
@@ -50,56 +50,56 @@ int waveWidth,
 int name, 
 int sampleNumber,
 int frequency ) const {
-	//57‚ª440Hz‚É‚È‚é‚æ‚¤‚Éname‚ð‰ðŽß‚·‚éB
+	//57ãŒ440Hzã«ãªã‚‹ã‚ˆã†ã«nameã‚’è§£é‡ˆã™ã‚‹ã€‚
 	double f = 440.0 * pow( 2.0, ( name - 57 ) * ( 1.0 / 12.0 ) );
 
-	//‰½‚©‚ÆŽg‚¤PI
+	//ä½•ã‹ã¨ä½¿ã†PI
 	const double pi = 3.1415926535897932384626433832795;
-	//ˆÈ‰º³Œ·”g‡¬
+	//ä»¥ä¸‹æ­£å¼¦æ³¢åˆæˆ
 	/*
 	y = c*sin( ax )
-	‚ª³Œ·”g‚ÌŽ®Bsine‚Í2PI‚Å1ŽüŠú‚¾‚©‚çA‚Ü‚¸a=2PI‚É‚·‚é‚Æx‚ª1‚Å1ŽüŠú‰ñ‚éB
-	ŽÀÛ‚ÌŽüŠú‚Íf/44100‚¾‚©‚ç‚±‚ê‚ðæ‚¶‚Ä
+	ãŒæ­£å¼¦æ³¢ã®å¼ã€‚sineã¯2PIã§1å‘¨æœŸã ã‹ã‚‰ã€ã¾ãša=2PIã«ã™ã‚‹ã¨xãŒ1ã§1å‘¨æœŸå›žã‚‹ã€‚
+	å®Ÿéš›ã®å‘¨æœŸã¯f/44100ã ã‹ã‚‰ã“ã‚Œã‚’ä¹—ã˜ã¦
 	a = 2PI * f / 44100;
-	b‚ÍwaveWidth‚Ì”¼•ª‚¾B-b‚©‚çb‚Ü‚Å“®‚­B
-	‚±‚ÌƒTƒ“ƒvƒ‹‚Å‚Í‚¾‚ñ‚¾‚ñ‰¹‚ª¬‚³‚­‚È‚é‚æ‚¤‚É‚µ‚Ä‚Ý‚½B
+	bã¯waveWidthã®åŠåˆ†ã ã€‚-bã‹ã‚‰bã¾ã§å‹•ãã€‚
+	ã“ã®ã‚µãƒ³ãƒ—ãƒ«ã§ã¯ã ã‚“ã ã‚“éŸ³ãŒå°ã•ããªã‚‹ã‚ˆã†ã«ã—ã¦ã¿ãŸã€‚
 	*/
 	double a = f * ( 2.0 * pi ) / frequency;
 	double b = waveWidth / 2.0;
 	double rcpSampleNumber = 1.0 / sampleNumber;
 
-	//Šy‚µ‚¢‰¹F‡¬(ƒgƒ‰ƒ“ƒyƒbƒg‚Ìƒt[ƒŠƒG‰ðÍŒ‹‰Ê(7”{‰¹‚Ü‚Å))
-	//‚±‚±‚ð‚¢‚¶‚é‚Æ‚¢‚ë‚ñ‚È‰¹F‚ª‚Å‚«‚Ü‚·B
-	//Še”{‰¹‚ÌŠÜ—L—Ê
+	//æ¥½ã—ã„éŸ³è‰²åˆæˆ(ãƒˆãƒ©ãƒ³ãƒšãƒƒãƒˆã®ãƒ•ãƒ¼ãƒªã‚¨è§£æžçµæžœ(7å€éŸ³ã¾ã§))
+	//ã“ã“ã‚’ã„ã˜ã‚‹ã¨ã„ã‚ã‚“ãªéŸ³è‰²ãŒã§ãã¾ã™ã€‚
+	//å„å€éŸ³ã®å«æœ‰é‡
 	const double factor[] = { 
-		0.5, //Šî’êŽü”g”
-		0.85, //2”{‰¹
-		1.05, //3”{‰¹
+		0.5, //åŸºåº•å‘¨æ³¢æ•°
+		0.85, //2å€éŸ³
+		1.05, //3å€éŸ³
 		0.85,
 		0.4,
 		0.3,
 		0.1,
 		0.0
 	};
-	//Še”{‰¹‚ÌˆÊ‘Š(’PˆÊ‚Í“x)
+	//å„å€éŸ³ã®ä½ç›¸(å˜ä½ã¯åº¦)
 	const double phase[] = { 
-		339.0, //Šî’êŽü”g”
-		9.0, //2”{‰¹
-		18.0, //3”{‰¹
+		339.0, //åŸºåº•å‘¨æ³¢æ•°
+		9.0, //2å€éŸ³
+		18.0, //3å€éŸ³
 		3.0,
 		351.0,
 		353.0,
 		358.0,
 		0,
 	};
-	//ƒrƒuƒ‰[ƒg—psin(ax)‚Ìa(•bŠÔ8‰ñ)
+	//ãƒ“ãƒ–ãƒ©ãƒ¼ãƒˆç”¨sin(ax)ã®a(ç§’é–“8å›ž)
 	const double va = 8.f * ( 2.0 * pi ) / frequency;
 
 	for ( int i = 0; i < sampleNumber; ++i ){
-		double posInNote = i * rcpSampleNumber; //‰¹•„‚Ì’†‚ÌˆÊ’u
-		double tb = b * ( 1.0 - posInNote ); //‰¹—Ê‚ð‚¾‚ñ‚¾‚ñ¬‚³‚­
-		tb *= ( 1.0 + posInNote * 0.2 * sin( va * i ) ); //ƒ”ƒBƒuƒ‰[ƒg(‰¹•„‚ÌŒã‚ë‚Ù‚Ç‹­‚­)
-		//8ŒÂ‚Ì³Œ·”g‚ð‡¬
+		double posInNote = i * rcpSampleNumber; //éŸ³ç¬¦ã®ä¸­ã®ä½ç½®
+		double tb = b * ( 1.0 - posInNote ); //éŸ³é‡ã‚’ã ã‚“ã ã‚“å°ã•ã
+		tb *= ( 1.0 + posInNote * 0.2 * sin( va * i ) ); //ãƒ´ã‚£ãƒ–ãƒ©ãƒ¼ãƒˆ(éŸ³ç¬¦ã®å¾Œã‚ã»ã©å¼·ã)
+		//8å€‹ã®æ­£å¼¦æ³¢ã‚’åˆæˆ
 		double w = 0.0;
 		for ( int j = 0; j < 8; ++j ){
 			w += tb * sin( a * j * i + ( phase[ j ] / pi ) ) * factor[ j ];

@@ -20,28 +20,28 @@ bool Sphere::isIntersect( const Sphere& b ) const {
 }
 
 void Sphere::restrictMove( Vector3* v, const Sphere& a ) const {
-	//�R�s�[����
+	//コピー生成
 	Sphere t = *this;
-	t.mPosition += *v; //�ړ�
-	//�ړ���Ŕ��肵�āA�������ĂȂ���΂��������B
+	t.mPosition += *v; //移動
+	//移動先で判定して、当たってなければもういい。
 	bool r = t.isIntersect( a );
 	if ( !r ){
 		return;
 	}
-	//�������Ă���Ȃ�x�N�^���C������B
+	//当たっているならベクタを修正する。
 	//b = (c0-c1)/|c0-c1|
 	//a = v - dot( b, v ) * b
-	//b������1�̏Փː��������x�N�^�Ba�͌��ʂƂ��ė~�������������x�N�^�B
-	//�����ŁA��̎������̎��ɂ��̂܂ܓ�����
+	//bが長さ1の衝突垂直方向ベクタ。aは結果として欲しい水平方向ベクタ。
+	//ここで、上の式を下の式にそのまま入れると
 	//a = v - dot( (c0-c1)/|c0-c1|, v ) / |c0-c1| * b
-	//�ƂȂ�Bc0-c1��d�Ƃ���΁A
+	//となる。c0-c1をdとすれば、
 	//a = v - dot( d, v ) * d / |d|^2
-	//�ƂȂ�A���v�Z���ȒP�ɂȂ�B
+	//となり、より計算が簡単になる。
 	Vector3 d;
 	d.setSub( mPosition, a.mPosition ); //c0-c1 = d
 	double dotDV = d.dot( *v ); //dot(d, v)
 	double dLength2 = d.squareLength(); //|d|^2
 	d *= ( dotDV / dLength2 ); //dot(b,v) / |d|^2
-	//�Ō�̈����Z
+	//最後の引き算
 	*v -= d;
 }

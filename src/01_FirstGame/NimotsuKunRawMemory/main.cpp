@@ -1,23 +1,23 @@
-#include <iostream> //���ꂾ�������ė~�����B
+#include <iostream> //これだけ許して欲しい。
 using namespace std;
 /*
 
-���̃T���v���ł͉���m�ȊO�ɕϐ�����؂���Ȃ��B
-�R���p�C���������̐��E�ŉ����N�����Ă���̂����v���m���ė~�����B
-�ϐ������R�ɍ��邱�Ƃ��ǂ�قǂ��肪�������Ƃ����������A
-�܂��A���ꂪ�ǂ�����ĉ\�ɂȂ��Ă���̂�����������Ă݂悤�B
+このサンプルでは下のm以外に変数を一切つかわない。
+コンパイラよりも下の世界で何が起こっているのかを思い知って欲しい。
+変数を自由に作れることがどれほどありがたいことかを実感し、
+また、それがどうやって可能になっているのかを感じ取ってみよう。
 
-[�������̎g����]
+[メモリの使い方]
 
-0     : �֐��̈����Ɩ߂�l�Ɏg���B
-1-17  : �֐��̒��ōD���Ɏg���Ă����̈�Ƃ���B�֐����ĂԂƉ󂳂��ƍl����B
-18    : 8 //��
-19    : 5 //����
-20-59 : 8x5�̏�Ԕz��
-60-99 : ������`���̃X�e�[�W�f�[�^
+0     : 関数の引数と戻り値に使う。
+1-17  : 関数の中で好きに使っていい領域とする。関数を呼ぶと壊されると考える。
+18    : 8 //幅
+19    : 5 //高さ
+20-59 : 8x5の状態配列
+60-99 : 文字列形式のステージデータ
 */
 
-char m[ 100 ]; //�������B100�o�C�g�����g��Ȃ�
+char m[ 100 ]; //メモリ。100バイトしか使わない
 
 enum Object{
 	OBJ_SPACE,
@@ -31,7 +31,7 @@ enum Object{
 	OBJ_UNKNOWN,
 };
 
-//�֐��v���g�^�C�v
+//関数プロトタイプ
 void initializeGlobalVariables();
 void initialize();
 void draw();
@@ -39,46 +39,46 @@ void update();
 void checkClear();
 
 int main(){
-	//�O���[�o���ϐ�������
+	//グローバル変数初期化
 	initializeGlobalVariables();
 
-	initialize(); //�X�e�[�W������
-	//���C�����[�v
+	initialize(); //ステージ初期化
+	//メインループ
 	while ( true ){
-		//�܂��`��
+		//まず描画
 		draw();
-		//�N���A�`�F�b�N ���ʂ�m[ 0 ]�ɓ����Ă���
+		//クリアチェック 結果はm[ 0 ]に入っている
 		checkClear();
 		if ( m[ 0 ] == 1 ){
-			break; //�N���A�`�F�b�N
+			break; //クリアチェック
 		}
-		//���͎擾
-		cout << "a:left s:right w:up z:down. command?" << endl; //�������
-		//���͂�m[ 0 ]�ɓ���悤
+		//入力取得
+		cout << "a:left s:right w:up z:down. command?" << endl; //操作説明
+		//入力はm[ 0 ]に入れよう
 		cin >> m[ 0 ];
-		//�X�V
+		//更新
 		update();
 	}
-	//�j���̃��b�Z�[�W
+	//祝いのメッセージ
 	cout << "Congratulation! you win." << endl;
 
-	//Visual Studio������s����l�̂��߂ɖ������[�v�B�R�}���h���C�������Ctrl-C�ŏI���Ă��������B
+	//Visual Studioから実行する人のために無限ループ。コマンドラインからはCtrl-Cで終えてください。
 	while( true ){
 		;
 	} 
 	return 0;
 }
 
-//---------------------�ȉ��֐���`------------------------------------------
+//---------------------以下関数定義------------------------------------------
 
-//m[60]����n�܂镶��������߂��āAm[20]����n�܂��Ԕz����\�z����֐��B
+//m[60]から始まる文字列を解釈して、m[20]から始まる状態配列を構築する関数。
 void initialize(){
-	m[ 0 ] = 0; //0�Ԃ�ǂݎ�葤�̓Y�����Ɏg����
-	m[ 1 ] = 0; //1�Ԃ�����x���W
-	m[ 2 ] = 0; //2�Ԃ�����y���W
+	m[ 0 ] = 0; //0番を読み取り側の添え字に使おう
+	m[ 1 ] = 0; //1番が今のx座標
+	m[ 2 ] = 0; //2番が今のy座標
 
-	while ( m[ 60 + m[ 0 ] ] != '\0' ){ //NULL�����łȂ���
-		//3�Ԃɕ�������
+	while ( m[ 60 + m[ 0 ] ] != '\0' ){ //NULL文字でない間
+		//3番に物を入れる
 		switch ( m[ 60 + m[ 0 ] ] ){
 			case '#': m[ 3 ] = OBJ_WALL; break;
 			case ' ': m[ 3 ] = OBJ_SPACE; break;
@@ -87,12 +87,12 @@ void initialize(){
 			case '.': m[ 3 ] = OBJ_GOAL; break;
 			case 'p': m[ 3 ] = OBJ_MAN; break;
 			case 'P': m[ 3 ] = OBJ_MAN_ON_GOAL; break;
-			case '\n': m[ 1 ] = 0; ++m[ 2 ]; m[ 3 ] = OBJ_UNKNOWN; break; //���s����(++y)
+			case '\n': m[ 1 ] = 0; ++m[ 2 ]; m[ 3 ] = OBJ_UNKNOWN; break; //改行処理(++y)
 			default: m[ 3 ] = OBJ_UNKNOWN; break;
 		}
 		++m[ 0 ];
-		if ( m[ 3 ] != OBJ_UNKNOWN ){ //�m��Ȃ������Ȃ疳������̂ł���if��������
-			m[ 20 + m[ 2 ]*m[ 18 ] + m[ 1 ] ] = m[ 3 ]; //�������� m[18]�͕�
+		if ( m[ 3 ] != OBJ_UNKNOWN ){ //知らない文字なら無視するのでこのif文がある
+			m[ 20 + m[ 2 ]*m[ 18 ] + m[ 1 ] ] = m[ 3 ]; //書き込み m[18]は幅
 			++m[ 1 ]; //++x
 		}
 	}
@@ -117,50 +117,50 @@ void draw(){
 }
 
 void update(){
-	//�ړ������ɕϊ�
+	//移動差分に変換
 	m[ 1 ] = 0; //dx
 	m[ 2 ] = 0; //dy
-	switch ( m[ 0 ] ){ //input��m[100]�ɓ���Ă���
-		case 'a': m[ 1 ] = -1; break; //��
-		case 's': m[ 1 ] = 1; break; //�E
-		case 'w': m[ 2 ] = -1; break; //��BY�͉����v���X
-		case 'z': m[ 2 ] = 1; break; //���B
+	switch ( m[ 0 ] ){ //inputはm[100]に入れてある
+		case 'a': m[ 1 ] = -1; break; //左
+		case 's': m[ 1 ] = 1; break; //右
+		case 'w': m[ 2 ] = -1; break; //上。Yは下がプラス
+		case 'z': m[ 2 ] = 1; break; //下。
 	}
-	//�l���W������
+	//人座標を検索
 	for ( m[ 0 ] = 0; m[ 0 ] < m[ 18 ]*m[ 19 ]; ++m[ 0 ] ){
 		if ( m[ 20 + m[ 0 ] ] == OBJ_MAN || m[ 20 + m[ 0 ] ] == OBJ_MAN_ON_GOAL ){
 			break;
 		}
 	}
-	m[ 3 ] = m[ 0 ] % m[ 18 ]; //x�͕��Ŋ��������܂�
-	m[ 4 ] = m[ 0 ] / m[ 18 ]; //y�͕��Ŋ�������
+	m[ 3 ] = m[ 0 ] % m[ 18 ]; //xは幅で割ったあまり
+	m[ 4 ] = m[ 0 ] / m[ 18 ]; //yは幅で割った商
 
-	//�ړ�
-	//�ړ�����W
+	//移動
+	//移動後座標
 	m[ 5 ] = m[ 3 ] + m[ 1 ]; //tx
 	m[ 6 ] = m[ 4 ] + m[ 2 ]; //ty
-	//���W�̍ő�ŏ��`�F�b�N�B�O��Ă���Εs����
+	//座標の最大最小チェック。外れていれば不許可
 	if ( m[ 5 ] < 0 || m[ 6 ] < 0 || m[ 5 ] >= m[ 18 ] || m[ 6 ] >= m[ 19 ] ){
 		return;
 	}
-	//A.���̕������󔒂܂��̓S�[���B�l���ړ��B
-	m[ 7 ] = 20 + m[ 4 ]*m[ 18 ] + m[ 3 ]; //�l�ʒu
-	m[ 8 ] = 20 + m[ 6 ]*m[ 18 ] + m[ 5 ]; //�ړ��ڕW�ʒu
-	if ( m[ m[ 8 ] ] == OBJ_SPACE || m[ m[ 8 ] ] == OBJ_GOAL ){ //�ړ���ɋ�Ԃ������
-		m[ m[ 8 ] ] = ( m[ m[ 8 ] ] == OBJ_GOAL ) ? OBJ_MAN_ON_GOAL : OBJ_MAN; //�S�[���Ȃ�S�[����̐l��
-		m[ m[ 7 ] ] = ( m[ m[ 7 ] ] == OBJ_MAN_ON_GOAL ) ? OBJ_GOAL : OBJ_SPACE; //���Ƃ��ƃS�[����Ȃ�S�[����
-	//B.���̕��������B���̕����̎��̃}�X���󔒂܂��̓S�[���ł���Έړ��B
+	//A.その方向が空白またはゴール。人が移動。
+	m[ 7 ] = 20 + m[ 4 ]*m[ 18 ] + m[ 3 ]; //人位置
+	m[ 8 ] = 20 + m[ 6 ]*m[ 18 ] + m[ 5 ]; //移動目標位置
+	if ( m[ m[ 8 ] ] == OBJ_SPACE || m[ m[ 8 ] ] == OBJ_GOAL ){ //移動先に空間があれば
+		m[ m[ 8 ] ] = ( m[ m[ 8 ] ] == OBJ_GOAL ) ? OBJ_MAN_ON_GOAL : OBJ_MAN; //ゴールならゴール上の人に
+		m[ m[ 7 ] ] = ( m[ m[ 7 ] ] == OBJ_MAN_ON_GOAL ) ? OBJ_GOAL : OBJ_SPACE; //もともとゴール上ならゴールに
+	//B.その方向が箱。その方向の次のマスが空白またはゴールであれば移動。
 	}else if ( m[ m[ 8 ] ] == OBJ_BLOCK || m[ m[ 8 ] ] == OBJ_BLOCK_ON_GOAL ){
-		//2�}�X�悪�͈͓����`�F�b�N
+		//2マス先が範囲内かチェック
 		m[ 9 ] = m[ 5 ] + m[ 1 ];
 		m[ 10 ] = m[ 6 ] + m[ 2 ];
-		if ( m[ 9 ] < 0 || m[ 10 ] < 0 || m[ 9 ] >= m[ 18 ] || m[ 10 ] >= m[ 19 ] ){ //�����Ȃ�
+		if ( m[ 9 ] < 0 || m[ 10 ] < 0 || m[ 9 ] >= m[ 18 ] || m[ 10 ] >= m[ 19 ] ){ //押せない
 			return;
 		}
 
-		m[ 11 ] = 20 + ( m[ 6 ] + m[ 2 ] )*m[ 18 ] + ( m[ 5 ] + m[ 1 ] ); //2�}�X��
+		m[ 11 ] = 20 + ( m[ 6 ] + m[ 2 ] )*m[ 18 ] + ( m[ 5 ] + m[ 1 ] ); //2マス先
 		if ( m[ m[ 11 ] ] == OBJ_SPACE || m[ m[ 11 ] ] == OBJ_GOAL ){
-			//��������ւ�
+			//順次入れ替え
 			m[ m[ 11 ] ] = ( m[ m[ 11 ] ] == OBJ_GOAL ) ? OBJ_BLOCK_ON_GOAL : OBJ_BLOCK;
 			m[ m[ 8 ] ] = ( m[ m[ 8 ] ] == OBJ_BLOCK_ON_GOAL ) ? OBJ_MAN_ON_GOAL : OBJ_MAN;
 			m[ m[ 7 ] ] = ( m[ m[ 7 ] ] == OBJ_MAN_ON_GOAL ) ? OBJ_GOAL : OBJ_SPACE;
@@ -168,31 +168,31 @@ void update(){
 	}
 }
 
-//�u���b�N�݂̂��Ȃ���΃N���A���Ă���B
+//ブロックのみがなければクリアしている。
 void checkClear(){
 	for ( m[ 1 ] = 20; m[ 1 ] < 20+m[ 18 ]*m[ 19 ]; ++m[ 1 ] ){
 		if ( m[ m[ 1 ] ] == OBJ_BLOCK ){
-			m[ 0 ] = 0; //�߂�l��m[ 0 ]
+			m[ 0 ] = 0; //戻り値はm[ 0 ]
 			return;
 		}
 	}
-	m[ 0 ] = 1; //�߂�l��m[ 0 ]
+	m[ 0 ] = 1; //戻り値はm[ 0 ]
 	return;
 }
 
 
-//#�� _��� .�S�[�� o�u���b�N p�l
+//#壁 _空間 .ゴール oブロック p人
 //########\n\
 //# .. p #\n\
 //# oo   #\n\
 //#      #\n\
 //########";
 void initializeGlobalVariables(){
-	//����18
+	//幅が18
 	m[ 18 ] = 8;
-	//������19
+	//高さが19
 	m[ 19 ] = 5;
-	//2�s��
+	//2行目
 	m[ 68 ] = '#';
 	m[ 69 ] = ' ';
 	m[ 70 ] = '.';
@@ -201,7 +201,7 @@ void initializeGlobalVariables(){
 	m[ 73 ] = 'p';
 	m[ 74 ] = ' ';
 	m[ 75 ] = '#';
-	//3�s��
+	//3行目
 	m[ 76 ] = '#';
 	m[ 77 ] = ' ';
 	m[ 78 ] = 'o';
@@ -210,7 +210,7 @@ void initializeGlobalVariables(){
 	m[ 81 ] = ' ';
 	m[ 82 ] = ' ';
 	m[ 83 ] = '#';
-	//4�s��
+	//4行目
 	m[ 84 ] = '#';
 	m[ 85 ] = ' ';
 	m[ 86 ] = ' ';
@@ -219,7 +219,7 @@ void initializeGlobalVariables(){
 	m[ 89 ] = ' ';
 	m[ 90 ] = ' ';
 	m[ 91 ] = '#';
-	//1�s�ڂ�5�s�ڂ͑S��#
+	//1行目と5行目は全部#
 	for ( m[ 0 ] = 0; m[ 0 ] < m[ 18 ]; ++m[ 0 ] ){
 		m[ 60 + m[ 0 ] ] = '#';
 		m[ 92 + m[ 0 ] ] = '#';

@@ -5,18 +5,18 @@ class Vector3;
 
 class Matrix34{
 public:
-	Matrix34(); //ƒfƒtƒHƒ‹ƒg‚ÅƒRƒ“ƒXƒgƒ‰ƒNƒg
-	//ˆÚ“®s—ñ¶¬
+	Matrix34(); //ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
+	//ç§»å‹•è¡Œåˆ—ç”Ÿæˆ
 	void setTranslation( const Vector3& );
-	//Šg‘åk¬s—ñ¶¬
+	//æ‹¡å¤§ç¸®å°è¡Œåˆ—ç”Ÿæˆ
 	void setScaling( const Vector3& );
-	//ƒxƒNƒ^‚ÆŠ|‚¯Z
+	//ãƒ™ã‚¯ã‚¿ã¨æ›ã‘ç®—
 	void multiply( Vector3* out, const Vector3& in ) const;
-	//s—ñ‚ÆŠ|‚¯Z
+	//è¡Œåˆ—ã¨æ›ã‘ç®—
 	void operator*=( const Matrix34& );
-	//ˆÚ“®s—ñ‚ÆæZ
+	//ç§»å‹•è¡Œåˆ—ã¨ä¹—ç®—
 	void translate( const Vector3& );
-	//Šg‘åk¬s—ñ‚ÆæZ
+	//æ‹¡å¤§ç¸®å°è¡Œåˆ—ã¨ä¹—ç®—
 	void scale( const Vector3& );
 private:
 	double m00, m01, m02, m03;

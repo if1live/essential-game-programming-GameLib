@@ -1,5 +1,5 @@
-//--------ƒ}ƒ‹ƒ`ƒTƒ“ƒvƒ‹ƒAƒ“ƒ`ƒGƒCƒŠƒAƒXƒXƒCƒbƒ`---
-bool gMultiSampleAntiAlias = true; //‚±‚ê‚ğ‘‚«Š·‚¦‚Ä‚İ‚æ‚¤
+//--------ãƒãƒ«ãƒã‚µãƒ³ãƒ—ãƒ«ã‚¢ãƒ³ãƒã‚¨ã‚¤ãƒªã‚¢ã‚¹ã‚¹ã‚¤ãƒƒãƒ---
+bool gMultiSampleAntiAlias = true; //ã“ã‚Œã‚’æ›¸ãæ›ãˆã¦ã¿ã‚ˆã†
 
 #include "GameLib/Framework.h"
 #include "GameLib/DebugScreen.h"
@@ -24,54 +24,54 @@ int gCount;
 GameLib::Graphics::TextureFilter gTextureFilter = GameLib::Graphics::TEXTURE_FILTER_POINT;
 
 namespace GameLib{
-	//ConfigurationƒNƒ‰ƒX‚ğg‚Á‚Ä‰Šúİ’è‚µ‚Ä‚â‚ë‚¤B
+	//Configurationã‚¯ãƒ©ã‚¹ã‚’ä½¿ã£ã¦åˆæœŸè¨­å®šã—ã¦ã‚„ã‚ã†ã€‚
 	void Framework::configure( Configuration* conf ){
-		conf->enableAntiAlias( gMultiSampleAntiAlias ); //ƒWƒƒƒM[‚ğŒyŒ¸‚·‚éˆ—‚Ì—L–³
+		conf->enableAntiAlias( gMultiSampleAntiAlias ); //ã‚¸ãƒ£ã‚®ãƒ¼ã‚’è»½æ¸›ã™ã‚‹å‡¦ç†ã®æœ‰ç„¡
 		conf->enableVSync( true );
 	}
 	void Framework::update(){
 		using namespace Graphics;
-		//‰½“x‚Æ‚È‚­o‚Ä‚­‚é‚Ì‚Åmˆê•¶š‚Å‚ ‚é‚±‚Æ‚ğ‹–‚µ‚Ä—~‚µ‚¢
+		//ä½•åº¦ã¨ãªãå‡ºã¦ãã‚‹ã®ã§mä¸€æ–‡å­—ã§ã‚ã‚‹ã“ã¨ã‚’è¨±ã—ã¦æ¬²ã—ã„
 		Graphics::Manager m = Graphics::Manager::instance();
 		if ( gCount == 0 ){ 
-			//--------------’¸“_ƒoƒbƒtƒ@‚ğì‚é-----------------------
-			gVertexBuffer = VertexBuffer::create( 3 ); //3’¸“_‚Ì’¸“_ƒoƒbƒtƒ@
-			Vertex* v = gVertexBuffer.lock(); //‘‚«‚İƒ|ƒCƒ“ƒ^‚ğ“¾‚é
-			//ˆÊ’u‚ğ“ü‚ê‚é
+			//--------------é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚‹-----------------------
+			gVertexBuffer = VertexBuffer::create( 3 ); //3é ‚ç‚¹ã®é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
+			Vertex* v = gVertexBuffer.lock(); //æ›¸ãè¾¼ã¿ãƒã‚¤ãƒ³ã‚¿ã‚’å¾—ã‚‹
+			//ä½ç½®ã‚’å…¥ã‚Œã‚‹
 			v[ 0 ].mPosition.set( -1.f, -1.f, 0.f );
 			v[ 1 ].mPosition.set( 0.f, 1.f, 0.f );
 			v[ 2 ].mPosition.set( 1.f, -0.8f, 0.f );
 			for ( int i = 0; i < 3; ++i ){
 				v[ i ].mColor = 0xffffffff;
 			}
-			//ƒeƒNƒXƒ`ƒƒÀ•W‚ğ“ü‚ê‚é(“K“–)
+			//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã‚’å…¥ã‚Œã‚‹(é©å½“)
 			v[ 0 ].mUv.set( -2.f, 2.f );
 			v[ 1 ].mUv.set( 0.f, -2.f );
 			v[ 2 ].mUv.set( 2.f, -2.f );
-			//‘‚«I‚í‚Á‚½‚ç•Â‚¶‚é
+			//æ›¸ãçµ‚ã‚ã£ãŸã‚‰é–‰ã˜ã‚‹
 			gVertexBuffer.unlock( &v );
 
-			//-------------ƒeƒNƒXƒ`ƒƒ‚ğì‚é---------------------
+			//-------------ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ä½œã‚‹---------------------
 			gTexture = Texture::create( "robo.tga" );
 			while ( !gTexture.isReady() ){
-				; //ƒ[ƒh‘Ò‚¿
+				; //ãƒ­ãƒ¼ãƒ‰å¾…ã¡
 			}
 		}
-		//g‚¤ƒf[ƒ^‚ğw’è‚·‚é
+		//ä½¿ã†ãƒ‡ãƒ¼ã‚¿ã‚’æŒ‡å®šã™ã‚‹
 		m.setVertexBuffer( gVertexBuffer );
 		m.setTexture( gTexture );
 
-		//s—ñ‚Í’PˆÊs—ñ‚Å‚¢‚¢(“§‹•ÏŠ·ƒrƒ…[s—ñ‚Æƒ[ƒ‹ƒh‚Ì“ñ‚Â‚ª•K—v)
+		//è¡Œåˆ—ã¯å˜ä½è¡Œåˆ—ã§ã„ã„(é€è¦–å¤‰æ›ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã¨ãƒ¯ãƒ¼ãƒ«ãƒ‰ã®äºŒã¤ãŒå¿…è¦)
 		Matrix44 pvm;
 		pvm.setIdentity();
 		m.setProjectionViewMatrix( pvm );
 		Matrix34 wm;
 		wm.setIdentity();
 		m.setWorldMatrix( wm );
-		//•`‰æ
+		//æç”»
 		m.draw( 0, 1, PRIMITIVE_TRIANGLE );
 
-		//ˆÈ‰º‚ÍƒXƒy[ƒXƒL[‚ÅƒtƒBƒ‹ƒ^‚ğØ‚è‘Ö‚¦‚éƒR[ƒh
+		//ä»¥ä¸‹ã¯ã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ã§ãƒ•ã‚£ãƒ«ã‚¿ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹ã‚³ãƒ¼ãƒ‰
 		if ( Input::Manager::instance().keyboard().isTriggered( ' ' ) ){
 			if ( gTextureFilter == TEXTURE_FILTER_POINT ){
 				gTextureFilter = TEXTURE_FILTER_LINEAR;
@@ -79,7 +79,7 @@ namespace GameLib{
 				gTextureFilter = TEXTURE_FILTER_POINT;
 			}
 		}
-		//ƒeƒNƒXƒ`ƒƒƒtƒBƒ‹ƒ^ƒZƒbƒg
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚£ãƒ«ã‚¿ã‚»ãƒƒãƒˆ
 		m.setTextureFilter( gTextureFilter );
 
 		DebugScreen ds = DebugScreen::instance();
@@ -95,9 +95,9 @@ namespace GameLib{
 		}
 		++gCount;
 
-		//Œã•Ğ•t‚¯ 
+		//å¾Œç‰‡ä»˜ã‘ 
 		if ( isEndRequested() ){
-			//ƒOƒ[ƒoƒ‹‚É’u‚­‚ÆŸè‚É‚ÍÁ‚¦‚È‚¢‚Ì‚Å‰ğ•ú
+			//ã‚°ãƒ­ãƒ¼ãƒãƒ«ã«ç½®ãã¨å‹æ‰‹ã«ã¯æ¶ˆãˆãªã„ã®ã§è§£æ”¾
 			gTexture.release();
 			gVertexBuffer.release();
 		}

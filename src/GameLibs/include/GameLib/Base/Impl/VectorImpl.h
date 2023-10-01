@@ -28,7 +28,7 @@ mCapacity( a.mCapacity ){
 	if ( mSize > 0 ){
 		mElements = static_cast< T* >( OPERATOR_NEW( sizeof( T ) * mCapacity ) );
 		for ( int i = 0; i < mSize; ++i ){
-			new ( &mElements[ i ] ) T( a.mElements[ i ] ); //ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^ŒÄ‚Ño‚µ
+			new ( &mElements[ i ] ) T( a.mElements[ i ] ); //ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿å‘¼ã³å‡ºã—
 		}
 	}
 }
@@ -38,11 +38,11 @@ template< class T > inline Vector< T >::~Vector(){
 }
 
 template< class T > inline void Vector< T >::operator=( const Vector& a ){ 
-	//operator=()‚ğ‘‚­‚É‚Í©•ª‚ğ‘ã“ü‚·‚éƒP[ƒX‚É‹C‚ğ‚Â‚¯‚æ‚¤B
+	//operator=()ã‚’æ›¸ãæ™‚ã«ã¯è‡ªåˆ†ã‚’ä»£å…¥ã™ã‚‹ã‚±ãƒ¼ã‚¹ã«æ°—ã‚’ã¤ã‘ã‚ˆã†ã€‚
 	if ( this == &a ){
 		return;
 	}
-	//‚Ü‚¸ŠÛ‚²‚ÆíœB\•ªL‚¢—Ìˆæ‚ª‚ ‚Á‚Ä‚àA–³‘Ê‚É‚È‚é‰Â”\«‚ª‚ ‚é‚Ì‚Åíœ‚·‚éB
+	//ã¾ãšä¸¸ã”ã¨å‰Šé™¤ã€‚ååˆ†åºƒã„é ˜åŸŸãŒã‚ã£ã¦ã‚‚ã€ç„¡é§„ã«ãªã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹ã®ã§å‰Šé™¤ã™ã‚‹ã€‚
 	clear();
 
 	mSize = a.size;
@@ -50,63 +50,63 @@ template< class T > inline void Vector< T >::operator=( const Vector& a ){
 	if ( mSize > 0 ){
 		mElements = static_cast< T* >( OPERATOR_NEW( sizeof( T ) * mCapacity ) );
 		for ( int i = 0; i < mSize; ++i ){
-			new ( &mElements[ i ] ) T( a.mElements[ i ] ); //ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^ŒÄ‚Ño‚µ
+			new ( &mElements[ i ] ) T( a.mElements[ i ] ); //ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿å‘¼ã³å‡ºã—
 		}
 	}
 }
 
 
 template< class T > inline void Vector< T >::push( const T& a ){
-	if ( mSize == mCapacity ){ //êŠ‚ª‚È‚¢Bˆø‰z‚µ‚ğs‚¤B
-		//1.5”{+1ƒTƒCƒY‚Ì—Ìˆæ‚ğŠm•ÛB+1‚Í2–¢–‚Å‚à‘‚¦‚é‚æ‚¤‚É‚·‚é‚½‚ßB
+	if ( mSize == mCapacity ){ //å ´æ‰€ãŒãªã„ã€‚å¼•è¶Šã—ã‚’è¡Œã†ã€‚
+		//1.5å€+1ã‚µã‚¤ã‚ºã®é ˜åŸŸã‚’ç¢ºä¿ã€‚+1ã¯2æœªæº€ã§ã‚‚å¢—ãˆã‚‹ã‚ˆã†ã«ã™ã‚‹ãŸã‚ã€‚
 		mCapacity = ( mCapacity * 3 / 2 ) + 1;
 		T* newElements = static_cast< T* >( OPERATOR_NEW( sizeof( T ) * mCapacity ) );
-		//‘SƒRƒs[‚¨‚æ‚ÑŒÃ‚¢—v‘f‚Ì”jŠü
+		//å…¨ã‚³ãƒ”ãƒ¼ãŠã‚ˆã³å¤ã„è¦ç´ ã®ç ´æ£„
 		for ( int i = 0; i < mSize; ++i ){
 			new ( &newElements[ i ] ) T( mElements[ i ] );
 			mElements[ i ].~T();
 		}
-		//‹Œ—Ìˆæ‚Ì”jŠü
+		//æ—§é ˜åŸŸã®ç ´æ£„
 		OPERATOR_DELETE( mElements );
-		//·‚µ‘Ö‚¦
+		//å·®ã—æ›¿ãˆ
 		mElements = newElements;
 	}
-	//V—v‘f‚Ì’Ç‰Á
+	//æ–°è¦ç´ ã®è¿½åŠ 
 	new ( &mElements[ mSize ] ) T( a );
-	//ƒTƒCƒYXV
+	//ã‚µã‚¤ã‚ºæ›´æ–°
 	++mSize;
 }
 
 template< class T > inline T* Vector< T >::push(){
-	if ( mSize == mCapacity ){ //êŠ‚ª‚È‚¢Bˆø‰z‚µ‚ğs‚¤B
-		//1.5”{+1ƒTƒCƒY‚Ì—Ìˆæ‚ğŠm•ÛB+1‚Í2–¢–‚Å‚à‘‚¦‚é‚æ‚¤‚É‚·‚é‚½‚ßB
+	if ( mSize == mCapacity ){ //å ´æ‰€ãŒãªã„ã€‚å¼•è¶Šã—ã‚’è¡Œã†ã€‚
+		//1.5å€+1ã‚µã‚¤ã‚ºã®é ˜åŸŸã‚’ç¢ºä¿ã€‚+1ã¯2æœªæº€ã§ã‚‚å¢—ãˆã‚‹ã‚ˆã†ã«ã™ã‚‹ãŸã‚ã€‚
 		mCapacity = ( mCapacity * 3 / 2 ) + 1;
 		T* newElements = static_cast< T* >( OPERATOR_NEW( sizeof( T ) * mCapacity ) );
-		//‘SƒRƒs[‚¨‚æ‚ÑŒÃ‚¢—v‘f‚Ì”jŠü
+		//å…¨ã‚³ãƒ”ãƒ¼ãŠã‚ˆã³å¤ã„è¦ç´ ã®ç ´æ£„
 		for ( int i = 0; i < mSize; ++i ){
 			new ( &newElements[ i ] ) T( mElements[ i ] );
 			mElements[ i ].~T();
 		}
-		//‹Œ—Ìˆæ‚Ì”jŠü
+		//æ—§é ˜åŸŸã®ç ´æ£„
 		OPERATOR_DELETE( mElements );
-		//·‚µ‘Ö‚¦
+		//å·®ã—æ›¿ãˆ
 		mElements = newElements;
 		newElements = 0;
 	}
-	//V—v‘f‚Ì’Ç‰Á
+	//æ–°è¦ç´ ã®è¿½åŠ 
 	new ( &mElements[ mSize ] ) T;
-	//ƒTƒCƒYXV
+	//ã‚µã‚¤ã‚ºæ›´æ–°
 	++mSize;
-	//V—v‘f‚Ìƒ|ƒCƒ“ƒ^‚ğ•Ô‚·
+	//æ–°è¦ç´ ã®ãƒã‚¤ãƒ³ã‚¿ã‚’è¿”ã™
 	return &mElements[ mSize - 1 ];
 }
 
 template< class T > inline void Vector< T >::clear(){
-	//ƒfƒXƒgƒ‰ƒNƒ^ŒÄ‚Ño‚µ
+	//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿å‘¼ã³å‡ºã—
 	for ( int i = 0; i < mSize; ++i ){
 		mElements[ i ].~T();
 	}
-	//—ÌˆæŠJ•ú
+	//é ˜åŸŸé–‹æ”¾
 	OPERATOR_DELETE( mElements );
 	mSize = mCapacity = 0;
 }
@@ -116,25 +116,25 @@ template< class T > inline int Vector< T >::size() const {
 }
 
 template< class T > inline void Vector< T >::setSize( int n ){
-	//w’èƒTƒCƒY‚ª¡‚ÌcapacityˆÈ‰º‚È‚çˆø‰z‚µ‚µ‚È‚¢
+	//æŒ‡å®šã‚µã‚¤ã‚ºãŒä»Šã®capacityä»¥ä¸‹ãªã‚‰å¼•è¶Šã—ã—ãªã„
 	if ( n < mCapacity ){
-		for ( int i = n; i < mSize; ++i ){ //‚½‚¾‚µŒã‚ë‚Ì•û‚Ì‰ğ•ú‚Í•K—vB5ŒÂ‚ ‚Á‚Ä3‚É‚·‚é‚È‚ç“Y‚¦š3,4‚Í‰ğ•ú‚·‚é•K—v‚ª‚ ‚é
+		for ( int i = n; i < mSize; ++i ){ //ãŸã ã—å¾Œã‚ã®æ–¹ã®è§£æ”¾ã¯å¿…è¦ã€‚5å€‹ã‚ã£ã¦3ã«ã™ã‚‹ãªã‚‰æ·»ãˆå­—3,4ã¯è§£æ”¾ã™ã‚‹å¿…è¦ãŒã‚ã‚‹
 			mElements[ i ].~T();
 		}
-	}else if ( n > mCapacity ){ //ƒ_ƒ‚¾Bˆø‰z‚µ
+	}else if ( n > mCapacity ){ //ãƒ€ãƒ¡ã ã€‚å¼•è¶Šã—
 		mCapacity = n;
 		T* newElements = static_cast< T* >( OPERATOR_NEW( sizeof( T ) * mCapacity ) );
-		//‘SƒRƒs[‚¨‚æ‚ÑŒÃ‚¢—v‘f‚Ì”jŠü
+		//å…¨ã‚³ãƒ”ãƒ¼ãŠã‚ˆã³å¤ã„è¦ç´ ã®ç ´æ£„
 		for ( int i = 0; i < mSize; ++i ){
 			new ( &newElements[ i ] ) T( mElements[ i ] );
 			mElements[ i ].~T();
 		}
-		//‹Œ—Ìˆæ‚Ì”jŠü
+		//æ—§é ˜åŸŸã®ç ´æ£„
 		OPERATOR_DELETE( mElements );
-		//·‚µ‘Ö‚¦
+		//å·®ã—æ›¿ãˆ
 		mElements = newElements;
 		newElements = 0;
-		//‰½‚à‚È‚¢—Ìˆæ‚ÉƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^ŒÄ‚Ño‚µ
+		//ä½•ã‚‚ãªã„é ˜åŸŸã«ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿å‘¼ã³å‡ºã—
 		for ( int i = mSize; i < n; ++i ){
 			new ( &mElements[ i ] ) T;
 		}

@@ -19,10 +19,10 @@ using namespace Math;
 
 namespace Scene{
 
-///’¼ÚOŠpŒ`Aü•ªA“_A2D’·•ûŒ`‚ğ•`‰æ‚·‚é‚½‚ß‚Ì•Ö—˜ƒNƒ‰ƒXB‘¬“x“I‚É‚Í‚©‚È‚è–³‘Ê‚ª‘½‚¢B
+///ç›´æ¥ä¸‰è§’å½¢ã€ç·šåˆ†ã€ç‚¹ã€2Dé•·æ–¹å½¢ã‚’æç”»ã™ã‚‹ãŸã‚ã®ä¾¿åˆ©ã‚¯ãƒ©ã‚¹ã€‚é€Ÿåº¦çš„ã«ã¯ã‹ãªã‚Šç„¡é§„ãŒå¤šã„ã€‚
 class PrimitiveRenderer{
 public:
-	///’¸“_”‚ÆA‚»‚Ì‘¼–½—ß‚Ì”‚ğw’è‚µ‚Ä\’z
+	///é ‚ç‚¹æ•°ã¨ã€ãã®ä»–å‘½ä»¤ã®æ•°ã‚’æŒ‡å®šã—ã¦æ§‹ç¯‰
 	static PrimitiveRenderer create( 
 		int vertexCapacity, 
 		int commandCapacity );
@@ -34,7 +34,7 @@ public:
 	void setCullMode( Graphics::CullMode );
 	void setTransform( const Matrix44& );
 
-	///OŠpŒ`‚ğ•ÏŠ·Ï‚İ’¸“_‚Å‘‚­B‚Â‚Ü‚èp‚Í4—v‘fƒxƒNƒ^B
+	///ä¸‰è§’å½¢ã‚’å¤‰æ›æ¸ˆã¿é ‚ç‚¹ã§æ›¸ãã€‚ã¤ã¾ã‚Špã¯4è¦ç´ ãƒ™ã‚¯ã‚¿ã€‚
 	void addTransformedTriangle(
 		const Vector4& pos0,
 		const Vector4& pos1,
@@ -45,7 +45,7 @@ public:
 		unsigned color0 = 0xffffffff,
 		unsigned color1 = 0xffffffff,
 		unsigned color2 = 0xffffffff);
-	///OŠpŒ`‚ğ•ÏŠ·Ï‚İ’¸“_‚Å‘‚­BƒeƒNƒXƒ`ƒƒ‚È‚µB
+	///ä¸‰è§’å½¢ã‚’å¤‰æ›æ¸ˆã¿é ‚ç‚¹ã§æ›¸ãã€‚ãƒ†ã‚¯ã‚¹ãƒãƒ£ãªã—ã€‚
 	void addTransformedTriangle(
 		const Vector4& pos0,
 		const Vector4& pos1,
@@ -53,7 +53,7 @@ public:
 		unsigned color0 = 0xffffffff,
 		unsigned color1 = 0xffffffff,
 		unsigned color2 = 0xffffffff);
-	///OŠpŒ`‚ğ•`‚­
+	///ä¸‰è§’å½¢ã‚’æã
 	void addTriangle(
 		const Vector3& pos0,
 		const Vector3& pos1,
@@ -64,7 +64,7 @@ public:
 		unsigned color0 = 0xffffffff,
 		unsigned color1 = 0xffffffff,
 		unsigned color2 = 0xffffffff );
-	///OŠpŒ`‚ğ•`‚­BƒeƒNƒXƒ`ƒƒ‚È‚µ
+	///ä¸‰è§’å½¢ã‚’æãã€‚ãƒ†ã‚¯ã‚¹ãƒãƒ£ãªã—
 	void addTriangle(
 		const Vector3& pos0,
 		const Vector3& pos1,
@@ -72,7 +72,7 @@ public:
 		unsigned color0 = 0xffffffff,
 		unsigned color1 = 0xffffffff,
 		unsigned color2 = 0xffffffff );
-	///ü•ª‚ğ•`‚­B
+	///ç·šåˆ†ã‚’æãã€‚
 	void addLine(
 		const Vector3& pos0,
 		const Vector3& pos1,
@@ -80,22 +80,22 @@ public:
 		const Vector2& uv1,
 		unsigned color0 = 0xffffffff,
 		unsigned color1 = 0xffffffff );
-	///ü•ª‚ğ•`‚­BƒeƒNƒXƒ`ƒƒ‚È‚µB
+	///ç·šåˆ†ã‚’æãã€‚ãƒ†ã‚¯ã‚¹ãƒãƒ£ãªã—ã€‚
 	void addLine(
 		const Vector3& pos0,
 		const Vector3& pos1,
 		unsigned color0 = 0xffffffff,
 		unsigned color1 = 0xffffffff );
-	///“_‚ğ•`‚­B
+	///ç‚¹ã‚’æãã€‚
 	void addPoint(
 		const Vector3& pos,
 		const Vector2& uv,
 		unsigned color = 0xffffffff );
-	///“_‚ğ•`‚­BƒeƒNƒXƒ`ƒƒ‚È‚µ
+	///ç‚¹ã‚’æãã€‚ãƒ†ã‚¯ã‚¹ãƒãƒ£ãªã—
 	void addPoint(
 		const Vector3& pos,
 		unsigned color = 0xffffffff );
-	///Z=0•½–Ê‚É’·•ûŒ`‚ğ•`‚­BÀ•WŒn‚ÍƒXƒNƒŠ[ƒ“À•WB
+	///Z=0å¹³é¢ã«é•·æ–¹å½¢ã‚’æãã€‚åº§æ¨™ç³»ã¯ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã€‚
 	void addRectangle(
 		const Vector2& pos0,
 		const Vector2& pos1,
@@ -103,16 +103,16 @@ public:
 		const Vector2& uv1,
 		unsigned color = 0xffffffff,
 		float depth = 0.f );
-	///Z=0•½–Ê‚É’·•ûŒ`‚ğ•`‚­BÀ•WŒn‚ÍƒXƒNƒŠ[ƒ“À•WBƒeƒNƒXƒ`ƒƒ‚È‚µB
+	///Z=0å¹³é¢ã«é•·æ–¹å½¢ã‚’æãã€‚åº§æ¨™ç³»ã¯ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã€‚ãƒ†ã‚¯ã‚¹ãƒãƒ£ãªã—ã€‚
 	void addRectangle(
 		const Vector2& pos0,
 		const Vector2& pos1,
 		unsigned color = 0xffffffff,
 		float depth = 0.f );
-	///•`‰æ
+	///æç”»
 	void draw();
 
-	//ˆÈ‰ºƒ†[ƒU‚ÍˆÓ¯‚µ‚È‚¢
+	//ä»¥ä¸‹ãƒ¦ãƒ¼ã‚¶ã¯æ„è­˜ã—ãªã„
 	PrimitiveRenderer();
 	PrimitiveRenderer( const PrimitiveRenderer& );
 	~PrimitiveRenderer();

@@ -1,8 +1,8 @@
-//�Q�ƃC���^�[�t�F�C�X�^��Const�ł���鎞�Ɋy�ɂ��邽�߂̂��́B
+//参照インターフェイス型のConst版を作る時に楽にするためのもの。
 //#define TYPE ActualType
 //#define CONST_TYPE ActualConstType
-//�Ə����Ă���C���N���[�h���邱�ƁB�������ActualType�͖{���̌^�̖��O���B
-//�����o�ϐ���mBase�Œ�
+//と書いてからインクルードすること。もちろんActualTypeは本当の型の名前だ。
+//メンバ変数はmBase固定
 
 CONST_TYPE::CONST_TYPE(){
 }

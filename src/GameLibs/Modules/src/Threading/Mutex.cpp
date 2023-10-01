@@ -8,8 +8,8 @@
 namespace GameLib{
 namespace Threading{
 
-//���d�A�����b�N�A���d���b�N���X�����o���邽�߂ɁA���g�̓Z�}�t�H�ɂ��Ă����B
-//Release�ł�CriticalSection�ɐ؂�ւ���̂�������������Ȃ��B
+//多重アンロック、多重ロック等々を検出するために、中身はセマフォにしておく。
+//Release版でCriticalSectionに切り替えるのもいいかもしれない。
 class Mutex::Impl : public ReferenceType{
 public:
 	Impl() : mHandle( 0 ){

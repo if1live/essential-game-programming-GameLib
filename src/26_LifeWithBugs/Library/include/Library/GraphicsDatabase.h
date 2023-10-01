@@ -6,7 +6,7 @@ namespace GameLib{
 		class Element;
 	}
 }
-using namespace GameLib; //�ʓ|�Ȃ̂�using�B���܂�悭�Ȃ��B
+using namespace GameLib; //面倒なのでusing。あまりよくない。
 
 class VertexBuffer;
 class IndexBuffer;
@@ -16,17 +16,17 @@ class Model;
 
 class GraphicsDatabase{
 public:
-	//�j�Zxml��Element���琶��
+	//ニセxmlのElementから生成
 	GraphicsDatabase( GameLib::PseudoXml::Element& );
-	//�t�@�C�����琶��
+	//ファイルから生成
 	GraphicsDatabase( const char* filename );
 	~GraphicsDatabase();
-	//�擾�n(const�łŕԂ�)
+	//取得系(const版で返す)
 	ConstSharedPtr< VertexBuffer > getVertexBuffer( const char* name ) const;
 	ConstSharedPtr< IndexBuffer > getIndexBuffer( const char* name ) const;
 	ConstSharedPtr< Texture > getTexture( const char* name ) const;
 	ConstSharedPtr< Batch > getBatch( const char* name ) const;
-	//���f������
+	//モデル生成
 	Model* createModel( const char* batchName ) const;
 private:
 	void createFromElement( GameLib::PseudoXml::Element& );

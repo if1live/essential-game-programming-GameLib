@@ -12,12 +12,12 @@ namespace GameLib{
 	void Framework::update(){
 		if ( !Loader::instance() ){
 			Loader::create( "data.bin" );
-//			Loader::create(); //‚±‚Á‚¿‚Ìs‚É‚·‚é‚ÆAƒA[ƒJƒCƒu‚È‚µ‚ÅƒAƒNƒZƒXB
+//			Loader::create(); //ã“ã£ã¡ã®è¡Œã«ã™ã‚‹ã¨ã€ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–ãªã—ã§ã‚¢ã‚¯ã‚»ã‚¹ã€‚
 		}
-		//ƒ[ƒ_Às
+		//ãƒ­ãƒ¼ãƒ€å®Ÿè¡Œ
 		Loader::instance()->update();
 
-		//ƒ[ƒhÏ‚İ‚È‚çíœ
+		//ãƒ­ãƒ¼ãƒ‰æ¸ˆã¿ãªã‚‰å‰Šé™¤
 		for ( int i = 0; i < 100; ++i ){
 			if ( gFiles[ i ] ){
 				if ( gFiles[ i ]->isReady() ){
@@ -26,7 +26,7 @@ namespace GameLib{
 			}
 		}
 		ostringstream oss;
-		//‹ó‚¢‚Ä‚é‚¾‚¯‘SƒXƒƒbƒgƒ[ƒh
+		//ç©ºã„ã¦ã‚‹ã ã‘å…¨ã‚¹ãƒ­ãƒƒãƒˆãƒ­ãƒ¼ãƒ‰
 		for ( int i = 0; i < 100; ++i ){
 			if ( gFiles[ i ] == 0 ){
 				oss.str( "" );
@@ -45,7 +45,7 @@ namespace GameLib{
 		c = ( previousFrame > 63 ) ? 0 : ( 255 - previousFrame * 4 );
 		drawDebugString( 0, 1, oss.str().c_str(), 0xffff0000 | ( c << 8 ) | c );
 
-		//~‚Ü‚Á‚Ä‚é‚Ì‚ğ‚í‚©‚è‚â‚·‚­‚·‚é•`‰æ
+		//æ­¢ã¾ã£ã¦ã‚‹ã®ã‚’ã‚ã‹ã‚Šã‚„ã™ãã™ã‚‹æç”»
 		double p[ 4 ][ 4 ];
 		p[ 0 ][ 2 ] = p[ 1 ][ 2 ] = p[ 2 ][ 2 ] = p[ 3 ][ 2 ] = 0.0;
 		p[ 0 ][ 3 ] = p[ 1 ][ 3 ] = p[ 2 ][ 3 ] = p[ 3 ][ 3 ] = 1.0;

@@ -17,7 +17,7 @@ File::~File(){
 }
 
 bool File::isReady() const {
-	return ( mData != 0 ); //ƒ[ƒh‚ªI‚í‚é‚Ü‚Åƒf[ƒ^‚É’l‚Í“ü‚ç‚È‚¢‚Ì‚Å‚±‚ê‚ÅƒI[ƒP[
+	return ( mData != 0 ); //ãƒ­ãƒ¼ãƒ‰ãŒçµ‚ã‚ã‚‹ã¾ã§ãƒ‡ãƒ¼ã‚¿ã«å€¤ã¯å…¥ã‚‰ãªã„ã®ã§ã“ã‚Œã§ã‚ªãƒ¼ã‚±ãƒ¼
 }
 
 int File::getSize() const {
@@ -45,14 +45,14 @@ Loader::~Loader(){
 	for ( It i = mFiles.begin(); i != mFiles.end(); ++i ){
 		SAFE_DELETE( *i );
 	}
-	//“Ç‚ñ‚Å‚éƒtƒ@ƒCƒ‹‚ª‚ ‚é‚È‚ç”jŠü
+	//èª­ã‚“ã§ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã‚‹ãªã‚‰ç ´æ£„
 	if ( mStream ){
 		SAFE_DELETE( mStream );
 	}
 	if ( mData ){
 		SAFE_DELETE( mData );
 	}
-	mCurrentFile = 0; //‚±‚ê‚Ídelete‚µ‚È‚¢BƒŠƒXƒg‚Ì’†‚É‚¢‚é‚Í‚¸‚¾
+	mCurrentFile = 0; //ã“ã‚Œã¯deleteã—ãªã„ã€‚ãƒªã‚¹ãƒˆã®ä¸­ã«ã„ã‚‹ã¯ãšã 
 }
 
 Loader* Loader::instance(){
@@ -75,15 +75,15 @@ void Loader::createFile( File** f, const char* filename ){
 }
 
 void Loader::destroyFile( File** f ){
-	if ( !( *f ) ){ //‚·‚Å‚É0B‚â‚é‚±‚Æ‚È‚¢B
+	if ( !( *f ) ){ //ã™ã§ã«0ã€‚ã‚„ã‚‹ã“ã¨ãªã„ã€‚
 		return;
 	}
 	typedef list< File* >::iterator It;
 	for ( It i = mFiles.begin(); i != mFiles.end(); ++i ){
-		if ( *i == *f ){ //Œ©‚Â‚©‚Á‚½B
-			SAFE_DELETE( *f ); //•¨‚ğÁ‚µ‚Ä
-			mFiles.erase( i ); //ƒŠƒXƒg‚©‚ç‚àÁ‚µ‚Ä
-			*f = 0; //ó‚¯æ‚èƒ|ƒCƒ“ƒ^‚ğ0‚É
+		if ( *i == *f ){ //è¦‹ã¤ã‹ã£ãŸã€‚
+			SAFE_DELETE( *f ); //ç‰©ã‚’æ¶ˆã—ã¦
+			mFiles.erase( i ); //ãƒªã‚¹ãƒˆã‹ã‚‰ã‚‚æ¶ˆã—ã¦
+			*f = 0; //å—ã‘å–ã‚Šãƒã‚¤ãƒ³ã‚¿ã‚’0ã«
 			break;
 		}
 	}
@@ -92,17 +92,17 @@ void Loader::destroyFile( File** f ){
 
 void Loader::update(){
 	typedef list< File* >::iterator It;
-	//‚·‚Å‚Éƒ[ƒh’†‚È‚çƒ[ƒh‚ği‚ß‚é
+	//ã™ã§ã«ãƒ­ãƒ¼ãƒ‰ä¸­ãªã‚‰ãƒ­ãƒ¼ãƒ‰ã‚’é€²ã‚ã‚‹
 	if ( mCurrentFile ){
-		//‚Å‚àA‚±‚ê–{“–‚ÉƒŠƒXƒg‚É‚ ‚é‚ÌH
+		//ã§ã‚‚ã€ã“ã‚Œæœ¬å½“ã«ãƒªã‚¹ãƒˆã«ã‚ã‚‹ã®ï¼Ÿ
 		bool found = false;
 		for ( It i = mFiles.begin(); i != mFiles.end(); ++i ){
 			if ( *i == mCurrentFile ){
-				found = true; //‚ ‚Á‚½
+				found = true; //ã‚ã£ãŸ
 				break;
 			}
 		}
-		if ( !found ){ //‚à‚¤‚È‚¢‚¶‚á‚È‚¢‚©B‚·‚Ä‚¿‚á‚¤B“r’†‚Ådestroy()‚³‚ê‚½‚æ‚¤‚¾B
+		if ( !found ){ //ã‚‚ã†ãªã„ã˜ã‚ƒãªã„ã‹ã€‚ã™ã¦ã¡ã‚ƒã†ã€‚é€”ä¸­ã§destroy()ã•ã‚ŒãŸã‚ˆã†ã ã€‚
 			if ( mData ){
 				SAFE_DELETE_ARRAY( mData );
 			}
@@ -111,35 +111,35 @@ void Loader::update(){
 			}
 			mFileSize = mFilePosition = 0;
 			mCurrentFile = 0;
-		}else{ //ƒtƒ@ƒCƒ‹‚ª‚ ‚éB‚¶‚á‚ ƒ[ƒh‚ğ‘±‚¯‚é‚©B
+		}else{ //ãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã‚‹ã€‚ã˜ã‚ƒã‚ãƒ­ãƒ¼ãƒ‰ã‚’ç¶šã‘ã‚‹ã‹ã€‚
 			int rest = mFileSize - mFilePosition;
-			//¡‰ñ“Ç‚ŞƒTƒCƒY‚ÍREAD_UNITˆÈã‚È‚çREAD_UNITAˆÈ‰º‚È‚çrest‚»‚Ì‚Ü‚Ü
+			//ä»Šå›èª­ã‚€ã‚µã‚¤ã‚ºã¯READ_UNITä»¥ä¸Šãªã‚‰READ_UNITã€ä»¥ä¸‹ãªã‚‰restãã®ã¾ã¾
 			int size = ( rest > READ_UNIT ) ? READ_UNIT : rest;
-			//“Ç‚İ‚İ
+			//èª­ã¿è¾¼ã¿
 			mStream->read( mData + mFilePosition, size );
 			mFilePosition += size;
-			//I‚í‚Á‚½‚È‚çƒZƒbƒg‚µ‚æ‚¤B
-			if ( size == rest ){ //¡‰ñ‚Ì“Ç‚İ‚İ—Ê‚Æc‚è‚ª“™‚µ‚¢=I‚í‚Á‚½
+			//çµ‚ã‚ã£ãŸãªã‚‰ã‚»ãƒƒãƒˆã—ã‚ˆã†ã€‚
+			if ( size == rest ){ //ä»Šå›ã®èª­ã¿è¾¼ã¿é‡ã¨æ®‹ã‚ŠãŒç­‰ã—ã„=çµ‚ã‚ã£ãŸ
 				mCurrentFile->mData = mData;
 				mCurrentFile->mSize = mFileSize;
-				mData = 0; //Œ¨‚Ì‰×‚ª‰º‚è‚½‚Ì‚Å0‚É
+				mData = 0; //è‚©ã®è·ãŒä¸‹ã‚ŠãŸã®ã§0ã«
 				mFileSize = mFilePosition = 0;
 				SAFE_DELETE( mStream );
 				mCurrentFile = 0;
 			}
 		}
-	}else{ //‚³‚ÄA“Ç‚İ‚İ’†‚Ì‚à‚Ì‚ª‚È‚¢‚È‚çƒtƒ@ƒCƒ‹‚ğŠJ‚¯‚Ë‚Î‚È‚ç‚È‚¢‚È‚ B
+	}else{ //ã•ã¦ã€èª­ã¿è¾¼ã¿ä¸­ã®ã‚‚ã®ãŒãªã„ãªã‚‰ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã‘ã­ã°ãªã‚‰ãªã„ãªã‚ã€‚
 		for ( It i = mFiles.begin(); i != mFiles.end(); ++i ){
 			File* f = *i;
-			if ( !f->isReady() ){ //I‚í‚Á‚Ä‚Ë‚¦Bƒ[ƒh‚·‚é‚æ
+			if ( !f->isReady() ){ //çµ‚ã‚ã£ã¦ã­ãˆã€‚ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ã‚ˆ
 				mStream = new ifstream( f->mFilename.c_str(), ifstream::binary );
 				mStream->seekg( 0, ifstream::end );
 				mFileSize = static_cast< int >( mStream->tellg() );
 				mData = new char[ mFileSize ];
-				mStream->seekg( 0, ifstream::beg ); //Å‰‚ÉŠª‚«–ß‚µ‚Ä‚¨‚­B
+				mStream->seekg( 0, ifstream::beg ); //æœ€åˆã«å·»ãæˆ»ã—ã¦ãŠãã€‚
 				mFilePosition = 0;
 				mCurrentFile = f;
-				break; //”²‚¯‚éB
+				break; //æŠœã‘ã‚‹ã€‚
 			}
 		}
 	}

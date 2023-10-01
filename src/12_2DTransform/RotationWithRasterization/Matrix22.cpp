@@ -9,7 +9,7 @@ m11( e11 ){
 }
 
 void Matrix22::multiply( Vector2* out, const Vector2& in ) const {
-	double tx = in.x; //outÇ∆inÇ™ìØÇ∂Ç©Ç‡ÇµÇÍÇ»Ç¢ÇÃÇ≈ÅAÉoÉbÉNÉAÉbÉv
-	out->x = m00 * tx + m01 * in.y; //ç∂è„*x + âEè„*y
-	out->y = m10 * tx + m11 * in.y; //ç∂â∫*x + âEâ∫*y
+	double tx = in.x; //out„Å®in„ÅåÂêå„Åò„Åã„ÇÇ„Åó„Çå„Å™„ÅÑ„ÅÆ„Åß„ÄÅ„Éê„ÉÉ„ÇØ„Ç¢„ÉÉ„Éó
+	out->x = m00 * tx + m01 * in.y; //Â∑¶‰∏ä*x + Âè≥‰∏ä*y
+	out->y = m10 * tx + m11 * in.y; //Â∑¶‰∏ã*x + Âè≥‰∏ã*y
 }

@@ -14,24 +14,24 @@ mName( name ){
 }
 
 Element::Element( Tag* beginTag, const char** p, const char* e ){
-	//–¼‘O‚ğˆÚA
+	//åå‰ã‚’ç§»æ¤
 	mName = *( beginTag->name() );
-	//ƒAƒgƒŠƒrƒ…[ƒg‚ğˆÚA(ƒRƒs[‚Å‚È‚­ƒ|ƒCƒ“ƒ^‚ğ‚»‚Ì‚Ü‚Ü‚à‚ç‚Á‚Ä‚‘¬‰»)
-	mAttributes = *beginTag->attributes(); //ŠÛ‚²‚ÆƒRƒs[
+	//ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆã‚’ç§»æ¤(ã‚³ãƒ”ãƒ¼ã§ãªããƒã‚¤ãƒ³ã‚¿ã‚’ãã®ã¾ã¾ã‚‚ã‚‰ã£ã¦é«˜é€ŸåŒ–)
+	mAttributes = *beginTag->attributes(); //ä¸¸ã”ã¨ã‚³ãƒ”ãƒ¼
 
-	//ƒ^ƒO’T‚·
+	//ã‚¿ã‚°æ¢ã™
 	while ( *p < e ){
-		if ( **p == '<' ){ //”­Œ©
-			++( *p ); //<‚ÌŸ‚ÖˆÚ“®
-			Tag tag( p, e ); //ƒ^ƒO‰ğß‚ğŠÛ“Š‚°
+		if ( **p == '<' ){ //ç™ºè¦‹
+			++( *p ); //<ã®æ¬¡ã¸ç§»å‹•
+			Tag tag( p, e ); //ã‚¿ã‚°è§£é‡ˆã‚’ä¸¸æŠ•ã’
 			Tag::Type type = tag.type();
-			if ( type == Tag::TYPE_BEGIN ){ //ŠJnƒ^ƒO
-				mChildren.push_back( new Element( &tag, p, e ) ); //q‚É’Ç‰Á
-			}else if ( type == Tag::TYPE_END ){ //I—¹ƒ^ƒO
-				break; //I‚í‚é
+			if ( type == Tag::TYPE_BEGIN ){ //é–‹å§‹ã‚¿ã‚°
+				mChildren.push_back( new Element( &tag, p, e ) ); //å­ã«è¿½åŠ 
+			}else if ( type == Tag::TYPE_END ){ //çµ‚äº†ã‚¿ã‚°
+				break; //çµ‚ã‚ã‚‹
 			}
 		}else{
-			++( *p ); //<‚ªo‚é‚Ü‚Å–³‹‚µ‚Ü‚­‚è
+			++( *p ); //<ãŒå‡ºã‚‹ã¾ã§ç„¡è¦–ã—ã¾ãã‚Š
 		}
 	}
 }
@@ -58,7 +58,7 @@ Attribute* Element::attribute( int i ){
 }
 
 void Element::setAttributeNumber( int n ){
-	//¡‚ ‚é•ª‚ÍÌ‚Ä‚é
+	//ä»Šã‚ã‚‹åˆ†ã¯æ¨ã¦ã‚‹
 	for ( unsigned i = 0; i < mAttributes.size(); ++i ){
 		SAFE_DELETE( mAttributes[ i ] );
 	}
@@ -81,7 +81,7 @@ Element* Element::child( int i ){
 }
 
 void Element::setChildNumber( int n ){
-	//¡‚ ‚é•ª‚ÍÌ‚Ä‚é
+	//ä»Šã‚ã‚‹åˆ†ã¯æ¨ã¦ã‚‹
 	for ( unsigned i = 0; i < mChildren.size(); ++i ){
 		SAFE_DELETE( mChildren[ i ] );
 	}
@@ -100,35 +100,35 @@ void Element::setName( const char* name ){
 }
 
 void Element::convertToString( string* out, int indent ) const {
-	//ƒCƒ“ƒfƒ“ƒg‚Ì”‚¾‚¯ƒ^ƒu‚ğ‘‚­
+	//ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã®æ•°ã ã‘ã‚¿ãƒ–ã‚’æ›¸ã
 	for ( int i = 0; i < indent; ++i ){
 		*out += '\t';
 	}
-	//ƒ^ƒOŠJn‚ÆƒGƒŒƒƒ“ƒg–¼
+	//ã‚¿ã‚°é–‹å§‹ã¨ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆå
 	*out += '<';
 	*out += mName;
-	//ƒAƒgƒŠƒrƒ…[ƒg‘‚«‚İ
+	//ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆæ›¸ãè¾¼ã¿
 	for ( unsigned i = 0; i < mAttributes.size(); ++i ){
 		if ( mAttributes[ i ] ){
-			*out += ' '; //ƒXƒy[ƒX
+			*out += ' '; //ã‚¹ãƒšãƒ¼ã‚¹
 			*out += *( mAttributes[ i ]->name() );
 			*out += "=\"";
 			*out += *( mAttributes[ i ]->value() );
 			*out += '"';
 		}
 	}
-	*out += ">\r\n"; //ŠJnƒ^ƒOI‚í‚è
-	//q‚É—¬‚·
+	*out += ">\r\n"; //é–‹å§‹ã‚¿ã‚°çµ‚ã‚ã‚Š
+	//å­ã«æµã™
 	for ( unsigned i = 0; i < mChildren.size(); ++i ){
 		if ( mChildren[ i ] ){
 			mChildren[ i ]->convertToString( out, indent + 1 );
 		}
 	}
-	//ƒCƒ“ƒfƒ“ƒg‚Ì”‚¾‚¯ƒ^ƒu‚ğ‘‚­
+	//ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã®æ•°ã ã‘ã‚¿ãƒ–ã‚’æ›¸ã
 	for ( int i = 0; i < indent; ++i ){
 		*out += '\t';
 	}
-	//I—¹ƒ^ƒO
+	//çµ‚äº†ã‚¿ã‚°
 	*out += "</";
 	*out += mName;
 	*out += ">\r\n";

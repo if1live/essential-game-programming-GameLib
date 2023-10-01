@@ -3,27 +3,27 @@
 
 class Vector3{
 public:
-	//‰½‚à‚µ‚È‚¢ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ä½•ã‚‚ã—ãªã„ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Vector3();
-	//double‚©‚çƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//doubleã‹ã‚‰ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Vector3( double x, double y, double z );
-	//Vector2‚©‚çƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//Vector2ã‹ã‚‰ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Vector3( const Vector3& );
-	//Œã‚©‚ç”š‚ğƒZƒbƒg
+	//å¾Œã‹ã‚‰æ•°å­—ã‚’ã‚»ãƒƒãƒˆ
 	void set( double x, double y, double z );
-	//‘«‚µZ
+	//è¶³ã—ç®—
 	void operator+=( const Vector3& );
-	//ˆø‚«Z
+	//å¼•ãç®—
 	void operator-=( const Vector3& );
-	//ƒRƒs[
+	//ã‚³ãƒ”ãƒ¼
 	void operator=( const Vector3& );
-	//‘«‚µZ‚ğƒZƒbƒg
+	//è¶³ã—ç®—ã‚’ã‚»ãƒƒãƒˆ
 	void setAdd( const Vector3&, const Vector3& );
-	//ˆø‚«Z‚ğƒZƒbƒg
+	//å¼•ãç®—ã‚’ã‚»ãƒƒãƒˆ
 	void setSub( const Vector3&, const Vector3& );
-	//xyz‚ğa”{
+	//xyzã‚’aå€
 	void operator*=( double );
-	//Š|‚¯Z‚ğƒZƒbƒg
+	//æ›ã‘ç®—ã‚’ã‚»ãƒƒãƒˆ
 	void setMul( const Vector3&, double );
 
 	double x, y, z;

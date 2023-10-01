@@ -9,25 +9,25 @@ namespace Graphics{
 
 class Texture{
 public:
-	///ƒGƒŒƒƒ“ƒg‚©‚ç¶¬Bpath‚ª‚ ‚ê‚Îƒtƒ@ƒCƒ‹–¼‚Ì‘O‚É’Ç‰Á‚·‚éB
+	///ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆã‹ã‚‰ç”Ÿæˆã€‚pathãŒã‚ã‚Œã°ãƒ•ã‚¡ã‚¤ãƒ«åã®å‰ã«è¿½åŠ ã™ã‚‹ã€‚
 	static Texture create( PseudoXml::ConstElement, const char* path = 0 );
-	//‹ó‚ÌƒeƒNƒXƒ`ƒƒ
+	//ç©ºã®ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	static Texture create( int width, int height, bool createMipChain );
-	///TGA‚à‚µ‚­‚ÍDDSBŠg’£q‚Å”»•Ê‚·‚éB
+	///TGAã‚‚ã—ãã¯DDSã€‚æ‹¡å¼µå­ã§åˆ¤åˆ¥ã™ã‚‹ã€‚
 	static Texture create( const char* filename );
-	///TGA‚à‚µ‚­‚ÍDDS‚Ì’†g‚ğ“n‚·BÅ‰‚ÉDDS‚Æ‘‚¢‚Ä‚ ‚ê‚ÎDDS‚Æ‚İ‚È‚µA‚»‚êˆÈŠO‚ÍTGA‚Æ‚İ‚È‚·B
+	///TGAã‚‚ã—ãã¯DDSã®ä¸­èº«ã‚’æ¸¡ã™ã€‚æœ€åˆã«DDSã¨æ›¸ã„ã¦ã‚ã‚Œã°DDSã¨ã¿ãªã—ã€ãã‚Œä»¥å¤–ã¯TGAã¨ã¿ãªã™ã€‚
 	static Texture create( const char* fileData, int fileSize );
-	///–¼‘OƒQƒbƒg(ƒjƒZxml‚©‚çƒ[ƒh‚·‚ê‚Î‚»‚Ì–¼‘OB‘¼‚Í‹óB)
+	///åå‰ã‚²ãƒƒãƒˆ(ãƒ‹ã‚»xmlã‹ã‚‰ãƒ­ãƒ¼ãƒ‰ã™ã‚Œã°ãã®åå‰ã€‚ä»–ã¯ç©ºã€‚)
 	const char* name() const;
 
-	///ƒ[ƒhI‚í‚Á‚½H(const‚ª‚È‚¢‚Ì‚Í“à•”‚Åˆ—‚ª‚ ‚é‚©‚ç)
+	///ãƒ­ãƒ¼ãƒ‰çµ‚ã‚ã£ãŸï¼Ÿ(constãŒãªã„ã®ã¯å†…éƒ¨ã§å‡¦ç†ãŒã‚ã‚‹ã‹ã‚‰)
 	bool isReady(); 
-	///“Ç‚İ‚İƒGƒ‰[‹N‚±‚Á‚Ä‚È‚¢H
+	///èª­ã¿è¾¼ã¿ã‚¨ãƒ©ãƒ¼èµ·ã“ã£ã¦ãªã„ï¼Ÿ
 	bool isError() const;
 
-	///‘‚«‚İŠÖ”
+	///æ›¸ãè¾¼ã¿é–¢æ•°
 	void lock( unsigned** address, int* pitch, int mipLevel = 0 );
-	///•”•ª‘‚«‚İŠÖ”
+	///éƒ¨åˆ†æ›¸ãè¾¼ã¿é–¢æ•°
 	void lock( 
 		unsigned** address, 
 		int* pitch, 
@@ -37,18 +37,18 @@ public:
 		int height,
 		int mipLevel = 0 );
 	void unlock( unsigned** address, int mipLevel = 0 );
-	//î•ñæ“¾
+	//æƒ…å ±å–å¾—
 	int width() const;
 	int height() const;
-	///2™p‚É’¼‚³‚ê‚é‘O‚ÌŒ³‚Ì•
+	///2å†ªã«ç›´ã•ã‚Œã‚‹å‰ã®å…ƒã®å¹…
 	int originalWidth() const;
-	///2™p‚É’¼‚³‚ê‚é‘O‚ÌŒ³‚Ì‚‚³
+	///2å†ªã«ç›´ã•ã‚Œã‚‹å‰ã®å…ƒã®é«˜ã•
 	int originalHeight() const;
 	int mipmapNumber() const;
-	///ƒtƒ@ƒCƒ‹‚É‘‚«o‚·B¬Œ÷¸”s‚Íƒ`ƒFƒbƒN‚µ‚È‚¢BƒfƒoƒO—pB
+	///ãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ãå‡ºã™ã€‚æˆåŠŸå¤±æ•—ã¯ãƒã‚§ãƒƒã‚¯ã—ãªã„ã€‚ãƒ‡ãƒã‚°ç”¨ã€‚
 	void write( const char* filename );
 
-	//ˆÈ‰ºƒ†[ƒU‚ÍˆÓ¯‚µ‚È‚¢ŠÖ”ŒQ
+	//ä»¥ä¸‹ãƒ¦ãƒ¼ã‚¶ã¯æ„è­˜ã—ãªã„é–¢æ•°ç¾¤
 	Texture();
 	Texture( const Texture& );
 	~Texture();

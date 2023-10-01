@@ -17,7 +17,7 @@ class AnimationNode{
 public:
 	AnimationNode( GameLib::PseudoXml::Element& );
 	~AnimationNode();
-	//ƒf[ƒ^‚ð‚à‚ç‚¤BƒAƒjƒ[ƒVƒ‡ƒ“‚ª‚È‚¢Žž‚Í‚à‚ç‚Á‚½‚à‚Ì‚ð‚¢‚¶‚ç‚È‚¢B
+	//ãƒ‡ãƒ¼ã‚¿ã‚’ã‚‚ã‚‰ã†ã€‚ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒãªã„æ™‚ã¯ã‚‚ã‚‰ã£ãŸã‚‚ã®ã‚’ã„ã˜ã‚‰ãªã„ã€‚
 	void data( 
 		Vector3* translationInOut,
 		Vector3* rotationInOut,

@@ -9,24 +9,24 @@ using namespace GameLib;
 
 namespace {
 
-//“K“–ƒpƒ‰ƒ[ƒ^ŒQ
-//‘¬“xB’PˆÊ‚Í“à•”’PˆÊ/ƒtƒŒ[ƒ€
+//é©å½“ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ç¾¤
+//é€Ÿåº¦ã€‚å˜ä½ã¯å†…éƒ¨å˜ä½/ãƒ•ãƒ¬ãƒ¼ãƒ 
 static const int PLAYER_SPEED = 1000;
 static const int ENEMY_SPEED = 500;
 static const int HALF_SIZE = 6000;
 
-//“à•”’PˆÊ‚Ö
+//å†…éƒ¨å˜ä½ã¸
 int convertCellToInner( int x ){
 	return x * 16000 + 8000;
 }
-//“à•”’PˆÊ‚©‚ç‰æ‘f’PˆÊ‚Ö
+//å†…éƒ¨å˜ä½ã‹ã‚‰ç”»ç´ å˜ä½ã¸
 int convertInnerToPixel( int x ){
 	return  ( x - 8000 + 500 ) / 1000;
 }
 
 } //namespace{}
 
-//‚Å‚«‚é‚¾‚¯•s³‚­‚³‚¢’l‚ğ“ü‚ê‚Ä‚¨‚­Bset‚ªŒÄ‚Î‚ê‚È‚¢‚Æ€‚Ê‚æ‚¤‚ÉB
+//ã§ãã‚‹ã ã‘ä¸æ­£ãã•ã„å€¤ã‚’å…¥ã‚Œã¦ãŠãã€‚setãŒå‘¼ã°ã‚Œãªã„ã¨æ­»ã¬ã‚ˆã†ã«ã€‚
 DynamicObject::DynamicObject() : 
 mType( TYPE_NONE ),
 mBombPower( 10 ),
@@ -41,11 +41,11 @@ mDirectionY( 0 ){
 }
 
 void DynamicObject::set( int x, int y, Type type ){
-	//“à•”À•W’l‚É•ÏŠ·
+	//å†…éƒ¨åº§æ¨™å€¤ã«å¤‰æ›
 	mX = convertCellToInner( x );
 	mY = convertCellToInner( y );
 	mType = type;
-	//“Gê—pBˆÚ“®•ûŒü‰Šú‰»
+	//æ•µå°‚ç”¨ã€‚ç§»å‹•æ–¹å‘åˆæœŸåŒ–
 	if ( mType == TYPE_ENEMY ){
 		mDirectionX = mDirectionY = 0;
 		Framework f = Framework::instance();
@@ -62,10 +62,10 @@ void DynamicObject::draw( const Image* image ) const {
 	if ( isDead() ){
 		return;
 	}
-	//“à•”À•W‚ğ‰æ‘fÀ•W‚É•ÏŠ·(+500‚ÍlÌŒÜ“ü)
+	//å†…éƒ¨åº§æ¨™ã‚’ç”»ç´ åº§æ¨™ã«å¤‰æ›(+500ã¯å››æ¨äº”å…¥)
 	int dstX = convertInnerToPixel( mX );
 	int dstY = convertInnerToPixel( mY );
-	//‰æ‘œØ‚èo‚µˆÊ’u‚Ì“¯’è
+	//ç”»åƒåˆ‡ã‚Šå‡ºã—ä½ç½®ã®åŒå®š
 	int srcX, srcY;
 	srcX = srcY = -1;
 	switch ( mType ){
@@ -78,15 +78,15 @@ void DynamicObject::draw( const Image* image ) const {
 		case TYPE_ENEMY: srcX = 64; srcY = 32; break;
 		default: HALT( "arienai" ); break;
 	}
-	image->draw( dstX * 2, dstY * 2, srcX, srcY, 32, 32 ); //‰ğ‘œ“x‚ª”{‚É‚È‚Á‚½‚Ì‚Å‚±‚±‚ÅˆÊ’u‚ğ”{‚É
+	image->draw( dstX * 2, dstY * 2, srcX, srcY, 32, 32 ); //è§£åƒåº¦ãŒå€ã«ãªã£ãŸã®ã§ã“ã“ã§ä½ç½®ã‚’å€ã«
 }
 
 void DynamicObject::move( const int* wallsX, int* wallsY, int wallNumber ){
-	//ˆÚ“®—Êæ“¾
+	//ç§»å‹•é‡å–å¾—
 	int dx, dy;
 	getVelocity( &dx, &dy );
 	
-	//X,Y•ÊX‚ÉˆÚ“®‚µ‚½‚É“–‚½‚é‚©ƒ`ƒFƒbƒN
+	//X,Yåˆ¥ã€…ã«ç§»å‹•ã—ãŸæ™‚ã«å½“ãŸã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	int movedX = mX + dx;
 	int movedY = mY + dy;
 	bool hitX = false;
@@ -101,10 +101,10 @@ void DynamicObject::move( const int* wallsX, int* wallsY, int wallNumber ){
 		}
 	}
 	if ( hitX && !hitY ){
-		mY = movedY; //Y‚Ì‚İƒI[ƒP[
+		mY = movedY; //Yã®ã¿ã‚ªãƒ¼ã‚±ãƒ¼
 	}else if ( !hitX && hitY ){
-		mX = movedX; //X‚Ì‚İƒI[ƒP[
-	}else{ //ƒ_ƒ‚È‚Ì‚Å•’Ê‚É
+		mX = movedX; //Xã®ã¿ã‚ªãƒ¼ã‚±ãƒ¼
+	}else{ //ãƒ€ãƒ¡ãªã®ã§æ™®é€šã«
 		for ( int i = 0; i < wallNumber; ++i ){
 			if ( isIntersectWall( movedX, movedY, wallsX[ i ], wallsY[ i ] ) ){
 				hit = true;
@@ -115,7 +115,7 @@ void DynamicObject::move( const int* wallsX, int* wallsY, int wallNumber ){
 			mY = movedY;
 		}
 	}
-	//“G‚È‚çŒü‚«•Ï‚¦
+	//æ•µãªã‚‰å‘ãå¤‰ãˆ
 	if ( hit && mType == TYPE_ENEMY ){
 		mDirectionX = mDirectionY = 0;
 		switch ( Framework::instance().getRandom( 4 ) ){
@@ -152,7 +152,7 @@ bool DynamicObject::isIntersectWall( int wallX, int wallY ){
 }
 
 void DynamicObject::getVelocity( int* dx, int* dy ) const {
-	//ƒXƒs[ƒh‚ğ•Ï”‚ÉŠi”[
+	//ã‚¹ãƒ”ãƒ¼ãƒ‰ã‚’å¤‰æ•°ã«æ ¼ç´
 	int speedX, speedY;
 	if ( mType == TYPE_ENEMY ){
 		speedX = ENEMY_SPEED;
@@ -161,9 +161,9 @@ void DynamicObject::getVelocity( int* dx, int* dy ) const {
 		speedX = PLAYER_SPEED;
 		speedY = PLAYER_SPEED;
 	}
-	//Œü‚«æ“¾
+	//å‘ãå–å¾—
 	getDirection( dx, dy );
-	//‘¬“xŒvZ
+	//é€Ÿåº¦è¨ˆç®—
 	*dx = *dx * speedX;
 	*dy = *dy * speedY;
 }
@@ -189,15 +189,15 @@ void DynamicObject::getDirection( int* dx, int* dy ) const {
 }
 
 void DynamicObject::doCollisionReactionToDynamic( DynamicObject* another ){
-	//‘Šè‚ª€‚ñ‚Å‚¢‚ê‚Î–³‹
+	//ç›¸æ‰‹ãŒæ­»ã‚“ã§ã„ã‚Œã°ç„¡è¦–
 	if ( another->isDead() ){
 		return;
 	}
-	//‘ÎÌ‚É‘‚­‚½‚ß‚É•Ê–¼‚ÉŠi”[
+	//å¯¾ç§°ã«æ›¸ããŸã‚ã«åˆ¥åã«æ ¼ç´
 	DynamicObject& o1 = *this;
 	DynamicObject& o2 = *another;
-	if ( o1.isIntersect( o2 ) ){ //Õ“Ë”»’è
-		//ƒvƒŒƒCƒ„[‚ğE‚·
+	if ( o1.isIntersect( o2 ) ){ //è¡çªåˆ¤å®š
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’æ®ºã™
 		if ( o1.isPlayer() && o2.isEnemy() ){
 			o1.die();
 		}else if ( o1.isEnemy() && o2.isPlayer() ){

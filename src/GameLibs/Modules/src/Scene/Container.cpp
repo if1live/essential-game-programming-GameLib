@@ -28,28 +28,28 @@ Container Container::create( const char* filename, const char* extraDataPath ){
 Model Container::createModel( const char* batchName ) const {
 	Batch::Impl* batchImpl = mImpl->batch( batchName );
 	Model::Impl* modelImpl = NEW Model::Impl( batchImpl );
-	modelImpl->release(); //ƒRƒ“ƒeƒi‚ÍŠÇ—‚µ‚È‚¢
+	modelImpl->release(); //ã‚³ãƒ³ãƒ†ãƒŠã¯ç®¡ç†ã—ãªã„
 	return Model( modelImpl );
 }
 
 Model Container::createModel( int batchId ) const {
 	Batch::Impl* batchImpl = mImpl->batch( batchId );
 	Model::Impl* modelImpl = NEW Model::Impl( batchImpl );
-	modelImpl->release(); //ƒRƒ“ƒeƒi‚ÍŠÇ—‚µ‚È‚¢
+	modelImpl->release(); //ã‚³ãƒ³ãƒ†ãƒŠã¯ç®¡ç†ã—ãªã„
 	return Model( modelImpl );
 }
 
 Tree Container::createTree( const char* treeName ) const {
 	TreeTemplate* treeTmpl = mImpl->tree( treeName );
 	Tree::Impl* treeImpl = NEW Tree::Impl( treeTmpl );
-	treeImpl->release(); //ƒRƒ“ƒeƒi‚ÍŠÇ—‚µ‚È‚¢
+	treeImpl->release(); //ã‚³ãƒ³ãƒ†ãƒŠã¯ç®¡ç†ã—ãªã„
 	return Tree( treeImpl );
 }
 
 Tree Container::createTree( int treeId ) const {
 	TreeTemplate* treeTmpl = mImpl->tree( treeId );
 	Tree::Impl* treeImpl = NEW Tree::Impl( treeTmpl );
-	treeImpl->release(); //ƒRƒ“ƒeƒi‚ÍŠÇ—‚µ‚È‚¢
+	treeImpl->release(); //ã‚³ãƒ³ãƒ†ãƒŠã¯ç®¡ç†ã—ãªã„
 	return Tree( treeImpl );
 }
 

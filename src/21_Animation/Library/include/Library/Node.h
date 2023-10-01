@@ -14,7 +14,7 @@ class AnimationNode;
 
 class Node{
 public:
-	Node(); //デフォルトコンストラクタ
+	Node(); //繝�繝輔か繝ｫ繝医さ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
 	Node( const Batch*, int childNumber );
 	~Node();
 	void draw( 
@@ -47,7 +47,7 @@ private:
 	Node** mChildren;
 	int mChildNumber;
 	string mName;
-	const AnimationNode* mAnimation; //アニメーション
+	const AnimationNode* mAnimation; //繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ
 };
 
 #endif

@@ -28,7 +28,7 @@ public:
 	int mHalfSize;
 };
 bool gFirstFrame = true;
-Square gPlayer; //©ƒLƒƒƒ‰‚Ì‚Â‚à‚è
+Square gPlayer; //è‡ªã‚­ãƒ£ãƒ©ã®ã¤ã‚‚ã‚Š
 Square gWall[ 5 ][ 5 ];
 
 namespace GameLib{
@@ -53,30 +53,30 @@ namespace GameLib{
 			dx -= 1;
 		}else if ( isKeyOn( 's' ) ){
 			dx += 1;
-		}else if ( isKeyOn( 'w' ) ){ //Î‚ß‚Í‚È‚µ
+		}else if ( isKeyOn( 'w' ) ){ //æ–œã‚ã¯ãªã—
 			dy -= 1;
 		}else if ( isKeyOn( 'z' ) ){
 			dy += 1;
 		}
-		//Õ“Ëˆ—
+		//è¡çªå‡¦ç†
 		unsigned color = 0xffff0000;
 		Square movedPlayer;
 		movedPlayer.set( gPlayer.mX + dx, gPlayer.mY + dy, gPlayer.mHalfSize );
 		bool hit = false;
-		int dx2 = 0; //‚¸‚ç‚µˆÚ“®
+		int dx2 = 0; //ãšã‚‰ã—ç§»å‹•
 		int dy2 = 0;
 		for ( int i = 0; i < 5; ++i ){
 			for ( int j = 0; j < 5; ++j ){
 				if ( movedPlayer.isIntersect( gWall[ i ][ j ] ) ){
-					//‰¡‚É‚¸‚ç‚µ‚Ä‚İ‚éB
+					//æ¨ªã«ãšã‚‰ã—ã¦ã¿ã‚‹ã€‚
 					Square slided0 = movedPlayer;
 					Square slided1 = movedPlayer;
-					if ( dx != 0 ){ //‰¡ˆÚ“®Bc•ûŒü‚Å‚â‚ë‚¤
-						slided0.mY += gPlayer.mHalfSize; //”¼•ª
-						slided1.mY -= gPlayer.mHalfSize; //”¼•ª
-					}else{ //cˆÚ“®B‰¡•ûŒü‚Å‚â‚ë‚¤
-						slided0.mX += gPlayer.mHalfSize; //”¼•ª
-						slided1.mX -= gPlayer.mHalfSize; //”¼•ª
+					if ( dx != 0 ){ //æ¨ªç§»å‹•ã€‚ç¸¦æ–¹å‘ã§ã‚„ã‚ã†
+						slided0.mY += gPlayer.mHalfSize; //åŠåˆ†
+						slided1.mY -= gPlayer.mHalfSize; //åŠåˆ†
+					}else{ //ç¸¦ç§»å‹•ã€‚æ¨ªæ–¹å‘ã§ã‚„ã‚ã†
+						slided0.mX += gPlayer.mHalfSize; //åŠåˆ†
+						slided1.mX -= gPlayer.mHalfSize; //åŠåˆ†
 					}
 					bool hit0 = false;
 					bool hit1 = false;
@@ -87,15 +87,15 @@ namespace GameLib{
 						hit1 = true;
 					}
 					if ( dx != 0 ){
-						if ( hit0 && !hit1 ){ //ã‚É“®‚­‚Æ“–‚½‚ç‚È‚¢Bã‚É‚¸‚ç‚µ‚Ä‚â‚ë‚¤B
+						if ( hit0 && !hit1 ){ //ä¸Šã«å‹•ãã¨å½“ãŸã‚‰ãªã„ã€‚ä¸Šã«ãšã‚‰ã—ã¦ã‚„ã‚ã†ã€‚
 							dy2 -= 1;
-						}else if ( hit1 && !hit0 ){ //‰º‚É“®‚­‚Æ“–‚½‚ç‚È‚¢B‰º‚É‚¸‚ç‚µ‚Ä‚â‚ë‚¤
+						}else if ( hit1 && !hit0 ){ //ä¸‹ã«å‹•ãã¨å½“ãŸã‚‰ãªã„ã€‚ä¸‹ã«ãšã‚‰ã—ã¦ã‚„ã‚ã†
 							dy2 += 1;
 						}
 					}else{
-						if ( hit0 && !hit1 ){ //¶‚É“®‚­‚Æ“–‚½‚ç‚È‚¢B¶‚É‚¸‚ç‚µ‚Ä‚â‚ë‚¤B
+						if ( hit0 && !hit1 ){ //å·¦ã«å‹•ãã¨å½“ãŸã‚‰ãªã„ã€‚å·¦ã«ãšã‚‰ã—ã¦ã‚„ã‚ã†ã€‚
 							dx2 -= 1;
-						}else if ( hit1 && !hit0 ){ //‰E‚É“®‚­‚Æ“–‚½‚ç‚È‚¢B‰E‚É‚¸‚ç‚µ‚Ä‚â‚ë‚¤
+						}else if ( hit1 && !hit0 ){ //å³ã«å‹•ãã¨å½“ãŸã‚‰ãªã„ã€‚å³ã«ãšã‚‰ã—ã¦ã‚„ã‚ã†
 							dx2 += 1;
 						}
 					}
@@ -104,7 +104,7 @@ namespace GameLib{
 				}
 			}
 		}
-		if ( hit ){ //“–‚½‚Á‚½‚É‚Ídx2‚Å‚à‚¤ˆê‰ñ”»’è
+		if ( hit ){ //å½“ãŸã£ãŸæ™‚ã«ã¯dx2ã§ã‚‚ã†ä¸€å›åˆ¤å®š
 			movedPlayer.set( gPlayer.mX + dx2, gPlayer.mY + dy2, gPlayer.mHalfSize );
 			hit = false;
 			for ( int i = 0; i < 5; ++i ){
@@ -114,21 +114,21 @@ namespace GameLib{
 					}
 				}
 			}
-			if ( !hit ){ //“–‚½‚Á‚½‚ªƒYƒŒˆÚ“®‚Í‰Â”\
+			if ( !hit ){ //å½“ãŸã£ãŸãŒã‚ºãƒ¬ç§»å‹•ã¯å¯èƒ½
 				gPlayer.mX += dx2;
 				gPlayer.mY += dy2;
 			}
-		}else{ //“–‚½‚ç‚È‚©‚Á‚½‚È‚ç—\’è’Ê‚èˆÚ“®‚Å‚«‚é
+		}else{ //å½“ãŸã‚‰ãªã‹ã£ãŸãªã‚‰äºˆå®šé€šã‚Šç§»å‹•ã§ãã‚‹
 			gPlayer.mX += dx;
 			gPlayer.mY += dy;
 		}
-		//•`‰æ
+		//æç”»
 		unsigned* vram = videoMemory();
-		//ˆê’UƒNƒŠƒA
+		//ä¸€æ—¦ã‚¯ãƒªã‚¢
 		for ( int i = 0; i < width() * height(); ++i ){
 			vram[ i ] = 0;
 		}
-		//“®‚©‚È‚¢‚Ù‚¤•`‰æ
+		//å‹•ã‹ãªã„ã»ã†æç”»
 		for ( int i = 0; i < 5; ++i ){
 			for ( int j = 0; j < 5; ++j ){
 				for ( int y = 0; y < 32; ++y ){
@@ -140,7 +140,7 @@ namespace GameLib{
 				}
 			}
 		}
-		//“®‚­‚Ù‚¤•`‰æ
+		//å‹•ãã»ã†æç”»
 		for ( int y = 0; y < 32; ++y ){
 			for ( int x = 0; x < 32; ++x ){
 				int tx = x + gPlayer.mX - 16;

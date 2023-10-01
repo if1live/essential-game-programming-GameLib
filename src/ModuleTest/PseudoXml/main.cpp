@@ -13,29 +13,29 @@ namespace GameLib{
 	void Framework::update(){
 		setFrameRate( 60 );
 		if ( !gDocument ){
-			//ƒtƒ@ƒCƒ‹‚©‚ç¶¬
+			//ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ç”Ÿæˆ
 			gDocument = PseudoXml::Document::create( "data2.txt" );
 
-			//1‚©‚çì‚Á‚Ä“f‚«o‚µ‚Ä‚İ‚é
+			//1ã‹ã‚‰ä½œã£ã¦åãå‡ºã—ã¦ã¿ã‚‹
 			using namespace PseudoXml;
 			Document doc = Document::create();
 			Element root = doc.root();
-			//ª‚Á‚±‚ÉˆêŒÂ‰Á‚¦‚é
+			//æ ¹ã£ã“ã«ä¸€å€‹åŠ ãˆã‚‹
 			root.setChildNumber( 1 );
 			Element cameraData = root.child( 0 );
 			cameraData.setName( "Data" );
-			//ƒf[ƒ^‚ğ“ñ‚Â“ü‚ê‚é
+			//ãƒ‡ãƒ¼ã‚¿ã‚’äºŒã¤å…¥ã‚Œã‚‹
 			cameraData.setChildNumber( 2 );
 
 			Element e;
-			//ˆêŒÂ–Ú
+			//ä¸€å€‹ç›®
 			e = cameraData.child( 0 );
 			e.setName( "SomeElement0" );
 			e.setAttributeNumber( 3 );
-			e.attribute( 0 ).set( "name", "value" ); //•¶š—ñ’l
-			e.attribute( 1 ).set( "intValue", 1 ); //int’l
-			e.attribute( 2 ).set( "floatValue", 2.32f ); //float’l
-			//“ñŒÂ–Ú
+			e.attribute( 0 ).set( "name", "value" ); //æ–‡å­—åˆ—å€¤
+			e.attribute( 1 ).set( "intValue", 1 ); //intå€¤
+			e.attribute( 2 ).set( "floatValue", 2.32f ); //floatå€¤
+			//äºŒå€‹ç›®
 			e = cameraData.child( 1 );
 			e.setName( "SomeElement1" );
 			e.setAttributeNumber( 2 );
@@ -43,27 +43,27 @@ namespace GameLib{
 			for ( int i = 0; i < 5; ++i ){
 				ia[ i ] = i;
 			}
-			e.attribute( 0 ).set( "intArray", ia, 5 ); //int”z—ñ
+			e.attribute( 0 ).set( "intArray", ia, 5 ); //inté…åˆ—
 			float fa[ 3 ];
 			for ( int i = 0; i < 3; ++i ){
 				fa[ i ] = 1.f / static_cast< float >( i + 1 );
 			}
-			e.attribute( 1 ).set( "floatArray", fa, 3 ); //float”z—ñ
-			//cout‚É“f‚¢‚Ä‚İ‚é
+			e.attribute( 1 ).set( "floatArray", fa, 3 ); //floaté…åˆ—
+			//coutã«åã„ã¦ã¿ã‚‹
 			string s;
 			doc.convertToString( &s );
 			cout << s.c_str() << endl;
-			//ƒtƒ@ƒCƒ‹‚É‚à‘‚«‚ß
+			//ãƒ•ã‚¡ã‚¤ãƒ«ã«ã‚‚æ›¸ãè¾¼ã‚
 			doc.write( "dataCreated.txt", false );
-		}else if ( gDocument.isReady() ){ //“Ç‚İ‚İI—¹
-			//•¶š—ñ‰»‚µ‚Äcout‚Éo‚µ‚Ä‚İ‚éB
+		}else if ( gDocument.isReady() ){ //èª­ã¿è¾¼ã¿çµ‚äº†
+			//æ–‡å­—åˆ—åŒ–ã—ã¦coutã«å‡ºã—ã¦ã¿ã‚‹ã€‚
 			string s;
 			gDocument.convertToString( &s );
 			cout << s.c_str() << endl;
-			//‚Â‚¢‚Å‚Éƒtƒ@ƒCƒ‹‚É‚à“f‚¢‚Ä‚İ‚éB“¯‚¶‚Ì‚ªo‚Ä‚é‚©H
+			//ã¤ã„ã§ã«ãƒ•ã‚¡ã‚¤ãƒ«ã«ã‚‚åã„ã¦ã¿ã‚‹ã€‚åŒã˜ã®ãŒå‡ºã¦ã‚‹ã‹ï¼Ÿ
 			gDocument.write( "dataOut.txt" );
-			gDocument.release(); //“Ç‚İI‚í‚Á‚½‚µA‚¢‚ç‚ËB
-			requestEnd(); //I‚í‚éB
+			gDocument.release(); //èª­ã¿çµ‚ã‚ã£ãŸã—ã€ã„ã‚‰ã­ã€‚
+			requestEnd(); //çµ‚ã‚ã‚‹ã€‚
 		}
 	}
 }

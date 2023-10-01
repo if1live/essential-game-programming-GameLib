@@ -17,7 +17,7 @@ using namespace GameLib;
 class Template;
 class Element;
 
-//1s‚ÌƒGƒ“ƒgƒŠ‚ğ•\‚·ƒNƒ‰ƒX
+//1è¡Œã®ã‚¨ãƒ³ãƒˆãƒªã‚’è¡¨ã™ã‚¯ãƒ©ã‚¹
 class TemplateLine{
 public:
 	const Template* mTemplate;
@@ -25,13 +25,13 @@ public:
 	RefString mName;
 	Array< RefString > mIndices;
 private:
-	void operator=( const TemplateLine& ); //‘ã“ü‹Ö~
+	void operator=( const TemplateLine& ); //ä»£å…¥ç¦æ­¢
 };
 
 class SyntaxErrorException{
 public:
-	SyntaxErrorException(){ ASSERT( false ); } //ƒfƒoƒO”Å‘¦€‘•’u
-}; //•¶–@ƒGƒ‰[—áŠO
+	SyntaxErrorException(){ ASSERT( false ); } //ãƒ‡ãƒã‚°ç‰ˆå³æ­»è£…ç½®
+}; //æ–‡æ³•ã‚¨ãƒ©ãƒ¼ä¾‹å¤–
 
 class Parser{
 public:

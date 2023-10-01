@@ -12,11 +12,11 @@ namespace PseudoXml{
 
 class Attribute;
 
-///ƒ^ƒO‚ğƒeƒLƒXƒg‚©‚ç¶¬‚·‚éƒNƒ‰ƒXB
+///ã‚¿ã‚°ã‚’ãƒ†ã‚­ã‚¹ãƒˆã‹ã‚‰ç”Ÿæˆã™ã‚‹ã‚¯ãƒ©ã‚¹ã€‚
 /*!
-’†‚Ì•¶š—ñ‚ÍQÆ(RefString)‚ÅA©—Í‚Ånew‚µ‚Ä‚Á‚½•¨‚Å‚Í‚È‚¢B
-Œ³‚ÌƒeƒLƒXƒg‚ª‘¶İ‚µ‚Ä‚¢‚éŠÔ‚µ‚©g‚í‚È‚¢ƒNƒ‰ƒX‚Æ‚¢‚¤‘O’ñ‚ª‚ ‚éB
-‚Ü‚½Aì‚Á‚½Attribute::Impl*‚ÍŒã‚ÅElement‚É“n‚·‚Ì‚Å‰½‚àc‚ç‚È‚¢B
+ä¸­ã®æ–‡å­—åˆ—ã¯å‚ç…§(RefString)ã§ã€è‡ªåŠ›ã§newã—ã¦æŒã£ãŸç‰©ã§ã¯ãªã„ã€‚
+å…ƒã®ãƒ†ã‚­ã‚¹ãƒˆãŒå­˜åœ¨ã—ã¦ã„ã‚‹é–“ã—ã‹ä½¿ã‚ãªã„ã‚¯ãƒ©ã‚¹ã¨ã„ã†å‰æãŒã‚ã‚‹ã€‚
+ã¾ãŸã€ä½œã£ãŸAttribute::Impl*ã¯å¾Œã§Elementã«æ¸¡ã™ã®ã§ä½•ã‚‚æ®‹ã‚‰ãªã„ã€‚
 */
 class Tag{
 public:
@@ -26,7 +26,7 @@ public:
 		TYPE_END,
 		TYPE_BEGIN_END,
 	};
-	Tag( const char** p, const char* e, Document::Impl* document ); //‚±‚ê‚¾‚¯‚Ícpp‚É’u‚­B
+	Tag( const char** p, const char* e, Document::Impl* document ); //ã“ã‚Œã ã‘ã¯cppã«ç½®ãã€‚
 
 	Tag( const char* name ) : 
 	mName( name ),
@@ -34,8 +34,8 @@ public:
 	mDocument( 0 ){
 	}
 	~Tag(){
-		//ì‚Á‚½ƒ^ƒO‚Í•K‚¸Element‚ÌŞ—¿‚É‚È‚Á‚Ä‚¢‚é‚Í‚¸‚ÅA
-		//mAttributes‚ÍgiveAttributes‚Å“n‚µ‚Ä‚µ‚Ü‚¤‚Í‚¸‚¾B
+		//ä½œã£ãŸã‚¿ã‚°ã¯å¿…ãšElementã®ææ–™ã«ãªã£ã¦ã„ã‚‹ã¯ãšã§ã€
+		//mAttributesã¯giveAttributesã§æ¸¡ã—ã¦ã—ã¾ã†ã¯ãšã ã€‚
 		ASSERT( mAttributes.size() == 0 );
 		mDocument = 0;
 	}
@@ -67,7 +67,7 @@ public:
 		return mType;
 	}
 private:
-	//XML“I‚É“Áê‚ÈˆÓ–¡‚ğ‚Â•¶š‚Å‚È‚¢‚©‚ğ’²‚×‚éŠÖ”
+	//XMLçš„ã«ç‰¹æ®Šãªæ„å‘³ã‚’æŒã¤æ–‡å­—ã§ãªã„ã‹ã‚’èª¿ã¹ã‚‹é–¢æ•°
 	static bool isNormalChar( char c, bool* wide ){
 		unsigned char u = static_cast< unsigned char >( c );
 		static const char table[ 0x100 ] = {
@@ -87,7 +87,7 @@ private:
 			1, 1, 1, 1, 1, 1, 1, 1, //0x68-0x6f hijklmno
 			1, 1, 1, 1, 1, 1, 1, 1, //0x70-0x77 pqrstuvw
 			1, 1, 1, 1, 1, 1, 1, 0, //0x78-0x7f xyz{|}~
-			0, 2, 2, 2, 2, 2, 2, 2, //0x80-0x87 0x81-0x9f sjis 2ƒoƒCƒg—Ìˆæ
+			0, 2, 2, 2, 2, 2, 2, 2, //0x80-0x87 0x81-0x9f sjis 2ãƒã‚¤ãƒˆé ˜åŸŸ
 			2, 2, 2, 2, 2, 2, 2, 2, //0x88-0x8f
 			2, 2, 2, 2, 2, 2, 2, 2, //0x90-0x97
 			2, 2, 2, 2, 2, 2, 2, 2, //0x98-0x9f
@@ -102,7 +102,7 @@ private:
 			2, 2, 2, 2, 2, 2, 2, 2, //0xe0-0xe7
 			2, 2, 2, 2, 2, 2, 2, 2, //0xe8-0xef
 			2, 2, 2, 2, 2, 2, 2, 2, //0xf0-0xf7
-			2, 2, 2, 2, 2, 0, 0, 0, //0xf8-0xff 0xe0-0xfc sjis 2ƒoƒCƒg—Ìˆæ
+			2, 2, 2, 2, 2, 0, 0, 0, //0xf8-0xff 0xe0-0xfc sjis 2ãƒã‚¤ãƒˆé ˜åŸŸ
 		};
 		char t = table[ u ];
 		*wide = ( ( t - 1 ) > 0 ) ? true : false;

@@ -13,15 +13,15 @@ using namespace std;
 using namespace GameLib;
 class Template;
 
-//ƒf[ƒ^Œ^
+//ãƒ‡ãƒ¼ã‚¿å‹
 class Element{
 public:
 	Element();
 	virtual ~Element();
 	virtual void toString( OStringStream*, int indent, const RefString& name ) const = 0;
 private:
-	void operator=( const Element& ); //‹Ö~
-	Element( const Element& ); //‹Ö~
+	void operator=( const Element& ); //ç¦æ­¢
+	Element( const Element& ); //ç¦æ­¢
 };
 
 class CompositeElement : public Element{
@@ -41,7 +41,7 @@ private:
 	const Template* mTemplate;
 	Array< Child > mChildren;
 
-	const RefString mName; //•¡‡Œ^‚É‚Í–¼‘O‚ª‚ ‚é‚±‚Æ‚ª‚ ‚éB
+	const RefString mName; //è¤‡åˆå‹ã«ã¯åå‰ãŒã‚ã‚‹ã“ã¨ãŒã‚ã‚‹ã€‚
 };
 
 class CompositeArrayElement : public Element{
@@ -65,7 +65,7 @@ public:
 	void toString( OStringStream*, int indent, const RefString& name ) const;
 private:
 	Array< int > mSizes;
-	Array< RefString > mElements; //”z—ñ‚ªƒvƒŠƒ~ƒeƒBƒuŒ^‚È‚ç‚±‚Á‚¿‚ğg‚¤B
+	Array< RefString > mElements; //é…åˆ—ãŒãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å‹ãªã‚‰ã“ã£ã¡ã‚’ä½¿ã†ã€‚
 	const RefString mType;
 };
 
@@ -76,7 +76,7 @@ public:
 
 	void toString( OStringStream*, int indent, const RefString& name ) const;
 private:
-	const RefString mName; //•¡‡Œ^‚É‚Í–¼‘O‚ª‚ ‚é‚±‚Æ‚ª‚ ‚éB
+	const RefString mName; //è¤‡åˆå‹ã«ã¯åå‰ãŒã‚ã‚‹ã“ã¨ãŒã‚ã‚‹ã€‚
 };
 
 

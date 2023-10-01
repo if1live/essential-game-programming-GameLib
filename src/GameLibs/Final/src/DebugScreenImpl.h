@@ -17,10 +17,10 @@ public:
 	mX( 0 ),
 	mY( 0 ),
 	mOriginX( 0 ){
-		//•¶š•`‰æ
-		//ƒAƒXƒL[•”•ª‚Ì•\(ƒAƒXƒL[(126-32+1=95•¶š+63•¶š‚Å158•¶š
+		//æ–‡å­—æç”»
+		//ã‚¢ã‚¹ã‚­ãƒ¼éƒ¨åˆ†ã®è¡¨(ã‚¢ã‚¹ã‚­ãƒ¼(126-32+1=95æ–‡å­—+63æ–‡å­—ã§158æ–‡å­—
 		Array< Scene::Font::BitmapChar > chars( 158 );
-		//ƒAƒXƒL[•”•ª[“U
+		//ã‚¢ã‚¹ã‚­ãƒ¼éƒ¨åˆ†å……å¡«
 		int pos = 0;
 		for ( int i = 0x20; i <= 0x7E; ++i ){
 			Scene::Font::BitmapChar& c = chars[ pos ];
@@ -32,7 +32,7 @@ public:
 			c.mHeight = 16;
 			++pos;
 		}
-		//”¼ŠpƒJƒi•”
+		//åŠè§’ã‚«ãƒŠéƒ¨
 		for ( int i = 0xA1; i <= 0xDF; ++i ){
 			Scene::Font::BitmapChar& c = chars[ pos ];
 			c.mCode = static_cast< unsigned short >( i );
@@ -49,7 +49,7 @@ public:
 		const char* fontDataArray[ 1 ];
 		fontDataArray[ 0 ] = gFontTga;
 		mFont = Scene::Font::create( fontDataArray, &textureSize, 1, &( chars[ 0 ] ), 158 );
-		mRenderer = Scene::StringRenderer::create( 2048, 128 ); //‚±‚ñ‚È‚à‚ñ‚Å‘«‚è‚é‚¾‚ë‚¤H
+		mRenderer = Scene::StringRenderer::create( 2048, 128 ); //ã“ã‚“ãªã‚‚ã‚“ã§è¶³ã‚Šã‚‹ã ã‚ã†ï¼Ÿ
 
 		mRenderer.setFont( mFont );
 	}
@@ -57,36 +57,36 @@ public:
 		Array< char > s;
 		mBuffer.get( &s );
 		mBuffer.clear();
-		//•¶š”‚ğ”‚¦‚Â‚Â‚È‚ß‚ÄA‰üs‚ğŒ©‚Â‚¯‚½‚ç‚»‚±‚Åˆê’U•`‰æ
+		//æ–‡å­—æ•°ã‚’æ•°ãˆã¤ã¤ãªã‚ã¦ã€æ”¹è¡Œã‚’è¦‹ã¤ã‘ãŸã‚‰ãã“ã§ä¸€æ—¦æç”»
 		int begin = 0;
 		int count = 0;
 		int n = s.size();
 		for ( int i = 0; i < n; ++i ){
 			if ( s[ i ] == '\n' ){
-				s[ i ] = '\0'; //NULL•¶š‚É•ÏŠ·‚µ‚Ä•`‰æ
+				s[ i ] = '\0'; //NULLæ–‡å­—ã«å¤‰æ›ã—ã¦æç”»
 				if ( i > begin ){
 					mRenderer.add( mX * 8, mY * 16, &s[ begin ], mColor );
 				}
 				begin = i + 1;
 				mX = mOriginX;
-				mY += 1; //‰üs
+				mY += 1; //æ”¹è¡Œ
 				count = 0;
 			}else{
 				++count;
 			}
 		}
-		//ÅŒã‚Ì•`‰æ
+		//æœ€å¾Œã®æç”»
 		if ( count > 0 ){
 			mRenderer.add( mX * 8, mY * 16, &s[ begin ], mColor );
 			mX += count;
 		}
 	}
 	void draw(){
-		if ( mBuffer.size() > 0 ){ //c‚Á‚Ä‚¢‚é‚È‚ç“f‚«o‚µ‚Ä
+		if ( mBuffer.size() > 0 ){ //æ®‹ã£ã¦ã„ã‚‹ãªã‚‰åãå‡ºã—ã¦
 			add();
 		}
 		mRenderer.draw();
-		//•Ï”ƒŠƒZƒbƒg
+		//å¤‰æ•°ãƒªã‚»ãƒƒãƒˆ
 		mX = mY = mOriginX = 0;
 		mColor = 0xffffffff;
 	}

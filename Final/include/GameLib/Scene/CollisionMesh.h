@@ -11,25 +11,25 @@ namespace Math{
 namespace Scene{
 using namespace Math;
 
-///Õ“Ë”»’è—pOŠpŒ`W‡ƒNƒ‰ƒX
+///è¡çªåˆ¤å®šç”¨ä¸‰è§’å½¢é›†åˆã‚¯ãƒ©ã‚¹
 /*
-Container“à•”‚ÌVertexBuffer‚ÆIndexBuffer‚ğ‘S•”g‚Á‚Äˆê‚Â‚ÌOŠpŒ`W‡‚ğŒ`¬‚·‚éB
-Batch‚âAnimation“™X‚Í’Pƒ‚ÉŒ©‚È‚¢B
+Containerå†…éƒ¨ã®VertexBufferã¨IndexBufferã‚’å…¨éƒ¨ä½¿ã£ã¦ä¸€ã¤ã®ä¸‰è§’å½¢é›†åˆã‚’å½¢æˆã™ã‚‹ã€‚
+Batchã‚„Animationç­‰ã€…ã¯å˜ç´”ã«è¦‹ãªã„ã€‚
 */
 class CollisionMesh{
 public:
-	///ƒjƒZXMLƒtƒ@ƒCƒ‹‚©‚çƒRƒ“ƒXƒgƒ‰ƒNƒg
+	///ãƒ‹ã‚»XMLãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 	static CollisionMesh create( const char* filename );
-	///ƒjƒZXML‚ÌƒGƒŒƒƒ“ƒg(Container)‚©‚çƒRƒ“ƒXƒgƒ‰ƒNƒg
+	///ãƒ‹ã‚»XMLã®ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆ(Container)ã‹ã‚‰ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 	static CollisionMesh create( PseudoXml::ConstElement );
-	///ƒ[ƒhI—¹ŒŸ’mBƒtƒ@ƒCƒ‹–¼‚©‚çì‚Á‚½ê‡‚Ítrue‚ª•Ô‚é‚±‚Æ‚ğŠm”F‚µ‚Ä‚©‚çg‚¤‚±‚ÆB
+	///ãƒ­ãƒ¼ãƒ‰çµ‚äº†æ¤œçŸ¥ã€‚ãƒ•ã‚¡ã‚¤ãƒ«åã‹ã‚‰ä½œã£ãŸå ´åˆã¯trueãŒè¿”ã‚‹ã“ã¨ã‚’ç¢ºèªã—ã¦ã‹ã‚‰ä½¿ã†ã“ã¨ã€‚
 	bool isReady();
-	///ü•ª‚ÆŒğ·”»’èB
+	///ç·šåˆ†ã¨äº¤å·®åˆ¤å®šã€‚
 	bool isIntersect( const Vector3& lineOrigin, const Vector3& lineVector ) const;
-	///ü•ª‚ÆŒğ·”»’èBÅ‰‚É“–‚½‚Á‚½‚ğtimeOut‚É“ü‚ê‚éB“–‚½‚ê‚Îtrue‚ğ•Ô‚·B
+	///ç·šåˆ†ã¨äº¤å·®åˆ¤å®šã€‚æœ€åˆã«å½“ãŸã£ãŸæ™‚åˆ»ã‚’timeOutã«å…¥ã‚Œã‚‹ã€‚å½“ãŸã‚Œã°trueã‚’è¿”ã™ã€‚
 	bool getIntersection( 
-		float* timeOut, //0ƒ|ƒCƒ“ƒ^‚È‚ç•Ô‚³‚È‚¢
-		Vector3* normalOut, //0ƒ|ƒCƒ“ƒ^‚È‚ç•Ô‚³‚È‚¢
+		float* timeOut, //0ãƒã‚¤ãƒ³ã‚¿ãªã‚‰è¿”ã•ãªã„
+		Vector3* normalOut, //0ãƒã‚¤ãƒ³ã‚¿ãªã‚‰è¿”ã•ãªã„
 		const Vector3& lineOrigin, 
 		const Vector3& lineVector ) const;
 

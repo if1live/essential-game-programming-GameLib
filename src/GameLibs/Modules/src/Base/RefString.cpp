@@ -63,7 +63,7 @@ void RefString::clamp( int first, int last ){
 		last = mSize - 1;
 	}
 	mString = mString + first;
-	mSize = last - first + 1; //+1‚ª•K—vBlast‚àŠÜ‚Ü‚ê‚Ä‚¢‚é‚©‚ç‚¾
+	mSize = last - first + 1; //+1ãŒå¿…è¦ã€‚lastã‚‚å«ã¾ã‚Œã¦ã„ã‚‹ã‹ã‚‰ã 
 }
 
 int RefString::find( char c ) const {
@@ -109,7 +109,7 @@ bool RefString::operator==( const char* s ) const {
 		}
 		++i;
 	}
-	return ( ( s[ i ] == '\0' ) && ( i == mSize ) ); //“¯‚ÉI‚í‚Á‚½‚çtrue
+	return ( ( s[ i ] == '\0' ) && ( i == mSize ) ); //åŒæ™‚ã«çµ‚ã‚ã£ãŸã‚‰true
 }
 /*
 bool RefString::operator==( const string& s ) const {
@@ -138,7 +138,7 @@ bool RefString::operator!=( const string& s ) const {
 }
 */
 bool RefString::operator<( const RefString& s ) const {
-	bool f; //‚Ç‚Á‚¿‚©‚ªI‚í‚é‚Ü‚Å‚ÉŒˆ’…‚ª•t‚©‚È‚©‚Á‚½ê‡A•¶š”‚ª­‚È‚¢•û‚ª¬‚³‚¢
+	bool f; //ã©ã£ã¡ã‹ãŒçµ‚ã‚ã‚‹ã¾ã§ã«æ±ºç€ãŒä»˜ã‹ãªã‹ã£ãŸå ´åˆã€æ–‡å­—æ•°ãŒå°‘ãªã„æ–¹ãŒå°ã•ã„
 	int n;
 	if ( mSize < s.mSize ){
 		f = true;

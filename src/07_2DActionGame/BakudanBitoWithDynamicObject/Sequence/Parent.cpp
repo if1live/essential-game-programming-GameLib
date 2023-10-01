@@ -30,12 +30,12 @@ mTitle( 0 ),
 mGame( 0 ),
 mGameOver( 0 ),
 mEnding( 0 ){
-	//ç≈èâÇ…çÏÇÈÇÃÇÕÉ^ÉCÉgÉã
+	//ÊúÄÂàù„Å´‰Ωú„Çã„ÅÆ„ÅØ„Çø„Ç§„Éà„É´
 	mTitle = new Title();
 }
 
 Parent::~Parent(){
-	//écÇ¡ÇƒÇ¢ÇÍÇŒñïéE
+	//ÊÆã„Å£„Å¶„ÅÑ„Çå„Å∞ÊäπÊÆ∫
 	SAFE_DELETE( mTitle );
 	SAFE_DELETE( mGame );
 	SAFE_DELETE( mGameOver );
@@ -52,38 +52,38 @@ void Parent::update(){
 	}else if ( mEnding ){
 		mEnding->update( this );
 	}else{
-		HALT( "bakana!" ); //Ç†ÇËÇ¶Ç»Ç¢
+		HALT( "bakana!" ); //„ÅÇ„Çä„Åà„Å™„ÅÑ
 	}
-	//ëJà⁄îªíË
-	//ñ ÉZÉåÇ÷
+	//ÈÅ∑ÁßªÂà§ÂÆö
+	//Èù¢„Çª„É¨„Å∏
 	switch ( mNextSequence ){
 		case NEXT_TITLE:
-			ASSERT( !mTitle && ( mGame || mGameOver || mEnding ) ); //É`ÉFÉbÉN
+			ASSERT( !mTitle && ( mGame || mGameOver || mEnding ) ); //„ÉÅ„Çß„ÉÉ„ÇØ
 			SAFE_DELETE( mGame );
 			SAFE_DELETE( mGameOver );
 			SAFE_DELETE( mEnding );
 			mTitle = new Title();
 			break;
 		case NEXT_GAME:
-			ASSERT( mTitle && !mGameOver && !mGame && !mEnding ); //É`ÉFÉbÉN
+			ASSERT( mTitle && !mGameOver && !mGame && !mEnding ); //„ÉÅ„Çß„ÉÉ„ÇØ
 			SAFE_DELETE( mTitle );
 			mGame = new Game::Parent( mMode );
 			break;
 		case NEXT_GAME_OVER:
-			ASSERT( mGame && !mGameOver && !mEnding && !mTitle ); //É`ÉFÉbÉN
+			ASSERT( mGame && !mGameOver && !mEnding && !mTitle ); //„ÉÅ„Çß„ÉÉ„ÇØ
 			SAFE_DELETE( mGame );
 			mGameOver = new GameOver();
 			break;
 		case NEXT_ENDING:
-			ASSERT( mGame && !mGameOver && !mEnding && !mTitle ); //É`ÉFÉbÉN
+			ASSERT( mGame && !mGameOver && !mEnding && !mTitle ); //„ÉÅ„Çß„ÉÉ„ÇØ
 			SAFE_DELETE( mGame );
 			mEnding = new Ending();
 	}
-	mNextSequence = NEXT_NONE; //ñﬂÇ∑
+	mNextSequence = NEXT_NONE; //Êàª„Åô
 }
 
 void Parent::moveTo( NextSequence next ){
-	ASSERT( mNextSequence == NEXT_NONE ); //Ç±ÇÍà»äOÇ†ÇËÇ¶Ç»Ç¢
+	ASSERT( mNextSequence == NEXT_NONE ); //„Åì„Çå‰ª•Â§ñ„ÅÇ„Çä„Åà„Å™„ÅÑ
 	mNextSequence = next;
 }
 

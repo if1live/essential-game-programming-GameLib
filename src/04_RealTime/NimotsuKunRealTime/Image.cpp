@@ -30,7 +30,7 @@ int Image::height() const {
 	return mHeight;
 }
 
-//アルファブレンド付き
+//繧｢繝ｫ繝輔ぃ繝悶Ξ繝ｳ繝我ｻ倥″
 void Image::draw(
 int dstX, 
 int dstY, 

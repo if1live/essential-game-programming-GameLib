@@ -8,7 +8,7 @@ namespace GameLib{
 DebugScreenImpl* gDebugScreenImpl;
 
 DebugScreen::DebugScreen(){
-	//•ÊƒXƒŒƒbƒh‚©‚ç‚ÌŒÄ‚Ño‚µ‚Í‹–‚³‚È‚¢
+	//åˆ¥ã‚¹ãƒ¬ãƒƒãƒ‰ã‹ã‚‰ã®å‘¼ã³å‡ºã—ã¯è¨±ã•ãªã„
 	ASSERT( WindowCreator::isMainThread() && "you must call from MAIN thread" );
 }
 

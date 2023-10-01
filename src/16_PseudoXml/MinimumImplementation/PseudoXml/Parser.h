@@ -15,9 +15,9 @@ public:
 	Element* build();
 	~Parser();
 private:
-	int mMode; //ƒ‚[ƒh•Ï”
-	bool mInEndTag; //I—¹ƒ^ƒO‚É‚¢‚é‚Ì‚©H
-	list< ElementData* > mElementStack; //ƒGƒŒƒƒ“ƒg‚ÌŞ—¿‚ª‹l‚Ü‚Á‚Ä‚¢‚é
+	int mMode; //ãƒ¢ãƒ¼ãƒ‰å¤‰æ•°
+	bool mInEndTag; //çµ‚äº†ã‚¿ã‚°ã«ã„ã‚‹ã®ã‹ï¼Ÿ
+	list< ElementData* > mElementStack; //ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆã®ææ–™ãŒè©°ã¾ã£ã¦ã„ã‚‹
 };
 
 } //namespace PseudoXml

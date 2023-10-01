@@ -21,15 +21,15 @@ public:
 		TYPE_SCALE_Z,
 	};
 	enum Interporation{
-		INTERPORATION_NONE, //��ԂȂ��B
-		INTERPORATION_LINEAR, //1�����
-		INTERPORATION_CUBIC, //3�����
+		INTERPORATION_NONE, //補間なし。
+		INTERPORATION_LINEAR, //1次補間
+		INTERPORATION_CUBIC, //3次補間
 	};
 	Curve( GameLib::PseudoXml::Element& );
 	~Curve();
-	//���鎞���̃f�[�^�����炤
+	//ある時刻のデータをもらう
 	double get( double time ) const;
-	//�^�C�v�擾
+	//タイプ取得
 	Type type() const;
 private:
 	struct Data{

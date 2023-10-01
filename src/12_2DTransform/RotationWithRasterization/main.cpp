@@ -16,11 +16,11 @@ const Vector2& offset,
 const Matrix22& matrix ){
 	Vector2 tmpOffset( -0.5, -0.5 );
 	tmpOffset += offset;
-	//Œ´“_‚ğ‚¸‚ç‚µ‚Ä
+	//åŸç‚¹ã‚’ãšã‚‰ã—ã¦
 	out->setSub( in, tmpOffset );
-	//s—ñ‚ğ‚©‚¯A
+	//è¡Œåˆ—ã‚’ã‹ã‘ã€
 	matrix.multiply( out, *out );
-	//Œ´“_‚ğŒ³‚É–ß‚µ‚Ä“Y‚¦š‚É•ÏŠ·
+	//åŸç‚¹ã‚’å…ƒã«æˆ»ã—ã¦æ·»ãˆå­—ã«å¤‰æ›
 	*out += tmpOffset;
 }
 
@@ -28,7 +28,7 @@ bool gFirstFrame = true;
 Image* gImage;
 int gCount;
 
-//OŠpŒ`‚ğƒ‰ƒXƒ^ƒ‰ƒCƒY
+//ä¸‰è§’å½¢ã‚’ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚º
 void rasterize( 
 const Vector2& a, 
 const Vector2& b, 
@@ -37,7 +37,7 @@ const Vector2& ai,
 const Vector2& bi,
 const Vector2& ci,
 const Image* image ){
-	//abc‚Åy‚ª¬‚³‚¢‡‚É•À‚×‚éB
+	//abcã§yãŒå°ã•ã„é †ã«ä¸¦ã¹ã‚‹ã€‚
 	Vector2 p0, p1, p2;
 	Vector2 i0, i1, i2;
 	if ( a.y < b.y ){
@@ -63,37 +63,37 @@ const Image* image ){
 			i0 = ci; i1 = bi; i2 = ai;
 		}
 	}
-	//p0‚Æp2‚ğŒ‹‚Ô•Ó‚Æy=p1.y‚Ì…•½ü‚ÌŒğ“_‚ğ‹‚ß‚éB
-	//y‚Í“–‘Rp1.y‚¾‚©‚çAx‚¾‚¯‹‚ß‚ê‚Î‚¢‚¢B
-	//‚¤‚Ü‚­‘Š—‚ğg‚¦‚Î
+	//p0ã¨p2ã‚’çµã¶è¾ºã¨y=p1.yã®æ°´å¹³ç·šã®äº¤ç‚¹ã‚’æ±‚ã‚ã‚‹ã€‚
+	//yã¯å½“ç„¶p1.yã ã‹ã‚‰ã€xã ã‘æ±‚ã‚ã‚Œã°ã„ã„ã€‚
+	//ã†ã¾ãç›¸ä¼¼ã‚’ä½¿ãˆã°
 	//x = p0x + (p2x-p0x) * (p1y-p0y)/(p2y-p0y);
-	//‚Å‚ ‚é‚±‚Æ‚ª‚í‚©‚éBp1.y‚ªp0.y‚Æp2.y‚Ì^‚ñ’†‚É‚ ‚ê‚Îp2x-p0x‚ğ”¼•ª‚É‚µ‚Ä
-	//p0x‚É‘«‚µ‚Ä‚â‚ê‚Î‚¢‚¢‚Æ‚¢‚¤‚±‚Æ‚¾B
+	//ã§ã‚ã‚‹ã“ã¨ãŒã‚ã‹ã‚‹ã€‚p1.yãŒp0.yã¨p2.yã®çœŸã‚“ä¸­ã«ã‚ã‚Œã°p2x-p0xã‚’åŠåˆ†ã«ã—ã¦
+	//p0xã«è¶³ã—ã¦ã‚„ã‚Œã°ã„ã„ã¨ã„ã†ã“ã¨ã ã€‚
 	Vector2 p01, p02, p03;
 	p01.setSub( p1, p0 );
 	p02.setSub( p2, p0 );
 
 	Vector2 p3;
-	double t = ( p1.y - p0.y ) / p02.y; //‚±‚ê‚©‚çt‚Íˆê“I‚È—p“r‚É‚¢‚ë‚¢‚ëg‚¤
+	double t = ( p1.y - p0.y ) / p02.y; //ã“ã‚Œã‹ã‚‰tã¯ä¸€æ™‚çš„ãªç”¨é€”ã«ã„ã‚ã„ã‚ä½¿ã†
 	p3.x = p0.x + p02.x * t;
 	p3.y = p1.y;
 
 	p03.setSub( p3, p0 );
 
-	//VRAMƒQƒbƒg
+	//VRAMã‚²ãƒƒãƒˆ
 	unsigned* vram = Framework::instance().videoMemory();
 	int ww = Framework::instance().width();
 
-	//‰æ‘œ‘¤‚Ì“Y‚¦š‚Æ‰æ–Êã‚ÌˆÊ’u‚ÌŠÖŒW‚ğ®‚É‚µ‚Ä‚¨‚­B
-	//x,y‚ª‚í‚©‚ê‚Îix,iy‚ª‚í‚©‚é‚æ‚¤‚É‚µ‚Ä‚¨‚­‚±‚Æ‚ª•K—v‚¾B
+	//ç”»åƒå´ã®æ·»ãˆå­—ã¨ç”»é¢ä¸Šã®ä½ç½®ã®é–¢ä¿‚ã‚’å¼ã«ã—ã¦ãŠãã€‚
+	//x,yãŒã‚ã‹ã‚Œã°ix,iyãŒã‚ã‹ã‚‹ã‚ˆã†ã«ã—ã¦ãŠãã“ã¨ãŒå¿…è¦ã ã€‚
 	/*
-	ix,iy‚Íx‚Æy‚ÌˆêŸ®‚Å•\‚¹‚é‚Í‚¸‚È‚Ì‚ÅA
+	ix,iyã¯xã¨yã®ä¸€æ¬¡å¼ã§è¡¨ã›ã‚‹ã¯ãšãªã®ã§ã€
 
 	ix = ax + by + c
 	iy = dx + ey + f
 
-	‚Æ‘‚¯‚éB–¢’m”‚ª6‚Â‚¾‚©‚ç®‚Í6–{•K—v‚¾B
-	3‚Âuv‚ª‚ ‚é‚Ì‚¾‚©‚ç‚±‚ê‚Å‘«‚è‚é‚Í‚¸‚Å‚ ‚éB
+	ã¨æ›¸ã‘ã‚‹ã€‚æœªçŸ¥æ•°ãŒ6ã¤ã ã‹ã‚‰å¼ã¯6æœ¬å¿…è¦ã ã€‚
+	3ã¤uvãŒã‚ã‚‹ã®ã ã‹ã‚‰ã“ã‚Œã§è¶³ã‚Šã‚‹ã¯ãšã§ã‚ã‚‹ã€‚
 	i0x = p0x*a + p0y*b + c
 	i1x = p1x*a + p1y*b + c
 	i2x = p2x*a + p2y*b + c
@@ -102,11 +102,11 @@ const Image* image ){
 	i1y = p1x*d + p1y*e + f
 	i2y = p2x*d + p2y*e + f
 
-	3–{‚Ã‚Â‰ğ‚¢‚Ä‚â‚ê‚Î‚¢‚¢B
+	3æœ¬ã¥ã¤è§£ã„ã¦ã‚„ã‚Œã°ã„ã„ã€‚
 	i01x = p01x*a + p01y*b
 	i02x = p02x*a + p02y*b
 
-	‘ÎÌ«‚ğ—˜—p‚µ‚Ä‚â‚ê‚Î
+	å¯¾ç§°æ€§ã‚’åˆ©ç”¨ã—ã¦ã‚„ã‚Œã°
 	a = ( i01x*p02y - i02x*p01y ) / ( p01x*p02y - p02x*p01y )
 	b = ( i01x*p02x - i02x*p01x ) / ( p01y*p02x - p02y*p01x )
 	c = uv0x - p0x*a - p0y*b
@@ -114,7 +114,7 @@ const Image* image ){
 	e = ( i01y*p02x - i02y*p01x ) / ( p01y*p02x - p02y*p01x )
 	f = uv0y - p0x*a - p0y*b
 	*/
-	double a0,a1,a2,a3,a4,a5; //abcdef‚Ì‘ã‚í‚è
+	double a0,a1,a2,a3,a4,a5; //abcdefã®ä»£ã‚ã‚Š
 	Vector2 i01, i02;
 	i01.setSub( i1, i0 );
 	i02.setSub( i2, i0 );
@@ -125,20 +125,20 @@ const Image* image ){
 	a4 = ( i01.y * p02.x - i02.y * p01.x ) / ( p01.y * p02.x - p02.y * p01.x );
 	a5 = i0.y - p0.x * a3 - p0.y * a4;
 
-	//‚Å‚Íã”¼•ª‚ÌOŠpŒ`‚©‚çn‚ß‚æ‚¤Bp0,p1,p3‚¾B
-	//‚Ü‚¸Y‚Ì”ÍˆÍ‚ğ®”‚É‚·‚éB
+	//ã§ã¯ä¸ŠåŠåˆ†ã®ä¸‰è§’å½¢ã‹ã‚‰å§‹ã‚ã‚ˆã†ã€‚p0,p1,p3ã ã€‚
+	//ã¾ãšYã®ç¯„å›²ã‚’æ•´æ•°ã«ã™ã‚‹ã€‚
 	if ( p1.y > p0.y + 1.0 ){
 		int yBegin = static_cast< int >( p0.y );
 		int yEnd = static_cast< int >( p1.y );
 		double rcpP01y = 1.0 / p01.y;
 		for ( int y = yBegin; y <= yEnd; ++y ){
-			//w’è‚Ìy‚É‚¨‚¢‚Äx‚Ì”ÍˆÍ‚ğ’²‚×‚éB
+			//æŒ‡å®šã®yã«ãŠã„ã¦xã®ç¯„å›²ã‚’èª¿ã¹ã‚‹ã€‚
 			double yf = y;
-			//p3-p0‚Æp1-p0‚Ì“ñ•Ó‚Æ¡‚Ìy‚Ì…•½ü‚ÌŒğ“_‚ğ‹‚ß‚Ä‚â‚ê‚Î‚¢‚¢B
-			//ŒvZ‚Íæ‚Ù‚Ç‚Ì‚Æ“¯‚¶‚¾B
+			//p3-p0ã¨p1-p0ã®äºŒè¾ºã¨ä»Šã®yã®æ°´å¹³ç·šã®äº¤ç‚¹ã‚’æ±‚ã‚ã¦ã‚„ã‚Œã°ã„ã„ã€‚
+			//è¨ˆç®—ã¯å…ˆã»ã©ã®ã¨åŒã˜ã ã€‚
 			t = ( y - p0.y ) * rcpP01y;
 			double x0 = p0.x + p01.x * t; //p0.x + p01.x * ( y - p0.y ) / p01.y
-			double x1 = p0.x + p03.x * t; //p0.x + p01.x * ( y - p0.y ) / p03.y ‚½‚¾‚µp01.y=p03.yB
+			double x1 = p0.x + p03.x * t; //p0.x + p01.x * ( y - p0.y ) / p03.y ãŸã ã—p01.y=p03.yã€‚
 			int xBegin, xEnd;
 			if ( x0 > x1 ){
 				xBegin = static_cast< int >( x1 ); 
@@ -149,16 +149,16 @@ const Image* image ){
 			}
 			for ( int x = xBegin; x <= xEnd; ++x ){
 				double xf = x;
-				//x,y‚©‚çix,iy‚ğ‹‚ß‚é
+				//x,yã‹ã‚‰ix,iyã‚’æ±‚ã‚ã‚‹
 				Vector2 ip;
 				ip.x = a0 * xf + a1 * yf + a2;
 				ip.y = a3 * xf + a4 * yf + a5;
-				//ƒsƒNƒZƒ‹ƒQƒbƒg
+				//ãƒ”ã‚¯ã‚»ãƒ«ã‚²ãƒƒãƒˆ
 				vram[ y * ww + x ] = image->pixel( ip );
 			}
 		}
 	}
-	//Ÿ‚Í‰º”¼•ª‚ÌOŠpŒ`B‚â‚é‚±‚Æ‚Í‚Ù‚Æ‚ñ‚Ç“¯‚¶B
+	//æ¬¡ã¯ä¸‹åŠåˆ†ã®ä¸‰è§’å½¢ã€‚ã‚„ã‚‹ã“ã¨ã¯ã»ã¨ã‚“ã©åŒã˜ã€‚
 	if ( p2.y > p1.y + 1.0 ){
 		Vector2 p21, p23;
 		p21.setSub( p1, p2 );
@@ -167,13 +167,13 @@ const Image* image ){
 		int yEnd = static_cast< int >( p2.y );
 		double rcpP21y = 1.0 / p21.y;
 		for ( int y = yBegin; y <= yEnd; ++y ){
-			//w’è‚Ìy‚É‚¨‚¢‚Äx‚Ì”ÍˆÍ‚ğ’²‚×‚éB
+			//æŒ‡å®šã®yã«ãŠã„ã¦xã®ç¯„å›²ã‚’èª¿ã¹ã‚‹ã€‚
 			double yf = y;
-			//p3-p2‚Æp1-p2‚Ì“ñ•Ó‚Æ¡‚Ìy‚Ì…•½ü‚ÌŒğ“_‚ğ‹‚ß‚Ä‚â‚ê‚Î‚¢‚¢B
-			//ŒvZ‚Íæ‚Ù‚Ç‚Ì‚Æ“¯‚¶‚¾B
+			//p3-p2ã¨p1-p2ã®äºŒè¾ºã¨ä»Šã®yã®æ°´å¹³ç·šã®äº¤ç‚¹ã‚’æ±‚ã‚ã¦ã‚„ã‚Œã°ã„ã„ã€‚
+			//è¨ˆç®—ã¯å…ˆã»ã©ã®ã¨åŒã˜ã ã€‚
 			t = ( y - p2.y ) * rcpP21y;
 			double x0 = p2.x + p21.x * t; //p2.x + p21.x * ( y - p2.y ) / p21.y
-			double x1 = p2.x + p23.x * t; //p2.x + p21.x * ( y - p2.y ) / p23.y ‚½‚¾‚µp21.y=p23.yB
+			double x1 = p2.x + p23.x * t; //p2.x + p21.x * ( y - p2.y ) / p23.y ãŸã ã—p21.y=p23.yã€‚
 			int xBegin, xEnd;
 			if ( x0 > x1 ){
 				xBegin = static_cast< int >( x1 ); 
@@ -184,11 +184,11 @@ const Image* image ){
 			}
 			for ( int x = xBegin; x <= xEnd; ++x ){
 				double xf = x;
-				//x,y‚©‚çix,iy‚ğ‹‚ß‚é
+				//x,yã‹ã‚‰ix,iyã‚’æ±‚ã‚ã‚‹
 				Vector2 ip;
 				ip.x = a0 * xf + a1 * yf + a2;
 				ip.y = a3 * xf + a4 * yf + a5;
-				//ƒsƒNƒZƒ‹ƒQƒbƒg
+				//ãƒ”ã‚¯ã‚»ãƒ«ã‚²ãƒƒãƒˆ
 				vram[ y * ww + x ] = image->pixel( ip );
 			}
 		}
@@ -205,7 +205,7 @@ namespace GameLib{
 		int ww = width(); //window width
 		int wh = height(); //window height
 
-		//–ˆƒtƒŒ[ƒ€ƒNƒŠƒA
+		//æ¯ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¯ãƒªã‚¢
 		unsigned* vram = videoMemory();
 		for ( int i = 0; i < ww * wh; ++i ){
 			vram[ i ] = 0;
@@ -213,34 +213,34 @@ namespace GameLib{
 
 		int iw = gImage->width(); //image width
 		int ih = gImage->height(); //image height
-		//ƒIƒtƒZƒbƒg‚Í‰æ–Ê’†SB(160,120)
+		//ã‚ªãƒ•ã‚»ãƒƒãƒˆã¯ç”»é¢ä¸­å¿ƒã€‚(160,120)
 		Vector2 offset;
 		offset.x = static_cast< double >( ww ) / 2.0;
 		offset.y = static_cast< double >( wh ) / 2.0;
 		
 		double rotation = static_cast< double >( gCount );
-		double sine = sin( rotation ); //¡“x‚Í©•ª‚ª‰ñ‚é‚Ì‚Åƒ}ƒCƒiƒX‚Í’…‚©‚È‚¢
+		double sine = sin( rotation ); //ä»Šåº¦ã¯è‡ªåˆ†ãŒå›ã‚‹ã®ã§ãƒã‚¤ãƒŠã‚¹ã¯ç€ã‹ãªã„
 		double cosine = cos( rotation );
-		Matrix22 matrix( cosine, -sine, sine, cosine ); //s—ñ‚ğì‚Á‚Ä
-		//4“_ì‚é
+		Matrix22 matrix( cosine, -sine, sine, cosine ); //è¡Œåˆ—ã‚’ä½œã£ã¦
+		//4ç‚¹ä½œã‚‹
 		Vector2 a, b, c, d;
-		rotate( &a, Vector2( ( ww - iw )/2, ( wh - ih )/2 ), offset, matrix ); //¶ã
-		rotate( &b, Vector2( ( ww + iw )/2 - 1, ( wh - ih )/2 ), offset, matrix ); //‰Eã
-		rotate( &c, Vector2( ( ww - iw )/2, ( wh + ih )/2 - 1 ), offset, matrix ); //¶‰º
-		//4“_–Ú‚Ía + (b-a) + (c-a)‚ÅŒvZ‚Å‚«‚éB
+		rotate( &a, Vector2( ( ww - iw )/2, ( wh - ih )/2 ), offset, matrix ); //å·¦ä¸Š
+		rotate( &b, Vector2( ( ww + iw )/2 - 1, ( wh - ih )/2 ), offset, matrix ); //å³ä¸Š
+		rotate( &c, Vector2( ( ww - iw )/2, ( wh + ih )/2 - 1 ), offset, matrix ); //å·¦ä¸‹
+		//4ç‚¹ç›®ã¯a + (b-a) + (c-a)ã§è¨ˆç®—ã§ãã‚‹ã€‚
 		Vector2 ab, ac;
 		ab.setSub( b, a );
 		ac.setSub( c, a );
 		d.setAdd( a, ab );
 		d += ac;
-		//a,b,c,d‚É‚¨‚¢‚ÄA‰æ‘œ‘¤‚Ì“Y‚¦š‚ª‚¢‚­‚Â‚È‚Ì‚©‚ğŒvZ
+		//a,b,c,dã«ãŠã„ã¦ã€ç”»åƒå´ã®æ·»ãˆå­—ãŒã„ãã¤ãªã®ã‹ã‚’è¨ˆç®—
 		Vector2 ai( 0, 0 );
 		Vector2 bi( iw - 1, 0 ); //(w-1)/w, 0)
 		Vector2 ci( 0, ih - 1 ); //(0,(h-1)/h)
 		Vector2 di( bi.x, ci.y );
-		//ƒ‰ƒXƒ^ƒ‰ƒCƒYŠJn
-		rasterize( a, b, c, ai, bi, ci, gImage ); //OŠpŒ`abc
-		rasterize( d, b, c, di, bi, ci, gImage ); //OŠpŒ`dbc
+		//ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚ºé–‹å§‹
+		rasterize( a, b, c, ai, bi, ci, gImage ); //ä¸‰è§’å½¢abc
+		rasterize( d, b, c, di, bi, ci, gImage ); //ä¸‰è§’å½¢dbc
 
 		++gCount;
 

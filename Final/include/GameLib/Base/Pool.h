@@ -3,40 +3,40 @@
 
 namespace GameLib{
 
-///‚ ‚éŒ^‚Ì’u‚«êŠB‚à‚Á‚Ï‚çnew‚ğíŒ¸‚·‚é‚½‚ß‚¾‚¯‚É—p‚¢‚ç‚ê‚éB
+///ã‚ã‚‹å‹ã®ç½®ãå ´æ‰€ã€‚ã‚‚ã£ã±ã‚‰newã‚’å‰Šæ¸›ã™ã‚‹ãŸã‚ã ã‘ã«ç”¨ã„ã‚‰ã‚Œã‚‹ã€‚
 /*!
-Šm•Û‚·‚é‚½‚ß‚¾‚¯‚É‚ ‚èA‚»‚ÌŒã‚Ì‘€ì‚Í‰½‚à‚Å‚«‚È‚¢‚±‚Æ‚É’ˆÓ‚·‚é‚±‚ÆB
-‚Ü‚½A•”•ª‰ğ•ú‚à•s‰Â”\B‚Å‚«‚é‚Ì‚Í‘S‘Ì‰ğ•ú‚¾‚¯‚Å‚ ‚éB
+ç¢ºä¿ã™ã‚‹ãŸã‚ã ã‘ã«ã‚ã‚Šã€ãã®å¾Œã®æ“ä½œã¯ä½•ã‚‚ã§ããªã„ã“ã¨ã«æ³¨æ„ã™ã‚‹ã“ã¨ã€‚
+ã¾ãŸã€éƒ¨åˆ†è§£æ”¾ã‚‚ä¸å¯èƒ½ã€‚ã§ãã‚‹ã®ã¯å…¨ä½“è§£æ”¾ã ã‘ã§ã‚ã‚‹ã€‚
 */
 template< class T > class Pool{
 public:
 	explicit Pool( int defaultBlockSize = 16 );
 	~Pool();
-	///•W€ƒuƒƒbƒN”‚ğ•ÏXB
+	///æ¨™æº–ãƒ–ãƒ­ãƒƒã‚¯æ•°ã‚’å¤‰æ›´ã€‚
 	void setDefaultBlockSize( int blockSize );
-	///‘S‰ğ•ú
+	///å…¨è§£æ”¾
 	void clear();
-	///nŒÂŠm•Û
+	///nå€‹ç¢ºä¿
 	T* allocate( int n = 1 );
-	///nŒÂƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒg
+	///nå€‹ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 	T* allocate( const T*, int n = 1 );
 private:
 	struct Block{
-		Block* mNext; //Ÿ‚ÌƒuƒƒbƒN
-		T* mElements; //”z—ñ
-		int mUsedNumber; //g‚í‚ê‚½”
-		int mSize; //ƒuƒƒbƒN‚ÌƒTƒCƒY
+		Block* mNext; //æ¬¡ã®ãƒ–ãƒ­ãƒƒã‚¯
+		T* mElements; //é…åˆ—
+		int mUsedNumber; //ä½¿ã‚ã‚ŒãŸæ•°
+		int mSize; //ãƒ–ãƒ­ãƒƒã‚¯ã®ã‚µã‚¤ã‚º
 	};
-	void operator=( const Pool& ); //‘ã“ü‹Ö~
-	Pool( const Pool& ); //ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‹Ö~
+	void operator=( const Pool& ); //ä»£å…¥ç¦æ­¢
+	Pool( const Pool& ); //ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ç¦æ­¢
 
-	//’è”
-	int mDefaultBlockSize; //’PˆÊ—Ê
-	Block mHead; //ƒ_ƒ~[ƒm[ƒhB
-	Block* mLastBlock; //ÅIƒm[ƒh
+	//å®šæ•°
+	int mDefaultBlockSize; //å˜ä½é‡
+	Block mHead; //ãƒ€ãƒŸãƒ¼ãƒãƒ¼ãƒ‰ã€‚
+	Block* mLastBlock; //æœ€çµ‚ãƒãƒ¼ãƒ‰
 };
 
 } //namespace GameLib
-#include "GameLib/Base/Impl/PoolImpl.h" //’†g‚Í‚±‚Ì’†
+#include "GameLib/Base/Impl/PoolImpl.h" //ä¸­èº«ã¯ã“ã®ä¸­
 
 #endif

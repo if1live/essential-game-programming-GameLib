@@ -4,7 +4,7 @@ using namespace GameLib;
 #include "Game/StaticObject.h"
 #include "Image.h"
 
-//�f�t�H���g�ǁB�ǂɂ��Ă����Δ����邱�Ƃ͂Ȃ��B
+//デフォルト壁。壁にしておけば抜けることはない。
 StaticObject::StaticObject() : mFlags( 0 ){
 }
 
@@ -36,9 +36,9 @@ void StaticObject::draw( int x, int y, const Image* image ) const {
 		floor = true;
 	}
 	image->draw( x*16, y*16, srcX, srcY, 16, 16 );
-	//�I�v�V�����`��
+	//オプション描画
 	if ( floor ){
-		srcX = -1; //�ԕ�
+		srcX = -1; //番兵
 		if ( mFlags & FLAG_ITEM_BOMB ){
 			srcX = 32;
 			srcY = 0;

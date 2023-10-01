@@ -17,16 +17,16 @@ public:
 	mDxObject( 0 ),
 	mVertexNumber( 0 ),
 	mName( 0 ){
-		//�G���[�`�F�b�N�S�R���Ă܂���
+		//エラーチェック全然してません
 		mVertexNumber = e.childNumber();
 		if ( mVertexNumber > 0 ){
 			createDxObject( device );
 			Vertex* vertices = lock();
 			for ( int i = 0; i < mVertexNumber; ++i ){
 				ConstElement vertex = e.child( i );
-				//�A�g���r���[�g���甲���o��
+				//アトリビュートから抜き出す
 				int an = vertex.attributeNumber();
-				//�f�t�H���g�l�[�U
+				//デフォルト値充填
 				Vertex& v = vertices[ i ];
 				v.mPosition.w = 1.f;
 				v.mNormal.set( 0.f, 0.f, 0.f );
@@ -41,7 +41,7 @@ public:
 					}else if ( RefString( "uv" ) == a.name() ){
 						a.getFloatValues( &v.mUv.x, 2 );
 					}else if ( RefString( "color" ) == a.name() ){
-						//RGBA32�`���J���[�ɕϊ�
+						//RGBA32形式カラーに変換
 						float color[ 4 ];
 						a.getFloatValues( color, 4 );
 						unsigned c[ 4 ];
@@ -50,7 +50,7 @@ public:
 							c[ i ] = ( c[ i ] < 0.f ) ? 0 : c[ i ];
 							c[ i ] = ( c[ i ] > 255 ) ? 255 : c[ i ];
 						}
-						//RGBA�̏��Ńt�@�C���ɏ�����Ă���킯�����A32bit�`������ARGB�ɂȂ�B���ӁB
+						//RGBAの順でファイルに書かれているわけだが、32bit形式だとARGBになる。注意。
 						v.mColor = ( c[ 3 ] << 24 ) | ( c[ 0 ] << 16 ) | ( c[ 1 ] << 8 ) | c[ 2 ];
 					}
 				}
@@ -58,7 +58,7 @@ public:
 			unlock();
 			vertices = 0;
 		}
-		//���O�𔲂�
+		//名前を抜く
 		int an = e.attributeNumber();
 		for ( int i = 0; i < an; ++i ){
 			ConstAttribute a = e.attribute( i );
@@ -107,7 +107,7 @@ public:
 	int mVertexNumber;
 	char* mName;
 private:
-	void operator=( const Impl& ); //�֎~
+	void operator=( const Impl& ); //禁止
 };
 
 } //namespace Graphics

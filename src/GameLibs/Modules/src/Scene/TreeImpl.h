@@ -35,18 +35,18 @@ public:
 	mSpeed( 1.f ),
 	mNodes( 0 ),
 	mNodeNumber( 0 ){
-		mTemplate->container()->refer(); //Š—LƒRƒ“ƒeƒi‚ÌQÆƒJƒEƒ“ƒg‚ğ‘‚â‚·
+		mTemplate->container()->refer(); //æ‰€æœ‰ã‚³ãƒ³ãƒ†ãƒŠã®å‚ç…§ã‚«ã‚¦ãƒ³ãƒˆã‚’å¢—ã‚„ã™
 
-		//\’zŠJn
+		//æ§‹ç¯‰é–‹å§‹
 		mNodeNumber = tmpl->nodeNumber();
 		mNodes = static_cast< Node* >( OPERATOR_NEW( sizeof( Node ) * mNodeNumber ) );
 		for ( int i = 0; i < mNodeNumber; ++i ){
 			const NodeTemplate* src = tmpl->node( i ); 
 			Node* dst = &mNodes[ i ];
-			//ƒRƒ“ƒXƒgƒ‰ƒNƒg
+			//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 			new ( dst ) Node( src );
 
-			//q‚Ì”‚ğ”‚¦‚é
+			//å­ã®æ•°ã‚’æ•°ãˆã‚‹
 			int child = src->mChild;
 			int childNumber = 0;
 			while ( child >= 0 ){
@@ -54,7 +54,7 @@ public:
 				child = tmpl->node( child )->mBrother;
 			}
 			Node** children = mChildrenPool.allocate( childNumber );
-			//q‚ğ[“U‚·‚é
+			//å­ã‚’å……å¡«ã™ã‚‹
 			child = src->mChild;
 			int j = 0;
 			while ( child >= 0 ){
@@ -62,7 +62,7 @@ public:
 				child = tmpl->node( child )->mBrother;
 				++j;
 			}
-			//ƒm[ƒh‚É—^‚¦‚é
+			//ãƒãƒ¼ãƒ‰ã«ä¸ãˆã‚‹
 			dst->setChildren( children, childNumber );
 		}
 	}
@@ -72,33 +72,33 @@ public:
 		}
 		OPERATOR_DELETE( mNodes );
 
-		//eƒRƒ“ƒeƒi‚Ì‰ğ•úƒ`ƒFƒbƒN
+		//è¦ªã‚³ãƒ³ãƒ†ãƒŠã®è§£æ”¾ãƒã‚§ãƒƒã‚¯
 		Container::Impl* c = mTemplate->container(); 
 		c->release();
-		if ( c->referenceCount() == 0 ){ //©•ª‚ªÅŒã‚ÌQÆ‚ğ‚Á‚Ä‚¢‚éB”jŠüB
+		if ( c->referenceCount() == 0 ){ //è‡ªåˆ†ãŒæœ€å¾Œã®å‚ç…§ã‚’æŒã£ã¦ã„ã‚‹ã€‚ç ´æ£„ã€‚
 			SAFE_DELETE( c );
 		}
 		mTemplate = 0;
 	}
 	void draw(){
-		//ƒ[ƒ‹ƒhs—ñ‚ğì‚é
+		//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’ä½œã‚‹
 		Matrix34 w;
 		w.setTranslation( mPosition );
 		w.rotateY( mAngle.y );
 		w.rotateX( mAngle.x );
 		w.rotateZ( mAngle.z );
 		w.scale( mScale );
-		//•`‰æ
+		//æç”»
 		mNodes[ 0 ].draw( w, mColor, mTransparency );
 	}
 	void setAnimation( Animation::Impl* a ){
-		if ( a ){ //ƒ‚ƒm‚ª‚ ‚ê‚Î
+		if ( a ){ //ãƒ¢ãƒãŒã‚ã‚Œã°
 			for ( int i = 0; i < mNodeNumber; ++i ){
 				mNodes[ i ].setAnimation( a->node( mNodes[ i ].name() ) );
 			}
-		}else{ //ƒ‚ƒm‚ª‚È‚¯‚ê‚Î
+		}else{ //ãƒ¢ãƒãŒãªã‘ã‚Œã°
 			for ( int i = 0; i < mNodeNumber; ++i ){
-				mNodes[ i ].removeAnimation(); //ó‘Ô‚à‰Šú‰»
+				mNodes[ i ].removeAnimation(); //çŠ¶æ…‹ã‚‚åˆæœŸåŒ–
 			}
 		}
 		mTime = 0.f;
@@ -121,13 +121,13 @@ public:
 	Vector3 mScale;
 	Vector3 mColor;
 	float mTransparency;
-	float mTime; //ƒAƒjƒ
-	float mSpeed; //ƒAƒjƒ‘¬“x
+	float mTime; //ã‚¢ãƒ‹ãƒ¡æ™‚åˆ»
+	float mSpeed; //ã‚¢ãƒ‹ãƒ¡é€Ÿåº¦
 
-	Node* mNodes; //0”Ô‚ªª‚ÆŒˆ‚Ü‚Á‚Ä‚¢‚é
+	Node* mNodes; //0ç•ªãŒæ ¹ã¨æ±ºã¾ã£ã¦ã„ã‚‹
 	int mNodeNumber;
 
-	Pool< Node* > mChildrenPool; //Šeƒm[ƒh‚ª‚Âq”z—ñ‚ğ‚±‚±‚ÉW’†
+	Pool< Node* > mChildrenPool; //å„ãƒãƒ¼ãƒ‰ãŒæŒã¤å­é…åˆ—ã‚’ã“ã“ã«é›†ä¸­
 };
 
 } //namespace Scene

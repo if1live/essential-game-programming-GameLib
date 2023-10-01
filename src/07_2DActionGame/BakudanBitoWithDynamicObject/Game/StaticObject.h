@@ -6,14 +6,14 @@ class Image;
 class StaticObject{
 public:
 	enum Flag{
-		FLAG_WALL = ( 1 << 0 ), //ƒRƒ“ƒNƒŠ‚Å‚·
-		FLAG_BRICK = ( 1 << 1 ), //ƒŒƒ“ƒK‚Å‚·
-		FLAG_ITEM_BOMB = ( 1 << 2 ), //”š’eƒAƒCƒeƒ€
-		FLAG_ITEM_POWER = ( 1 << 3 ), //”š•—ƒAƒCƒeƒ€
+		FLAG_WALL = ( 1 << 0 ), //ã‚³ãƒ³ã‚¯ãƒªã§ã™
+		FLAG_BRICK = ( 1 << 1 ), //ãƒ¬ãƒ³ã‚¬ã§ã™
+		FLAG_ITEM_BOMB = ( 1 << 2 ), //çˆ†å¼¾ã‚¢ã‚¤ãƒ†ãƒ 
+		FLAG_ITEM_POWER = ( 1 << 3 ), //çˆ†é¢¨ã‚¢ã‚¤ãƒ†ãƒ 
 	};
 	StaticObject();
 
-	//°A•ÇA—ùŠ¢‚ð•`‰æ‚µA”š’e‚âƒAƒCƒeƒ€‚ª‚ ‚ê‚Î‚»‚ê‚à•`‰æ
+	//åºŠã€å£ã€ç…‰ç“¦ã‚’æç”»ã—ã€çˆ†å¼¾ã‚„ã‚¢ã‚¤ãƒ†ãƒ ãŒã‚ã‚Œã°ãã‚Œã‚‚æç”»
 	void draw( int x, int y, const Image* ) const;
 
 	bool checkFlag( unsigned ) const;

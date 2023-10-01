@@ -9,9 +9,9 @@ using namespace std;
 
 class File{
 public:
-	bool isReady() const; //ƒ[ƒhI‚í‚Á‚Ä‚éH
-	int getSize() const; //ƒtƒ@ƒCƒ‹ƒTƒCƒYæ“¾
-	const char* getData() const; //’†gæ“¾
+	bool isReady() const; //ãƒ­ãƒ¼ãƒ‰çµ‚ã‚ã£ã¦ã‚‹ï¼Ÿ
+	int getSize() const; //ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºå–å¾—
+	const char* getData() const; //ä¸­èº«å–å¾—
 private:
 	File( const char* filename );
 	~File();
@@ -23,7 +23,7 @@ private:
 	int mSize;
 };
 
-//ƒA[ƒJƒCƒuƒNƒ‰ƒX
+//ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–ã‚¯ãƒ©ã‚¹
 class Archive{
 public:
 	Archive( const char* archiveName );
@@ -42,7 +42,7 @@ private:
 class Loader{
 public:
 	static Loader* instance();
-	//ƒA[ƒJƒCƒu‚©‚ç“Ç‚Ş‚È‚çƒA[ƒJƒCƒu–¼‚ğ“n‚¹
+	//ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–ã‹ã‚‰èª­ã‚€ãªã‚‰ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–åã‚’æ¸¡ã›
 	static void create( const char* archiveName = 0 );
 	static void destroy();
 
@@ -51,7 +51,7 @@ public:
 	void update();
 private:
 	Loader( const char* filename );
-	Loader( const Loader& ); //••ˆó
+	Loader( const Loader& ); //å°å°
 	~Loader();
 
 	list< File* > mFiles;

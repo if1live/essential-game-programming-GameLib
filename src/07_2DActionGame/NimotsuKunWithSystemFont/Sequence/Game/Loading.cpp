@@ -9,8 +9,8 @@ using namespace GameLib;
 namespace Sequence{
 namespace Game{
 
-//ƒ[ƒh‚ğn‚ß‚é‚Ì‚Íupdate‚¾‚©‚ç‚±‚±‚Å‚Íƒ[ƒh‚ÍŠJn‚µ‚È‚¢‚ªA
-//uƒ[ƒh’†v‚Æ‚¢‚¤‰æ‘œ‚Í‚±‚±‚Åƒ[ƒh‚·‚éB
+//ãƒ­ãƒ¼ãƒ‰ã‚’å§‹ã‚ã‚‹ã®ã¯updateã ã‹ã‚‰ã“ã“ã§ã¯ãƒ­ãƒ¼ãƒ‰ã¯é–‹å§‹ã—ãªã„ãŒã€
+//ã€Œãƒ­ãƒ¼ãƒ‰ä¸­ã€ã¨ã„ã†ç”»åƒã¯ã“ã“ã§ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ã€‚
 Loading::Loading() : 
 mImage( 0 ),
 mCount( 0 ),
@@ -24,17 +24,17 @@ Loading::~Loading(){
 
 void Loading::update( Parent* parent ){
 	if ( !mStarted ){
-		//Œ‹‹Çƒ[ƒh‚·‚é‚Ì‚ÍeB‚È‚º‚È‚çState‚ğ‚Á‚Ä‚¢‚é‚Ì‚Íe‚¾‚©‚çB
+		//çµå±€ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ã®ã¯è¦ªã€‚ãªãœãªã‚‰Stateã‚’æŒã£ã¦ã„ã‚‹ã®ã¯è¦ªã ã‹ã‚‰ã€‚
 		parent->startLoading();
 		mStarted = true;
-	}else if ( mCount == 60 ){ //1•b‘Ò‚Â
-		parent->moveTo( Parent::SEQ_PLAY ); //Play‚ÉˆÚ“®
+	}else if ( mCount == 60 ){ //1ç§’å¾…ã¤
+		parent->moveTo( Parent::SEQ_PLAY ); //Playã«ç§»å‹•
 	}
 
-	//•`‰æ
+	//æç”»
 	mImage->draw();
-	//š‚ğo‚·
-	Framework::instance().drawDebugString( 0, 0, "Û°ÄŞÁ­³ÆÂ· ÏÃ" );
+	//å­—ã‚’å‡ºã™
+	Framework::instance().drawDebugString( 0, 0, "ï¾›ï½°ï¾„ï¾ï¾ï½­ï½³ï¾†ï¾‚ï½· ï¾ï¾ƒ" );
 
 	++mCount;
 }

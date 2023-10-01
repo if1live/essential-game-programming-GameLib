@@ -9,28 +9,28 @@ template< class T > class Array;
 namespace Scene{
 using namespace Math;
 
-///‹…Õ“Ë”»’èƒNƒ‰ƒX
+///çƒè¡çªåˆ¤å®šã‚¯ãƒ©ã‚¹
 /*
-–ˆƒtƒŒ[ƒ€‚Ìg—p‚ğ‘z’è‚µ‚Ä‚¢‚éB
-add‚Å“o˜^Adetect‚ÅŒvZ‚ğs‚Á‚ÄŒ‹‰Ê‚ğ•Ô‚·B
-add‚ÌŒø‰Ê‚Ídetectˆê‰ñ•ª‚µ‚©‚È‚¢‚Ì‚ÅA
-–ˆƒtƒŒ[ƒ€add‚·‚é‚±‚Æ‚É’ˆÓB
+æ¯ãƒ•ãƒ¬ãƒ¼ãƒ ã®ä½¿ç”¨ã‚’æƒ³å®šã—ã¦ã„ã‚‹ã€‚
+addã§ç™»éŒ²ã€detectã§è¨ˆç®—ã‚’è¡Œã£ã¦çµæœã‚’è¿”ã™ã€‚
+addã®åŠ¹æœã¯detectä¸€å›åˆ†ã—ã‹ãªã„ã®ã§ã€
+æ¯ãƒ•ãƒ¬ãƒ¼ãƒ addã™ã‚‹ã“ã¨ã«æ³¨æ„ã€‚
 
-Œ»óì•iB’†‚Ík-d tree‚È‚Ì‚ÅŒ©‚Ä‚İ‚Ä—~‚µ‚¢B
+ç¾çŠ¶è©¦ä½œå“ã€‚ä¸­ã¯k-d treeãªã®ã§è¦‹ã¦ã¿ã¦æ¬²ã—ã„ã€‚
 */
 class CollisionDetector{
 public:
-	///Œ‹‰Ê‚Ì”Ô†ƒyƒA
+	///çµæœã®ç•ªå·ãƒšã‚¢
 	struct Pair{
 		int mId0, mId1;
 	};
 	static CollisionDetector create( int capacity, int maxLevel = -1 );
-	///€–Ú’Ç‰ÁBdetectˆê‰ñ‚¾‚¯—LŒøB–ß‚è’l‚ÍŒ‹‰Ê‚É“ü‚Á‚Ä‚­‚éIDB
+	///é …ç›®è¿½åŠ ã€‚detectä¸€å›ã ã‘æœ‰åŠ¹ã€‚æˆ»ã‚Šå€¤ã¯çµæœã«å…¥ã£ã¦ãã‚‹IDã€‚
 	int add( const Vector3& sphereCenter, float sphereRadius );
-	///ŒŸoŠÖ”Badd‚µ‚½‚à‚Ì‚ÍÁ‚¦‚éBˆø”‚É‚ÍŒ‹‰ÊIDƒyƒA”z—ñ‚ğ“ü‚ê‚éB
+	///æ¤œå‡ºé–¢æ•°ã€‚addã—ãŸã‚‚ã®ã¯æ¶ˆãˆã‚‹ã€‚å¼•æ•°ã«ã¯çµæœIDãƒšã‚¢é…åˆ—ã‚’å…¥ã‚Œã‚‹ã€‚
 	void detect( Array< Pair >* resultsOut );
 
-	//ˆÈ‰º‹C‚É‚µ‚È‚­‚Ä‚¢‚¢ŠÖ”
+	//ä»¥ä¸‹æ°—ã«ã—ãªãã¦ã„ã„é–¢æ•°
 	CollisionDetector();
 	~CollisionDetector();
 	CollisionDetector( const CollisionDetector& );

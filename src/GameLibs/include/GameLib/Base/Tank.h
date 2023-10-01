@@ -5,61 +5,61 @@
 
 namespace GameLib{
 
-///�����I���܂ŃA�N�Z�X�����A�������������킩��Ȃ��A�Ƃ����p�r�̂��߂̂���
+///足し終わるまでアクセスせず、いくつ足すかがわからない、という用途のためのもの
 /*!
-�������߂Ĉ�C�ɗ����C���[�W�Ń^���N�Ƃ������A�����Ƃ������O������Ε�W�B
-�����I�ɂ͗e�ʒP��(blockSize)�Â����ŃA���P�[�g���Čp�������Ă����B
+水をためて一気に流すイメージでタンクとしたが、もっといい名前があれば募集。
+内部的には容量単位(blockSize)づつ内部でアロケートして継ぎ足していく。
 
-�A�N�Z�X��getCurrent()�Ŏ擾�AtoNext()�Ŏ��ցBrewind()�ōŏ�����A�N�Z�X���Ȃ�����B
+アクセスはgetCurrent()で取得、toNext()で次へ。rewind()で最初からアクセスしなおせる。
 */
 template< class T > class Tank{
 public:
 	explicit Tank( int blockSize = 16 );
 	~Tank();
-	///�Ċm�ہB���g�������ԂŌĂԂ�assert�Bclear()����B
+	///再確保。中身がある状態で呼ぶとassert。clear()しろ。
 	void setBlockSize( int blockSize );
-	///���݂̗v�f���擾
+	///現在の要素数取得
 	int size() const;
-	///�S���
+	///全解放
 	void clear();
-	///�����ɋ�Œǉ��B���������̂ւ̃|�C���^��Ԃ��̂ŁA�����ݒ�͂�����g�����ƁB
+	///末尾に空で追加。足したものへのポインタを返すので、初期設定はこれを使うこと。
 	T* add();
-	///�����ɒǉ�
+	///末尾に追加
 	void add( const T& );
-	///����
+	///次へ
 	void toNext();
-	///�I���ł�
+	///終わりです
 	bool isEnd() const;
-	///���݂̗v�f���擾(��const)
+	///現在の要素を取得(非const)
 	T* get();
-	///���݂̗v�f���擾(const)
+	///現在の要素を取得(const)
 	const T* get() const;
-	///�ŏ��̗v�f�Ƀ|�C���^��߂�
+	///最初の要素にポインタを戻す
 	void rewind();
-	///�P�Ȃ�z��ɕϊ��B�O������size()�����T�C�Y��new�����̈��n�����ƁB
+	///単なる配列に変換。前もってsize()したサイズでnewした領域を渡すこと。
 	void copyTo( T* ) const;
-	///Array�ɃR�s�[�B��łȂ��Ɠ{����B
+	///Arrayにコピー。空でないと怒られる。
 	void copyTo( Array< T >* ) const;
 private:
 	struct Block{
-		Block* mNext; //���̃m�[�h
-		T* mElements; //�z��
+		Block* mNext; //次のノード
+		T* mElements; //配列
 	};
-	void operator=( const Tank& ); //����֎~
-	Tank( const Tank& ); //�R�s�[�R���X�g���N�^�֎~
+	void operator=( const Tank& ); //代入禁止
+	Tank( const Tank& ); //コピーコンストラクタ禁止
 
-	//�萔
-	int mBlockSize; //�P�ʗ�
+	//定数
+	int mBlockSize; //単位量
 	int mSize;
-	Block mHead; //�_�~�[
+	Block mHead; //ダミー
 
-	Block* mLastBlock; //�ŏI�m�[�h
-	int mLastPos; //�ŏI�m�[�h���̈ʒu
-	Block* mCurrentBlock; //���݂̃C�e���[�^
-	int mCurrentPos; //�m�[�h���ʒu
+	Block* mLastBlock; //最終ノード
+	int mLastPos; //最終ノード内の位置
+	Block* mCurrentBlock; //現在のイテレータ
+	int mCurrentPos; //ノード内位置
 };
 
 } //namespace GameLib
-#include "GameLib/Base/Impl/TankImpl.h" //���g�͂��̒�
+#include "GameLib/Base/Impl/TankImpl.h" //中身はこの中
 
 #endif

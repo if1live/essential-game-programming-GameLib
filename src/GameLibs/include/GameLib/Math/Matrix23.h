@@ -32,9 +32,9 @@ public:
 	void setMul( const Matrix23&, const Matrix23& );
 	void setMul( const Matrix23&, const Matrix22& );
 
-	///���S�Ɉ�v���Ă��邩�`�F�b�N
+	///完全に一致しているかチェック
 	bool operator==( const Matrix23& ) const;
-	///�����ł��Ⴄ�̂����`�F�b�N
+	///少しでも違うのかをチェック
 	bool operator!=( const Matrix23& ) const;
 
 	float& operator()( int row, int col );

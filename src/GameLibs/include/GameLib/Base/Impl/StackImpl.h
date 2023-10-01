@@ -22,7 +22,7 @@ mBack( 0 ){
 		return;
 	}
 	mCapacity = capacity;
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ñ‚½‚­‚È‚¢‚Ì‚Å¶new
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å‘¼ã³ãŸããªã„ã®ã§ç”Ÿnew
 	mElements = static_cast< T* >( OPERATOR_NEW( sizeof( T ) * mCapacity ) );
 }
 
@@ -35,7 +35,7 @@ template< class T > inline Stack< T >::~Stack(){
 
 template< class T > inline void Stack< T >::setCapacity( int capacity ){
 	ASSERT( mSize == 0 && "NOT EMPTY!. you must call clear()." );
-	//ˆê’U‰ğ•ú
+	//ä¸€æ—¦è§£æ”¾
 	if ( mElements ){
 		clear();
 		OPERATOR_DELETE( mElements );
@@ -45,8 +45,8 @@ template< class T > inline void Stack< T >::setCapacity( int capacity ){
 		return;
 	}
 	mCapacity = capacity;
-	//ÄŠm•Û
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ñ‚½‚­‚È‚¢‚Ì‚Å¶new
+	//å†ç¢ºä¿
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’å‘¼ã³ãŸããªã„ã®ã§ç”Ÿnew
 	mElements = static_cast< T* >( OPERATOR_NEW( sizeof( T ) * mCapacity ) );
 }
 
@@ -60,21 +60,21 @@ template< class T > inline int Stack< T >::size() const {
 
 template< class T > inline void Stack< T >::clear(){
 	for ( int i = 0; i < mBack; ++i ){
-		mElements[ i ].~T(); //–¾¦“I‚ÉƒfƒXƒgƒ‰ƒNƒg
+		mElements[ i ].~T(); //æ˜ç¤ºçš„ã«ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 	}
 	mBack = mSize = 0;
 }
 
 template< class T > inline void Stack< T >::push( const T& v ){
 	ASSERT( mSize < mCapacity );
-	new ( &mElements[ mBack ] ) T( v ); //ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^ŒÄ‚Ño‚µ
+	new ( &mElements[ mBack ] ) T( v ); //ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿å‘¼ã³å‡ºã—
 	++mBack;
 	++mSize;
 }
 
 template< class T > inline void Stack< T >::push(){
 	ASSERT( mSize < mCapacity );
-	new ( &mElements[ mBack ] ) T; //ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^ŒÄ‚Ño‚µ
+	new ( &mElements[ mBack ] ) T; //ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿å‘¼ã³å‡ºã—
 	++mBack;
 	++mSize;
 }
@@ -82,7 +82,7 @@ template< class T > inline void Stack< T >::push(){
 template< class T > inline void Stack< T >::pop(){
 	ASSERT( mSize > 0 );
 	--mBack;
-	mElements[ mBack ].~T(); //–¾¦“IƒfƒXƒgƒ‰ƒNƒg
+	mElements[ mBack ].~T(); //æ˜ç¤ºçš„ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 	--mSize;
 }
 
@@ -90,7 +90,7 @@ template< class T > inline void Stack< T >::pop( T* o ){
 	ASSERT( mSize > 0 );
 	*o = mElements[ mBack - 1 ];
 	--mBack;
-	mElements[ mBack ].~T(); //–¾¦“IƒfƒXƒgƒ‰ƒNƒg
+	mElements[ mBack ].~T(); //æ˜ç¤ºçš„ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 	--mSize;
 }
 

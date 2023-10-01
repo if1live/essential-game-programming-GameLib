@@ -1,7 +1,7 @@
 #ifndef INCLUDED_GAMELIB_MATH_H
 #define INCLUDED_GAMELIB_MATH_H
 
-//角度単位として度を取る数学ライブラリ
+//隗貞ｺｦ蜊倅ｽ阪→縺励※蠎ｦ繧貞叙繧区焚蟄ｦ繝ｩ繧､繝悶Λ繝ｪ
 namespace GameLib{
 
 double sin( double degree );

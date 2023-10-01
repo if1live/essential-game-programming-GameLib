@@ -22,26 +22,26 @@ int gCount;
 GameLib::Graphics::LightingMode gLightingMode = GameLib::Graphics::LIGHTING_NONE;
 
 namespace GameLib{
-	//ConfigurationƒNƒ‰ƒX‚ğg‚Á‚Ä‰Šúİ’è‚µ‚Ä‚â‚ë‚¤B
+	//Configurationã‚¯ãƒ©ã‚¹ã‚’ä½¿ã£ã¦åˆæœŸè¨­å®šã—ã¦ã‚„ã‚ã†ã€‚
 	void Framework::configure( Configuration* conf ){
 		conf->setWidth( 640 );
 		conf->setHeight( 480 );
 		conf->forbidFullScreen( true );
-		conf->enableFullScreen( false ); //ƒtƒ‹ƒXƒNƒŠ[ƒ“ƒ‚[ƒh‹N“®
-		conf->enableVSync( false ); //ƒn[ƒhƒEƒFƒA‚É‚æ‚éƒtƒŒ[ƒ€ƒŒ[ƒgˆê’è‰»
-		conf->enableAntiAlias( false ); //ƒWƒƒƒM[‚ğŒyŒ¸‚·‚éˆ—‚Ì—L–³
-		conf->setTitle( "DrawCube Sample" ); //ƒ^ƒCƒgƒ‹ƒo[‚Ì•¶š—ñ
+		conf->enableFullScreen( false ); //ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ãƒ¢ãƒ¼ãƒ‰èµ·å‹•
+		conf->enableVSync( false ); //ãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢ã«ã‚ˆã‚‹ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆä¸€å®šåŒ–
+		conf->enableAntiAlias( false ); //ã‚¸ãƒ£ã‚®ãƒ¼ã‚’è»½æ¸›ã™ã‚‹å‡¦ç†ã®æœ‰ç„¡
+		conf->setTitle( "DrawCube Sample" ); //ã‚¿ã‚¤ãƒˆãƒ«ãƒãƒ¼ã®æ–‡å­—åˆ—
 	}
 	void Framework::update(){
 		using namespace Graphics;
-		//‰½“x‚Æ‚È‚­o‚Ä‚­‚é‚Ì‚Åmˆê•¶š‚Å‚ ‚é‚±‚Æ‚ğ‹–‚µ‚Ä—~‚µ‚¢
+		//ä½•åº¦ã¨ãªãå‡ºã¦ãã‚‹ã®ã§mä¸€æ–‡å­—ã§ã‚ã‚‹ã“ã¨ã‚’è¨±ã—ã¦æ¬²ã—ã„
 		Graphics::Manager m = Graphics::Manager::instance();
 		if ( gCount == 0 ){ 
 			m.setTextureFilter( TEXTURE_FILTER_POINT );
-			//--------------’¸“_ƒoƒbƒtƒ@‚ğì‚é-----------------------
-			gVertexBuffer = VertexBuffer::create( 8 ); //8’¸“_‚Ì’¸“_ƒoƒbƒtƒ@
-			Vertex* v = gVertexBuffer.lock(); //‘‚«‚İƒ|ƒCƒ“ƒ^‚ğ“¾‚é
-			//ˆÊ’u‚ğ“ü‚ê‚é
+			//--------------é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚‹-----------------------
+			gVertexBuffer = VertexBuffer::create( 8 ); //8é ‚ç‚¹ã®é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
+			Vertex* v = gVertexBuffer.lock(); //æ›¸ãè¾¼ã¿ãƒã‚¤ãƒ³ã‚¿ã‚’å¾—ã‚‹
+			//ä½ç½®ã‚’å…¥ã‚Œã‚‹
 			v[ 0 ].mPosition.set( -1.f, -1.f, -1.f );
 			v[ 1 ].mPosition.set( -1.f, -1.f, 1.f );
 			v[ 2 ].mPosition.set( -1.f, 1.f, -1.f );
@@ -50,7 +50,7 @@ namespace GameLib{
 			v[ 5 ].mPosition.set( 1.f, -1.f, 1.f );
 			v[ 6 ].mPosition.set( 1.f, 1.f, -1.f );
 			v[ 7 ].mPosition.set( 1.f, 1.f, 1.f );
-			//–@ü‚ğ“ü‚ê‚éBÎ‚ß‚Éo‚Ä‚¢‚é–@ü‚É‚µ‚Ä‚İ‚éB’·‚³‚Í‚¾‚¢‚½‚¢1
+			//æ³•ç·šã‚’å…¥ã‚Œã‚‹ã€‚æ–œã‚ã«å‡ºã¦ã„ã‚‹æ³•ç·šã«ã—ã¦ã¿ã‚‹ã€‚é•·ã•ã¯ã ã„ãŸã„1
 			v[ 0 ].mNormal.set( -0.57f, -0.57f, -0.57f );
 			v[ 1 ].mNormal.set( -0.57f, -0.57f, 0.57f );
 			v[ 2 ].mNormal.set( -0.57f, 0.57f, -0.57f );
@@ -59,11 +59,11 @@ namespace GameLib{
 			v[ 5 ].mNormal.set( 0.57f, -0.57f, 0.57f );
 			v[ 6 ].mNormal.set( 0.57f, 0.57f, -0.57f );
 			v[ 7 ].mNormal.set( 0.57f, 0.57f, 0.57f );
-			//’¸“_ƒJƒ‰[‚ğ“ü‚ê‚é(ƒ‰ƒCƒeƒBƒ“ƒO‚ÌŒø‰Ê‚ğŒ©‚½‚¢‚Ì‚Å^‚Á”’
+			//é ‚ç‚¹ã‚«ãƒ©ãƒ¼ã‚’å…¥ã‚Œã‚‹(ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°ã®åŠ¹æœã‚’è¦‹ãŸã„ã®ã§çœŸã£ç™½
 			for ( int i = 0; i < 8; ++i ){
 				v[ i ].mColor = 0xffffffff;
 			}
-			//ƒeƒNƒXƒ`ƒƒÀ•W‚ğ“ü‚ê‚é(“K“–)
+			//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã‚’å…¥ã‚Œã‚‹(é©å½“)
 			v[ 0 ].mUv.set( 0.f, 0.f );
 			v[ 1 ].mUv.set( 0.f, 1.f );
 			v[ 2 ].mUv.set( 1.f, 0.f );
@@ -72,12 +72,12 @@ namespace GameLib{
 			v[ 5 ].mUv.set( 0.f, 1.f );
 			v[ 6 ].mUv.set( 1.f, 0.f );
 			v[ 7 ].mUv.set( 1.f, 1.f );
-			//‘‚«I‚í‚Á‚½‚ç•Â‚¶‚é
+			//æ›¸ãçµ‚ã‚ã£ãŸã‚‰é–‰ã˜ã‚‹
 			gVertexBuffer.unlock( &v );
 
-			//-------------ƒCƒ“ƒfƒNƒXƒoƒbƒtƒ@‚ğì‚é--------------------
-			//3ƒCƒ“ƒfƒNƒX‚ÅOŠpŒ`ˆê‚Â‚È‚Ì‚ÅAƒCƒ“ƒfƒNƒXƒoƒbƒtƒ@‚ÌƒTƒCƒY‚Í•’Ê3‚Ì”{”‚É‚È‚é
-			gIndexBuffer = IndexBuffer::create( 36 ); //36’¸“_‚ÌƒCƒ“ƒfƒNƒXƒoƒbƒtƒ@
+			//-------------ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ä½œã‚‹--------------------
+			//3ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹ã§ä¸‰è§’å½¢ä¸€ã¤ãªã®ã§ã€ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚ºã¯æ™®é€š3ã®å€æ•°ã«ãªã‚‹
+			gIndexBuffer = IndexBuffer::create( 36 ); //36é ‚ç‚¹ã®ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡
 			unsigned short indices[ 36 ] = {
 				0, 1, 3, 3, 2, 0,
 				4, 6, 7, 7, 5, 4,
@@ -92,58 +92,58 @@ namespace GameLib{
 			}
 			gIndexBuffer.unlock( &iBuffer );
 
-			//-------------ƒeƒNƒXƒ`ƒƒ‚ğì‚é---------------------
+			//-------------ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ä½œã‚‹---------------------
 			gTexture = Texture::create( "robo.tga" );
 			while ( !gTexture.isReady() ){
-				; //ƒ[ƒh‘Ò‚¿
+				; //ãƒ­ãƒ¼ãƒ‰å¾…ã¡
 			}
 		}
-		//g‚¤ƒf[ƒ^‚ğw’è‚·‚é
+		//ä½¿ã†ãƒ‡ãƒ¼ã‚¿ã‚’æŒ‡å®šã™ã‚‹
 		m.setVertexBuffer( gVertexBuffer );
 		m.setIndexBuffer( gIndexBuffer );
 		m.setTexture( gTexture );
 
-		//ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒh‚È‚Ç‚È‚Ç‚ğİ’è
+		//ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰ãªã©ãªã©ã‚’è¨­å®š
 		m.setBlendMode( BLEND_LINEAR );
-		m.setCullMode( CULL_BACK ); //— ‚ğ‚¯‚¸‚é
+		m.setCullMode( CULL_BACK ); //è£ã‚’ã‘ãšã‚‹
 		m.enableDepthTest( true );
 		m.enableDepthWrite( true );
 		m.setLightingMode( gLightingMode );
 
-		//ƒ[ƒ‹ƒhs—ñ‚ğİ’è‚·‚é
+		//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’è¨­å®šã™ã‚‹
 		Matrix34 wm;
 		wm.setRotationY( gCount * 0.09f );
 		wm.rotateX( gCount * 0.08f );
 		wm.rotateZ( gCount * 0.07f );
-		//ƒrƒ…[s—ñ‚ğİ’è‚·‚é
+		//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã‚’è¨­å®šã™ã‚‹
 		Matrix34 vm;
 		Vector3 eyePosition( 
 			4.f * sin( gCount * 0.01f ),
 			0.f,
 			4.f * cos( gCount * 0.01f ) );
 		Vector3 eyeTarget( 0.f, 0.f, 0.f );
-		Vector3 up( 0.f, 1.f, 0.f ); //uãv‚ğw’è‚·‚éƒxƒNƒ^B‚±‚ê‚ğ‚¢‚¶‚Á‚Ä‰¡‚ÉŒX‚¯‚éB
+		Vector3 up( 0.f, 1.f, 0.f ); //ã€Œä¸Šã€ã‚’æŒ‡å®šã™ã‚‹ãƒ™ã‚¯ã‚¿ã€‚ã“ã‚Œã‚’ã„ã˜ã£ã¦æ¨ªã«å‚¾ã‘ã‚‹ã€‚
 		vm.setViewTransform( eyePosition, eyeTarget, up ); 
 
-		//“Š‰es—ñ‚ğİ’è‚·‚é
+		//æŠ•å½±è¡Œåˆ—ã‚’è¨­å®šã™ã‚‹
 		Matrix44 pm;
 		pm.setPerspectiveTransform( 
-			45.f, //45“x
+			45.f, //45åº¦
 			static_cast< float >( width() ),
 			static_cast< float >( height() ),
 			1.f,
 			1000.f );
 		
-		//s—ñ‚ğƒn[ƒhƒEƒFƒA‚É“n‚·
-		pm *= vm; //“§‹•ÏŠ·~ƒrƒ…[•ÏŠ·
-		m.setProjectionViewMatrix( pm ); //“§‹•ÏŠ·ƒrƒ…[s—ñ
-		m.setWorldMatrix( wm ); //ƒ[ƒ‹ƒhs—ñ
+		//è¡Œåˆ—ã‚’ãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢ã«æ¸¡ã™
+		pm *= vm; //é€è¦–å¤‰æ›Ã—ãƒ“ãƒ¥ãƒ¼å¤‰æ›
+		m.setProjectionViewMatrix( pm ); //é€è¦–å¤‰æ›ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—
+		m.setWorldMatrix( wm ); //ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
 
-		//ƒ‰ƒCƒeƒBƒ“ƒO‚Ìİ’è‚ğ‚·‚éB“K“–‚É”ò‚Ñ‰ñ‚éŒõ‚Ì‹…‚ÌƒCƒ[ƒW‚Å
+		//ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°ã®è¨­å®šã‚’ã™ã‚‹ã€‚é©å½“ã«é£›ã³å›ã‚‹å…‰ã®çƒã®ã‚¤ãƒ¡ãƒ¼ã‚¸ã§
 		Vector3 lightPositions[ 4 ];
 		float lightIntensities[ 4 ];
 		for ( int i = 0; i < 4; ++i ){
-			//‚Ü‚¸‚ÍˆÊ’u
+			//ã¾ãšã¯ä½ç½®
 			float phase = 90.f * static_cast< float >( i );
 			float t = gCount * 0.025f + phase;
 			lightPositions[ i ].x = 10.f * sin( t ) * sin( t );
@@ -151,22 +151,22 @@ namespace GameLib{
 			lightPositions[ i ].z = 10.f * cos( t );
 			lightIntensities[ i ] = 5.f;
 		}
-		//Œõ‚ÌF‚Í”’AÔA—ÎAÔA‚É‚µ‚Ä‚â‚ë‚¤
+		//å…‰ã®è‰²ã¯ç™½ã€èµ¤ã€ç·‘ã€èµ¤ã€ã«ã—ã¦ã‚„ã‚ã†
 		Vector3 lightColors[ 4 ];
 		lightColors[ 0 ].set( 1.f, 1.f, 1.f );
 		lightColors[ 1 ].set( 1.f, 0.f, 0.f );
 		lightColors[ 2 ].set( 0.f, 1.f, 0.f );
 		lightColors[ 3 ].set( 0.f, 0.f, 1.f );
-		//ƒAƒ“ƒrƒGƒ“ƒg‚Í’n–¡‚É0.3‚­‚ç‚¢‚Å
+		//ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆã¯åœ°å‘³ã«0.3ãã‚‰ã„ã§
 		Vector3 ambient( 0.3f, 0.3f, 0.3f );
-		//Œã‚Í•¨‘Ì‘¤‚Ì“Á«B‚ ‚Ü‚è‚¶‚Á‚Ä‚àd•û‚È‚¢‚Ì‚ÅŒÅ’è’l‚ÅB‚¢‚ë‚¢‚ë‚¢‚¶‚Á‚ÄŒ‹‰Ê‚ª‚Ç‚¤‚È‚é‚©Œ©‚Ä‚â‚ë‚¤
+		//å¾Œã¯ç‰©ä½“å´ã®ç‰¹æ€§ã€‚ã‚ã¾ã‚Šã˜ã£ã¦ã‚‚ä»•æ–¹ãªã„ã®ã§å›ºå®šå€¤ã§ã€‚ã„ã‚ã„ã‚ã„ã˜ã£ã¦çµæœãŒã©ã†ãªã‚‹ã‹è¦‹ã¦ã‚„ã‚ã†
 		Vector3 diffuseColor( 1.f, 1.f, 1.f );
 		Vector3 specularColor( 1.f, 1.f, 1.f );
-		//‚±‚ê‚ğ•Ï‚¦‚é‚ÆƒnƒCƒ‰ƒCƒg‚Ì‰s‚³‚ª•Ï‚í‚éB¬‚³‚¢‚Ù‚Ç‚´‚ç‚´‚ç‚µ‚½•\–Ê‚Æ‚¢‚¤ƒCƒ[ƒW
+		//ã“ã‚Œã‚’å¤‰ãˆã‚‹ã¨ãƒã‚¤ãƒ©ã‚¤ãƒˆã®é‹­ã•ãŒå¤‰ã‚ã‚‹ã€‚å°ã•ã„ã»ã©ã–ã‚‰ã–ã‚‰ã—ãŸè¡¨é¢ã¨ã„ã†ã‚¤ãƒ¡ãƒ¼ã‚¸
 		float specularSharpness = 100.f;
-		//ƒJƒƒ‰ˆÊ’u‚Ìİ’è
+		//ã‚«ãƒ¡ãƒ©ä½ç½®ã®è¨­å®š
 		m.setEyePosition( eyePosition );
-		//‚Å‚Íƒ‰ƒCƒg‚Ìî•ñ‚ğƒZƒbƒg‚µ‚Ä‚â‚ë‚¤
+		//ã§ã¯ãƒ©ã‚¤ãƒˆã®æƒ…å ±ã‚’ã‚»ãƒƒãƒˆã—ã¦ã‚„ã‚ã†
 		m.setAmbientColor( ambient );
 		m.setDiffuseColor( diffuseColor );
 		m.setSpecularColor( specularColor );
@@ -176,12 +176,12 @@ namespace GameLib{
 			m.setLightColor( i, lightColors[ i ] );
 			m.setLightIntensity( i, lightIntensities[ i ] );
 		}
-		//Œã‚Í•`‰æ‚·‚é‚¾‚¯‚¾
-		//ˆø”‚Í‡‚ÉƒCƒ“ƒfƒNƒXƒoƒbƒtƒ@‚Ì‰½”Ô–Ú‚©‚çg‚¤‚©A‚¢‚­‚Â•`‚­‚©A‰½‚ğ•`‚­‚©B
+		//å¾Œã¯æç”»ã™ã‚‹ã ã‘ã 
+		//å¼•æ•°ã¯é †ã«ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®ä½•ç•ªç›®ã‹ã‚‰ä½¿ã†ã‹ã€ã„ãã¤æãã‹ã€ä½•ã‚’æãã‹ã€‚
 		m.drawIndexed( 0, 12, PRIMITIVE_TRIANGLE );
-		//ã‚Ìê‡Au0”Ô–Ú‚©‚ç12ŒÂ‚ÌOŠpŒ`‚ğ•`‚­v‚Æ‚È‚éBg‚í‚ê‚éƒCƒ“ƒfƒNƒX‚Í36‚Â‚¾B
+		//ä¸Šã®å ´åˆã€ã€Œ0ç•ªç›®ã‹ã‚‰12å€‹ã®ä¸‰è§’å½¢ã‚’æãã€ã¨ãªã‚‹ã€‚ä½¿ã‚ã‚Œã‚‹ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹ã¯36ã¤ã ã€‚
 
-		//ˆÈ‰º‚ÍƒXƒy[ƒXƒL[‚Åƒ‰ƒCƒeƒBƒ“ƒO‚ğØ‚è‘Ö‚¦‚éƒR[ƒh‚ÅA‚Ç‚¤‚Å‚à—Ç‚¢B
+		//ä»¥ä¸‹ã¯ã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ã§ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹ã‚³ãƒ¼ãƒ‰ã§ã€ã©ã†ã§ã‚‚è‰¯ã„ã€‚
 		if ( Input::Manager::instance().keyboard().isTriggered( ' ' ) ){
 			if ( gLightingMode == LIGHTING_NONE ){
 				gLightingMode = LIGHTING_PER_VERTEX;
@@ -201,9 +201,9 @@ namespace GameLib{
 		}
 		++gCount;
 
-		//Œã•Ğ•t‚¯ 
+		//å¾Œç‰‡ä»˜ã‘ 
 		if ( isEndRequested() ){
-			//ƒOƒ[ƒoƒ‹‚É’u‚­‚ÆŸè‚É‚ÍÁ‚¦‚È‚¢‚Ì‚ÅŠJ•ú
+			//ã‚°ãƒ­ãƒ¼ãƒãƒ«ã«ç½®ãã¨å‹æ‰‹ã«ã¯æ¶ˆãˆãªã„ã®ã§é–‹æ”¾
 			gTexture.release();
 			gIndexBuffer.release();
 			gVertexBuffer.release();

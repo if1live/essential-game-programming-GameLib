@@ -14,7 +14,7 @@ public:
 	void update( Parent* );
 private:
 	Image* mImage;
-	int mMenuCursor; //カーソル位置
+	int mMenuCursor; //繧ｫ繝ｼ繧ｽ繝ｫ菴咲ｽｮ
 };
 
 } //namespace Game

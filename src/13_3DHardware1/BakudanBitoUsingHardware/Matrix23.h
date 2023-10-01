@@ -5,22 +5,22 @@ class Vector2;
 
 class Matrix23{
 public:
-	Matrix23(); //ƒfƒtƒHƒ‹ƒg‚ÅƒRƒ“ƒXƒgƒ‰ƒNƒg
-	//ˆÚ“®s—ñ¶¬
+	Matrix23(); //ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
+	//ç§»å‹•è¡Œåˆ—ç”Ÿæˆ
 	void setTranslation( const Vector2& );
-	//‰ñ“]s—ñ¶¬
+	//å›è»¢è¡Œåˆ—ç”Ÿæˆ
 	void setRotation( double radian );
-	//Šg‘åk¬s—ñ¶¬
+	//æ‹¡å¤§ç¸®å°è¡Œåˆ—ç”Ÿæˆ
 	void setScaling( const Vector2& );
-	//ƒxƒNƒ^‚ÆŠ|‚¯Z
+	//ãƒ™ã‚¯ã‚¿ã¨æ›ã‘ç®—
 	void multiply( Vector2* out, const Vector2& in ) const;
-	//s—ñ‚ÆŠ|‚¯Z
+	//è¡Œåˆ—ã¨æ›ã‘ç®—
 	void operator*=( const Matrix23& );
-	//ˆÚ“®s—ñ‚ğì‚Á‚Ä‰E‚©‚ç‚©‚¯‚é
+	//ç§»å‹•è¡Œåˆ—ã‚’ä½œã£ã¦å³ã‹ã‚‰ã‹ã‘ã‚‹
 	void translate( const Vector2& );
-	//‰ñ“]s—ñ‚ğì‚Á‚Ä‰E‚©‚ç‚©‚¯‚é
+	//å›è»¢è¡Œåˆ—ã‚’ä½œã£ã¦å³ã‹ã‚‰ã‹ã‘ã‚‹
 	void rotate( double radian );
-	//Šg‘åk¬s—ñ‚ğì‚Á‚Ä‰E‚©‚ç‚©‚¯‚é
+	//æ‹¡å¤§ç¸®å°è¡Œåˆ—ã‚’ä½œã£ã¦å³ã‹ã‚‰ã‹ã‘ã‚‹
 	void scale( const Vector2& );
 private:
 	double m00, m01, m02;

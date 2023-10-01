@@ -9,13 +9,13 @@ using namespace GameLib;
 namespace Sequence{
 namespace Game{
 
-Play::Play(){ //‰½‚à‚µ‚È‚¢
+Play::Play(){ //ä½•ã‚‚ã—ãªã„
 }
 
-Play::~Play(){ //‰½‚à‚µ‚È‚¢
+Play::~Play(){ //ä½•ã‚‚ã—ãªã„
 }
 
-//ƒQ[ƒ€–{‘Ì
+//ã‚²ãƒ¼ãƒ æœ¬ä½“
 void Play::update( Parent* parent ){
 	Framework f = Framework::instance();;
 
@@ -24,27 +24,27 @@ void Play::update( Parent* parent ){
 	bool cleared = state->hasCleared();
 	bool die1P = !state->isAlive( 0 );
 	bool die2P = !state->isAlive( 1 );
-	//‚Æ‚è‚ ‚¦‚¸ƒfƒoƒOƒRƒ}ƒ“ƒh‚ÅƒeƒXƒg‚·‚éB
-	if ( f.isKeyTriggered( '1' ) ){ //1PE‚µ
+	//ã¨ã‚Šã‚ãˆãšãƒ‡ãƒã‚°ã‚³ãƒãƒ³ãƒ‰ã§ãƒ†ã‚¹ãƒˆã™ã‚‹ã€‚
+	if ( f.isKeyTriggered( '1' ) ){ //1Pæ®ºã—
 		die2P = true;
-	}else if ( f.isKeyTriggered( '2' ) || f.isKeyTriggered( 'x' ) ){ //2PE‚µ
+	}else if ( f.isKeyTriggered( '2' ) || f.isKeyTriggered( 'x' ) ){ //2Pæ®ºã—
 		die1P = true;
 	}else if ( f.isKeyTriggered( 'c' ) ){
 		cleared = true;
 	}
-	//SPACE‰Ÿ‚³‚ê‚½‚çƒ|[ƒY‚Ös‚­
-	//ƒNƒŠƒA‚µ‚½‚È‚çã‚Ö•ñ
+	//SPACEæŠ¼ã•ã‚ŒãŸã‚‰ãƒãƒ¼ã‚ºã¸è¡Œã
+	//ã‚¯ãƒªã‚¢ã—ãŸãªã‚‰ä¸Šã¸å ±å‘Š
 	if ( parent->mode() == Parent::MODE_1P ){
 		if ( cleared && !die1P ){
 			parent->moveTo( Parent::NEXT_CLEAR );
 		}else if ( die1P ){
 			parent->moveTo( Parent::NEXT_FAILURE );
 		}
-	}else{ //“ñl—p
-		if ( die1P || die2P ){ //‚Ç‚Á‚¿‚©€‚ñ‚Å‚ê‚ÎŸ”s”»’è
+	}else{ //äºŒäººç”¨
+		if ( die1P || die2P ){ //ã©ã£ã¡ã‹æ­»ã‚“ã§ã‚Œã°å‹æ•—åˆ¤å®š
 			parent->moveTo( Parent::NEXT_JUDGE );
 			if ( die1P && die2P ){
-				parent->setWinner( Parent::PLAYER_NONE ); //—¼•û€–S
+				parent->setWinner( Parent::PLAYER_NONE ); //ä¸¡æ–¹æ­»äº¡
 			}else if ( die1P ){
 				parent->setWinner( Parent::PLAYER_2 );
 			}else{
@@ -55,9 +55,9 @@ void Play::update( Parent* parent ){
 	if ( f.isKeyTriggered( ' ' ) ){
 		parent->moveTo( Parent::NEXT_PAUSE );
 	}
-	//XV
+	//æ›´æ–°
 	state->update();
-	//•`‰æ
+	//æç”»
 	state->draw();
 }
 

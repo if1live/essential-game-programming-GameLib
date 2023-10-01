@@ -4,13 +4,13 @@
 #include <ctime> //clock()
 using namespace std;
 
-//êŠ\‘¢‘Ì
+//å ´æ‰€æ§‹é€ ä½“
 struct Position{
 	double x;
 	double y;
 };
 
-//Ä‹AŒŸõ–{‘Ì
+//å†å¸°æ¤œç´¢æœ¬ä½“
 void search( 
 int* minPath, 
 int* path, 
@@ -20,30 +20,30 @@ const Position* p,
 double currentLength, 
 const Position& currentPos );
 
-//Å’Z‹——£
-double gMinLength = numeric_limits< double >::max(); //‚Æ‚Ä‚à‘å‚«‚È”‚Å‰Šú‰»
+//æœ€çŸ­è·é›¢
+double gMinLength = numeric_limits< double >::max(); //ã¨ã¦ã‚‚å¤§ããªæ•°ã§åˆæœŸåŒ–
 
 int main( int argc, char** argv ){
 	if ( argc < 2 ){
-		return 1; //ƒGƒ‰[
+		return 1; //ã‚¨ãƒ©ãƒ¼
 	}
 	int n = atoi( argv[ 1 ] );
 
-	//‰Æ‚ÌêŠ‚ğ‰Šú‰»
+	//å®¶ã®å ´æ‰€ã‚’åˆæœŸåŒ–
 	Position* positions = new Position[ n ];
 	for ( int i = 0; i < n; ++i ){
 		positions[ i ].x = rand();
 		positions[ i ].y = rand();
 		cout << i << " : " << positions[ i ].x << "," << positions[ i ].y << endl;
 	}
-	//Ä‹AŒÄ‚Ño‚µŠJn
+	//å†å¸°å‘¼ã³å‡ºã—é–‹å§‹
 	int* minPath = new int[ n ];
 	int* path = new int[ n ];
 	Position currentPos;
-	currentPos.x = currentPos.y = 0.0; //‰ŠúˆÊ’u
-	double t0 = clock(); //ŠJn
+	currentPos.x = currentPos.y = 0.0; //åˆæœŸä½ç½®
+	double t0 = clock(); //é–‹å§‹æ™‚åˆ»
 	search( minPath, path, 0, n, positions, 0.0, currentPos );
-	double t1 = clock(); //I—¹
+	double t1 = clock(); //çµ‚äº†æ™‚åˆ»
 
 	cout << "Length : " << gMinLength << endl;
 	for ( int i = 0; i < n; ++i ){
@@ -63,7 +63,7 @@ const Position* p,
 double currentLength, 
 const Position& currentPos ){
 	for ( int i = 0; i < n; ++i ){
-		//s‚Á‚½–‚ª‚È‚¢êŠ‚©H
+		//è¡Œã£ãŸäº‹ãŒãªã„å ´æ‰€ã‹ï¼Ÿ
 		bool found = false;
 		for ( int j = 0; j < cn; ++j ){
 			if ( path[ j ] == i ){
@@ -71,19 +71,19 @@ const Position& currentPos ){
 				break;
 			}
 		}
-		if ( !found ){ //s‚Á‚½–‚ª‚È‚¢‚Ì‚ÅŸ‚Í‚±‚±‚Ös‚±‚¤
+		if ( !found ){ //è¡Œã£ãŸäº‹ãŒãªã„ã®ã§æ¬¡ã¯ã“ã“ã¸è¡Œã“ã†
 			path[ cn ] = i;
 			double dx = currentPos.x - p[ i ].x;
 			double dy = currentPos.y - p[ i ].y;
 			double l = currentLength + sqrt( dx * dx + dy * dy );
-			if ( cn == n - 1 ){ //ÅŒã‚Ü‚Å—ˆ‚½‚Ì‚ÅÄ‹AŒÄ‚Ño‚µ‚¹‚¸ƒOƒ[ƒoƒ‹‚Æ”äŠrBI‚í‚éB
+			if ( cn == n - 1 ){ //æœ€å¾Œã¾ã§æ¥ãŸã®ã§å†å¸°å‘¼ã³å‡ºã—ã›ãšã‚°ãƒ­ãƒ¼ãƒãƒ«ã¨æ¯”è¼ƒã€‚çµ‚ã‚ã‚‹ã€‚
 				if ( l < gMinLength ){
 					gMinLength = l;
-					//Œo˜H‚à•Û‘¶
+					//çµŒè·¯ã‚‚ä¿å­˜
 					for ( int j = 0; j < n; ++j ){
 						minPath[ j ] = path[ j ];
 					}
-					//Œ»İ‚Ì‰ğ‚ğ•\¦
+					//ç¾åœ¨ã®è§£ã‚’è¡¨ç¤º
 					cout << l << " : ";
 					for ( int j = 0; j < n; ++j ){
 						cout << path[ j ] << ',';

@@ -8,7 +8,7 @@ using namespace GameLib::FileIO;
 
 InFile gFile;
 Player gPlayer;
-const int BUFFER_SIZE = 16 * 1024; //‚±‚êˆÈ‰º‚Í‚¨Š©‚ß‚µ‚È‚¢B1/16•b•ªˆÈã‚È‚¢‚ÆPlayerƒRƒ“ƒXƒgƒ‰ƒNƒ^‚Å‚Í‚Ë‚ç‚ê‚éB
+const int BUFFER_SIZE = 16 * 1024; //ã“ã‚Œä»¥ä¸‹ã¯ãŠå‹§ã‚ã—ãªã„ã€‚1/16ç§’åˆ†ä»¥ä¸Šãªã„ã¨Playerã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã§ã¯ã­ã‚‰ã‚Œã‚‹ã€‚
 const int BUFFER_HALFSIZE = BUFFER_SIZE / 2;
 
 int gReadPos = 0;
@@ -21,58 +21,58 @@ namespace GameLib{
 	void Framework::update(){
 		if ( !gFile ){
 			gFile = InFile::create( "charara.wav" );
-			while ( !gFile.isFinished() ){ ; } //ƒ[ƒh‘Ò‚¿
+			while ( !gFile.isFinished() ){ ; } //ãƒ­ãƒ¼ãƒ‰å¾…ã¡
 
-			//--------Wavƒtƒ@ƒCƒ‹‚ğ‰ğÍ‚µ‚Ä‚İ‚æ‚¤B
+			//--------Wavãƒ•ã‚¡ã‚¤ãƒ«ã‚’è§£æã—ã¦ã¿ã‚ˆã†ã€‚
 
-			int channels = gFile.getShort( 22 ); //22ƒoƒCƒg–Ú‚©‚ç2ƒoƒCƒg‚ªƒ`ƒƒƒlƒ‹”
-			int frequency = gFile.getInt( 24 ); //24ƒoƒCƒg–Ú‚©‚ç4ƒoƒCƒg‚ªü”g”
-			int bitsPerSample = gFile.getShort( 34 ); //34ƒoƒCƒg–Ú‚©‚ç2ƒoƒCƒg‚ªƒrƒbƒg”
+			int channels = gFile.getShort( 22 ); //22ãƒã‚¤ãƒˆç›®ã‹ã‚‰2ãƒã‚¤ãƒˆãŒãƒãƒ£ãƒãƒ«æ•°
+			int frequency = gFile.getInt( 24 ); //24ãƒã‚¤ãƒˆç›®ã‹ã‚‰4ãƒã‚¤ãƒˆãŒå‘¨æ³¢æ•°
+			int bitsPerSample = gFile.getShort( 34 ); //34ãƒã‚¤ãƒˆç›®ã‹ã‚‰2ãƒã‚¤ãƒˆãŒãƒ“ãƒƒãƒˆæ•°
 			const char* data = gFile.data();
-			int pos = 36; //36ƒoƒCƒg–Ú‚©‚ç“Ç‚ñ‚Å‚¢‚­
-			//‚¢‚ç‚È‚¢‚à‚Ì‚ğ“Ç‚İ”ò‚Î‚·
-			while ( data[ pos+0 ] != 'd' || data[ pos+1 ] != 'a' || data[ pos+2 ] != 't' || data[ pos+3 ] != 'a' ){ //"data"‚Æ•À‚ñ‚Å‚¢‚é‚à‚Ì‚ªŒ©‚Â‚©‚é‚Ü‚Åi‚ß‚éB
-				pos += gFile.getInt( pos+4 ); //‚¢‚ç‚È‚¢‚à‚Ì‚ÌƒTƒCƒY‚ª‚±‚±‚É“ü‚Á‚Ä‚¢‚é
+			int pos = 36; //36ãƒã‚¤ãƒˆç›®ã‹ã‚‰èª­ã‚“ã§ã„ã
+			//ã„ã‚‰ãªã„ã‚‚ã®ã‚’èª­ã¿é£›ã°ã™
+			while ( data[ pos+0 ] != 'd' || data[ pos+1 ] != 'a' || data[ pos+2 ] != 't' || data[ pos+3 ] != 'a' ){ //"data"ã¨ä¸¦ã‚“ã§ã„ã‚‹ã‚‚ã®ãŒè¦‹ã¤ã‹ã‚‹ã¾ã§é€²ã‚ã‚‹ã€‚
+				pos += gFile.getInt( pos+4 ); //ã„ã‚‰ãªã„ã‚‚ã®ã®ã‚µã‚¤ã‚ºãŒã“ã“ã«å…¥ã£ã¦ã„ã‚‹
 			}
-			//‚â‚Á‚Æƒf[ƒ^‚ªŒ©‚Â‚©‚Á‚½
-			gWaveSize = gFile.getInt( pos + 4 ); //ƒf[ƒ^‚Ì—Ê‚Í"data"‚ÌŸ‚©‚ç4ƒoƒCƒg
-			gWaveStart = pos + 8; //‚³‚ç‚ÉŸ‚©‚ç‚ª”g
-			if ( gWaveSize + gWaveStart > gFile.size() ){ //‚½‚Ü‚ÉƒTƒCƒY‚ÉƒEƒ\‚ª‘‚¢‚Ä‚ ‚éƒtƒ@ƒCƒ‹‚ª‚ ‚éB
-				gWaveSize = gFile.size() - gWaveStart; //d•û‚ª‚È‚¢‚Ì‚Å––”ö‚Ü‚ÅB
+			//ã‚„ã£ã¨ãƒ‡ãƒ¼ã‚¿ãŒè¦‹ã¤ã‹ã£ãŸ
+			gWaveSize = gFile.getInt( pos + 4 ); //ãƒ‡ãƒ¼ã‚¿ã®é‡ã¯"data"ã®æ¬¡ã‹ã‚‰4ãƒã‚¤ãƒˆ
+			gWaveStart = pos + 8; //ã•ã‚‰ã«æ¬¡ã‹ã‚‰ãŒæ³¢
+			if ( gWaveSize + gWaveStart > gFile.size() ){ //ãŸã¾ã«ã‚µã‚¤ã‚ºã«ã‚¦ã‚½ãŒæ›¸ã„ã¦ã‚ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã‚‹ã€‚
+				gWaveSize = gFile.size() - gWaveStart; //ä»•æ–¹ãŒãªã„ã®ã§æœ«å°¾ã¾ã§ã€‚
 			}
 
 
-			//ƒvƒŒƒCƒ„[¶¬
+			//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç”Ÿæˆ
 			gPlayer = Player::create( bitsPerSample, BUFFER_SIZE, frequency, channels );
 
-			//Å‰‚Ì•”•ª‚ğ[“U
-			int restSize = gWaveSize - gReadPos; //c‚èƒtƒ@ƒCƒ‹ƒTƒCƒY
-			int writeSize = ( restSize >= BUFFER_HALFSIZE ) ? BUFFER_HALFSIZE : restSize; //ƒoƒbƒtƒ@‚Ì”¼•ª‚æ‚è‘å‚«‚¯‚ê‚Î‚»‚ê‚¾‚¯B¬‚³‚¯‚ê‚Îc‚è‘S•”B
-			bool succeeded = gPlayer.write( gWritePos, gFile.data() + 44 + gReadPos, writeSize ); //‘‚«‚İB
+			//æœ€åˆã®éƒ¨åˆ†ã‚’å……å¡«
+			int restSize = gWaveSize - gReadPos; //æ®‹ã‚Šãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º
+			int writeSize = ( restSize >= BUFFER_HALFSIZE ) ? BUFFER_HALFSIZE : restSize; //ãƒãƒƒãƒ•ã‚¡ã®åŠåˆ†ã‚ˆã‚Šå¤§ãã‘ã‚Œã°ãã‚Œã ã‘ã€‚å°ã•ã‘ã‚Œã°æ®‹ã‚Šå…¨éƒ¨ã€‚
+			bool succeeded = gPlayer.write( gWritePos, gFile.data() + 44 + gReadPos, writeSize ); //æ›¸ãè¾¼ã¿ã€‚
 			if ( !succeeded ){
 				cout << "WRITING FAILED!" << endl;
 			}
 			gReadPos += writeSize;
 			gWritePos += writeSize;
-			//‘«‚è‚È‚¢ƒf[ƒ^‚Í0‚ğ–„‚ß‚é
+			//è¶³ã‚Šãªã„ãƒ‡ãƒ¼ã‚¿ã¯0ã‚’åŸ‹ã‚ã‚‹
 			if ( writeSize < BUFFER_HALFSIZE ){
 				gPlayer.fillSilence( gWritePos, BUFFER_HALFSIZE - writeSize );
 				gWritePos += BUFFER_HALFSIZE - writeSize;
 			}
-			gPlayer.play(); //ƒXƒgƒŠ[ƒ~ƒ“ƒOÄ¶‚Í‰½‚à“n‚³‚È‚­‚Ä‚àŸè‚Éƒ‹[ƒvÄ¶‚É‚È‚éB‹È‚»‚Ì‚à‚Ì‚ğƒ‹[ƒv‚³‚¹‚éˆ—‚Í©‘O‚Å‚â‚é‚±‚ÆB
+			gPlayer.play(); //ã‚¹ãƒˆãƒªãƒ¼ãƒŸãƒ³ã‚°å†ç”Ÿæ™‚ã¯ä½•ã‚‚æ¸¡ã•ãªãã¦ã‚‚å‹æ‰‹ã«ãƒ«ãƒ¼ãƒ—å†ç”Ÿã«ãªã‚‹ã€‚æ›²ãã®ã‚‚ã®ã‚’ãƒ«ãƒ¼ãƒ—ã•ã›ã‚‹å‡¦ç†ã¯è‡ªå‰ã§ã‚„ã‚‹ã“ã¨ã€‚
 		}
-		///-----ˆÈ‰º–ˆƒtƒŒ[ƒ€-----
+		///-----ä»¥ä¸‹æ¯ãƒ•ãƒ¬ãƒ¼ãƒ -----
 
 
-		//Ä¶’†‚ÌêŠ‚ğŒ©‚ÄA
+		//å†ç”Ÿä¸­ã®å ´æ‰€ã‚’è¦‹ã¦ã€
 		int playPos = gPlayer.position();
-		//‘‚«‚İƒ|ƒCƒ“ƒ^‚Æ‹ß‚Ã‚¢‚Ä‚«‚½‚ç( ‘‚«‚İˆÊ’u‚ªÄ¶ˆÊ’u‚æ‚èŒã‚ë‚ÅA·‚ª”¼ƒoƒbƒtƒ@ƒTƒCƒYˆÈ‰º‚È‚ç )
+		//æ›¸ãè¾¼ã¿ãƒã‚¤ãƒ³ã‚¿ã¨è¿‘ã¥ã„ã¦ããŸã‚‰( æ›¸ãè¾¼ã¿ä½ç½®ãŒå†ç”Ÿä½ç½®ã‚ˆã‚Šå¾Œã‚ã§ã€å·®ãŒåŠãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚ºä»¥ä¸‹ãªã‚‰ )
 		if ( ( gWritePos > playPos ) && ( gWritePos - playPos < BUFFER_HALFSIZE ) ){
 			cout << "write=" << gWritePos << "\tplay=" << playPos << "\tread=" << gReadPos << endl;
-			//Ÿ‚ğ‘‚«‚İB
+			//æ¬¡ã‚’æ›¸ãè¾¼ã¿ã€‚
 			int restSize = gWaveSize - gReadPos;
 			int writeSize = ( restSize >= BUFFER_HALFSIZE ) ? BUFFER_HALFSIZE : restSize;
-			if ( gWritePos >= BUFFER_SIZE ){ //ÅŒã‚Ü‚Ås‚Á‚½‚Ì‚ÅŠª‚«–ß‚µ
+			if ( gWritePos >= BUFFER_SIZE ){ //æœ€å¾Œã¾ã§è¡Œã£ãŸã®ã§å·»ãæˆ»ã—
 				gWritePos = 0;
 			}
 			bool succeeded = gPlayer.write( gWritePos, gFile.data() + 44 + gReadPos, writeSize );
@@ -81,7 +81,7 @@ namespace GameLib{
 			}
 			gReadPos += writeSize;
 			gWritePos += writeSize;
-			//‘«‚è‚È‚¢ƒf[ƒ^‚Í0‚ğ–„‚ß‚é
+			//è¶³ã‚Šãªã„ãƒ‡ãƒ¼ã‚¿ã¯0ã‚’åŸ‹ã‚ã‚‹
 			if ( writeSize < BUFFER_HALFSIZE ){
 				gPlayer.fillSilence( gWritePos, BUFFER_HALFSIZE - writeSize );
 				gWritePos += BUFFER_HALFSIZE - writeSize;

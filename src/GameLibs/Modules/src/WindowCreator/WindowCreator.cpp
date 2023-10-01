@@ -1,5 +1,5 @@
 #ifndef _WIN32_WINNT
-#define _WIN32_WINNT 0x400 //WM_MOUSEWHEEL‚Ì‚½‚ß‚É
+#define _WIN32_WINNT 0x400 //WM_MOUSEWHEELã®ãŸã‚ã«
 #endif
 
 #include <tchar.h>
@@ -17,10 +17,10 @@
 using namespace std;
 using namespace GameLib;
 
-//WindowCreatorƒƒ“ƒoŠÖ”
+//WindowCreatorãƒ¡ãƒ³ãƒé–¢æ•°
 namespace GameLib{
 
-namespace{ //–³–¼
+namespace{ //ç„¡å
 
 class Impl{
 public:
@@ -39,12 +39,12 @@ public:
 	mDragAndDropEnabled( false ),
 	mMouseWheel( 0 ),
 	mTimeBias( 0 ){
-		//getTime()—pƒoƒCƒAƒX’lŒvZ
+		//getTime()ç”¨ãƒã‚¤ã‚¢ã‚¹å€¤è¨ˆç®—
 		unsigned time = timeGetTime();
 		mTimeBias = 0xffffffff - time;
-		mTimeBias -= 60000; //60•bˆø‚­B
+		mTimeBias -= 60000; //60ç§’å¼•ãã€‚
 
-		//ƒXƒŒƒbƒhIDæ“¾
+		//ã‚¹ãƒ¬ãƒƒãƒ‰IDå–å¾—
 		mThreadId = GetCurrentThreadId();
 	}
 	~Impl(){
@@ -55,10 +55,10 @@ public:
 				LONG style;
 				if ( f ){
 					style = WS_POPUP | WS_VISIBLE;
-					//Å‘å‰»‚·‚é‚Æ‚«‚É‚Í¡‚ÌêŠ‚ğŠo‚¦‚Ä‚¨‚­
+					//æœ€å¤§åŒ–ã™ã‚‹ã¨ãã«ã¯ä»Šã®å ´æ‰€ã‚’è¦šãˆã¦ãŠã
 					GetWindowRect( mWindowHandle, &mWindowRect );
 					SetWindowLong( mWindowHandle, GWL_STYLE, style );
-					//ˆÊ’u‚Í0,0
+					//ä½ç½®ã¯0,0
 					SetWindowPos( mWindowHandle, NULL, 
 						0, 0,
 						mWidth, mHeight,
@@ -66,7 +66,7 @@ public:
 				}else{
 					style = WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_VISIBLE;
 					SetWindowLong( mWindowHandle, GWL_STYLE, style );
-					//Œ³‚É–ß‚·‚É‚ÍˆÊ’u‚ğ–ß‚·
+					//å…ƒã«æˆ»ã™æ™‚ã«ã¯ä½ç½®ã‚’æˆ»ã™
 					SetWindowPos( mWindowHandle, NULL, 
 						mWindowRect.left, mWindowRect.top,
 						mWindowRect.right - mWindowRect.left,
@@ -107,19 +107,19 @@ public:
 	bool mFullScreenForbidden;
 	bool mDragAndDropEnabled;
 	int mMouseWheel;
-	unsigned mTimeBias; //timeGetTime‚É‚Í‚©‚¹‚éƒQƒ^
+	unsigned mTimeBias; //timeGetTimeã«ã¯ã‹ã›ã‚‹ã‚²ã‚¿
 	unsigned mThreadId;
 	Array< string > mDroppedItems;
 	HWND mWindowHandle;
 	RECT mWindowRect;
 };
 
-Impl* gImpl = 0; //—BˆêƒCƒ“ƒXƒ^ƒ“ƒX
+Impl* gImpl = 0; //å”¯ä¸€ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 
 } //namespace{}
 
 WindowCreator::WindowCreator(){
-	//•ÊƒXƒŒƒbƒh‚©‚ç‚ÌŒÄ‚Ño‚µ‚Í‹–‚³‚È‚¢
+	//åˆ¥ã‚¹ãƒ¬ãƒƒãƒ‰ã‹ã‚‰ã®å‘¼ã³å‡ºã—ã¯è¨±ã•ãªã„
 	ASSERT( isMainThread() && "you must call from MAIN thread" );
 }
 
@@ -148,7 +148,7 @@ bool WindowCreator::isFullScreen() const {
 }
 
 WindowCreator WindowCreator::instance(){
-	return WindowCreator(); //À‚Í‚±‚ÌŠÖ”‚¢‚ç‚È‚¢
+	return WindowCreator(); //å®Ÿã¯ã“ã®é–¢æ•°ã„ã‚‰ãªã„
 }
 
 bool WindowCreator::isEndRequested() const {
@@ -234,12 +234,12 @@ void WindowCreator::Configuration::enableDragAndDrop( bool f ){
 
 #define MAX_LOADSTRING 100
 
-// ƒOƒ[ƒoƒ‹•Ï”:
-HINSTANCE hInst;								// Œ»İ‚ÌƒCƒ“ƒ^[ƒtƒFƒCƒX
-TCHAR szTitle[MAX_LOADSTRING];					// ƒ^ƒCƒgƒ‹ ƒo[‚ÌƒeƒLƒXƒg
-TCHAR szWindowClass[MAX_LOADSTRING];			// ƒƒCƒ“ ƒEƒBƒ“ƒhƒE ƒNƒ‰ƒX–¼
+// ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°:
+HINSTANCE hInst;								// ç¾åœ¨ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹
+TCHAR szTitle[MAX_LOADSTRING];					// ã‚¿ã‚¤ãƒˆãƒ« ãƒãƒ¼ã®ãƒ†ã‚­ã‚¹ãƒˆ
+TCHAR szWindowClass[MAX_LOADSTRING];			// ãƒ¡ã‚¤ãƒ³ ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ ã‚¯ãƒ©ã‚¹å
 
-// ‚±‚ÌƒR[ƒh ƒ‚ƒWƒ…[ƒ‹‚ÉŠÜ‚Ü‚ê‚éŠÖ”‚ÌéŒ¾‚ğ“]‘—‚µ‚Ü‚·:
+// ã“ã®ã‚³ãƒ¼ãƒ‰ ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã«å«ã¾ã‚Œã‚‹é–¢æ•°ã®å®£è¨€ã‚’è»¢é€ã—ã¾ã™:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
 BOOL				InitInstance(HINSTANCE, int);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -254,15 +254,15 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
- 	// TODO: ‚±‚±‚ÉƒR[ƒh‚ğ‘}“ü‚µ‚Ä‚­‚¾‚³‚¢B
+ 	// TODO: ã“ã“ã«ã‚³ãƒ¼ãƒ‰ã‚’æŒ¿å…¥ã—ã¦ãã ã•ã„ã€‚
 	MSG msg;
 	HACCEL hAccelTable;
 
-	//ƒEƒBƒ“ƒhƒEó‘Ô•ÛƒNƒ‰ƒX¶¬
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦çŠ¶æ…‹ä¿æŒã‚¯ãƒ©ã‚¹ç”Ÿæˆ
 	gImpl = NEW Impl();
 	gImpl->mCommandLine = lpCmdLine;
 	WindowCreator wc;
-	//ƒ†[ƒUİ’èŠÖ”ŒÄ‚Ño‚µ
+	//ãƒ¦ãƒ¼ã‚¶è¨­å®šé–¢æ•°å‘¼ã³å‡ºã—
 	WindowCreator::Configuration config;
 	wc.configure( &config );
 
@@ -274,7 +274,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	MyRegisterClass( hInstance );
 
-	// ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚Ì‰Šú‰»‚ğÀs‚µ‚Ü‚·:
+	// ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®åˆæœŸåŒ–ã‚’å®Ÿè¡Œã—ã¾ã™:
 	if ( !InitInstance ( hInstance, nCmdShow ) ){
 		return FALSE;
 	}
@@ -283,34 +283,34 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	timeBeginPeriod( 1 );
 	HWND windowHandle = gImpl->mWindowHandle;
-	///‹N“®‘O‚Ì—áŠO‚ÍŒp‘±•s‰Â”\‚È‚Ì‚ÅAƒƒbƒZ[ƒWƒ{ƒbƒNƒX‚ğo‚µ‚ÄI‚í‚ç‚¹‚é
+	///èµ·å‹•å‰ã®ä¾‹å¤–ã¯ç¶™ç¶šä¸å¯èƒ½ãªã®ã§ã€ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒœãƒƒã‚¯ã‚¹ã‚’å‡ºã—ã¦çµ‚ã‚ã‚‰ã›ã‚‹
 	try{
 		wc.start( windowHandle );
 	}
-	catch ( ... ){ //‹N“®‚Ì—áŠO‚Í–³‹‚Å‚«‚È‚¢B
+	catch ( ... ){ //èµ·å‹•æ™‚ã®ä¾‹å¤–ã¯ç„¡è¦–ã§ããªã„ã€‚
 		MessageBoxA( 
 			windowHandle, 
-			"’v–½“I‚È–â‘è‚ª‚ ‚èA‹N“®‚Å‚«‚Ü‚¹‚ñB\‚µ–ó‚ ‚è‚Ü‚¹‚ñ‚ªI—¹‚¢‚½‚µ‚Ü‚·", 
-			"’v–½“IƒGƒ‰[", 
+			"è‡´å‘½çš„ãªå•é¡ŒãŒã‚ã‚Šã€èµ·å‹•ã§ãã¾ã›ã‚“ã€‚ç”³ã—è¨³ã‚ã‚Šã¾ã›ã‚“ãŒçµ‚äº†ã„ãŸã—ã¾ã™", 
+			"è‡´å‘½çš„ã‚¨ãƒ©ãƒ¼", 
 			MB_OK | MB_ICONERROR );
-		wc.requestEnd(); //I‚í‚êB
-		wc.update(); //’†‚ÅI—¹ˆ—
+		wc.requestEnd(); //çµ‚ã‚ã‚Œã€‚
+		wc.update(); //ä¸­ã§çµ‚äº†å‡¦ç†
 		SAFE_DELETE( gImpl );
 		timeEndPeriod( 1 );
 		return 0;
 	}
 
-	//ƒtƒ‹ƒXƒNƒŠ[ƒ“‚È‚ç–ß‚·ƒEƒBƒ“ƒhƒEˆÊ’u‚ğ¶¬
+	//ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ãªã‚‰æˆ»ã™ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ä½ç½®ã‚’ç”Ÿæˆ
 	if ( gImpl->mFullScreen ){
 		gImpl->createDefaultWindowPos();
 	}
-	//ƒhƒ‰ƒbƒOƒAƒ“ƒhƒhƒƒbƒv—LŒø‰»
+	//ãƒ‰ãƒ©ãƒƒã‚°ã‚¢ãƒ³ãƒ‰ãƒ‰ãƒ­ãƒƒãƒ—æœ‰åŠ¹åŒ–
 	if ( gImpl->mDragAndDropEnabled ){
 		DragAcceptFiles( windowHandle, TRUE );
 	}
-	gImpl->mStarted = true; //ƒ‹[ƒvŠJnM†
+	gImpl->mStarted = true; //ãƒ«ãƒ¼ãƒ—é–‹å§‹ä¿¡å·
 	while ( true ){
-		//ƒƒbƒZ[ƒW‚ª‚ ‚é‚È‚çˆ—
+		//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒã‚ã‚‹ãªã‚‰å‡¦ç†
 		if ( PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE ) ){
 			if ( GetMessage( &msg, NULL, 0, 0 ) ){
 				if ( !TranslateAccelerator( msg.hwnd, hAccelTable, &msg ) ){
@@ -318,25 +318,25 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 					DispatchMessage( &msg );
 				}
 			}else{
-				break; //WM_QUIT‚«‚Ü‚µ‚½Bƒ‹[ƒv”²‚¯‚Ü‚·B
+				break; //WM_QUITãã¾ã—ãŸã€‚ãƒ«ãƒ¼ãƒ—æŠœã‘ã¾ã™ã€‚
 			}
 		}
-		//I‚í‚Á‚Ä‚ê‚Îwindow”jŠü
-		if ( gImpl->mEnded ){ //I‚í‚Á‚Ä‚È‚¯‚ê‚ÎXVƒ‹[ƒv
-			if ( windowHandle ){ //‚à‚µ‚©‚·‚é‚Æ2‰ñ—ˆ‚é‚©‚à‚µ‚ê‚È‚¢‚Ì‚Å”O‚Ì‚½‚ß
+		//çµ‚ã‚ã£ã¦ã‚Œã°windowç ´æ£„
+		if ( gImpl->mEnded ){ //çµ‚ã‚ã£ã¦ãªã‘ã‚Œã°æ›´æ–°ãƒ«ãƒ¼ãƒ—
+			if ( windowHandle ){ //ã‚‚ã—ã‹ã™ã‚‹ã¨2å›æ¥ã‚‹ã‹ã‚‚ã—ã‚Œãªã„ã®ã§å¿µã®ãŸã‚
 				DestroyWindow( windowHandle );
 				windowHandle = 0;
 			}
-		}else{	//Às–{‘Ì
+		}else{	//å®Ÿè¡Œæœ¬ä½“
 			try{
 				wc.update();
 			}
 			catch ( Exception e ){
-				if ( e == EXCEPTION_EXIT ){ //I—¹—v¿—áŠO‚Ìê‡‚Ì‚İI—¹
+				if ( e == EXCEPTION_EXIT ){ //çµ‚äº†è¦è«‹ä¾‹å¤–ã®å ´åˆã®ã¿çµ‚äº†
 					MessageBoxA( 
 						windowHandle, 
-						"’v–½“I‚È–â‘è‚ª‚ ‚èAŒp‘±‚Å‚«‚Ü‚¹‚ñB\‚µ–ó‚ ‚è‚Ü‚¹‚ñ‚ªI—¹‚¢‚½‚µ‚Ü‚·", 
-						"’v–½“IƒGƒ‰[", 
+						"è‡´å‘½çš„ãªå•é¡ŒãŒã‚ã‚Šã€ç¶™ç¶šã§ãã¾ã›ã‚“ã€‚ç”³ã—è¨³ã‚ã‚Šã¾ã›ã‚“ãŒçµ‚äº†ã„ãŸã—ã¾ã™", 
+						"è‡´å‘½çš„ã‚¨ãƒ©ãƒ¼", 
 						MB_OK | MB_ICONERROR );
 				}
 			}
@@ -352,17 +352,17 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 
 //
-//  ŠÖ”: MyRegisterClass()
+//  é–¢æ•°: MyRegisterClass()
 //
-//  –Ú“I: ƒEƒBƒ“ƒhƒE ƒNƒ‰ƒX‚ğ“o˜^‚µ‚Ü‚·B
+//  ç›®çš„: ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ ã‚¯ãƒ©ã‚¹ã‚’ç™»éŒ²ã—ã¾ã™ã€‚
 //
-//  ƒRƒƒ“ƒg:
+//  ã‚³ãƒ¡ãƒ³ãƒˆ:
 //
-//    ‚±‚ÌŠÖ”‚¨‚æ‚Ñg‚¢•û‚ÍA'RegisterClassEx' ŠÖ”‚ª’Ç‰Á‚³‚ê‚½
-//    Windows 95 ‚æ‚è‘O‚Ì Win32 ƒVƒXƒeƒ€‚ÆŒİŠ·‚³‚¹‚éê‡‚É‚Ì‚İ•K—v‚Å‚·B
-//    ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ªAŠÖ˜A•t‚¯‚ç‚ê‚½
-//    ³‚µ‚¢Œ`®‚Ì¬‚³‚¢ƒAƒCƒRƒ“‚ğæ“¾‚Å‚«‚é‚æ‚¤‚É‚·‚é‚É‚ÍA
-//    ‚±‚ÌŠÖ”‚ğŒÄ‚Ño‚µ‚Ä‚­‚¾‚³‚¢B
+//    ã“ã®é–¢æ•°ãŠã‚ˆã³ä½¿ã„æ–¹ã¯ã€'RegisterClassEx' é–¢æ•°ãŒè¿½åŠ ã•ã‚ŒãŸ
+//    Windows 95 ã‚ˆã‚Šå‰ã® Win32 ã‚·ã‚¹ãƒ†ãƒ ã¨äº’æ›ã•ã›ã‚‹å ´åˆã«ã®ã¿å¿…è¦ã§ã™ã€‚
+//    ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãŒã€é–¢é€£ä»˜ã‘ã‚‰ã‚ŒãŸ
+//    æ­£ã—ã„å½¢å¼ã®å°ã•ã„ã‚¢ã‚¤ã‚³ãƒ³ã‚’å–å¾—ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹ã«ã¯ã€
+//    ã“ã®é–¢æ•°ã‚’å‘¼ã³å‡ºã—ã¦ãã ã•ã„ã€‚
 //
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
@@ -386,20 +386,20 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 }
 
 //
-//   ŠÖ”: InitInstance(HINSTANCE, int)
+//   é–¢æ•°: InitInstance(HINSTANCE, int)
 //
-//   –Ú“I: ƒCƒ“ƒXƒ^ƒ“ƒX ƒnƒ“ƒhƒ‹‚ğ•Û‘¶‚µ‚ÄAƒƒCƒ“ ƒEƒBƒ“ƒhƒE‚ğì¬‚µ‚Ü‚·B
+//   ç›®çš„: ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ ãƒãƒ³ãƒ‰ãƒ«ã‚’ä¿å­˜ã—ã¦ã€ãƒ¡ã‚¤ãƒ³ ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ä½œæˆã—ã¾ã™ã€‚
 //
-//   ƒRƒƒ“ƒg:
+//   ã‚³ãƒ¡ãƒ³ãƒˆ:
 //
-//        ‚±‚ÌŠÖ”‚ÅAƒOƒ[ƒoƒ‹•Ï”‚ÅƒCƒ“ƒXƒ^ƒ“ƒX ƒnƒ“ƒhƒ‹‚ğ•Û‘¶‚µA
-//        ƒƒCƒ“ ƒvƒƒOƒ‰ƒ€ ƒEƒBƒ“ƒhƒE‚ğì¬‚¨‚æ‚Ñ•\¦‚µ‚Ü‚·B
+//        ã“ã®é–¢æ•°ã§ã€ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ã§ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ ãƒãƒ³ãƒ‰ãƒ«ã‚’ä¿å­˜ã—ã€
+//        ãƒ¡ã‚¤ãƒ³ ãƒ—ãƒ­ã‚°ãƒ©ãƒ  ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ä½œæˆãŠã‚ˆã³è¡¨ç¤ºã—ã¾ã™ã€‚
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	HWND hWnd;
 
-	hInst = hInstance; // ƒOƒ[ƒoƒ‹•Ï”‚ÉƒCƒ“ƒXƒ^ƒ“ƒXˆ—‚ğŠi”[‚µ‚Ü‚·B
+	hInst = hInstance; // ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ã«ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å‡¦ç†ã‚’æ ¼ç´ã—ã¾ã™ã€‚
 //----
 	DWORD style = 0;
 	if ( gImpl->mFullScreen ){
@@ -414,7 +414,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	rect.bottom = gImpl->mHeight;
 	AdjustWindowRect(&rect, style, FALSE);
 	rect.right -= rect.left;
-	rect.bottom -= rect.top; //·•ªŒvZ
+	rect.bottom -= rect.top; //å·®åˆ†è¨ˆç®—
 	rect.left = 0;
 	rect.top = 0;
 //----
@@ -438,13 +438,13 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 }
 
 //
-//  ŠÖ”: WndProc(HWND, UINT, WPARAM, LPARAM)
+//  é–¢æ•°: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
-//  –Ú“I:  ƒƒCƒ“ ƒEƒBƒ“ƒhƒE‚ÌƒƒbƒZ[ƒW‚ğˆ—‚µ‚Ü‚·B
+//  ç›®çš„:  ãƒ¡ã‚¤ãƒ³ ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡¦ç†ã—ã¾ã™ã€‚
 //
-//  WM_COMMAND	- ƒAƒvƒŠƒP[ƒVƒ‡ƒ“ ƒƒjƒ…[‚Ìˆ—
-//  WM_PAINT	- ƒƒCƒ“ ƒEƒBƒ“ƒhƒE‚Ì•`‰æ
-//  WM_DESTROY	- ’†~ƒƒbƒZ[ƒW‚ğ•\¦‚µ‚Ä–ß‚é
+//  WM_COMMAND	- ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®å‡¦ç†
+//  WM_PAINT	- ãƒ¡ã‚¤ãƒ³ ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®æç”»
+//  WM_DESTROY	- ä¸­æ­¢ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤ºã—ã¦æˆ»ã‚‹
 //
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -452,13 +452,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message)
 	{
 		break;
-	case WM_CLOSE: //I—¹—v¿
+	case WM_CLOSE: //çµ‚äº†è¦è«‹
 		gImpl->mEndRequested = true;
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
-	case WM_SYSKEYDOWN: //alt+enter”F¯
+	case WM_SYSKEYDOWN: //alt+enterèªè­˜
 		if ( !gImpl->mFullScreenForbidden ){
 			if ( wParam == VK_RETURN ){
 				if ( gImpl->mFullScreen ){
@@ -471,7 +471,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		DefWindowProc(hWnd, message, wParam, lParam);
 		break;
 	case WM_ACTIVATE:
-		if ( wParam & 0xffff0000 ){ //Å¬‰»‚³‚ê‚Ä‚¢‚ê‚Îfalse
+		if ( wParam & 0xffff0000 ){ //æœ€å°åŒ–ã•ã‚Œã¦ã„ã‚Œã°false
 			gImpl->mActive = false;
 		}else{
 			gImpl->mActive = ( ( wParam & 0xffff ) != 0 );
@@ -480,7 +480,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_SYSCOMMAND:
 		if ( wParam == SC_MAXIMIZE ){
 			if ( !gImpl->mFullScreenForbidden ){
-				WindowCreator().enableFullScreen( true ); //Å‘å‰»‚Ì‚ÍDefWindowProc‚ÍŒÄ‚Î‚È‚¢
+				WindowCreator().enableFullScreen( true ); //æœ€å¤§åŒ–ã®æ™‚ã¯DefWindowProcã¯å‘¼ã°ãªã„
 			}
 		}else if ( wParam == SC_MINIMIZE ){
 			gImpl->mMinimized = true;

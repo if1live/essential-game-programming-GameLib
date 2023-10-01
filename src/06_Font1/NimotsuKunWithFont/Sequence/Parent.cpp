@@ -14,18 +14,18 @@ mStageSelect( 0 ),
 mGame( 0 ),
 mNext( SEQ_NONE ),
 mStageID( 0 ){
-	//•¶š—ñƒNƒ‰ƒX‰Šú‰»
+	//æ–‡å­—åˆ—ã‚¯ãƒ©ã‚¹åˆæœŸåŒ–
 	StringRenderer::create( "data/image/font.dds" );
-	//Å‰‚Éì‚é‚Ì‚Íƒ^ƒCƒgƒ‹
+	//æœ€åˆã«ä½œã‚‹ã®ã¯ã‚¿ã‚¤ãƒˆãƒ«
 	mTitle = new Title();
 }
 
 Parent::~Parent(){
-	//c‚Á‚Ä‚¢‚ê‚Î–•E
+	//æ®‹ã£ã¦ã„ã‚Œã°æŠ¹æ®º
 	SAFE_DELETE( mTitle );
 	SAFE_DELETE( mStageSelect );
 	SAFE_DELETE( mGame );
-	//•¶š—ñƒNƒ‰ƒXI—¹
+	//æ–‡å­—åˆ—ã‚¯ãƒ©ã‚¹çµ‚äº†
 	StringRenderer::destroy();
 }
 
@@ -37,9 +37,9 @@ void Parent::update(){
 	}else if ( mGame ){
 		mGame->update( this );
 	}else{
-		HALT( "bakana!" ); //‚ ‚è‚¦‚È‚¢
+		HALT( "bakana!" ); //ã‚ã‚Šãˆãªã„
 	}
-	//‘JˆÚ”»’è
+	//é·ç§»åˆ¤å®š
 	switch ( mNext ){
 		case SEQ_STAGE_SELECT:
 			SAFE_DELETE( mTitle );
@@ -52,7 +52,7 @@ void Parent::update(){
 			break;
 		case SEQ_GAME:
 			SAFE_DELETE( mStageSelect );
-			ASSERT( mStageID != 0 ); //‚¿‚á‚ñ‚Æ“ü‚ê‚Ä‚­‚ê‚Ä‚¢‚é‚Í‚¸
+			ASSERT( mStageID != 0 ); //ã¡ã‚ƒã‚“ã¨å…¥ã‚Œã¦ãã‚Œã¦ã„ã‚‹ã¯ãš
 			mGame = new Game::Parent( mStageID );
 			break;
 	}

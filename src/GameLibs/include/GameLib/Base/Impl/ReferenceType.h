@@ -1,7 +1,7 @@
 #ifndef INCLUDED_GAMELIB_BASE_REFERENCETYPE_H
 #define INCLUDED_GAMELIB_BASE_REFERENCETYPE_H
 
-//参照カウントを持つ型を作る時に楽にするための基底クラス
+//蜿ら�ｧ繧ｫ繧ｦ繝ｳ繝医ｒ謖√▽蝙九ｒ菴懊ｋ譎ゅ↓讌ｽ縺ｫ縺吶ｋ縺溘ａ縺ｮ蝓ｺ蠎輔け繝ｩ繧ｹ
 namespace GameLib{
 
 class ReferenceType{

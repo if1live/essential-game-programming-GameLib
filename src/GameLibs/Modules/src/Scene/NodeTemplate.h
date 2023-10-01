@@ -12,7 +12,7 @@ namespace Math{
 namespace Scene{
 using namespace Math;
 
-//ƒm[ƒh‚ÌŒ´Œ^Bƒ‰ƒCƒuƒ‰ƒŠ‚ÌŠO‚©‚ç‚ÍŒ©‚¦‚È‚¢‚Ì‚Å‚¢‚Â‚à‚ÌImpl‚Í‚È‚¢B
+//ãƒãƒ¼ãƒ‰ã®åŸå‹ã€‚ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®å¤–ã‹ã‚‰ã¯è¦‹ãˆãªã„ã®ã§ã„ã¤ã‚‚ã®Implã¯ãªã„ã€‚
 class NodeTemplate{
 public:
 	NodeTemplate() :
@@ -23,8 +23,8 @@ public:
 		mTransform.setIdentity();
 	}
 	~NodeTemplate(){
-		mBatch = 0; //Š—LŒ ‚Í‚Á‚Ä‚¢‚È‚¢‚Ì‚Å’P‚È‚éQÆ‚Í‚¸‚µ
-		mName = 0; //“¯ã
+		mBatch = 0; //æ‰€æœ‰æ¨©ã¯æŒã£ã¦ã„ãªã„ã®ã§å˜ãªã‚‹å‚ç…§ã¯ãšã—
+		mName = 0; //åŒä¸Š
 	}
 	int mChild;
 	int mBrother;

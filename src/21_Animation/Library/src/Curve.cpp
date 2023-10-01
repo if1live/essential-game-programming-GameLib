@@ -20,9 +20,9 @@ Curve::Curve( Element& e ) :
 mData( 0 ),
 mDataNumber( 0 ),
 mInterporation( INTERPORATION_NONE ){
-	ASSERT( string( "Curve" ) == e.name() ); //Curve‚¾‚æ‚ËH
-	ASSERT( e.childNumber() > 0 ); //ƒf[ƒ^ˆêŒÂ‚Í‚ ‚é‚æ‚ËH
-	//–¼‘Oæ“¾
+	ASSERT( string( "Curve" ) == e.name() ); //Curveã ã‚ˆã­ï¼Ÿ
+	ASSERT( e.childNumber() > 0 ); //ãƒ‡ãƒ¼ã‚¿ä¸€å€‹ã¯ã‚ã‚‹ã‚ˆã­ï¼Ÿ
+	//åå‰å–å¾—
 	int an = e.attributeNumber();
 	for ( int i = 0; i < an; ++i ){
 		Attribute a = e.attribute( i );
@@ -75,7 +75,7 @@ mInterporation( INTERPORATION_NONE ){
 			}else if ( name == "rightSlope" ){
 				mData[ i ].mRightSlope = a.getDoubleValue();
 			}else{
-				ASSERT( false ); //‚ ‚è‚¦‚ñ
+				ASSERT( false ); //ã‚ã‚Šãˆã‚“
 			}
 		}
 	}
@@ -86,10 +86,10 @@ Curve::~Curve(){
 }
 
 double Curve::get( double t ) const {
-	//ƒ‹[ƒvˆ—‚ğ‚·‚éBÅŒã‚Ìƒf[ƒ^‚Ì‚ªüŠú‚Æl‚¦‚éB‚±‚ê‚ÅzŠÂ‚·‚é‚ËB
+	//ãƒ«ãƒ¼ãƒ—å‡¦ç†ã‚’ã™ã‚‹ã€‚æœ€å¾Œã®ãƒ‡ãƒ¼ã‚¿ã®æ™‚åˆ»ãŒå‘¨æœŸã¨è€ƒãˆã‚‹ã€‚ã“ã‚Œã§å¾ªç’°ã™ã‚‹ã­ã€‚
 
-	//a‚©‚ç‰½‰ñb‚ªˆø‚¯‚é‚©‚ğŒvZ‚·‚é‚É‚ÍAa -= toInt(a/b) * b‚Å‹‚Ü‚éBtoInt‚Í®”‚ÉØ‚èÌ‚Ä‚éŠÖ”‚Æ‚µ‚æ‚¤BƒLƒƒƒXƒg‚ğ‚¤‚Ü‚­‚Â‚©‚¦‚Îo—ˆ‚éB
-	double quot = t / mData[ mDataNumber - 1 ].mTime; //Š„‚Á‚½‚à‚Ì‚ğ®”‚É’¼‚·‚Æ¤‚Ì®”‚ªo‚é
+	//aã‹ã‚‰ä½•å›bãŒå¼•ã‘ã‚‹ã‹ã‚’è¨ˆç®—ã™ã‚‹ã«ã¯ã€a -= toInt(a/b) * bã§æ±‚ã¾ã‚‹ã€‚toIntã¯æ•´æ•°ã«åˆ‡ã‚Šæ¨ã¦ã‚‹é–¢æ•°ã¨ã—ã‚ˆã†ã€‚ã‚­ãƒ£ã‚¹ãƒˆã‚’ã†ã¾ãã¤ã‹ãˆã°å‡ºæ¥ã‚‹ã€‚
+	double quot = t / mData[ mDataNumber - 1 ].mTime; //å‰²ã£ãŸã‚‚ã®ã‚’æ•´æ•°ã«ç›´ã™ã¨å•†ã®æ•´æ•°ãŒå‡ºã‚‹
 	int quotInt = static_cast< int >( quot ); 
 	t -= static_cast< double >( quotInt ) * mData[ mDataNumber - 1 ].mTime;
 
@@ -101,7 +101,7 @@ double Curve::get( double t ) const {
 			}
 			last = i;
 		}
-		//t‚ğ‰z‚¦‚È‚¢Å¬‚Ìtime‚ğ‚Âƒf[ƒ^‚ğg‚¤(•âŠÔ‚È‚µ)
+		//tã‚’è¶Šãˆãªã„æœ€å°ã®timeã‚’æŒã¤ãƒ‡ãƒ¼ã‚¿ã‚’ä½¿ã†(è£œé–“ãªã—)
 		return mData[ last ].mValue;
 	}else if ( mInterporation == INTERPORATION_LINEAR ){
 		int begin = 0;
@@ -112,16 +112,16 @@ double Curve::get( double t ) const {
 			}
 			begin = end;
 		}
-		if ( end >= mDataNumber ){ //‚ ‚Ó‚ê–h~BÅŒã‚Ì’l•Ô‚µ‚Ä‚â‚ê
+		if ( end >= mDataNumber ){ //ã‚ãµã‚Œé˜²æ­¢ã€‚æœ€å¾Œã®å€¤è¿”ã—ã¦ã‚„ã‚Œ
 			return mData[ mDataNumber - 1 ].mValue;
 		}
 		double t0 = mData[ begin ].mTime;
 		double t1 = mData[ end ].mTime;
 		double p0 = mData[ begin ].mValue;
 		double p1 = mData[ end ].mValue;
-		//•Ï”•ÏŠ·
+		//å¤‰æ•°å¤‰æ›
 		t = ( t - t0 ) / ( t1 - t0 );
-		//üŒ`•âŠÔ
+		//ç·šå½¢è£œé–“
 		return p0 + ( p1 - p0 ) * t;
 	}else if ( mInterporation == INTERPORATION_CUBIC ){
 		int begin = 0;
@@ -132,21 +132,21 @@ double Curve::get( double t ) const {
 			}
 			begin = end;
 		}
-		if ( end >= mDataNumber ){ //‚ ‚Ó‚ê–h~BÅŒã‚Ì’l•Ô‚µ‚Ä‚â‚ê
+		if ( end >= mDataNumber ){ //ã‚ãµã‚Œé˜²æ­¢ã€‚æœ€å¾Œã®å€¤è¿”ã—ã¦ã‚„ã‚Œ
 			return mData[ mDataNumber - 1 ].mValue;
 		}
 		double t0 = mData[ begin ].mTime;
 		double t1 = mData[ end ].mTime;
 		double p0 = mData[ begin ].mValue;
 		double p1 = mData[ end ].mValue;
-		double v0 = mData[ begin ].mRightSlope; //n“_‚Ì‰EŒX‚«
-		double v1 = mData[ end ].mLeftSlope; //I“_‚Ì¶ŒX‚«
-		//•Ï”•ÏŠ·
+		double v0 = mData[ begin ].mRightSlope; //å§‹ç‚¹ã®å³å‚¾ã
+		double v1 = mData[ end ].mLeftSlope; //çµ‚ç‚¹ã®å·¦å‚¾ã
+		//å¤‰æ•°å¤‰æ›
 		t = ( t - t0 ) / ( t1 - t0 );
-		//at^3 + bt^2 + c + d‚ÅŒvZBc=v0Ad=p0‚¾B
+		//at^3 + bt^2 + c + dã§è¨ˆç®—ã€‚c=v0ã€d=p0ã ã€‚
 		double a = 2.0 * ( p0 - p1 ) + ( v0 + v1 );
 		double b = 3.0 * ( p1 - p0 ) - ( 2.0 * v0 ) - v1;
-		//üŒ`•âŠÔ
+		//ç·šå½¢è£œé–“
 		double r = a; //a
 		r *= t; //at
 		r += b; //at+b
@@ -156,7 +156,7 @@ double Curve::get( double t ) const {
 		r += p0; //at^3+bt^2+ct+d
 		return r;
 	}else{
-		ASSERT( false ); //‚ ‚è‚¦‚ñ
+		ASSERT( false ); //ã‚ã‚Šãˆã‚“
 		return 0.0;
 	}
 }

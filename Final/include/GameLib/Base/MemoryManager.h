@@ -3,14 +3,14 @@
 
 namespace GameLib{
 
-//new‚ğ‚Â‚©‚³‚Ç‚éƒNƒ‰ƒX
+//newã‚’ã¤ã‹ã•ã©ã‚‹ã‚¯ãƒ©ã‚¹
 class MemoryManager{
 public:
 	static MemoryManager instance();
 
-	///î•ñ‚Ì‘‚«o‚µ(ƒtƒ@ƒCƒ‹–¼‚ğ—^‚¦‚ê‚Îƒtƒ@ƒCƒ‹‚ÖA—^‚¦‚È‚¯‚ê‚ÎƒfƒoƒOo—Í‚Ö)
+	///æƒ…å ±ã®æ›¸ãå‡ºã—(ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ä¸ãˆã‚Œã°ãƒ•ã‚¡ã‚¤ãƒ«ã¸ã€ä¸ãˆãªã‘ã‚Œã°ãƒ‡ãƒã‚°å‡ºåŠ›ã¸)
 	void write( const char* filename = 0 );
-	///‘SŠm•Û—e—Ê(“à•”—\–ñ—e—Ê‚ğŠÜ‚Ş)
+	///å…¨ç¢ºä¿å®¹é‡(å†…éƒ¨äºˆç´„å®¹é‡ã‚’å«ã‚€)
 	int totalSize() const;
 };
 

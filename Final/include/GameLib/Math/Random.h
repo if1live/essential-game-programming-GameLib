@@ -4,26 +4,26 @@
 namespace GameLib{
 namespace Math{
 
-///—”¶¬ƒNƒ‰ƒX
+///ä¹±æ•°ç”Ÿæˆã‚¯ãƒ©ã‚¹
 class Random{
 public:
 	static Random create( int seed = -1 );
-	///íÄİ’è
+	///ç¨®å†è¨­å®š
 	void setSeed( int );
 	///-0x80000000 - 0x7fffffff
 	int getInt();
-	///a-1‚Ü‚Å [0,a)
+	///a-1ã¾ã§ [0,a)
 	int getInt( int a );
-	///a‚©‚çb-1‚Ü‚Å [a,b)
+	///aã‹ã‚‰b-1ã¾ã§ [a,b)
 	int getInt( int a, int b );
-	///0-1‚¾‚ªA1‚ÍŠÜ‚Ü‚È‚¢ ( 23bit )
+	///0-1ã ãŒã€1ã¯å«ã¾ãªã„ ( 23bit )
 	float getFloat();
-	///a‚©‚çb‚Ü‚ÅB‚½‚¾‚µb‚ÍŠÜ‚Ü‚È‚¢B[a, b) ( 23bit )
+	///aã‹ã‚‰bã¾ã§ã€‚ãŸã ã—bã¯å«ã¾ãªã„ã€‚[a, b) ( 23bit )
 	float getFloat( float a );
-	///a‚©‚çb‚Ü‚ÅB‚½‚¾‚µb‚ÍŠÜ‚Ü‚È‚¢B[a, b) ( 23bit )
+	///aã‹ã‚‰bã¾ã§ã€‚ãŸã ã—bã¯å«ã¾ãªã„ã€‚[a, b) ( 23bit )
 	float getFloat( float a, float b );
 
-	//ˆÈ‰º’m‚ç‚È‚­‚Ä‚¢‚¢
+	//ä»¥ä¸‹çŸ¥ã‚‰ãªãã¦ã„ã„
 	Random();
 	Random( const Random& );
 	~Random();

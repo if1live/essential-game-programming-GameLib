@@ -14,7 +14,7 @@ Stage::Stage() : mDatabase( 0 ), mModel( 0 ), mTriangles( 0 ){
 	mDatabase = new GraphicsDatabase( "stage.txt" );
 	mModel = mDatabase->createModel( "stage" );
 
-	//�Փˏ����p�f�[�^�쐬
+	//衝突処理用データ作成
 	const Batch* batch = mModel->batch();
 	const IndexBuffer* ib = batch->indexBuffer();
 	const VertexBuffer* vb = batch->vertexBuffer();

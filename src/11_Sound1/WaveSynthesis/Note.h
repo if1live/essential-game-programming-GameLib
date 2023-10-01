@@ -3,9 +3,9 @@
 
 struct Note{
 public:
-	int mName; //ƒhƒŒƒ~B0‚ª65Hz‚ÌƒhB24‚ª‚¢‚í‚ä‚é^‚ñ’†‚ÌƒhB
-	int mLength; // 100•ª‚Ì1•b’PˆÊ
-	int mVolume; // 0‚©‚ç100
+	int mName; //ãƒ‰ãƒ¬ãƒŸã€‚0ãŒ65Hzã®ãƒ‰ã€‚24ãŒã„ã‚ã‚†ã‚‹çœŸã‚“ä¸­ã®ãƒ‰ã€‚
+	int mLength; // 100åˆ†ã®1ç§’å˜ä½
+	int mVolume; // 0ã‹ã‚‰100
 };
 
 #endif

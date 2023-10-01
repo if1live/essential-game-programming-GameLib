@@ -21,13 +21,13 @@ mModel( 0 ){
 	mModel = mDatabase->createModel( "robo" );
 
 	Vector3 c = mPosition;
-	c.y += 0.5; //’†S‚ªã‚É‚¸‚ê‚Ä‚é
+	c.y += 0.5; //ä¸­å¿ƒãŒä¸Šã«ãšã‚Œã¦ã‚‹
 	mSphere.setPosition( c );
 	mSphere.setRadius( 0.5 );
 }
 
 Robo::~Robo(){
-	SAFE_DELETE( mModel ); //Žg‚Á‚Ä‚¢‚é•û‚ªŽg‚í‚ê‚Ä‚¢‚é•û‚æ‚èæ
+	SAFE_DELETE( mModel ); //ä½¿ã£ã¦ã„ã‚‹æ–¹ãŒä½¿ã‚ã‚Œã¦ã„ã‚‹æ–¹ã‚ˆã‚Šå…ˆ
 	SAFE_DELETE( mDatabase );
 }
 
@@ -38,7 +38,7 @@ const Vector3* Robo::position() const {
 void Robo::setPosition( const Vector3& a ){
 	mPosition = a;
 	Vector3 c = mPosition;
-	c.y += 0.5; //’†S‚ªã‚É‚¸‚ê‚Ä‚é
+	c.y += 0.5; //ä¸­å¿ƒãŒä¸Šã«ãšã‚Œã¦ã‚‹
 	mSphere.setPosition( c );
 }
 
@@ -53,7 +53,7 @@ void Robo::setAngleY( double a ){
 void Robo::getMove( 
 Vector3* move,
 const Vector3& viewVector ) const {
-	//ˆÚ“®BŽ‹ü•ûŒü‚ð‰Á–¡B
+	//ç§»å‹•ã€‚è¦–ç·šæ–¹å‘ã‚’åŠ å‘³ã€‚
 	move->set( 0.0, 0.0, 0.0 );
 	Pad* pad = Pad::instance();
 	if ( pad->isOn( Pad::UP, mId ) ){
@@ -73,7 +73,7 @@ const Vector3& viewVector ) const {
 	m.setRotationY( ay );
 	m.multiply( move, *move );
 
-	//ƒWƒƒƒ“ƒv‚¾[
+	//ã‚¸ãƒ£ãƒ³ãƒ—ã ãƒ¼
 	if ( pad->isOn( Pad::JUMP, mId ) ){
 		move->y += 0.1;
 	}else{
@@ -86,15 +86,15 @@ const Vector3& move,
 const Vector3& enemyPos ){
 	mPosition += move;
 	Vector3 c = mPosition;
-	c.y += 0.5; //’†S‚ªã‚É‚¸‚ê‚Ä‚é
+	c.y += 0.5; //ä¸­å¿ƒãŒä¸Šã«ãšã‚Œã¦ã‚‹
 	mSphere.setPosition( c );
-	//ƒWƒƒƒ“ƒv‚¾[(ˆÚ“®‚ÍgetMove()‚Å‚â‚Á‚½‚Ì‚ÅA‚±‚±‚Å‚ÍŠp“x)
+	//ã‚¸ãƒ£ãƒ³ãƒ—ã ãƒ¼(ç§»å‹•ã¯getMove()ã§ã‚„ã£ãŸã®ã§ã€ã“ã“ã§ã¯è§’åº¦)
 	Pad* pad = Pad::instance();
 	if ( pad->isOn( Pad::JUMP, mId ) ){
-		//“G‚Ì•û‚ÉŒü‚¯‚éB
+		//æ•µã®æ–¹ã«å‘ã‘ã‚‹ã€‚
 		Vector3 dir;
-		dir.setSub( enemyPos, mPosition ); //Ž©•ª‚©‚ç“G‚Ö
-		//YŽ²Šp“x‚Íatan2( x, z )
+		dir.setSub( enemyPos, mPosition ); //è‡ªåˆ†ã‹ã‚‰æ•µã¸
+		//Yè»¸è§’åº¦ã¯atan2( x, z )
 		mAngleY = atan2( dir.x, dir.z );
 	}
 }
@@ -106,10 +106,10 @@ void Robo::getDirection( Vector3* v ) const {
 }
 
 void Robo::draw( const Matrix44& pvm ) const {
-	//ƒ‚ƒfƒ‹‚ÉˆÊ’uî•ñ‚ðƒZƒbƒg
+	//ãƒ¢ãƒ‡ãƒ«ã«ä½ç½®æƒ…å ±ã‚’ã‚»ãƒƒãƒˆ
 	mModel->setAngle( Vector3( 0.0, mAngleY, 0.0 ) );
 	mModel->setPosition( mPosition );
-	//•`‰æ
+	//æç”»
 	mModel->draw( pvm );
 }
 

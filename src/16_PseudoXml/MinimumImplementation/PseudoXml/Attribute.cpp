@@ -90,8 +90,8 @@ int Attribute::getIntValues( int* a, int n ) const {
 		if ( iss.fail() ){
 			break;
 		}
-		++c; //“Ç‚İo‚µ¬Œ÷
-		iss.ignore( l, ',' ); //ƒJƒ“ƒ}‚Ü‚Å“Ç‚İ”ò‚Î‚·
+		++c; //èª­ã¿å‡ºã—æˆåŠŸ
+		iss.ignore( l, ',' ); //ã‚«ãƒ³ãƒã¾ã§èª­ã¿é£›ã°ã™
 	}
 	return c;
 }
@@ -105,8 +105,8 @@ int Attribute::getDoubleValues( double* a, int n ) const {
 		if ( iss.fail() ){
 			break;
 		}
-		++c; //“Ç‚İo‚µ¬Œ÷
-		iss.ignore( l, ',' ); //ƒJƒ“ƒ}‚Ü‚Å“Ç‚İ”ò‚Î‚·
+		++c; //èª­ã¿å‡ºã—æˆåŠŸ
+		iss.ignore( l, ',' ); //ã‚«ãƒ³ãƒã¾ã§èª­ã¿é£›ã°ã™
 	}
 	return c;
 }

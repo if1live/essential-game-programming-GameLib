@@ -11,7 +11,7 @@ class Bullet;
 
 class Robo{
 public:
-	Robo( int id ); //”Ô†‚à‚ç‚¤B©•ª‚ª‰½”Ô‚©’m‚è‚½‚¢‚Ì‚ÅB
+	Robo( int id ); //ç•ªå·ã‚‚ã‚‰ã†ã€‚è‡ªåˆ†ãŒä½•ç•ªã‹çŸ¥ã‚ŠãŸã„ã®ã§ã€‚
 	~Robo();
 	void draw( const Matrix44& perspectiveViewMatrix ) const;
 	void update( Robo* robo );
@@ -35,32 +35,32 @@ private:
 	int mBulletNumber;
 
 	int mCameraCount;
-	int mCount; //ˆÚ“®ŠJnŒã‰½ƒtƒŒ[ƒ€Œo‚Á‚½H
-	Vector3 mVelocity; //Œ»İ‚Ì•½–Ê‘¬“x
-	double mAngleVelocityY; //U‚èŒü‚«‘¬“x
+	int mCount; //ç§»å‹•é–‹å§‹å¾Œä½•ãƒ•ãƒ¬ãƒ¼ãƒ çµŒã£ãŸï¼Ÿ
+	Vector3 mVelocity; //ç¾åœ¨ã®å¹³é¢é€Ÿåº¦
+	double mAngleVelocityY; //æŒ¯ã‚Šå‘ãé€Ÿåº¦
 
-	static const int mJumpUpTime; //ã¸‚µ‚Ä‚¢‚­ŠÔ
-	static const int mJumpStayTime; //ã¸Œã‰º~‚Ü‚Å‚ÌŠÔ
-	static const int mJumpFallTime; //‰º~‚É‚©‚©‚éŠÔ
-	static const int mMoveAccelEndCount; //•à‚«n‚ß‚Ä‰Á‘¬‚ªI—¹‚·‚é‚Ü‚Å‚ÌŠÔ
-	static const double mMaxMoveSpeed; //Å‘åˆÚ“®‘¬“x
-	static const double mJumpHeight; //Å‘å‚“x
-	static const int mCameraDelayCount; //ƒWƒƒƒ“ƒvŠJnŒã‰½ƒtƒŒ[ƒ€‚Å“G‚Ì•û‚ğŒü‚­‚©
-	static const double mCameraDistanceZ; //‰½ƒ[ƒgƒ‹Œã‚ë‚©‚çÊ‚·H
-	static const double mCameraDistanceY; //Œ©‰º‚ë‚µ‹ï‡
-	static const double mCameraTargetDistanceZ; //’‹“_‚Í‰½ƒ[ƒgƒ‹æH
-	static const double mTurnSpeed; //ù‰ñ‘¬“x
-	static const int mMaxHitPoint; //Å‘åƒqƒbƒgƒ|ƒCƒ“ƒg
+	static const int mJumpUpTime; //ä¸Šæ˜‡ã—ã¦ã„ãæ™‚é–“
+	static const int mJumpStayTime; //ä¸Šæ˜‡å¾Œä¸‹é™ã¾ã§ã®æ™‚é–“
+	static const int mJumpFallTime; //ä¸‹é™ã«ã‹ã‹ã‚‹æ™‚é–“
+	static const int mMoveAccelEndCount; //æ­©ãå§‹ã‚ã¦åŠ é€ŸãŒçµ‚äº†ã™ã‚‹ã¾ã§ã®æ™‚é–“
+	static const double mMaxMoveSpeed; //æœ€å¤§ç§»å‹•é€Ÿåº¦
+	static const double mJumpHeight; //æœ€å¤§é«˜åº¦
+	static const int mCameraDelayCount; //ã‚¸ãƒ£ãƒ³ãƒ—é–‹å§‹å¾Œä½•ãƒ•ãƒ¬ãƒ¼ãƒ ã§æ•µã®æ–¹ã‚’å‘ãã‹
+	static const double mCameraDistanceZ; //ä½•ãƒ¡ãƒ¼ãƒˆãƒ«å¾Œã‚ã‹ã‚‰å†™ã™ï¼Ÿ
+	static const double mCameraDistanceY; //è¦‹ä¸‹ã‚ã—å…·åˆ
+	static const double mCameraTargetDistanceZ; //æ³¨è¦–ç‚¹ã¯ä½•ãƒ¡ãƒ¼ãƒˆãƒ«å…ˆï¼Ÿ
+	static const double mTurnSpeed; //æ—‹å›é€Ÿåº¦
+	static const int mMaxHitPoint; //æœ€å¤§ãƒ’ãƒƒãƒˆãƒã‚¤ãƒ³ãƒˆ
 
 	enum Mode{
-		MODE_JUMP_UP, //ƒWƒƒƒ“ƒvã¸’†
-		MODE_JUMP_STAY, //ƒWƒƒƒ“ƒvã‹ó‚Å’â~’†
-		MODE_JUMP_FALL, //ƒWƒƒƒ“ƒv~‰º’†
-		MODE_ON_LAND, //’…’n‚µ‚Ä‚é
+		MODE_JUMP_UP, //ã‚¸ãƒ£ãƒ³ãƒ—ä¸Šæ˜‡ä¸­
+		MODE_JUMP_STAY, //ã‚¸ãƒ£ãƒ³ãƒ—ä¸Šç©ºã§åœæ­¢ä¸­
+		MODE_JUMP_FALL, //ã‚¸ãƒ£ãƒ³ãƒ—é™ä¸‹ä¸­
+		MODE_ON_LAND, //ç€åœ°ã—ã¦ã‚‹
 	};
 	Mode mMode;
 
-	int mHitPoint; //‘Ì—Í
+	int mHitPoint; //ä½“åŠ›
 };
 
 #endif

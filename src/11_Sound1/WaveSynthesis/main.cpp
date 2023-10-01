@@ -19,9 +19,9 @@ const int A = 57;
 const int Ais = 58;
 const int H = 59;
 
-//‰EèŠy•ˆ
+//å³æ‰‹æ¥½è­œ
 const Note gTrack0Notes[] = {
-	{ 0, 150, 0 }, //‹x•„
+	{ 0, 150, 0 }, //ä¼‘ç¬¦
 	{ D, 50, 15 },
 
 	{ G, 50, 17 },
@@ -72,9 +72,9 @@ const Note gTrack0Notes[] = {
 };
 const int gTrack0NoteNumber = sizeof( gTrack0Notes ) / sizeof( Note );
 
-//¶èŠy•ˆ
+//å·¦æ‰‹æ¥½è­œ
 const Note gTrack1Notes[] = {
-	{ 0, 200, 0 }, //‹x•„
+	{ 0, 200, 0 }, //ä¼‘ç¬¦
 
 	{ G-12, 100, 10 },
 	{ G, 100, 10 },
@@ -133,14 +133,14 @@ Wave gWave;
 Player gPlayer;
 
 const int FREQUENCY = 44100;
-const int TIME = 20; //20•b
+const int TIME = 20; //20ç§’
 const int BUFFER_SIZE = FREQUENCY * sizeof( short ) * TIME;
 
 namespace GameLib{
 	void Framework::update(){
 		sleep( 16 );
 		if ( !gWave ){
-			//ƒgƒ‰ƒbƒNƒNƒ‰ƒX¶¬
+			//ãƒˆãƒ©ãƒƒã‚¯ã‚¯ãƒ©ã‚¹ç”Ÿæˆ
 			Track tracks[ 2 ];
 			tracks[ 0 ].setData( gTrack0Notes, gTrack0NoteNumber );
 			tracks[ 1 ].setData( gTrack1Notes, gTrack1NoteNumber );
@@ -157,7 +157,7 @@ namespace GameLib{
 			gPlayer.play();
 		}
 		if ( isEndRequested() ){
-			//”jŠü‚µ‚Ü‚·B
+			//ç ´æ£„ã—ã¾ã™ã€‚
 			gPlayer.release();
 			gWave.release();
 		}

@@ -16,7 +16,7 @@ public:
 	Texture( GameLib::PseudoXml::Element& );
 	Texture( const char* filename );
 	~Texture();
-	void set() const; //�n�[�h�E�F�A�ɃZ�b�g
+	void set() const; //ハードウェアにセット
 	const string* name() const;
 private:
 	GameLib::Texture* mTexture;

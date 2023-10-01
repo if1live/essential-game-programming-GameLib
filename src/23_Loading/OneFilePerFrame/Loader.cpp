@@ -17,7 +17,7 @@ File::~File(){
 }
 
 bool File::isReady() const {
-	return ( mData != 0 ); //ƒ[ƒh‚ªI‚í‚é‚Ü‚Åƒf[ƒ^‚É’l‚Í“ü‚ç‚È‚¢‚Ì‚Å‚±‚ê‚ÅƒI[ƒP[
+	return ( mData != 0 ); //ãƒ­ãƒ¼ãƒ‰ãŒçµ‚ã‚ã‚‹ã¾ã§ãƒ‡ãƒ¼ã‚¿ã«å€¤ã¯å…¥ã‚‰ãªã„ã®ã§ã“ã‚Œã§ã‚ªãƒ¼ã‚±ãƒ¼
 }
 
 int File::getSize() const {
@@ -62,15 +62,15 @@ void Loader::createFile( File** f, const char* filename ){
 }
 
 void Loader::destroyFile( File** f ){
-	if ( !( *f ) ){ //‚·‚Å‚É0B‚â‚é‚±‚Æ‚È‚¢B
+	if ( !( *f ) ){ //ã™ã§ã«0ã€‚ã‚„ã‚‹ã“ã¨ãªã„ã€‚
 		return;
 	}
 	typedef list< File* >::iterator It;
 	for ( It i = mFiles.begin(); i != mFiles.end(); ++i ){
-		if ( *i == *f ){ //Œ©‚Â‚©‚Á‚½B
-			SAFE_DELETE( *f ); //•¨‚ğÁ‚µ‚Ä
-			mFiles.erase( i ); //ƒŠƒXƒg‚©‚ç‚àÁ‚µ‚Ä
-			*f = 0; //ó‚¯æ‚èƒ|ƒCƒ“ƒ^‚ğ0‚É
+		if ( *i == *f ){ //è¦‹ã¤ã‹ã£ãŸã€‚
+			SAFE_DELETE( *f ); //ç‰©ã‚’æ¶ˆã—ã¦
+			mFiles.erase( i ); //ãƒªã‚¹ãƒˆã‹ã‚‰ã‚‚æ¶ˆã—ã¦
+			*f = 0; //å—ã‘å–ã‚Šãƒã‚¤ãƒ³ã‚¿ã‚’0ã«
 			break;
 		}
 	}
@@ -81,14 +81,14 @@ void Loader::update(){
 	typedef list< File* >::iterator It;
 	for ( It i = mFiles.begin(); i != mFiles.end(); ++i ){
 		File* f = *i;
-		if ( !f->isReady() ){ //I‚í‚Á‚Ä‚Ë‚¦Bƒ[ƒh‚·‚é‚æ
+		if ( !f->isReady() ){ //çµ‚ã‚ã£ã¦ã­ãˆã€‚ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ã‚ˆ
 			ifstream in( f->mFilename.c_str(), ifstream::binary );
 			in.seekg( 0, ifstream::end );
 			f->mSize = static_cast< int >( in.tellg() );
 			in.seekg( 0, ifstream::beg );
 			f->mData = new char[ f->mSize ];
 			in.read( f->mData, f->mSize );
-			break; //‚±‚ÌƒTƒ“ƒvƒ‹‚Ìƒ~ƒ\‚Í‚±‚Ìˆês‚¾‚¯‚Å‚ ‚éB
+			break; //ã“ã®ã‚µãƒ³ãƒ—ãƒ«ã®ãƒŸã‚½ã¯ã“ã®ä¸€è¡Œã ã‘ã§ã‚ã‚‹ã€‚
 		}
 	}
 }

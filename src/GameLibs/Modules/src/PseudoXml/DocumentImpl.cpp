@@ -7,9 +7,9 @@ namespace GameLib{
 namespace PseudoXml{
 
 Document::Impl::Impl() : 
-mStringPool( 1024 ), //‚Æ‚è‚ ‚¦‚¸1KB‚Ã‚Â
-mElementPool( 16 ), //16ŒÂ‚Ã‚Â
-mAttributePool( 16 ), //16ŒÂ‚Ã‚Â
+mStringPool( 1024 ), //ã¨ã‚Šã‚ãˆãš1KBã¥ã¤
+mElementPool( 16 ), //16å€‹ã¥ã¤
+mAttributePool( 16 ), //16å€‹ã¥ã¤
 mRoot( 0 ){
 	mRoot = allocateElement( 1 );
 	mRoot->setDocument( this );
@@ -20,25 +20,25 @@ Document::Impl::~Impl(){
 
 bool Document::Impl::isReady(){
 	bool r = false;
-	if ( mRoot->name() ){ //–¼‘O‚ªNULL‚Å‚È‚¢‚È‚çbuildÏ‚İB
+	if ( mRoot->name() ){ //åå‰ãŒNULLã§ãªã„ãªã‚‰buildæ¸ˆã¿ã€‚
 		r = true;
-	}else if ( mFile ){ //ƒ[ƒh’†
-		if ( mFile.isFinished() ){ //ƒ[ƒhI‚í‚Á‚½
+	}else if ( mFile ){ //ãƒ­ãƒ¼ãƒ‰ä¸­
+		if ( mFile.isFinished() ){ //ãƒ­ãƒ¼ãƒ‰çµ‚ã‚ã£ãŸ
 			build( mFile.data(), mFile.size() );
 			mFile.release();
 			r = true;
 		}
 	}else{
-		HALT( "IT MUST BE BUG!" ); //ƒ‹[ƒg—v‘f‚à‚È‚­
+		HALT( "IT MUST BE BUG!" ); //ãƒ«ãƒ¼ãƒˆè¦ç´ ã‚‚ãªã
 	}
 	return r;
 }
 
 void Document::Impl::build( const char* data, int size ){
-	if ( RefString( data, 4 ) == "PXML" ){ //ƒoƒCƒiƒŠ‚¾I
+	if ( RefString( data, 4 ) == "PXML" ){ //ãƒã‚¤ãƒŠãƒªã ï¼
 		IBinaryStream is( data, size );
 		is.setPosition( 4 );
-		//ƒv[ƒ‹‚É•¶š—ñ‚ğ‚Ô‚Á‚±‚Ş
+		//ãƒ—ãƒ¼ãƒ«ã«æ–‡å­—åˆ—ã‚’ã¶ã£ã“ã‚€
 		int stringBufferOffset = is.readInt();
 		int stringBufferSize = size - stringBufferOffset;
 		is.setPosition( stringBufferOffset );
@@ -50,7 +50,7 @@ void Document::Impl::build( const char* data, int size ){
 		for ( int i = 0; i < mRoot->childNumber(); ++i ){
 			mRoot->child( i )->build( &is, stringBuffer );
 		}
-	}else{ //ƒeƒLƒXƒg‚¾
+	}else{ //ãƒ†ã‚­ã‚¹ãƒˆã 
 		const char* begin = data;
 		const char* end = begin + size;
 		Tag tag( "<ROOT>" );
@@ -58,13 +58,13 @@ void Document::Impl::build( const char* data, int size ){
 	}
 }
 
-//’Pƒ‚ÉˆêŒÂ‚Ã‚ÂŒÄ‚ñ‚Ås‚­B
+//å˜ç´”ã«ä¸€å€‹ã¥ã¤å‘¼ã‚“ã§è¡Œãã€‚
 void Document::Impl::convertToString( string* out ) const {
 	OStringStream oss;
 	int childN = mRoot->childNumber();
 	for ( int i = 0; i < childN; ++i ){
 		const Element::Impl* e = mRoot->child( i );
-		if ( e->name() ){ //–¼‘O‚ª‚ ‚é‚à‚Ì‚µ‚©o‚³‚È‚¢
+		if ( e->name() ){ //åå‰ãŒã‚ã‚‹ã‚‚ã®ã—ã‹å‡ºã•ãªã„
 			e->convertToString( &oss, 0 );
 		}
 	}
@@ -73,29 +73,29 @@ void Document::Impl::convertToString( string* out ) const {
 	*out = &t[ 0 ];
 }
 
-//’Pƒ‚ÉˆêŒÂ‚Ã‚ÂŒÄ‚ñ‚Ås‚­B
+//å˜ç´”ã«ä¸€å€‹ã¥ã¤å‘¼ã‚“ã§è¡Œãã€‚
 void Document::Impl::convertToBinary( Array< char >* out ) const {
 	int childN = mRoot->childNumber();
 	OStringStream binaryOut;
 	OStringStream stringBuffer;
 	map< RefString, int > stringMap;
-	binaryOut.write( "PXML", 4  ); //ƒ}ƒWƒbƒN
-	binaryOut.write( 0 ); //ƒXƒgƒŠƒ“ƒOƒoƒbƒtƒ@ƒIƒtƒZƒbƒg‚Ìƒ_ƒ~[
-	binaryOut.write( childN ); //ƒGƒŒƒƒ“ƒg”
+	binaryOut.write( "PXML", 4  ); //ãƒã‚¸ãƒƒã‚¯
+	binaryOut.write( 0 ); //ã‚¹ãƒˆãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ•ã‚»ãƒƒãƒˆã®ãƒ€ãƒŸãƒ¼
+	binaryOut.write( childN ); //ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆæ•°
 	for ( int i = 0; i < childN; ++i ){
 		const Element::Impl* e = mRoot->child( i );
-		if ( e->name() ){ //–¼‘O‚ª‚ ‚é‚à‚Ì‚µ‚©o‚³‚È‚¢
+		if ( e->name() ){ //åå‰ãŒã‚ã‚‹ã‚‚ã®ã—ã‹å‡ºã•ãªã„
 			e->convertToBinary( &binaryOut, &stringBuffer, &stringMap );
 		}
 	}
 	int stringBufferOffset = binaryOut.size();
-	//ƒXƒgƒŠƒ“ƒOƒoƒbƒtƒ@‚ğƒ}[ƒW
+	//ã‚¹ãƒˆãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã‚’ãƒãƒ¼ã‚¸
 	stringBuffer.get( out );
 	binaryOut.write( &( *out )[ 0 ], out->size() );
 	out->clear();
 
 	binaryOut.get( out );
-	//ƒXƒgƒŠƒ“ƒOƒoƒbƒtƒ@ƒIƒtƒZƒbƒg‚Ì–{•¨‚ğ“ü‚ê‚é
+	//ã‚¹ãƒˆãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ•ã‚»ãƒƒãƒˆã®æœ¬ç‰©ã‚’å…¥ã‚Œã‚‹
 	const char* p = reinterpret_cast< const char* >( &stringBufferOffset );
 	for ( int i = 0; i < 4; ++i ){
 		( *out )[ 4 + i ] = p[ i ];

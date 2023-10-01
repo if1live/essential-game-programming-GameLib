@@ -13,25 +13,25 @@ namespace Scene{
 class Animation;
 using namespace Math;
 
-///ŠK‘w\‘¢ƒ‚ƒfƒ‹
+///éšå±¤æ§‹é€ ãƒ¢ãƒ‡ãƒ«
 class Tree{
 public:
-	///•`‰æ
+	///æç”»
 	void draw() const;
-	///ƒAƒjƒ[ƒVƒ‡ƒ“İ’è
+	///ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³è¨­å®š
 	void setAnimation( Animation );
-	///ƒAƒjƒ[ƒVƒ‡ƒ“XV(ˆø”‚ÍBƒ}ƒCƒiƒX‚È‚ç’†‚ÅŸè‚Éi‚ß‚é)
+	///ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æ›´æ–°(å¼•æ•°ã¯æ™‚åˆ»ã€‚ãƒã‚¤ãƒŠã‚¹ãªã‚‰ä¸­ã§å‹æ‰‹ã«é€²ã‚ã‚‹)
 	void updateAnimation( float time = -1.f );
-	///ƒAƒjƒ‘¬“xİ’è
+	///ã‚¢ãƒ‹ãƒ¡é€Ÿåº¦è¨­å®š
 	void setAnimationSpeed( float );
 
 	const Vector3* position() const;
-	const Vector3* angle() const; //’PˆÊ‚Í“x
+	const Vector3* angle() const; //å˜ä½ã¯åº¦
 	const Vector3* scale() const;
 	const Vector3* color() const;
 	float transparency() const;
 	void setPosition( const Vector3& );
-	void setAngle( const Vector3& ); //’PˆÊ‚Í“x
+	void setAngle( const Vector3& ); //å˜ä½ã¯åº¦
 	void setScale( const Vector3& );
 	void setColor( const Vector3& );
 	void setTransparency( float );
@@ -51,7 +51,7 @@ private:
 	Impl* mImpl;
 };
 
-//const”Å
+//constç‰ˆ
 class ConstTree{
 public:
 	void draw() const;
@@ -61,7 +61,7 @@ public:
 	const Vector3* color() const;
 	float transparency() const;
 
-	//ˆÈ‰º’m‚ç‚È‚­‚Ä‚¢‚¢
+	//ä»¥ä¸‹çŸ¥ã‚‰ãªãã¦ã„ã„
 	ConstTree();
 	ConstTree( const Tree& );
 	~ConstTree();

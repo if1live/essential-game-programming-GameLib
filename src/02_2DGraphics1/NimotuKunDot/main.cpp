@@ -4,21 +4,21 @@ using namespace GameLib;
 #include <fstream>
 using namespace std;
 
-//ŠÖ”ƒvƒƒgƒ^ƒCƒv
+//é–¢æ•°ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—
 void readFile( char** buffer, int* size, const char* filename );
 void mainLoop();
 
 
-//“ñŸŒ³”z—ñƒNƒ‰ƒX
-//ƒeƒ“ƒvƒŒ[ƒg‚É‚È‚¶‚İ‚Í‚ ‚é‚¾‚ë‚¤‚©H‚È‚¯‚ê‚ÎŠî‘b‚¾‚¯‚Å‚à•×‹­‚µ‚Ä‚¨‚±‚¤B
-//‚±‚ÌƒNƒ‰ƒXéŒ¾‚Ì’†‚Å‚ÍT‚Æ‚¢‚¤ƒNƒ‰ƒX‚ª‚ ‚é‚©‚Ì‚æ‚¤‚Éˆµ‚í‚êA
-//‚±‚ê‚ğg‚¤‚É‚ÍT‚Ì‚Æ‚±‚ë‚Éint‚Æ‚©bool‚Æ‚©“ü‚ê‚Äg‚¤B
+//äºŒæ¬¡å…ƒé…åˆ—ã‚¯ãƒ©ã‚¹
+//ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã«ãªã˜ã¿ã¯ã‚ã‚‹ã ã‚ã†ã‹ï¼Ÿãªã‘ã‚Œã°åŸºç¤ã ã‘ã§ã‚‚å‹‰å¼·ã—ã¦ãŠã“ã†ã€‚
+//ã“ã®ã‚¯ãƒ©ã‚¹å®£è¨€ã®ä¸­ã§ã¯Tã¨ã„ã†ã‚¯ãƒ©ã‚¹ãŒã‚ã‚‹ã‹ã®ã‚ˆã†ã«æ‰±ã‚ã‚Œã€
+//ã“ã‚Œã‚’ä½¿ã†æ™‚ã«ã¯Tã®ã¨ã“ã‚ã«intã¨ã‹boolã¨ã‹å…¥ã‚Œã¦ä½¿ã†ã€‚
 template< class T > class Array2D{
 public:
 	Array2D() : mArray( 0 ){}
 	~Array2D(){
 		delete[] mArray;
-		mArray = 0;  //ƒ|ƒCƒ“ƒ^‚É0‚ğ“ü‚ê‚é‚Ì‚ÍƒNƒZ‚É‚µ‚æ‚¤B
+		mArray = 0;  //ãƒã‚¤ãƒ³ã‚¿ã«0ã‚’å…¥ã‚Œã‚‹ã®ã¯ã‚¯ã‚»ã«ã—ã‚ˆã†ã€‚
 	}
 	void setSize( int size0, int size1 ){
 		mSize0 = size0;
@@ -37,7 +37,7 @@ private:
 	int mSize1;
 };
 
-//ó‘ÔƒNƒ‰ƒX
+//çŠ¶æ…‹ã‚¯ãƒ©ã‚¹
 class State{
 public:
 	State( const char* stageData, int size );
@@ -61,10 +61,10 @@ private:
 	Array2D< bool > mGoalFlags;
 };
 
-//ƒOƒ[ƒoƒ‹•Ï”
+//ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 State* gState = 0;
 
-//ƒ†[ƒUÀ‘•ŠÖ”B’†g‚ÍmainLoop()‚ÉŠÛ“Š‚°
+//ãƒ¦ãƒ¼ã‚¶å®Ÿè£…é–¢æ•°ã€‚ä¸­èº«ã¯mainLoop()ã«ä¸¸æŠ•ã’
 namespace GameLib{
 	void Framework::update(){
 		mainLoop();
@@ -72,7 +72,7 @@ namespace GameLib{
 }
 
 void mainLoop(){
-	//Å‰‚ÌƒtƒŒ[ƒ€‚Í‰Šú‰»BÅ‰‚Ìó‘Ô‚ğ•`‰æ‚µ‚ÄI‚í‚èB
+	//æœ€åˆã®ãƒ•ãƒ¬ãƒ¼ãƒ ã¯åˆæœŸåŒ–ã€‚æœ€åˆã®çŠ¶æ…‹ã‚’æç”»ã—ã¦çµ‚ã‚ã‚Šã€‚
 	if ( !gState ){ 
 		const char* filename = "stageData.txt";
 		char* stageData;
@@ -83,37 +83,37 @@ void mainLoop(){
 			return;
 		}
 		gState = new State( stageData, fileSize );
-		//Œãn––
+		//å¾Œå§‹æœ«
 		delete[] stageData;
 		stageData = 0;
-		//‰‰ñ•`‰æ
+		//åˆå›æç”»
 		gState->draw();
-		return; //‚»‚Ì‚Ü‚ÜI‚í‚é
+		return; //ãã®ã¾ã¾çµ‚ã‚ã‚‹
 	}
 	bool cleared = false;
-	//ƒƒCƒ“ƒ‹[ƒv
-	//ƒNƒŠƒAƒ`ƒFƒbƒN
+	//ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—
+	//ã‚¯ãƒªã‚¢ãƒã‚§ãƒƒã‚¯
 	if ( gState->hasCleared() ){
 		cleared = true;
 	}
-	//“ü—Íæ“¾
-	cout << "a:left s:right w:up z:down. command?" << endl; //‘€ìà–¾
+	//å…¥åŠ›å–å¾—
+	cout << "a:left s:right w:up z:down. command?" << endl; //æ“ä½œèª¬æ˜
 	char input;
 	cin >> input;
-	//XV
+	//æ›´æ–°
 	gState->update( input );
-	//•`‰æ
+	//æç”»
 	gState->draw();
 
 	if ( cleared ){
-		//j‚¢‚ÌƒƒbƒZ[ƒW
+		//ç¥ã„ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 		cout << "Congratulation! you win." << endl;
 		delete gState;
 		gState = 0;
 	}
 }
 
-//---------------------ˆÈ‰ºŠÖ”’è‹`------------------------------------------
+//---------------------ä»¥ä¸‹é–¢æ•°å®šç¾©------------------------------------------
 
 void readFile( char** buffer, int* size, const char* filename ){
 	ifstream in( filename, ifstream::binary );
@@ -131,16 +131,16 @@ void readFile( char** buffer, int* size, const char* filename ){
 
 
 State::State( const char* stageData, int size ){	
-	//ƒTƒCƒY‘ª’è
+	//ã‚µã‚¤ã‚ºæ¸¬å®š
 	setSize( stageData, size );
-	//”z—ñŠm•Û
+	//é…åˆ—ç¢ºä¿
 	mObjects.setSize( mWidth, mHeight );
 	mGoalFlags.setSize( mWidth, mHeight );
-	//‰Šú’l‚Å–„‚ß‚Æ‚­
+	//åˆæœŸå€¤ã§åŸ‹ã‚ã¨ã
 	for ( int y = 0; y < mHeight; ++y ){
 		for ( int x = 0; x < mWidth; ++x ){
-			mObjects( x, y ) = OBJ_WALL; //‚ ‚Ü‚Á‚½•”•ª‚Í•Ç
-			mGoalFlags( x, y ) = false; //ƒS[ƒ‹‚¶‚á‚È‚¢
+			mObjects( x, y ) = OBJ_WALL; //ã‚ã¾ã£ãŸéƒ¨åˆ†ã¯å£
+			mGoalFlags( x, y ) = false; //ã‚´ãƒ¼ãƒ«ã˜ã‚ƒãªã„
 		}
 	}
 	int x = 0;
@@ -156,20 +156,20 @@ State::State( const char* stageData, int size ){
 			case '.': t = OBJ_SPACE; goalFlag = true; break;
 			case 'p': t = OBJ_MAN; break;
 			case 'P': t = OBJ_MAN; goalFlag = true; break;
-			case '\n': x = 0; ++y; t = OBJ_UNKNOWN; break; //‰üsˆ—
+			case '\n': x = 0; ++y; t = OBJ_UNKNOWN; break; //æ”¹è¡Œå‡¦ç†
 			default: t = OBJ_UNKNOWN; break;
 		}
-		if ( t != OBJ_UNKNOWN ){ //’m‚ç‚È‚¢•¶š‚È‚ç–³‹‚·‚é‚Ì‚Å‚±‚Ìif•¶‚ª‚ ‚é
-			mObjects( x, y ) = t; //‘‚«‚İ
-			mGoalFlags( x, y ) = goalFlag; //ƒS[ƒ‹î•ñ
+		if ( t != OBJ_UNKNOWN ){ //çŸ¥ã‚‰ãªã„æ–‡å­—ãªã‚‰ç„¡è¦–ã™ã‚‹ã®ã§ã“ã®ifæ–‡ãŒã‚ã‚‹
+			mObjects( x, y ) = t; //æ›¸ãè¾¼ã¿
+			mGoalFlags( x, y ) = goalFlag; //ã‚´ãƒ¼ãƒ«æƒ…å ±
 			++x;
 		}
 	}
 }
 
 void State::setSize( const char* stageData, int size ){
-	mWidth = mHeight = 0; //‰Šú‰»
-	//Œ»İˆÊ’u
+	mWidth = mHeight = 0; //åˆæœŸåŒ–
+	//ç¾åœ¨ä½ç½®
 	int x = 0;
 	int y = 0;
 	for ( int i = 0; i < size; ++i ){
@@ -180,7 +180,7 @@ void State::setSize( const char* stageData, int size ){
 				break;
 			case '\n': 
 				++y;
-				//Å‘å’lXV
+				//æœ€å¤§å€¤æ›´æ–°
 				mWidth = max( mWidth, x );
 				mHeight = max( mHeight, y );
 				x = 0; 
@@ -219,20 +219,20 @@ void State::draw() const {
 }
 
 void State::update( char input ){
-	//ˆÚ“®·•ª‚É•ÏŠ·
+	//ç§»å‹•å·®åˆ†ã«å¤‰æ›
 	int dx = 0;
 	int dy = 0;
 	switch ( input ){
-		case 'a': dx = -1; break; //¶
-		case 's': dx = 1; break; //‰E
-		case 'w': dy = -1; break; //ãBY‚Í‰º‚ªƒvƒ‰ƒX
-		case 'z': dy = 1; break; //‰ºB
+		case 'a': dx = -1; break; //å·¦
+		case 's': dx = 1; break; //å³
+		case 'w': dy = -1; break; //ä¸Šã€‚Yã¯ä¸‹ãŒãƒ—ãƒ©ã‚¹
+		case 'z': dy = 1; break; //ä¸‹ã€‚
 	}
-	//’Z‚¢•Ï”–¼‚ğ‚Â‚¯‚éB
+	//çŸ­ã„å¤‰æ•°åã‚’ã¤ã‘ã‚‹ã€‚
 	int w = mWidth;
 	int h = mHeight;
 	Array2D< Object >& o = mObjects;
-	//lÀ•W‚ğŒŸõ
+	//äººåº§æ¨™ã‚’æ¤œç´¢
 	int x, y;
 	x = y = -1;
 	bool found = false;
@@ -247,28 +247,28 @@ void State::update( char input ){
 			break;
 		}
 	}
-	//ˆÚ“®
-	//ˆÚ“®ŒãÀ•W
+	//ç§»å‹•
+	//ç§»å‹•å¾Œåº§æ¨™
 	int tx = x + dx;
 	int ty = y + dy;
-	//À•W‚ÌÅ‘åÅ¬ƒ`ƒFƒbƒNBŠO‚ê‚Ä‚¢‚ê‚Î•s‹–‰Â
+	//åº§æ¨™ã®æœ€å¤§æœ€å°ãƒã‚§ãƒƒã‚¯ã€‚å¤–ã‚Œã¦ã„ã‚Œã°ä¸è¨±å¯
 	if ( tx < 0 || ty < 0 || tx >= w || ty >= h ){
 		return;
 	}
-	//A.‚»‚Ì•ûŒü‚ª‹ó”’‚Ü‚½‚ÍƒS[ƒ‹Bl‚ªˆÚ“®B
+	//A.ãã®æ–¹å‘ãŒç©ºç™½ã¾ãŸã¯ã‚´ãƒ¼ãƒ«ã€‚äººãŒç§»å‹•ã€‚
 	if ( o( tx, ty ) == OBJ_SPACE ){
 		o( tx, ty ) = OBJ_MAN;
 		o( x, y ) = OBJ_SPACE;
-	//B.‚»‚Ì•ûŒü‚ª” B‚»‚Ì•ûŒü‚ÌŸ‚Ìƒ}ƒX‚ª‹ó”’‚Ü‚½‚ÍƒS[ƒ‹‚Å‚ ‚ê‚ÎˆÚ“®B
+	//B.ãã®æ–¹å‘ãŒç®±ã€‚ãã®æ–¹å‘ã®æ¬¡ã®ãƒã‚¹ãŒç©ºç™½ã¾ãŸã¯ã‚´ãƒ¼ãƒ«ã§ã‚ã‚Œã°ç§»å‹•ã€‚
 	}else if ( o( tx, ty ) == OBJ_BLOCK ){
-		//2ƒ}ƒXæ‚ª”ÍˆÍ“à‚©ƒ`ƒFƒbƒN
+		//2ãƒã‚¹å…ˆãŒç¯„å›²å†…ã‹ãƒã‚§ãƒƒã‚¯
 		int tx2 = tx + dx;
 		int ty2 = ty + dy; 
-		if ( tx2 < 0 || ty2 < 0 || tx2 >= w || ty2 >= h ){ //‰Ÿ‚¹‚È‚¢
+		if ( tx2 < 0 || ty2 < 0 || tx2 >= w || ty2 >= h ){ //æŠ¼ã›ãªã„
 			return;
 		}
 		if ( o( tx2, ty2 ) == OBJ_SPACE ){
-			//‡Ÿ“ü‚ê‘Ö‚¦
+			//é †æ¬¡å…¥ã‚Œæ›¿ãˆ
 			o( tx2, ty2 ) = OBJ_BLOCK;
 			o( tx, ty ) = OBJ_MAN;
 			o( x, y ) = OBJ_SPACE;
@@ -276,8 +276,8 @@ void State::update( char input ){
 	}
 }
 
-//ƒuƒƒbƒN‚Ì‚Æ‚±‚ë‚ÌgoalFlag‚ªˆê‚Â‚Å‚àfalse‚È‚ç
-//‚Ü‚¾ƒNƒŠƒA‚µ‚Ä‚È‚¢
+//ãƒ–ãƒ­ãƒƒã‚¯ã®ã¨ã“ã‚ã®goalFlagãŒä¸€ã¤ã§ã‚‚falseãªã‚‰
+//ã¾ã ã‚¯ãƒªã‚¢ã—ã¦ãªã„
 bool State::hasCleared() const {
 	for ( int y = 0; y < mHeight; ++y ){
 		for ( int x = 0; x < mWidth; ++x ){

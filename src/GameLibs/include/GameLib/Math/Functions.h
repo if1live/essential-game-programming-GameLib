@@ -1,32 +1,32 @@
 #ifndef INCLUDED_GAMELIB_MATH_FUNCTIONS_H
 #define INCLUDED_GAMELIB_MATH_FUNCTIONS_H
 
-//”Šwƒ‰ƒCƒuƒ‰ƒŠBŠp“x’PˆÊ‚Í“xB
+//æ•°å­¦ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã€‚è§’åº¦å˜ä½ã¯åº¦ã€‚
 namespace GameLib{
 namespace Math{
 
-//OŠpŠÖ”
+//ä¸‰è§’é–¢æ•°
 float sin( float );
 float cos( float );
 float tan( float );
-//‹tOŠpŠÖ”
+//é€†ä¸‰è§’é–¢æ•°
 float asin( float );
 float acos( float );
 float atan( float );
 float atan2( float y, float x );
 
-float pow( float a, float b ); //—İæ(a‚Ìbæ)
-float log2( float ); //2‚ğ’ê‚Æ‚·‚é‘Î”
-float log10( float ); //10‚ğ’ê‚Æ‚·‚é‘Î”
-float abs( float );//â‘Î’l
-float min( float, float ); //Å¬
-float max( float, float ); //Å‘å
-float sqrt( float ); //•½•ûª
+float pow( float a, float b ); //ç´¯ä¹—(aã®bä¹—)
+float log2( float ); //2ã‚’åº•ã¨ã™ã‚‹å¯¾æ•°
+float log10( float ); //10ã‚’åº•ã¨ã™ã‚‹å¯¾æ•°
+float abs( float );//çµ¶å¯¾å€¤
+float min( float, float ); //æœ€å°
+float max( float, float ); //æœ€å¤§
+float sqrt( float ); //å¹³æ–¹æ ¹
 
-const float EPSILON = 0.00000011920928955078125f; //float‚ÌŒÀŠE¸“x(1/2^23)
-const float FLOAT_MAX = 1.7014117331926442990585209174226e+38; //float‚ÌÅ‘å’l((2^24-1)/2^23 * 2^126 )
+const float EPSILON = 0.00000011920928955078125f; //floatã®é™ç•Œç²¾åº¦(1/2^23)
+const float FLOAT_MAX = 1.7014117331926442990585209174226e+38; //floatã®æœ€å¤§å€¤((2^24-1)/2^23 * 2^126 )
 
-bool isSpecial( float ); //NaN,Inf‚È‚çtrue
+bool isSpecial( float ); //NaN,Infãªã‚‰true
 
 } //namespace Math
 } //namespace GameLib

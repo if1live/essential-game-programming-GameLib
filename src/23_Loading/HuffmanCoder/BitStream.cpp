@@ -93,6 +93,6 @@ void OBitStream::write( int a ){
 }
 
 int OBitStream::sizeInByte() const {
-	return ( mPosition + 7 ) / 8; //8�Ŋ����ė]�肪0�Ȃ炻�̂܂܁A�]�肪�����+1���ĕԂ��̂����A7�����Ă���8�Ŋ���Ɠ������Ƃ��ł���B
+	return ( mPosition + 7 ) / 8; //8で割って余りが0ならそのまま、余りがあれば+1して返すのだが、7足してから8で割ると同じことができる。
 }
 

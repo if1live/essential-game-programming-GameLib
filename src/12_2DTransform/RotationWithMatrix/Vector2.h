@@ -3,19 +3,19 @@
 
 class Vector2{
 public:
-	//‰½‚à‚µ‚È‚¢ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ä½•ã‚‚ã—ãªã„ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Vector2();
-	//®”‚©‚çƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//æ•´æ•°ã‹ã‚‰ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Vector2( int x, int y );
-	//double‚©‚çƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//doubleã‹ã‚‰ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Vector2( double x, double y );
-	//Vector2‚©‚çƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//Vector2ã‹ã‚‰ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Vector2( const Vector2& );
-	//‘«‚µZ
+	//è¶³ã—ç®—
 	void operator+=( const Vector2& );
-	//ˆø‚«Z
+	//å¼•ãç®—
 	void operator-=( const Vector2& );
-	//ƒRƒs[
+	//ã‚³ãƒ”ãƒ¼
 	void operator=( const Vector2& );
 
 	double x;

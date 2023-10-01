@@ -42,7 +42,7 @@ void Matrix34::operator*=( const Matrix34& m ){
 }
 
 void Matrix34::multiply( Vector3* out, const Vector3& in ) const {
-	//out��in��������������Ȃ��̂ŁA�o�b�N�A�b�v
+	//outとinが同じかもしれないので、バックアップ
 	double tx = in.x; 
 	double ty = in.y; 
 	out->x = m00 * tx + m01 * ty + m02 * in.z + m03;
@@ -50,14 +50,14 @@ void Matrix34::multiply( Vector3* out, const Vector3& in ) const {
 	out->z = m20 * tx + m21 * ty + m22 * in.z + m23;
 }
 
-//���ʂȂ��ړ��s�����Z�B2D�̎��̂��Q�l�ɂ��Ď��͂ōl���悤�B
+//無駄なく移動行列を乗算。2Dの時のを参考にして自力で考えよう。
 void Matrix34::translate( const Vector3& a ){
 	m03 += m00 * a.x + m01 * a.y + m02 * a.z;
 	m13 += m10 * a.x + m11 * a.y + m12 * a.z;
 	m23 += m20 * a.x + m21 * a.y + m22 * a.z;
 }
 
-//���ʂȂ��g��k���s�����Z�B2D�̎��̂��Q�l�ɂ��Ď��͂ōl���悤�B
+//無駄なく拡大縮小行列を乗算。2Dの時のを参考にして自力で考えよう。
 void Matrix34::scale( const Vector3& a ){
 	m00 *= a.x;
 	m01 *= a.y;

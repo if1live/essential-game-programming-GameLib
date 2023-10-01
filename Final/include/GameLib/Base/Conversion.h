@@ -2,20 +2,20 @@
 #define INCLUDED_GAMELIB_CONVERSION_H
 
 
-//•¶š—ñ‚Ö‚Ì•ÏŠ·
-//char‚È‚çÅ‘å4•¶šAshort‚È‚ç6•¶šAint‚È‚ç11•¶šAfloat‚È‚ç16Adouble‚È‚ç30‘OŒã(—\’è)‚Ì
-//ƒTƒCƒY‚Ìƒoƒbƒtƒ@‚ğ“n‚·•K—v‚ª‚ ‚éB
-//–ß‚è’l‚Í‘‚«‚İƒTƒCƒY‚¾B”ÍˆÍŠO‚É‚ ‚Ó‚ê‚Ä‚¢‚È‚¢‚©ƒ`ƒFƒbƒN‚µ‚æ‚¤B
+//æ–‡å­—åˆ—ã¸ã®å¤‰æ›
+//charãªã‚‰æœ€å¤§4æ–‡å­—ã€shortãªã‚‰6æ–‡å­—ã€intãªã‚‰11æ–‡å­—ã€floatãªã‚‰16ã€doubleãªã‚‰30å‰å¾Œ(äºˆå®š)ã®
+//ã‚µã‚¤ã‚ºã®ãƒãƒƒãƒ•ã‚¡ã‚’æ¸¡ã™å¿…è¦ãŒã‚ã‚‹ã€‚
+//æˆ»ã‚Šå€¤ã¯æ›¸ãè¾¼ã¿ã‚µã‚¤ã‚ºã ã€‚ç¯„å›²å¤–ã«ã‚ãµã‚Œã¦ã„ãªã„ã‹ãƒã‚§ãƒƒã‚¯ã—ã‚ˆã†ã€‚
 namespace GameLib{
 
-int toString10( char* out, char ); //•¶š‚Å‚È‚­’P‚È‚é®”‚Æ‚µ‚Äˆµ‚¤
+int toString10( char* out, char ); //æ–‡å­—ã§ãªãå˜ãªã‚‹æ•´æ•°ã¨ã—ã¦æ‰±ã†
 int toString10( char* out, unsigned char );
 int toString10( char* out, short );
 int toString10( char* out, unsigned short );
 int toString10( char* out, int );
 int toString10( char* out, unsigned );
 
-int toString16( char* out, char ); //•¶š‚Å‚È‚­’P‚È‚é®”‚Æ‚µ‚Äˆµ‚¤
+int toString16( char* out, char ); //æ–‡å­—ã§ãªãå˜ãªã‚‹æ•´æ•°ã¨ã—ã¦æ‰±ã†
 int toString16( char* out, unsigned char );
 int toString16( char* out, short );
 int toString16( char* out, unsigned short );

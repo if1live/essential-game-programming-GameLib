@@ -7,8 +7,8 @@ using namespace std;
 using namespace GameLib;
 using namespace GameLib::Math;
 
-//ƒ‰ƒ“ƒ_ƒ€«‚ÌŒŸ’è
-//32*32*32‚Ì” ‚Éƒ‰ƒ“ƒ_ƒ€‚É“ü‚ê‚Ä‚¢‚«A‚¿‚á‚ñ‚Æƒ‰ƒ“ƒ_ƒ€‚©‚ğŠm”F‚·‚éB
+//ãƒ©ãƒ³ãƒ€ãƒ æ€§ã®æ¤œå®š
+//32*32*32ã®ç®±ã«ãƒ©ãƒ³ãƒ€ãƒ ã«å…¥ã‚Œã¦ã„ãã€ã¡ã‚ƒã‚“ã¨ãƒ©ãƒ³ãƒ€ãƒ ã‹ã‚’ç¢ºèªã™ã‚‹ã€‚
 Random gRandom;
 
 const int N = 1000*1000;
@@ -32,7 +32,7 @@ namespace GameLib{
 		for ( int i = 0; i < N; ++i ){
 			int v[ 3 ];
 			for ( int j = 0; j < 3; ++j ){
-#if 0 //1‚É‚·‚é‚Æ•W€rand(),0‚É‚·‚é‚ÆMath::Random
+#if 0 //1ã«ã™ã‚‹ã¨æ¨™æº–rand(),0ã«ã™ã‚‹ã¨Math::Random
 				v[ j ] = rand();
 #else
 				v[ j ] = gRandom.getInt();
@@ -54,7 +54,7 @@ namespace GameLib{
 		gK += s - sIdeal;
 		gC += 1.0;
 
-		//‡‚ÉŒvZ‚µ‚½•W€•Î·A—‘z“I•W€•Î·A—‘z‚Æ‚Ì·A—‘z‚Æ‚Ì·(—İÏ)
+		//é †ã«è¨ˆç®—ã—ãŸæ¨™æº–åå·®ã€ç†æƒ³çš„æ¨™æº–åå·®ã€ç†æƒ³ã¨ã®å·®ã€ç†æƒ³ã¨ã®å·®(ç´¯ç©)
 		DebugScreen sc;
 		sc << s << " " << sIdeal << " " << s - sIdeal << " " << gK/gC;
 	}

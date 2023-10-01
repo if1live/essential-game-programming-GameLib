@@ -10,19 +10,19 @@ namespace GameLib{
 	void Framework::update(){
 		setFrameRate( 60 );
 
-		enableDepthTest( true ); //ZƒeƒXƒg‚Íon
-		enableDepthWrite( gDepthWrite ); //‚±‚±‚Å•Ï‚¦‚é‚Ì‚ÍZƒoƒbƒtƒ@‚Ö‚Ì‘‚«‚İ
+		enableDepthTest( true ); //Zãƒ†ã‚¹ãƒˆã¯on
+		enableDepthWrite( gDepthWrite ); //ã“ã“ã§å¤‰ãˆã‚‹ã®ã¯Zãƒãƒƒãƒ•ã‚¡ã¸ã®æ›¸ãè¾¼ã¿
 		setBlendMode( gBlendMode );
 
 		double point0[ 3 ] = { 200.0, 100.0, 1.0 };
 		double point1[ 3 ] = { 400.0, 100.0, 1.0 };
 		double point2[ 3 ] = { 300.0, 400.0, 0.0 };
-		unsigned c0 = 0x80ff8080; //Ô
+		unsigned c0 = 0x80ff8080; //èµ¤
 
 		double point3[ 3 ] = { 200.0, 400.0, 1.0 };
 		double point4[ 3 ] = { 400.0, 400.0, 1.0 };
 		double point5[ 3 ] = { 300.0, 100.0, 0.0 };
-		unsigned c1 = 0x8080ff80; //—Î
+		unsigned c1 = 0x8080ff80; //ç·‘
 
 		if ( gSwapOrder ){
 			drawTriangle3D( point3, point4, point5, 0, 0, 0, c1, c1, c1 );

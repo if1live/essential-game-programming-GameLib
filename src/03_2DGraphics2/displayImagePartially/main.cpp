@@ -12,7 +12,7 @@ unsigned* gImageData = 0;
 
 namespace GameLib{
 	void Framework::update(){
-		//Å‰‚ÌƒtƒŒ[ƒ€‚Éƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+		//æœ€åˆã®ãƒ•ãƒ¬ãƒ¼ãƒ ã«ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 		if ( gFirst ){
 			gFirst = false;
 			char* buffer = 0;
@@ -30,7 +30,7 @@ namespace GameLib{
 		int windowHeight = height();
 		int partX = 0;
 		int partY = 1;
-		//“K“–‚É32x32‚Ì—Ìˆæ‚Å•~‚«‹l‚ß‚Ü‚·B
+		//é©å½“ã«32x32ã®é ˜åŸŸã§æ•·ãè©°ã‚ã¾ã™ã€‚
 		for ( int tileY = 0; tileY + 32 < windowHeight; tileY += 32 ){
 			for ( int tileX = 0; tileX + 32 < windowWidth; tileX += 32 ){
 				for ( int y = 0; y < 32; ++y ){
@@ -39,7 +39,7 @@ namespace GameLib{
 						*dst = gImageData[ ( partY * 32 + y ) * gImageWidth + ( partX * 32 + x ) ];
 					}
 				}
-				//“K“–‚Éƒ^ƒCƒ‹‚ğ‘I‘ğB”š‚Éª‹’‚Í‚È‚¢B
+				//é©å½“ã«ã‚¿ã‚¤ãƒ«ã‚’é¸æŠã€‚æ•°å­—ã«æ ¹æ‹ ã¯ãªã„ã€‚
 				partX = ( partX + 9973 ) % 4; 
 				partY = ( partY + 9967 ) % 4;
 			}
@@ -47,7 +47,7 @@ namespace GameLib{
 	}
 }
 
-//ƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+//ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 void readFile( char** buffer, int* size, const char* filename ){
 	ifstream in( filename, ifstream::binary );
 	if ( !in ){
@@ -62,7 +62,7 @@ void readFile( char** buffer, int* size, const char* filename ){
 	}
 }
 
-//unsignedæ‚èo‚µ
+//unsignedå–ã‚Šå‡ºã—
 unsigned getUnsigned( const char* p ){
 	const unsigned char* up;
 	up = reinterpret_cast< const unsigned char* >( p );

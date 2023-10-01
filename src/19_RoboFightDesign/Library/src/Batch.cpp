@@ -19,7 +19,7 @@ mVertexBuffer( 0 ),
 mIndexBuffer( 0 ),
 mTexture( 0 ),
 mBlendMode( Framework::BLEND_OPAQUE ){
-	//–¼‘O‚â‚ç‚È‚É‚â‚ç‚ğ”²‚­
+	//åå‰ã‚„ã‚‰ãªã«ã‚„ã‚‰ã‚’æŠœã
 	int an = e.attributeNumber();
 	for ( int i = 0; i < an; ++i ){
 		Attribute a = e.attribute( i );
@@ -48,7 +48,7 @@ mBlendMode( Framework::BLEND_OPAQUE ){
 Batch::Batch(
 const VertexBuffer* vb,
 const IndexBuffer* ib,
-const ::Texture* tex, //GameLib“à‚Ì‚Æ‹æ•Ê
+const ::Texture* tex, //GameLibå†…ã®ã¨åŒºåˆ¥
 Framework::BlendMode blend ) :
 mVertexBuffer( vb ),
 mIndexBuffer( ib ),
@@ -64,23 +64,23 @@ Batch::~Batch(){
 
 void Batch::draw( const Matrix44& transform, unsigned color ) const {
 	Framework f = Framework::instance();
-	//ƒeƒNƒXƒ`ƒƒƒZƒbƒg
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚»ãƒƒãƒˆ
 	if ( mTexture ){
 		mTexture->set();
 	}else{
-		f.setTexture( 0 ); //‹ó‚ÌƒeƒNƒXƒ`ƒƒ
+		f.setTexture( 0 ); //ç©ºã®ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	}
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhƒZƒbƒg
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰ã‚»ãƒƒãƒˆ
 	f.setBlendMode( mBlendMode );
-	//ƒuƒŒƒ“ƒhƒ‚[ƒh‚É‚æ‚Á‚ÄZƒoƒbƒtƒ@‘‚«‚İ‚Ìƒtƒ‰ƒO‚ğOn,Off
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰ã«ã‚ˆã£ã¦Zãƒãƒƒãƒ•ã‚¡æ›¸ãè¾¼ã¿ã®ãƒ•ãƒ©ã‚°ã‚’On,Off
 	if ( mBlendMode == Framework::BLEND_OPAQUE ){
 		f.enableDepthWrite( true );
 	}else{
 		f.enableDepthWrite( false );
 	}
-	//ZƒeƒXƒg‚Í‚¢‚Â‚àOn
+	//Zãƒ†ã‚¹ãƒˆã¯ã„ã¤ã‚‚On
 	f.enableDepthTest( true );
-	//’¸“_•ÏŠ·
+	//é ‚ç‚¹å¤‰æ›
 	int vertexNumber = mVertexBuffer->size();
 	double* p4 = new double[ vertexNumber * 4 ];
 	for ( int i = 0;i < vertexNumber; ++i ){

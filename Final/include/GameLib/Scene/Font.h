@@ -13,53 +13,53 @@ using namespace Math;
 
 namespace Scene{
 
-///ƒtƒHƒ“ƒgƒNƒ‰ƒX
+///ãƒ•ã‚©ãƒ³ãƒˆã‚¯ãƒ©ã‚¹
 class Font{
 public:
-	///ƒrƒbƒgƒ}ƒbƒvƒtƒHƒ“ƒg‚Ì•¶šˆê‚Â‚Ã‚Â‚É•t‚«•K—v‚Èƒf[ƒ^
+	///ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ãƒ•ã‚©ãƒ³ãƒˆã®æ–‡å­—ä¸€ã¤ã¥ã¤ã«ä»˜ãå¿…è¦ãªãƒ‡ãƒ¼ã‚¿
 	struct BitmapChar{
-		unsigned short mCode; //•¶šƒR[ƒh(SHIFT_JIS)
-		unsigned short mX; //¶’[
-		unsigned short mY; //ã’[
-		unsigned char mTexturePage; //ƒeƒNƒXƒ`ƒƒƒy[ƒW
-		unsigned char mWidth; //•î•ñ(ƒsƒNƒZƒ‹)
-		unsigned char mHeight; //‚‚³î•ñ(ƒsƒNƒZƒ‹)
+		unsigned short mCode; //æ–‡å­—ã‚³ãƒ¼ãƒ‰(SHIFT_JIS)
+		unsigned short mX; //å·¦ç«¯
+		unsigned short mY; //ä¸Šç«¯
+		unsigned char mTexturePage; //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒšãƒ¼ã‚¸
+		unsigned char mWidth; //å¹…æƒ…å ±(ãƒ”ã‚¯ã‚»ãƒ«)
+		unsigned char mHeight; //é«˜ã•æƒ…å ±(ãƒ”ã‚¯ã‚»ãƒ«)
 	};
-	///ƒeƒNƒXƒ`ƒƒ‚ğg‚Á‚½ƒrƒbƒgƒ}ƒbƒvƒtƒHƒ“ƒg‚ğ¶¬B•¶š‚Ì‚‚³‚ÍÅ‘å’l‚ğÌ—pB
+	///ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ä½¿ã£ãŸãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ãƒ•ã‚©ãƒ³ãƒˆã‚’ç”Ÿæˆã€‚æ–‡å­—ã®é«˜ã•ã¯æœ€å¤§å€¤ã‚’æ¡ç”¨ã€‚
 	static Font create( 
-		const char** textureFileNames, //ƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼”z—ñ
+		const char** textureFileNames, //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«åé…åˆ—
 		int textureNumber,
 		BitmapChar* BitmapChars,
 		int bitmapCharNumber );
-	///ƒeƒNƒXƒ`ƒƒ‚ğg‚Á‚½ƒrƒbƒgƒ}ƒbƒvƒtƒHƒ“ƒg‚ğ¶¬B•¶š‚Ì‚‚³‚ÍÅ‘å’l‚ğÌ—pB
+	///ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ä½¿ã£ãŸãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ãƒ•ã‚©ãƒ³ãƒˆã‚’ç”Ÿæˆã€‚æ–‡å­—ã®é«˜ã•ã¯æœ€å¤§å€¤ã‚’æ¡ç”¨ã€‚
 	static Font create(
-		const char** textureFileData, //ƒeƒNƒXƒ`ƒƒDDSƒCƒ[ƒW”z—ñ
-		const int* textureFileSizes, //ƒeƒNƒXƒ`ƒƒƒf[ƒ^ƒTƒCƒY”z—ñ
+		const char** textureFileData, //ãƒ†ã‚¯ã‚¹ãƒãƒ£DDSã‚¤ãƒ¡ãƒ¼ã‚¸é…åˆ—
+		const int* textureFileSizes, //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºé…åˆ—
 		int textureNumber,
 		BitmapChar* bitmapChars,
 		int CharNumber );
-	///OS‚©‚ç“®“I‚ÉƒtƒHƒ“ƒgƒf[ƒ^‚ğæ“¾‚·‚éB•¶š‚Ì‚‚³A“à•”ƒeƒNƒXƒ`ƒƒ•‚È‚Ç‚Íw’èB
+	///OSã‹ã‚‰å‹•çš„ã«ãƒ•ã‚©ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹ã€‚æ–‡å­—ã®é«˜ã•ã€å†…éƒ¨ãƒ†ã‚¯ã‚¹ãƒãƒ£å¹…ãªã©ã¯æŒ‡å®šã€‚
 	static Font create(
 		const char* osFontName,
-		int charHeightHint, //‚±‚ê‚Í–ÚˆÀBÀÛ‚É‚¢‚­‚Â‚©‚ÍgetCharHeight‚ğQÆ‚¹‚æ
+		int charHeightHint, //ã“ã‚Œã¯ç›®å®‰ã€‚å®Ÿéš›ã«ã„ãã¤ã‹ã¯getCharHeightã‚’å‚ç…§ã›ã‚ˆ
 		bool bold = false,
 		bool italic = false,
 		bool proportional = false,
 		bool antialias = false,
 		int internalTextureWidth = 512,
 		int internalTextureHeight = 512 );
-	///•¶šî•ñ‚ğæ“¾BŒ©‚Â‚©‚ç‚È‚¢‚Æfalse‚ğ•Ô‚·B
+	///æ–‡å­—æƒ…å ±ã‚’å–å¾—ã€‚è¦‹ã¤ã‹ã‚‰ãªã„ã¨falseã‚’è¿”ã™ã€‚
 	bool getChar( 
 		Graphics::Texture* textureOut,
 		Vector2* uvTopLeftOut,
 		Vector2* uvBottomRightOut,
 		int code );
-	///•¶š‚ÌÅ‘å‚‚³
+	///æ–‡å­—ã®æœ€å¤§é«˜ã•
 	int charHeight() const;
-	///ƒ[ƒhI‚í‚Á‚Ä‚éH
+	///ãƒ­ãƒ¼ãƒ‰çµ‚ã‚ã£ã¦ã‚‹ï¼Ÿ
 	bool isReady();
 
-	//ˆÈ‰ºƒ†[ƒU‚ÍˆÓ¯‚µ‚È‚­‚Ä‚¢‚¢
+	//ä»¥ä¸‹ãƒ¦ãƒ¼ã‚¶ã¯æ„è­˜ã—ãªãã¦ã„ã„
 	Font();
 	~Font();
 	Font( const Font& );

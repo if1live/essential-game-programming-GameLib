@@ -5,20 +5,20 @@ namespace GameLib{
 	void halt( const char* filename, int line, const char* message );
 }
 
-//ƒ}ƒNƒ—Ş
-#define STRONG_ASSERT( exp ) ( ( !! ( exp ) ) || ( GameLib::halt( __FILE__, __LINE__, #exp ), 0 ) ) //‚±‚Ìs‚ÌˆÓ–¡‚ğ—‰ğ‚·‚é‚Ì‚Í‘Š“–“ï‚µ‚¢
+//ãƒã‚¯ãƒ­é¡
+#define STRONG_ASSERT( exp ) ( ( !! ( exp ) ) || ( GameLib::halt( __FILE__, __LINE__, #exp ), 0 ) ) //ã“ã®è¡Œã®æ„å‘³ã‚’ç†è§£ã™ã‚‹ã®ã¯ç›¸å½“é›£ã—ã„
 #define HALT( exp ) { GameLib::halt( __FILE__, __LINE__, #exp ); }
 #define SAFE_DELETE( x ) { delete ( x ); ( x ) = 0; }
 #define SAFE_DELETE_ARRAY( x ) { delete[] ( x ); ( x ) = 0; }
 
-//ƒfƒoƒO‚ÆƒŠƒŠ[ƒX‚Å•ªŠò‚·‚é‚à‚Ì
+//ãƒ‡ãƒã‚°ã¨ãƒªãƒªãƒ¼ã‚¹ã§åˆ†å²ã™ã‚‹ã‚‚ã®
 #ifndef NDEBUG
 #define ASSERT( exp ) ( ( !! ( exp ) ) || ( GameLib::halt( __FILE__, __LINE__, #exp ), 0 ) )
 #else //NDEBUG
 #define ASSERT( exp )
 #endif //NDEBUG
 
-//ƒx[ƒXƒT[ƒrƒXƒwƒbƒ_
+//ãƒ™ãƒ¼ã‚¹ã‚µãƒ¼ãƒ“ã‚¹ãƒ˜ãƒƒãƒ€
 #include "Base/DebugStream.h"
 
 #endif

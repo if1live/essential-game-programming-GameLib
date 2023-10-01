@@ -13,8 +13,8 @@ using namespace GameLib;
 using namespace std;
 
 bool gFirstFrame = true;
-Robo* gRobo[ 2 ]; //ƒƒ{ƒOƒ[ƒoƒ‹‚É‚¨‚¢‚ÄŒ©‚½Bƒ}ƒl‚µ‚È‚¢‚Å‚ËB
-Stage* gStage; //ƒXƒe[ƒWƒOƒ[ƒoƒ‹‚É‚¨‚¢‚ÄŒ©‚½Bƒ}ƒl‚µ‚È‚¢‚Å‚ËB
+Robo* gRobo[ 2 ]; //ãƒ­ãƒœã‚°ãƒ­ãƒ¼ãƒãƒ«ã«ãŠã„ã¦è¦‹ãŸã€‚ãƒãƒã—ãªã„ã§ã­ã€‚
+Stage* gStage; //ã‚¹ãƒ†ãƒ¼ã‚¸ã‚°ãƒ­ãƒ¼ãƒãƒ«ã«ãŠã„ã¦è¦‹ãŸã€‚ãƒãƒã—ãªã„ã§ã­ã€‚
 int gCount;
 Vector3 gEyePosition( 0.0, 0.0, 1.0 );
 Vector3 gEyeTarget( 0.0, 0.0, 0.0 );
@@ -25,49 +25,49 @@ namespace GameLib{
 			setFrameRate( 60 );
 			gFirstFrame = false;
 			
-			Pad::create(); //ƒpƒbƒh‰Šú‰»
+			Pad::create(); //ãƒ‘ãƒƒãƒ‰åˆæœŸåŒ–
 			gRobo[ 0 ] = new Robo( 0 );
 			gRobo[ 1 ] = new Robo( 1 );
 			gStage = new Stage();
-			//‰ŠúˆÊ’uİ’è
+			//åˆæœŸä½ç½®è¨­å®š
 			gRobo[ 0 ]->setPosition( Vector3( 0.0, 0.0, 50.0 ) );
 			gRobo[ 1 ]->setPosition( Vector3( 0.0, 0.0, -50.0 ) );
 			gRobo[ 0 ]->setAngleY( 180.0 );
 			gRobo[ 1 ]->setAngleY( 0.0 );
 		}
 
-		//ƒƒCƒ“ƒ‹[ƒv
-		//‹ü‚Ì‚İŒvZBRobo::update()‚Ég‚¤‚Ì‚ÅB‚Å‚à‹“_ƒf[ƒ^‚Í‘O‚ÌƒtƒŒ[ƒ€
+		//ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—
+		//è¦–ç·šã®ã¿è¨ˆç®—ã€‚Robo::update()ã«ä½¿ã†ã®ã§ã€‚ã§ã‚‚è¦–ç‚¹ãƒ‡ãƒ¼ã‚¿ã¯å‰ã®ãƒ•ãƒ¬ãƒ¼ãƒ 
 		Vector3 eyeVector;
 		eyeVector.setSub( gEyeTarget, gEyePosition );
-		//----“ü—Í”»’è‚ÆˆÚ“®----
+		//----å…¥åŠ›åˆ¤å®šã¨ç§»å‹•----
 		for ( int i = 0; i < 2; ++i ){
 			gRobo[ i ]->update( *gRobo[ 1-i ]->position(), eyeVector );
 		}
-		//----•`‰æ----
-		//ƒrƒ…[•ÏŠ·s—ñ¶¬
+		//----æç”»----
+		//ãƒ“ãƒ¥ãƒ¼å¤‰æ›è¡Œåˆ—ç”Ÿæˆ
 		Vector3 dir;
 		gRobo[ 0 ]->getDirection( &dir );
-		gEyePosition = *( gRobo[ 0 ]->position() ); //‚Ü‚¸ƒƒ{‚ÌˆÊ’u
-		//’·‚³‚ğ6ƒ[ƒgƒ‹‚É‚µ‚½dir‚ğˆø‚­
+		gEyePosition = *( gRobo[ 0 ]->position() ); //ã¾ãšãƒ­ãƒœã®ä½ç½®
+		//é•·ã•ã‚’6ãƒ¡ãƒ¼ãƒˆãƒ«ã«ã—ãŸdirã‚’å¼•ã
 		Vector3 t;
 		t.setMul( dir, 6.0 );
 		gEyePosition -= t;
-		gEyePosition.y += 4.0; //6ƒ[ƒgƒ‹ã‚©‚çŒ©‚Ä‚â‚ë‚¤
-		//’‹“_‚Í‹t‚ÉA8ƒ[ƒgƒ‹‚É‚µ‚½‚à‚Ì‚ğ‘«‚·B
+		gEyePosition.y += 4.0; //6ãƒ¡ãƒ¼ãƒˆãƒ«ä¸Šã‹ã‚‰è¦‹ã¦ã‚„ã‚ã†
+		//æ³¨è¦–ç‚¹ã¯é€†ã«ã€8ãƒ¡ãƒ¼ãƒˆãƒ«ã«ã—ãŸã‚‚ã®ã‚’è¶³ã™ã€‚
 		gEyeTarget = *( gRobo[ 0 ]->position() );
 		t.setMul( dir, 8.0 );
 		gEyeTarget += t;
 		Matrix34 vm;
 		vm.setViewTransform( gEyePosition, gEyeTarget );
 
-		//“§‹•ÏŠ·s—ñ¶¬
-		//“§‹•ÏŠ·s—ñ
-		Matrix44 pm; //60“x‚Å‚¢‚¢‚¾‚ë‚¤B
+		//é€è¦–å¤‰æ›è¡Œåˆ—ç”Ÿæˆ
+		//é€è¦–å¤‰æ›è¡Œåˆ—
+		Matrix44 pm; //60åº¦ã§ã„ã„ã ã‚ã†ã€‚
 		pm.setPerspectiveTransform( 60.0, 640.0, 480.0, 1.0, 1000.0 );
-		//æZ
+		//ä¹—ç®—
 		pm *= vm;
-		//•`‰æ
+		//æç”»
 		gStage->draw( pm );
 		for ( int i = 0; i < 2; ++i ){
 			gRobo[ i ]->draw( pm );

@@ -10,13 +10,13 @@ int main( int argc, char** argv ){
 	string outFileName;
 	int m = 0;
 	bool help = false;
-	//ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‰ğß
+	//ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³è§£é‡ˆ
 	for ( int i = 1; i < argc; ++i ){
-		if ( argv[ i ][ 0 ] == '-' ){ //-‚©‚ç‚Í‚¶‚Ü‚ê‚Î‚È‚É‚©‚ÌƒIƒvƒVƒ‡ƒ“
+		if ( argv[ i ][ 0 ] == '-' ){ //-ã‹ã‚‰ã¯ã˜ã¾ã‚Œã°ãªã«ã‹ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³
 			char c = argv[ i ][ 1 ];
 			if ( c == 'o' && ( ( i + 1 ) < argc ) ){ 
 				outFileName = argv[ i + 1 ];
-			}else if ( c == 'h' ){ //ƒwƒ‹ƒv
+			}else if ( c == 'h' ){ //ãƒ˜ãƒ«ãƒ—
 				help = true;
 			}
 		}else{
@@ -31,49 +31,49 @@ int main( int argc, char** argv ){
 	if ( m == 0 ){
 		help = true;
 	}
-	//ƒwƒ‹ƒv•\¦‚µ‚ÄI‚í‚è
+	//ãƒ˜ãƒ«ãƒ—è¡¨ç¤ºã—ã¦çµ‚ã‚ã‚Š
 	if ( help ){
 		cout << "Usage: PrimeNumberGenerator.exe [ -h ][ -o outputFile ] MAX_NUMBER" << endl;
 		cout << "<Arguments>" << endl;
 		cout << "\t-h             : display this help." << endl;
 		cout << "\t-o             : specify output file." << endl;
 		cout << "\tMAX_NUMBER     : specify maximum number. must be >= 2" << endl;
-#ifndef NDEBUG //‚±‚¤‚µ‚Ä‚¨‚­‚ÆƒfƒoƒO‚Ì‚µ‚©—ˆ‚È‚¢
-	while( true ){;} //visual studio‚©‚çÀs‚·‚é‚ÉƒRƒ“ƒ\[ƒ‹‚ğ—Ç‚­‚İ‚½‚¢‚Ì‚ÅB
+#ifndef NDEBUG //ã“ã†ã—ã¦ãŠãã¨ãƒ‡ãƒã‚°ã®æ™‚ã—ã‹æ¥ãªã„
+	while( true ){;} //visual studioã‹ã‚‰å®Ÿè¡Œã™ã‚‹æ™‚ã«ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã‚’è‰¯ãã¿ãŸã„ã®ã§ã€‚
 #endif
 		return 1;
 	}
 	ostream* out;
 	if ( outFileName.size() > 0 ){
-		setlocale( LC_ALL, "" ); //‚±‚ê‚ª‚È‚¢‚Æ“ú–{Œêƒtƒ@ƒCƒ‹–¼‚ğó‚¯•t‚¯‚È‚¢
+		setlocale( LC_ALL, "" ); //ã“ã‚ŒãŒãªã„ã¨æ—¥æœ¬èªãƒ•ã‚¡ã‚¤ãƒ«åã‚’å—ã‘ä»˜ã‘ãªã„
 		out = new ofstream( outFileName.c_str() );
 	}else{
 		out = &cout;
 	}
-	//‘f”¶¬
-	//1.2‚ÆAmaxˆÈ‰º‚ÌŠï”‚ğ‘S•”ƒŠƒXƒg‚É“ü‚ê‚é
+	//ç´ æ•°ç”Ÿæˆ
+	//1.2ã¨ã€maxä»¥ä¸‹ã®å¥‡æ•°ã‚’å…¨éƒ¨ãƒªã‚¹ãƒˆã«å…¥ã‚Œã‚‹
 	list< int > l;
 	l.push_back( 2 );
 	for ( int i = 3; i <= m; i += 2 ){
 		l.push_back( i );
 	}
-	//2.ƒ‹[ƒgmaximum‚ğ¶¬
+	//2.ãƒ«ãƒ¼ãƒˆmaximumã‚’ç”Ÿæˆ
 	int n = static_cast< int >( sqrt( static_cast< double >( m ) ) );
-	//3‚Ó‚é‚¢”­“®
+	//3ãµã‚‹ã„ç™ºå‹•
 	for ( int i = 3; i < n; ++i ){
 		list< int >::iterator j = l.begin();
 		while ( j != l.end() ){
 			list< int >::iterator next = j;
 			++next;
 			if ( *j != i ){
-				if ( ( *j % i ) == 0 ){ //Š„‚ê‚¿‚á‚¤
+				if ( ( *j % i ) == 0 ){ //å‰²ã‚Œã¡ã‚ƒã†
 					l.erase( j );
 				}
 			}
 			j = next;
 		}
 	}
-	//4o—Í
+	//4å‡ºåŠ›
 	*out << "const int gPrimeNumbers[] = {" << endl;
 	list< int >::iterator i = l.begin();
 	int j = 0;
@@ -94,9 +94,9 @@ int main( int argc, char** argv ){
 	*out << "};" << endl;
 	*out << "const int gPrimeNumberTableSize = " << l.size() << ";" << endl;
 	*out << "const int gPrimeNumberTableMaximum = " << m << ";" << endl;
-#ifndef NDEBUG //‚±‚¤‚µ‚Ä‚¨‚­‚ÆƒfƒoƒO‚Ì‚µ‚©—ˆ‚È‚¢
+#ifndef NDEBUG //ã“ã†ã—ã¦ãŠãã¨ãƒ‡ãƒã‚°ã®æ™‚ã—ã‹æ¥ãªã„
 	if ( outFileName.size() == 0 ){
-		while( true ){;} //visual studio‚©‚çÀs‚·‚é‚ÉƒRƒ“ƒ\[ƒ‹‚ğ—Ç‚­‚İ‚½‚¢‚Ì‚ÅB
+		while( true ){;} //visual studioã‹ã‚‰å®Ÿè¡Œã™ã‚‹æ™‚ã«ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã‚’è‰¯ãã¿ãŸã„ã®ã§ã€‚
 	}
 #endif
 	return 0;

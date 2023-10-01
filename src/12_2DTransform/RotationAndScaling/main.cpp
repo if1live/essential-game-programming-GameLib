@@ -19,15 +19,15 @@ const Vector2& scalingOffset,
 const Vector2& scalingRatio,
 const Vector2& rotationOffset,
 const Matrix22& rotationMatrix ){
-	//Šg‘åk¬
+	//æ‹¡å¤§ç¸®å°
 	out->setMul( scalingRatio, in );
-	//ˆÚ“®
+	//ç§»å‹•
 	*out += scalingOffset;
-	//‰ñ“]’†S‚¸‚ç‚µ
+	//å›è»¢ä¸­å¿ƒãšã‚‰ã—
 	*out -= rotationOffset;
-	//‰ñ“]
+	//å›è»¢
 	rotationMatrix.multiply( out, *out );
-	//‰ñ“]’†S‚¸‚ç‚µ‚à‚Ç‚µ
+	//å›è»¢ä¸­å¿ƒãšã‚‰ã—ã‚‚ã©ã—
 	*out += rotationOffset;
 }
 
@@ -44,34 +44,34 @@ namespace GameLib{
 		unsigned* vram = videoMemory();
 		int ww = width(); //window width
 		int wh = height(); //window height
-		//ˆê’U‘S•”^‚Á•‚É
+		//ä¸€æ—¦å…¨éƒ¨çœŸã£é»’ã«
 		for ( int i = 0; i < ww * wh; ++i ){
 			vram[ i ] = 0;
 		}
 		int iw = gImage->width(); //image width
 		int ih = gImage->height(); //image height
-		double rotation = static_cast< double >( gCount ); //‚±‚ê‚ğŠg‘å—¦‚Ég‚¨‚¤
-		//Šg‘å—¦
+		double rotation = static_cast< double >( gCount ); //ã“ã‚Œã‚’æ‹¡å¤§ç‡ã«ä½¿ãŠã†
+		//æ‹¡å¤§ç‡
 		Vector2 scalingRatio( 1.1 + sin( rotation ), 1.1 + cos( rotation ) );
-		//Šg‘åƒIƒtƒZƒbƒg(Šg‘å—¦‚É‰‚¶‚Ä•Ï‚í‚é‚±‚Æ‚É’ˆÓ)
+		//æ‹¡å¤§ã‚ªãƒ•ã‚»ãƒƒãƒˆ(æ‹¡å¤§ç‡ã«å¿œã˜ã¦å¤‰ã‚ã‚‹ã“ã¨ã«æ³¨æ„)
 		Vector2 scalingOffset( ww/2 - iw/2*scalingRatio.x, wh/2 - ih/2*scalingRatio.y );
-		//‰ñ“]ƒIƒtƒZƒbƒg
+		//å›è»¢ã‚ªãƒ•ã‚»ãƒƒãƒˆ
 		Vector2 rotationOffset( ww/2, wh/2 );
-		//‰ñ“]s—ñ
+		//å›è»¢è¡Œåˆ—
 		double sine = sin( rotation );
 		double cosine = cos( rotation );
 		Matrix22 rotationMatrix( cosine, -sine, sine, cosine );
 		
-		//3“_ì‚é
+		//3ç‚¹ä½œã‚‹
 		Vector2 a, b, c;
-		transform( &a, Vector2( 0, 0 ), scalingOffset, scalingRatio, rotationOffset, rotationMatrix ); //¶ã
-		transform( &b, Vector2( iw, 0 ), scalingOffset, scalingRatio, rotationOffset, rotationMatrix ); //‰Eã
-		transform( &c, Vector2( 0, ih ), scalingOffset, scalingRatio, rotationOffset, rotationMatrix ); //¶‰º
-		//b-a,c-a‚ğŒvZ
+		transform( &a, Vector2( 0, 0 ), scalingOffset, scalingRatio, rotationOffset, rotationMatrix ); //å·¦ä¸Š
+		transform( &b, Vector2( iw, 0 ), scalingOffset, scalingRatio, rotationOffset, rotationMatrix ); //å³ä¸Š
+		transform( &c, Vector2( 0, ih ), scalingOffset, scalingRatio, rotationOffset, rotationMatrix ); //å·¦ä¸‹
+		//b-a,c-aã‚’è¨ˆç®—
 		Vector2 ab, ac;
 		ab.setSub( b, a );
 		ac.setSub( c, a );
-		//•âŠÔŠJn
+		//è£œé–“é–‹å§‹
 		double rcpWidth = 1.0 / static_cast< double >( iw );
 		double rcpHeight = 1.0 / static_cast< double >( ih );
 		for ( int y = 0; y < ih; ++y ){
@@ -82,11 +82,11 @@ namespace GameLib{
 				double u = xf * rcpWidth;
 				Vector2 p;
 				p.setInterporation( a, ab, ac, u, v );
-				p -= Vector2( 0.5, 0.5 ); //“Y‚¦š‚Ö
+				p -= Vector2( 0.5, 0.5 ); //æ·»ãˆå­—ã¸
 				int rx, ry;
 				rx = round( p.x );
 				ry = round( p.y );
-				//”ÍˆÍ“à‚È‚ç“\‚è•t‚¯
+				//ç¯„å›²å†…ãªã‚‰è²¼ã‚Šä»˜ã‘
 				if ( rx >= 0 && rx < ww && ry >= 0 && ry < wh ){
 					vram[ ry * ww + rx ] = gImage->pixel( x, y );
 				}

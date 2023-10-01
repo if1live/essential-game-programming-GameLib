@@ -12,15 +12,15 @@ namespace Scene{
 using namespace Math;
 class Batch;
 
-///•`‰æƒCƒ“ƒ^[ƒtƒFƒCƒX
+///æç”»ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹
 /*!
-draw‚·‚ê‚ÎŠG‚ªo‚éB“®‚©‚³‚È‚­‚Ä‚¢‚¢•¨‚Í‚±‚ê‚Å‘«‚è‚éB
+drawã™ã‚Œã°çµµãŒå‡ºã‚‹ã€‚å‹•ã‹ã•ãªãã¦ã„ã„ç‰©ã¯ã“ã‚Œã§è¶³ã‚Šã‚‹ã€‚
 */
 class Batch{
 public:
-	///•`‰æ
+	///æç”»
 	void draw() const;
-	///•`‰æ(C³F•t‚«)
+	///æç”»(ä¿®æ­£è‰²ä»˜ã)
 	void draw( const Vector3& color, float transparency ) const;
 
 	Batch();

@@ -1,19 +1,19 @@
 #include "List.h"
 
-//æ“ª‚Æ––”ö‚ª“Á•Êˆµ‚¢‚³‚ê‚È‚¢‚æ‚¤‚É‚¿‚å‚Á‚ÆH•v‚ğ‚µ‚Ä‚¢‚éB
+//å…ˆé ­ã¨æœ«å°¾ãŒç‰¹åˆ¥æ‰±ã„ã•ã‚Œãªã„ã‚ˆã†ã«ã¡ã‚‡ã£ã¨å·¥å¤«ã‚’ã—ã¦ã„ã‚‹ã€‚
 List::List(){
-	//Å‰‚æ‚è‚³‚ç‚É‘O‚É‚ ‚éƒ_ƒ~[—v‘f
+	//æœ€åˆã‚ˆã‚Šã•ã‚‰ã«å‰ã«ã‚ã‚‹ãƒ€ãƒŸãƒ¼è¦ç´ 
 	mDummyHead.mNext = &mDummyTail;
 	mDummyHead.mPrev = 0;
 	mDummyHead.mValue = 0.0;
-	//ÅŒã‚Ì—v‘f‚Ì‚³‚ç‚ÉŒã‚É‚ ‚éƒ_ƒ~[—v‘fB
+	//æœ€å¾Œã®è¦ç´ ã®ã•ã‚‰ã«å¾Œã«ã‚ã‚‹ãƒ€ãƒŸãƒ¼è¦ç´ ã€‚
 	mDummyTail.mNext = 0;
 	mDummyTail.mPrev = &mDummyHead;
 	mDummyTail.mValue = 0.0;
 }
 
 List::~List(){
-	//‘S•”Á‚µ‚Ä‰ñ‚ç‚È‚¢‚Æ‚¢‚¯‚È‚¢
+	//å…¨éƒ¨æ¶ˆã—ã¦å›ã‚‰ãªã„ã¨ã„ã‘ãªã„
 	Node* p = first();
 	while ( p ){
 		Node* nxt = next( p );
@@ -24,15 +24,15 @@ List::~List(){
 
 List::Node* List::addAfter( Node* cur, double v ){
 	Node* e = new Node();
-	//Ÿ‚Ì“z‚ğæ‚èo‚·
+	//æ¬¡ã®å¥´ã‚’å–ã‚Šå‡ºã™
 	Node* nxt = cur->mNext;
-	//’lŠi”[
+	//å€¤æ ¼ç´
 	e->mValue = v;
-	e->mPrev = cur; //w’èêŠ‚ª‘O‚É
-	e->mNext = nxt; //w’è‚ÌŸ‚Ì‚ªŸ‚É
-	//w’è‚Ì“z‚Í‘O‚É‚È‚é‚Ì‚ÅAŸ‚Í‘«‚µ‚½“z‚É‚È‚é
+	e->mPrev = cur; //æŒ‡å®šå ´æ‰€ãŒå‰ã«
+	e->mNext = nxt; //æŒ‡å®šã®æ¬¡ã®ãŒæ¬¡ã«
+	//æŒ‡å®šã®å¥´ã¯å‰ã«ãªã‚‹ã®ã§ã€æ¬¡ã¯è¶³ã—ãŸå¥´ã«ãªã‚‹
 	cur->mNext = e;
-	//w’è‚ÌŸ‚Ì“z‚ÍŒã‚É‚È‚é‚Ì‚ÅA‘O‚Í‘«‚µ‚½“z‚É‚È‚é
+	//æŒ‡å®šã®æ¬¡ã®å¥´ã¯å¾Œã«ãªã‚‹ã®ã§ã€å‰ã¯è¶³ã—ãŸå¥´ã«ãªã‚‹
 	nxt->mPrev = e;
 
 	return e;
@@ -40,47 +40,47 @@ List::Node* List::addAfter( Node* cur, double v ){
 
 List::Node* List::addBefore( Node* cur, double v ){
 	Node* e = new Node();
-	//‘O‚Ì“z‚ğæ‚èo‚·
+	//å‰ã®å¥´ã‚’å–ã‚Šå‡ºã™
 	Node* prev = cur->mPrev;
-	//’lŠi”[
+	//å€¤æ ¼ç´
 	e->mValue = v;
-	e->mPrev = prev; //w’è‚Ì‘O‚Ì“z‚ª‘O
-	e->mNext = cur; //w’è‚Ì“z‚ªŸ
-	//w’è‚Ì“z‚ÍŒã‚É‚È‚é‚Ì‚ÅA‘O‚Í‘«‚µ‚½“z‚É‚È‚é
+	e->mPrev = prev; //æŒ‡å®šã®å‰ã®å¥´ãŒå‰
+	e->mNext = cur; //æŒ‡å®šã®å¥´ãŒæ¬¡
+	//æŒ‡å®šã®å¥´ã¯å¾Œã«ãªã‚‹ã®ã§ã€å‰ã¯è¶³ã—ãŸå¥´ã«ãªã‚‹
 	cur->mPrev = e;
-	//w’è‚Ì‘O‚Ì“z‚Í‘O‚É‚È‚é‚Ì‚ÅAŒã‚Í‘«‚µ‚½“z‚É‚È‚é
+	//æŒ‡å®šã®å‰ã®å¥´ã¯å‰ã«ãªã‚‹ã®ã§ã€å¾Œã¯è¶³ã—ãŸå¥´ã«ãªã‚‹
 	prev->mNext = e;
 
 	return e;
 }
 
 List::Node* List::addHead( double v ){
-	return addBefore( first(), v ); //ƒ_ƒ~[—v‘f‚Ì‚¨‚©‚°‚Å‚±‚¤‘‚¯‚éB
+	return addBefore( first(), v ); //ãƒ€ãƒŸãƒ¼è¦ç´ ã®ãŠã‹ã’ã§ã“ã†æ›¸ã‘ã‚‹ã€‚
 }
 
 List::Node* List::addTail( double v ){
-	return addAfter( last(), v ); //ƒ_ƒ~[—v‘f‚Ì‚¨‚©‚°‚Å‚±‚¤‘‚¯‚é
+	return addAfter( last(), v ); //ãƒ€ãƒŸãƒ¼è¦ç´ ã®ãŠã‹ã’ã§ã“ã†æ›¸ã‘ã‚‹
 }
 
 void List::remove( Node* cur ){
-	//Ÿ
+	//æ¬¡
 	Node* nxt = cur->mNext;
-	//‘O
+	//å‰
 	Node* prev = cur->mPrev;
-	//‘O‚Ì“z‚ÌŸ‚ğAŸ‚É‚·‚éB
+	//å‰ã®å¥´ã®æ¬¡ã‚’ã€æ¬¡ã«ã™ã‚‹ã€‚
 	prev->mNext = nxt;
-	//Ÿ‚Ì“z‚Ì‘O‚ğA‘O‚É‚·‚éB
+	//æ¬¡ã®å¥´ã®å‰ã‚’ã€å‰ã«ã™ã‚‹ã€‚
 	nxt->mPrev = prev;
-	//Á‚·
+	//æ¶ˆã™
 	delete cur;
 	cur = 0;
 }
 
-void List::removeHead(){ //‚±‚ê‚Í‚Ù‚Æ‚ñ‚Ç•Ê–¼B
+void List::removeHead(){ //ã“ã‚Œã¯ã»ã¨ã‚“ã©åˆ¥åã€‚
 	remove( first() );
 }
 
-void List::removeTail(){ //‚±‚ê‚Í‚Ù‚Æ‚ñ‚Ç•Ê–¼B
+void List::removeTail(){ //ã“ã‚Œã¯ã»ã¨ã‚“ã©åˆ¥åã€‚
 	remove( last() );
 }
 
@@ -107,9 +107,9 @@ List::Node* List::previous( Node* p ) const {
 }
 
 List::Node* List::first() const {
-	return mDummyHead.mNext; //ƒ_ƒ~[æ“ª‚ÌŸ‚ª–{“–‚Ìæ“ª
+	return mDummyHead.mNext; //ãƒ€ãƒŸãƒ¼å…ˆé ­ã®æ¬¡ãŒæœ¬å½“ã®å…ˆé ­
 }
 
 List::Node* List::last() const {
-	return mDummyTail.mPrev; //ƒ_ƒ~[––”ö‚Ì‘O‚ª–{“–‚Ì––”ö
+	return mDummyTail.mPrev; //ãƒ€ãƒŸãƒ¼æœ«å°¾ã®å‰ãŒæœ¬å½“ã®æœ«å°¾
 }

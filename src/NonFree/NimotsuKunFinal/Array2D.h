@@ -1,10 +1,10 @@
 #ifndef INCLUDED_ARRAY_2D_H
 #define INCLUDED_ARRAY_2D_H
 
-//�񎟌��z��N���X
-//�e���v���[�g�ɂȂ��݂͂��邾�낤���H�Ȃ���Ί�b�����ł��׋����Ă������B
-//���̃N���X�錾�̒��ł�T�Ƃ����N���X�����邩�̂悤�Ɉ����A
-//������g�����ɂ�T�̂Ƃ����int�Ƃ�bool�Ƃ�����Ďg���B
+//二次元配列クラス
+//テンプレートになじみはあるだろうか？なければ基礎だけでも勉強しておこう。
+//このクラス宣言の中ではTというクラスがあるかのように扱われ、
+//これを使う時にはTのところにintとかboolとか入れて使う。
 template< class T > class Array2D{
 public:
 	Array2D() : mArray( 0 ){}

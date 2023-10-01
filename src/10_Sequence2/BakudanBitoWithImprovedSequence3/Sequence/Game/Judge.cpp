@@ -24,45 +24,45 @@ Base* Judge::update( Parent* parent ){
 	Base* next = this;
 	if ( Pad::isTriggered( Pad::U ) ){
 		--mCursorPosistion;
-		if ( mCursorPosistion < 0 ){ //ƒ}ƒCƒiƒX‚ÍÅ‘å’l‚Éƒ‹[ƒv
+		if ( mCursorPosistion < 0 ){ //ãƒžã‚¤ãƒŠã‚¹ã¯æœ€å¤§å€¤ã«ãƒ«ãƒ¼ãƒ—
  			mCursorPosistion = 1;
 		}
 	}else if ( Pad::isTriggered( Pad::D ) ){
 		++mCursorPosistion;
-		if ( mCursorPosistion > 1 ){ //1‚ð‰z‚¦‚½‚ç0‚Éƒ‹[ƒv
+		if ( mCursorPosistion > 1 ){ //1ã‚’è¶ŠãˆãŸã‚‰0ã«ãƒ«ãƒ¼ãƒ—
 			mCursorPosistion = 0;
 		}
 	}else if ( Pad::isTriggered( Pad::A ) ){
 		if ( mCursorPosistion == 0 ){
-			//‘±‚¯‚ÄŸ•‰
+			//ç¶šã‘ã¦å‹è² 
 			next = new Ready;
 		}else if ( mCursorPosistion == 1 ){
-			//ƒ^ƒCƒgƒ‹‚Ö
+			//ã‚¿ã‚¤ãƒˆãƒ«ã¸
 			next = new Title;
 		}
 	}
-	//•`‰æ
-	//‚Ü‚¸ƒQ[ƒ€‰æ–Ê
+	//æç”»
+	//ã¾ãšã‚²ãƒ¼ãƒ ç”»é¢
 	parent->drawState();
-	//ã‚Éd‚Ë‚é
+	//ä¸Šã«é‡ã­ã‚‹
 	mImage->draw();
 
-	//‚Ü‚¸‚Ç‚Á‚¿‚ªŸ‚Á‚½‚Ì‚©•\Ž¦
+	//ã¾ãšã©ã£ã¡ãŒå‹ã£ãŸã®ã‹è¡¨ç¤º
 	Framework f = Framework::instance();
-	f.drawDebugString( 0, 0, "[¼®³Ê²¹¯Ã²]" );
+	f.drawDebugString( 0, 0, "[ï½¼ï½®ï½³ï¾Šï½²ï½¹ï½¯ï¾ƒï½²]" );
 
 	Parent::PlayerID winner = parent->winner();
 	if ( winner == Parent::PLAYER_1 ){
-		f.drawDebugString( 0, 1, "1PÉ ¶Á!" );
+		f.drawDebugString( 0, 1, "1Pï¾‰ ï½¶ï¾!" );
 	}else if ( winner == Parent::PLAYER_2 ){
-		f.drawDebugString( 0, 1, "2PÉ ¶Á!" );
+		f.drawDebugString( 0, 1, "2Pï¾‰ ï½¶ï¾!" );
 	}else{
-		f.drawDebugString( 0, 1, "¼®³¼¬Å¼! Ë·Ü¹!" );
+		f.drawDebugString( 0, 1, "ï½¼ï½®ï½³ï½¼ï½¬ï¾…ï½¼! ï¾‹ï½·ï¾œï½¹!" );
 	}
-	//‚ß‚Ê[
-	f.drawDebugString( 1, 3, "ÏÀÞ ºÛ¼±³" );
-	f.drawDebugString( 1, 4, "ÔÒÃ À²ÄÙ ¶ÞÒÝ Í" );
-	//ƒJ[ƒ\ƒ‹‚ð‘‚­
+	//ã‚ã¬ãƒ¼
+	f.drawDebugString( 1, 3, "ï¾ï¾€ï¾ž ï½ºï¾›ï½¼ï½±ï½³" );
+	f.drawDebugString( 1, 4, "ï¾”ï¾’ï¾ƒ ï¾€ï½²ï¾„ï¾™ ï½¶ï¾žï¾’ï¾ ï¾" );
+	//ã‚«ãƒ¼ã‚½ãƒ«ã‚’æ›¸ã
 	f.drawDebugString( 0, mCursorPosistion + 3, ">" );
 
 	return next;

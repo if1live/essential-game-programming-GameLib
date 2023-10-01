@@ -5,15 +5,15 @@
 #include "GameLib/Base/List.h"
 
 /*
-<’ˆÓ>
-“Y‚¦š‚ÅmCapacity‚ªg‚í‚ê‚Ä‚¢‚½‚çA‚»‚ê‚Íƒ_ƒ~[ƒm[ƒh‚Å‚ ‚éB
-mNodes[ mCapacity ].mNext‚Íæ“ªA
-mNodes[ mCapacity ].mPrev‚Í––”ö‚É‚È‚Á‚Ä‚¢‚éB
+<æ³¨æ„>
+æ·»ãˆå­—ã§mCapacityãŒä½¿ã‚ã‚Œã¦ã„ãŸã‚‰ã€ãã‚Œã¯ãƒ€ãƒŸãƒ¼ãƒãƒ¼ãƒ‰ã§ã‚ã‚‹ã€‚
+mNodes[ mCapacity ].mNextã¯å…ˆé ­ã€
+mNodes[ mCapacity ].mPrevã¯æœ«å°¾ã«ãªã£ã¦ã„ã‚‹ã€‚
 */
 
 namespace GameLib{
 
-//æ“ª‚Æ––”ö‚ª“Á•Êˆµ‚¢‚³‚ê‚È‚¢‚æ‚¤‚É‚¿‚å‚Á‚ÆH•v‚ğ‚µ‚Ä‚¢‚éB
+//å…ˆé ­ã¨æœ«å°¾ãŒç‰¹åˆ¥æ‰±ã„ã•ã‚Œãªã„ã‚ˆã†ã«ã¡ã‚‡ã£ã¨å·¥å¤«ã‚’ã—ã¦ã„ã‚‹ã€‚
 template< class T > inline List< T >::List() : 
 mValues( 0 ),
 mNodes( 0 ),
@@ -21,7 +21,7 @@ mCapacity( 0 ),
 mSize( 0 ){
 }
 
-//æ“ª‚Æ––”ö‚ª“Á•Êˆµ‚¢‚³‚ê‚È‚¢‚æ‚¤‚É‚¿‚å‚Á‚ÆH•v‚ğ‚µ‚Ä‚¢‚éB
+//å…ˆé ­ã¨æœ«å°¾ãŒç‰¹åˆ¥æ‰±ã„ã•ã‚Œãªã„ã‚ˆã†ã«ã¡ã‚‡ã£ã¨å·¥å¤«ã‚’ã—ã¦ã„ã‚‹ã€‚
 template< class T > inline List< T >::List( int capacity ) : 
 mValues( 0 ),
 mNodes( 0 ),
@@ -32,40 +32,40 @@ mSize( 0 ){
 
 template< class T > inline List< T >::~List(){
 	if ( mNodes ){
-		//’P‘ÌƒfƒXƒgƒ‰ƒNƒg
+		//å˜ä½“ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 		int pos = mNodes[ mCapacity ].mNext;
-		while ( pos < mCapacity ){ //ƒ_ƒ~[‚Å‚È‚¯‚ê‚Î
-			mValues[ pos ].~T(); //ƒfƒXƒgƒ‰ƒNƒg
+		while ( pos < mCapacity ){ //ãƒ€ãƒŸãƒ¼ã§ãªã‘ã‚Œã°
+			mValues[ pos ].~T(); //ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 			pos = mNodes[ pos ].mNext;
 		}
-		OPERATOR_DELETE( mValues ); //¶delete
+		OPERATOR_DELETE( mValues ); //ç”Ÿdelete
 		SAFE_DELETE_ARRAY( mNodes );
 	}
 }
 
 template< class T > inline void List< T >::setCapacity( int capacity ){
 	ASSERT( mSize == 0 && "NOT EMPTY! call clear()." );
-	//‚Ü‚¸ƒNƒŠƒA
+	//ã¾ãšã‚¯ãƒªã‚¢
 	if ( mCapacity > 0 ){
 		mEmptyStack.clear();
 		clear();
-		OPERATOR_DELETE( mValues ); //¶delete
+		OPERATOR_DELETE( mValues ); //ç”Ÿdelete
 		SAFE_DELETE_ARRAY( mNodes );
 	}
-	//ÄŠm•Û
+	//å†ç¢ºä¿
 	mCapacity = capacity;
-	if ( capacity <= 0 ){ //0ƒTƒCƒY–³‹
+	if ( capacity <= 0 ){ //0ã‚µã‚¤ã‚ºç„¡è¦–
 		return;
 	}
 	mNodes = NEW Node[ mCapacity + 1 ];
-	//ƒm[ƒh”z—ñŠm•ÛBƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ª•s—v‚È‚Ì‚Åmalloc’¼
+	//ãƒãƒ¼ãƒ‰é…åˆ—ç¢ºä¿ã€‚ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãŒä¸è¦ãªã®ã§mallocç›´
 	mValues = static_cast< T* >( OPERATOR_NEW( sizeof( T ) * mCapacity ) );
-	//‹ó‚«”Ô†ƒXƒ^ƒbƒN
+	//ç©ºãç•ªå·ã‚¹ã‚¿ãƒƒã‚¯
 	mEmptyStack.setCapacity( mCapacity );
 	for ( int i = 0; i < mCapacity; ++i ){
-		mEmptyStack.push( i ); //‹ó‚«”Ô†ƒŠƒXƒg‚É‹l‚ß‚Ä‚¢‚­
+		mEmptyStack.push( i ); //ç©ºãç•ªå·ãƒªã‚¹ãƒˆã«è©°ã‚ã¦ã„ã
 	}
-	//mCapacity”Ô‚Í“Á•ÊBÅ‰‚Ì—v‘f‚Ì‘O‚©‚ÂÅŒã‚Ì—v‘f‚ÌŒã‚É‚ ‚éƒ_ƒ~[—v‘f
+	//mCapacityç•ªã¯ç‰¹åˆ¥ã€‚æœ€åˆã®è¦ç´ ã®å‰ã‹ã¤æœ€å¾Œã®è¦ç´ ã®å¾Œã«ã‚ã‚‹ãƒ€ãƒŸãƒ¼è¦ç´ 
 	mNodes[ mCapacity ].mNext = mNodes[ mCapacity ].mPrev = mCapacity;
 }
 
@@ -74,23 +74,23 @@ template< class T > inline int List< T >::capacity() const {
 }
 
 template< class T > inline int List< T >::addAfter( int position, const T& v ){
-	ASSERT( position >= 0 && position <= mCapacity ); //ƒCƒR[ƒ‹‚Í‚ ‚è‚¤‚é
-	//‹ó‚«êŠ‚ğæ“¾
+	ASSERT( position >= 0 && position <= mCapacity ); //ã‚¤ã‚³ãƒ¼ãƒ«ã¯ã‚ã‚Šã†ã‚‹
+	//ç©ºãå ´æ‰€ã‚’å–å¾—
 	int newPos;
 	mEmptyStack.pop( &newPos );
-	//‘«‚·êŠ‚ÍaddPosition
+	//è¶³ã™å ´æ‰€ã¯addPosition
 	Node* e = &mNodes[ newPos ];
-	//w’è‚Ì“z‚ğæ‚èo‚·
+	//æŒ‡å®šã®å¥´ã‚’å–ã‚Šå‡ºã™
 	Node* cur = &mNodes[ position ];
-	//Ÿ‚Ì“z‚ğæ‚èo‚·
+	//æ¬¡ã®å¥´ã‚’å–ã‚Šå‡ºã™
 	Node* next = &mNodes[ cur->mNext ];
-	//’lŠi”[(ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^ŒÄ‚Ño‚µ)
+	//å€¤æ ¼ç´(ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿å‘¼ã³å‡ºã—)
 	new ( &mValues[ newPos ] ) T( v );
-	e->mPrev = position; //w’èêŠ‚ª‘O‚É
-	e->mNext = cur->mNext; //w’è‚ÌŸ‚Ì‚ªŸ‚É
-	//w’è‚Ì“z‚Í‘O‚É‚È‚é‚Ì‚ÅAŸ‚Í‘«‚µ‚½“z‚É‚È‚é
+	e->mPrev = position; //æŒ‡å®šå ´æ‰€ãŒå‰ã«
+	e->mNext = cur->mNext; //æŒ‡å®šã®æ¬¡ã®ãŒæ¬¡ã«
+	//æŒ‡å®šã®å¥´ã¯å‰ã«ãªã‚‹ã®ã§ã€æ¬¡ã¯è¶³ã—ãŸå¥´ã«ãªã‚‹
 	cur->mNext = newPos;
-	//w’è‚ÌŸ‚Ì“z‚ÍŒã‚É‚È‚é‚Ì‚ÅA‘O‚Í‘«‚µ‚½“z‚É‚È‚é
+	//æŒ‡å®šã®æ¬¡ã®å¥´ã¯å¾Œã«ãªã‚‹ã®ã§ã€å‰ã¯è¶³ã—ãŸå¥´ã«ãªã‚‹
 	next->mPrev = newPos;
 	++mSize;
 
@@ -98,23 +98,23 @@ template< class T > inline int List< T >::addAfter( int position, const T& v ){
 }
 
 template< class T > inline int List< T >::addBefore( int position, const T& v ){
-	ASSERT( position >= 0 && position <= mCapacity ); //ƒCƒR[ƒ‹‚Í‚ ‚è‚¤‚é
-	//‹ó‚«êŠ‚ğæ“¾
+	ASSERT( position >= 0 && position <= mCapacity ); //ã‚¤ã‚³ãƒ¼ãƒ«ã¯ã‚ã‚Šã†ã‚‹
+	//ç©ºãå ´æ‰€ã‚’å–å¾—
 	int newPos;
 	mEmptyStack.pop( &newPos );
-	//‘«‚·êŠ‚ÍaddPosition
+	//è¶³ã™å ´æ‰€ã¯addPosition
 	Node* e = &mNodes[ newPos ];
-	//w’è‚Ì“z‚ğæ‚èo‚·
+	//æŒ‡å®šã®å¥´ã‚’å–ã‚Šå‡ºã™
 	Node* cur = &mNodes[ position ];
-	//‘O‚Ì“z‚ğæ‚èo‚·
+	//å‰ã®å¥´ã‚’å–ã‚Šå‡ºã™
 	Node* prev = &mNodes[ cur->mPrev ];
-	//’lŠi”[(ƒRƒ“ƒXƒgƒ‰ƒNƒ^ŒÄ‚Ño‚µ)
+	//å€¤æ ¼ç´(ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿å‘¼ã³å‡ºã—)
 	new ( &mValues[ newPos ] ) T( v );
-	e->mPrev = cur->mPrev; //w’è‚Ì‘O‚Ì“z‚ª‘O
-	e->mNext = position; //w’è‚Ì“z‚ªŸ
-	//w’è‚Ì“z‚ÍŒã‚É‚È‚é‚Ì‚ÅA‘O‚Í‘«‚µ‚½“z‚É‚È‚é
+	e->mPrev = cur->mPrev; //æŒ‡å®šã®å‰ã®å¥´ãŒå‰
+	e->mNext = position; //æŒ‡å®šã®å¥´ãŒæ¬¡
+	//æŒ‡å®šã®å¥´ã¯å¾Œã«ãªã‚‹ã®ã§ã€å‰ã¯è¶³ã—ãŸå¥´ã«ãªã‚‹
 	cur->mPrev = newPos;
-	//w’è‚Ì‘O‚Ì“z‚Í‘O‚É‚È‚é‚Ì‚ÅAŒã‚Í‘«‚µ‚½“z‚É‚È‚é
+	//æŒ‡å®šã®å‰ã®å¥´ã¯å‰ã«ãªã‚‹ã®ã§ã€å¾Œã¯è¶³ã—ãŸå¥´ã«ãªã‚‹
 	prev->mNext = newPos;
 	++mSize;
 
@@ -122,60 +122,60 @@ template< class T > inline int List< T >::addBefore( int position, const T& v ){
 }
 
 template< class T > inline int List< T >::addHead( const T& v ){
-	return addAfter( mCapacity, v ); //ƒ_ƒ~[—v‘f‚Ì‚¨‚©‚°‚Å‚±‚¤‘‚¯‚éB
+	return addAfter( mCapacity, v ); //ãƒ€ãƒŸãƒ¼è¦ç´ ã®ãŠã‹ã’ã§ã“ã†æ›¸ã‘ã‚‹ã€‚
 }
 
 template< class T > inline int List< T >::addTail( const T& v ){
-	return addBefore( mCapacity, v ); //ƒ_ƒ~[—v‘f‚Ì‚¨‚©‚°‚Å‚±‚¤‘‚¯‚é
+	return addBefore( mCapacity, v ); //ãƒ€ãƒŸãƒ¼è¦ç´ ã®ãŠã‹ã’ã§ã“ã†æ›¸ã‘ã‚‹
 }
 
 template< class T > inline void List< T >::remove( int position ){
 	ASSERT( mSize > 0 );
-	//w’è‚Ì“z
+	//æŒ‡å®šã®å¥´
 	Node* cur = &mNodes[ position ];
-	//Ÿ
+	//æ¬¡
 	Node* next = &mNodes[ cur->mNext ];
-	//‘O
+	//å‰
 	Node* prev = &mNodes[ cur->mPrev ];
-	//‘O‚Ì“z‚ÌŸ‚ğAŸ‚É‚·‚éB
+	//å‰ã®å¥´ã®æ¬¡ã‚’ã€æ¬¡ã«ã™ã‚‹ã€‚
 	prev->mNext = cur->mNext;
-	//Ÿ‚Ì“z‚Ì‘O‚ğA‘O‚É‚·‚éB
+	//æ¬¡ã®å¥´ã®å‰ã‚’ã€å‰ã«ã™ã‚‹ã€‚
 	next->mPrev = cur->mPrev;
-	//ƒfƒXƒgƒ‰ƒNƒ^‚ğ–¾¦“I‚ÉŒÄ‚Ô
+	//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’æ˜ç¤ºçš„ã«å‘¼ã¶
 	mValues[ position ].~T();
-	//ƒTƒCƒYŒ¸­
+	//ã‚µã‚¤ã‚ºæ¸›å°‘
 	--mSize;
-	//‹ó‚«ƒXƒ^ƒbƒN‚ÉƒvƒbƒVƒ…
+	//ç©ºãã‚¹ã‚¿ãƒƒã‚¯ã«ãƒ—ãƒƒã‚·ãƒ¥
 	mEmptyStack.push( position );
 }
 
-template< class T > inline void List< T >::removeHead(){ //‚±‚ê‚Í‚Ù‚Æ‚ñ‚Ç•Ê–¼B
+template< class T > inline void List< T >::removeHead(){ //ã“ã‚Œã¯ã»ã¨ã‚“ã©åˆ¥åã€‚
 	int pos = mNodes[ mCapacity ].mNext;
-	if ( pos < mCapacity ){ //ƒ_ƒ~[‚ÍÁ‚¹‚È‚¢‚©‚ç‚È
+	if ( pos < mCapacity ){ //ãƒ€ãƒŸãƒ¼ã¯æ¶ˆã›ãªã„ã‹ã‚‰ãª
 		remove( pos  );
 	}
 }
 
-template< class T > inline void List< T >::removeTail(){ //‚±‚ê‚Í‚Ù‚Æ‚ñ‚Ç•Ê–¼B
+template< class T > inline void List< T >::removeTail(){ //ã“ã‚Œã¯ã»ã¨ã‚“ã©åˆ¥åã€‚
 	int pos = mNodes[ mCapacity ].mPrev;
-	if ( pos < mCapacity ){ //ƒ_ƒ~[‚ÍÁ‚¹‚È‚¢‚©‚ç‚È
+	if ( pos < mCapacity ){ //ãƒ€ãƒŸãƒ¼ã¯æ¶ˆã›ãªã„ã‹ã‚‰ãª
 		remove( pos  );
 	}
 }
 
 template< class T> inline void List< T >::clear(){
 	int pos = mNodes[ mCapacity ].mNext;
-	while ( pos < mCapacity ){ //ƒ_ƒ~[‚Å‚È‚¯‚ê‚Î
-		mValues[ pos ].~T(); //ƒfƒXƒgƒ‰ƒNƒg
+	while ( pos < mCapacity ){ //ãƒ€ãƒŸãƒ¼ã§ãªã‘ã‚Œã°
+		mValues[ pos ].~T(); //ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
 		pos = mNodes[ pos ].mNext;
 	}
 	mNodes[ mCapacity ].mNext = mCapacity;
 	mNodes[ mCapacity ].mPrev = mCapacity;
 	mSize = 0;
-	//‹óƒXƒ^ƒbƒN‹l‚ß‚È‚¨‚µ
+	//ç©ºã‚¹ã‚¿ãƒƒã‚¯è©°ã‚ãªãŠã—
 	mEmptyStack.clear();
 	for ( int i = 0; i < mCapacity; ++i ){
-		mEmptyStack.push( i ); //‹ó‚«”Ô†ƒŠƒXƒg‚É‹l‚ß‚Ä‚¢‚­
+		mEmptyStack.push( i ); //ç©ºãç•ªå·ãƒªã‚¹ãƒˆã«è©°ã‚ã¦ã„ã
 	}
 }
 
@@ -190,12 +190,12 @@ template< class T > inline T* List< T >::value( int position ){
 }
 
 template< class T > inline int List< T >::next( int position ) const {
-	ASSERT( position >= 0 && position <= mCapacity ); //ƒ_ƒ~[‚à—ˆ“¾‚é‚Ì‚Å<=
+	ASSERT( position >= 0 && position <= mCapacity ); //ãƒ€ãƒŸãƒ¼ã‚‚æ¥å¾—ã‚‹ã®ã§<=
 	return mNodes[ position ].mNext;
 }
 
 template< class T > inline int List< T >::previous( int position ) const {
-	ASSERT( position >= 0 && position <= mCapacity );//ƒ_ƒ~[‚à—ˆ“¾‚é‚Ì‚Å<=
+	ASSERT( position >= 0 && position <= mCapacity );//ãƒ€ãƒŸãƒ¼ã‚‚æ¥å¾—ã‚‹ã®ã§<=
 	return mNodes[ position ].mPrev;
 }
 

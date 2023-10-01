@@ -5,18 +5,18 @@
 
 class Triangle{
 public:
-	//“–‚½‚é‚ğ‹‚ß‚é
+	//å½“ãŸã‚‹æ™‚åˆ»ã‚’æ±‚ã‚ã‚‹
 	double getIntersectionTime( const Vector3& lineBegin, const Vector3& lineVector ) const;
-	//n“_‚Æü•ªƒxƒNƒ^
+	//å§‹ç‚¹ã¨ç·šåˆ†ãƒ™ã‚¯ã‚¿
 	bool isIntersect( const Vector3& lineBegin, const Vector3& lineVector ) const;
-	//ó‚¯æ‚Á‚½ˆÚ“®ƒxƒNƒ^‚Ì¬•ª‚Ì‚¤‚¿‘Šè‚É“–‚½‚ç‚È‚¢‚Å“®‚¯‚é¬•ª‚¾‚¯‚ğc‚·
+	//å—ã‘å–ã£ãŸç§»å‹•ãƒ™ã‚¯ã‚¿ã®æˆåˆ†ã®ã†ã¡ç›¸æ‰‹ã«å½“ãŸã‚‰ãªã„ã§å‹•ã‘ã‚‹æˆåˆ†ã ã‘ã‚’æ®‹ã™
 	bool restrictMove( Vector3* moveVectorInOut, const Vector3& position ) const;
-	//ó‚¯æ‚Á‚½ˆÚ“®ƒxƒNƒ^‚©‚ç–@ü¬•ª‚ğÁ‚·
+	//å—ã‘å–ã£ãŸç§»å‹•ãƒ™ã‚¯ã‚¿ã‹ã‚‰æ³•ç·šæˆåˆ†ã‚’æ¶ˆã™
 	void modifyMove( Vector3* moveVectorInOut ) const;
-	//ˆÊ’uİ’è
+	//ä½ç½®è¨­å®š
 	void setPosition( const Vector3& p0, const Vector3& p1, const Vector3& p2 );
 private:
-	Vector3 mPosition[ 3 ]; //3’¸“_
+	Vector3 mPosition[ 3 ]; //3é ‚ç‚¹
 };
 
 #endif

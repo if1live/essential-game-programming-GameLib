@@ -33,27 +33,27 @@ Judge::~Judge(){
 void Judge::update( Parent* parent ){
 	if ( Pad::isTriggered( Pad::U ) ){
 		--mCursorPosition;
-		if ( mCursorPosition < 0 ){ //ƒ}ƒCƒiƒX‚ÍÅ‘å’l‚Éƒ‹[ƒv
+		if ( mCursorPosition < 0 ){ //ãƒžã‚¤ãƒŠã‚¹ã¯æœ€å¤§å€¤ã«ãƒ«ãƒ¼ãƒ—
  			mCursorPosition = 1;
 		}
 	}else if ( Pad::isTriggered( Pad::D ) ){
 		++mCursorPosition;
-		if ( mCursorPosition > 1 ){ //1‚ð‰z‚¦‚½‚ç0‚Éƒ‹[ƒv
+		if ( mCursorPosition > 1 ){ //1ã‚’è¶ŠãˆãŸã‚‰0ã«ãƒ«ãƒ¼ãƒ—
 			mCursorPosition = 0;
 		}
 	}else if ( Pad::isTriggered( Pad::A ) ){
 		if ( mCursorPosition == 0 ){
-			//‘±‚¯‚ÄŸ•‰
+			//ç¶šã‘ã¦å‹è² 
 			parent->moveTo( Parent::NEXT_READY );
 		}else if ( mCursorPosition == 1 ){
-			//ƒ^ƒCƒgƒ‹‚Ö
+			//ã‚¿ã‚¤ãƒˆãƒ«ã¸
 			parent->moveTo( Parent::NEXT_TITLE );
 		}
 	}
-	//•`‰æ
-	//‚Ü‚¸ƒQ[ƒ€‰æ–Ê
+	//æç”»
+	//ã¾ãšã‚²ãƒ¼ãƒ ç”»é¢
 	parent->drawState();
-	//ã‚Éd‚Ë‚é
+	//ä¸Šã«é‡ã­ã‚‹
 	mImageMenu->draw();
 
 	Parent::PlayerID winner = parent->getWinner();

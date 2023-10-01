@@ -36,21 +36,21 @@ bool* compressed,
 ofstream* oStream, 
 ifstream* iStream,
 double threshold ){
-	//–{“–‚Í•ªŠ„“Ç‚İ‚µ‚È‚¢‚Æ‚Ü‚¸‚¢‚ª–Ê“|‚È‚Ì‚ÅˆêŠ‡
+	//æœ¬å½“ã¯åˆ†å‰²èª­ã¿ã—ãªã„ã¨ã¾ãšã„ãŒé¢å€’ãªã®ã§ä¸€æ‹¬
 	iStream->seekg( 0, ifstream::end );
 	int inSize = static_cast< int >( iStream->tellg() );
 	iStream->seekg( 0, ifstream::beg );
 	char* inData = new char[ inSize ];
 	iStream->read( inData, inSize );
 
-	//‘‚«‚İæ—pˆÓ
-	int outBufferSize = inSize + ( inSize / 127 ) + 1; //‚ ‚Ü‚è‚Ì•ª+1‚ğ–Y‚ê‚¸‚ÉB
+	//æ›¸ãè¾¼ã¿å…ˆç”¨æ„
+	int outBufferSize = inSize + ( inSize / 127 ) + 1; //ã‚ã¾ã‚Šã®åˆ†+1ã‚’å¿˜ã‚Œãšã«ã€‚
 	char* outData = new char[ outBufferSize ];
 	if ( !outData ){
 		cerr << "memory allocation failed : " << outBufferSize << endl;
 		return false;
 	}
-	//‚¶‚á‚ ˆ³k‚·‚é‚æ[
+	//ã˜ã‚ƒã‚åœ§ç¸®ã™ã‚‹ã‚ˆãƒ¼
 	int outSize;
 	bool succeeded = compress( 
 		reinterpret_cast< unsigned char* >( outData ), 
@@ -62,8 +62,8 @@ double threshold ){
 	assert( succeeded );
 #ifndef NDEBUG
 	{
-		//ˆ³k‚µ‚½‚à‚Ì‚ğ“WŠJ‚µ‚Ä‚¿‚á‚ñ‚ÆŒ³‚É–ß‚é‚©Šm‚©‚ß‚æ‚¤B
-		char* outData2 = new char[ inSize ]; //“¯‚¶‚Å‚¢‚¢‚Í‚¸‚¾‚æ‚ËH
+		//åœ§ç¸®ã—ãŸã‚‚ã®ã‚’å±•é–‹ã—ã¦ã¡ã‚ƒã‚“ã¨å…ƒã«æˆ»ã‚‹ã‹ç¢ºã‹ã‚ã‚ˆã†ã€‚
+		char* outData2 = new char[ inSize ]; //åŒã˜ã§ã„ã„ã¯ãšã ã‚ˆã­ï¼Ÿ
 		int outSize2;
 		succeeded = decompress( 
 			reinterpret_cast< unsigned char* >( outData2 ), 
@@ -80,11 +80,11 @@ double threshold ){
 		outData2 = 0;
 	}
 #endif
-	//‘‚«‚±‚İ
+	//æ›¸ãã“ã¿
 	double t = inSize;
 	t *= threshold;
 	t /= 100.0;
-	if ( outSize < t ){ //ˆ³kƒo[ƒWƒ‡ƒ“‚ğ‘‚«‚İ
+	if ( outSize < t ){ //åœ§ç¸®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚’æ›¸ãè¾¼ã¿
 		oStream->write( outData, outSize );
 		*writtenSize = outSize;
 		*compressed = true;
@@ -101,18 +101,18 @@ double threshold ){
 	return true;
 }
 
-//ƒrƒbƒgŠ„‚è“–‚Ä
-const int DIC_BITS = 10; //ˆÊ’ubit”
-//ˆÈ‰º©“®ŒvZ’è”
-const int LENGTH_BITS = 16 - 1 - DIC_BITS; //’·‚³
+//ãƒ“ãƒƒãƒˆå‰²ã‚Šå½“ã¦
+const int DIC_BITS = 10; //ä½ç½®bitæ•°
+//ä»¥ä¸‹è‡ªå‹•è¨ˆç®—å®šæ•°
+const int LENGTH_BITS = 16 - 1 - DIC_BITS; //é•·ã•
 const int DIC_MASK = ( 1 << DIC_BITS ) - 1;
-const int DIC_MASK_HIGH = DIC_MASK & 0xffffff00; //‰º8bit‚ğ‚Â‚Ô‚µ‚½‚à‚Ì
+const int DIC_MASK_HIGH = DIC_MASK & 0xffffff00; //ä¸‹8bitã‚’ã¤ã¶ã—ãŸã‚‚ã®
 const int DIC_MASK_SHIFTED = ( DIC_MASK >> 8 ) << LENGTH_BITS; 
 const int LENGTH_MASK = ( 1 << LENGTH_BITS ) - 1;
-const int DIC_SIZE = DIC_MASK + 3; //«‘ƒTƒCƒY
-const int MAX_LENGTH = LENGTH_MASK + 3; //Å‘åˆê’v’·
+const int DIC_SIZE = DIC_MASK + 3; //è¾æ›¸ã‚µã‚¤ã‚º
+const int MAX_LENGTH = LENGTH_MASK + 3; //æœ€å¤§ä¸€è‡´é•·
 
-//‚æ‚­g‚¤Å¬’l‚ÆÅ‘å’l
+//ã‚ˆãä½¿ã†æœ€å°å€¤ã¨æœ€å¤§å€¤
 inline int min( int a, int b ){
 	return ( a < b ) ? a : b;
 }
@@ -121,19 +121,19 @@ inline int max( int a, int b ){
 	return ( a > b ) ? a : b;
 }
 
-//ˆ³k‚·‚é‚æ[
+//åœ§ç¸®ã™ã‚‹ã‚ˆãƒ¼
 /*
-«‘ˆ³kBLZ77‚Ì‰½‚©B
-ˆ³k—Ìˆæ‚Í2ƒoƒCƒg‚ÅAˆÊ’u‚Æ’·‚³‚É•ª”z‚µ‚Ä‚ ‚éB
-1ƒoƒCƒg–Ú : 0x80+ƒTƒCƒY(5bit)+ˆÊ’u‚ÌãˆÊƒrƒbƒg(2bit)A
-2ƒoƒCƒg–Ú : ˆÊ’u‚Ì‰ºˆÊ8bitB
-”ñˆ³k—Ìˆæ‚ÍA”ñˆ³k—ÌˆæƒTƒCƒYA”ñˆ³k•¶š—ñ(1‚©‚ç128)•¶š
+è¾æ›¸åœ§ç¸®ã€‚LZ77ã®ä½•ã‹ã€‚
+åœ§ç¸®é ˜åŸŸã¯2ãƒã‚¤ãƒˆã§ã€ä½ç½®ã¨é•·ã•ã«åˆ†é…ã—ã¦ã‚ã‚‹ã€‚
+1ãƒã‚¤ãƒˆç›® : 0x80+ã‚µã‚¤ã‚º(5bit)+ä½ç½®ã®ä¸Šä½ãƒ“ãƒƒãƒˆ(2bit)ã€
+2ãƒã‚¤ãƒˆç›® : ä½ç½®ã®ä¸‹ä½8bitã€‚
+éåœ§ç¸®é ˜åŸŸã¯ã€éåœ§ç¸®é ˜åŸŸã‚µã‚¤ã‚ºã€éåœ§ç¸®æ–‡å­—åˆ—(1ã‹ã‚‰128)æ–‡å­—
 
-ˆ³k—Ìˆæ‚ÍAˆÊ’uA’·‚³‹¤‚É-3‚µ‚½”‚ğŠi”[‚µ‚Ä‚ ‚éB
-“WŠJ‚Íæ‚èo‚µ‚Ä‚©‚ç3‚ğ‘«‚·B
-”ñˆ³k—Ìˆæ‚Í’·‚³‚ğ-1‚µ‚Ä‚ ‚èAæ‚èo‚·‚É‚Í+1‚·‚éB
+åœ§ç¸®é ˜åŸŸã¯ã€ä½ç½®ã€é•·ã•å…±ã«-3ã—ãŸæ•°ã‚’æ ¼ç´ã—ã¦ã‚ã‚‹ã€‚
+å±•é–‹æ™‚ã¯å–ã‚Šå‡ºã—ã¦ã‹ã‚‰3ã‚’è¶³ã™ã€‚
+éåœ§ç¸®é ˜åŸŸã¯é•·ã•ã‚’-1ã—ã¦ã‚ã‚Šã€å–ã‚Šå‡ºã™æ™‚ã«ã¯+1ã™ã‚‹ã€‚
 
-23Í‚ÌƒTƒ“ƒvƒ‹‚É”ä‚×‚ÄAƒGƒ‰[ˆ—‚âAˆ³k—¦Œüã‚ÌH•v‚ÅƒR[ƒh‚ª’·‚­‚È‚Á‚Ä‚¢‚éB
+23ç« ã®ã‚µãƒ³ãƒ—ãƒ«ã«æ¯”ã¹ã¦ã€ã‚¨ãƒ©ãƒ¼å‡¦ç†ã‚„ã€åœ§ç¸®ç‡å‘ä¸Šã®å·¥å¤«ã§ã‚³ãƒ¼ãƒ‰ãŒé•·ããªã£ã¦ã„ã‚‹ã€‚
 */
 bool DictionaryCompressor::compress( 
 unsigned char* oData, 
@@ -142,21 +142,21 @@ int* oNecessaryBufferSize,
 int oBufferSize, 
 const unsigned char* iData, 
 int iSize ){
-	int oPos = 0; //‘‚«‚İ‘¤‚Ì‘‚«‚ŞˆÊ’u
-	int maxPosDiff = 0; //“WŠJ‚ÉA‘‚«‚İƒ|ƒCƒ“ƒ^‚ª“Ç‚İ‚İƒ|ƒCƒ“ƒ^‚ğ’Ç‚¢”²‚­—Ê‚ÌÅ‘å’lB‚»‚Ìê“WŠJ‚·‚é‚½‚ß‚É‚ÍA‚±‚Ì•ª‚¾‚¯‘å‚«‚È“WŠJƒoƒbƒtƒ@‚ª•K—vB
+	int oPos = 0; //æ›¸ãè¾¼ã¿å´ã®æ›¸ãè¾¼ã‚€ä½ç½®
+	int maxPosDiff = 0; //å±•é–‹æ™‚ã«ã€æ›¸ãè¾¼ã¿ãƒã‚¤ãƒ³ã‚¿ãŒèª­ã¿è¾¼ã¿ãƒã‚¤ãƒ³ã‚¿ã‚’è¿½ã„æŠœãé‡ã®æœ€å¤§å€¤ã€‚ãã®å ´å±•é–‹ã™ã‚‹ãŸã‚ã«ã¯ã€ã“ã®åˆ†ã ã‘å¤§ããªå±•é–‹ãƒãƒƒãƒ•ã‚¡ãŒå¿…è¦ã€‚
 	int i = 0;
-	int unmatchBegin = 0; //”ñˆê’v—Ìˆæ‚ÌŠJnˆÊ’u
+	int unmatchBegin = 0; //éä¸€è‡´é ˜åŸŸã®é–‹å§‹ä½ç½®
 	while ( i < iSize ){
-		//«‘‚©‚çŒŸõ
+		//è¾æ›¸ã‹ã‚‰æ¤œç´¢
 		int matchLength = 0;
 		int matchPos = 0;
-		//«‘‚Ìæ“ªB
-		int dicBegin = max( i - DIC_SIZE, 0 ); //0‚æ‚è‘O‚É‚Í‚È‚ê‚È‚¢‚±‚Æ‚É’ˆÓB‚¾‚©‚çmax()‚ğg‚¤
-		//Å‘åŒŸõ’·
-		int maxL = min( MAX_LENGTH, iSize - dicBegin ); //“ü—Í‚ÌÅŒã‚ğ‰z‚¦‚ÄŒŸõ‚Í‚Å‚«‚È‚¢B
-		//«‘‚Ìæ“ª‚©‚ç’T‚µ‚Ä‚¢‚­B‚±‚±‚Å‰ºè‚ÈH•v‚ğ‚·‚é‚Æ“Á‹–‚Éˆø‚Á‚©‚©‚é‚Ì‚Å‚â‚Á‚Ä‚¢‚È‚¢B
-		int jEnd = i - 3; //ŒŸõæ“ª‚Í3•¶šˆÈã‘O‚©‚çn‚ß‚éB3•¶šˆÈãƒ}ƒbƒ`‚µ‚È‚¢ŒÀ‚èˆ³k‚µ‚È‚¢‚©‚ç‚¾B
-		//‚±‚±‚Å‚ÍŒ³‚ÌƒTƒ“ƒvƒ‹‚Æˆá‚Á‚Äƒ‹[ƒv‚ğˆêd‚É‚µ‚Ä‚¢‚éB•sˆê’v‚Åj‚ğl-1‚¾‚¯–ß‚·ì‚è‚¾B‚±‚¿‚ç‚Ì•û‚ª‚í‚©‚è‚É‚­‚¢‚ªAÅŒã‚Ü‚Åƒ}ƒbƒ`‚µ‚½‚É‚·‚®”²‚¯‚Ä‚­‚ê‚é‚Ì‚Å“Á’è‚Ìí—Ş‚Ìƒtƒ@ƒCƒ‹(^‚Á”’‚È‰æ‘œ‚Æ‚©)‚Å‘¬‚­‚È‚éB
+		//è¾æ›¸ã®å…ˆé ­ã€‚
+		int dicBegin = max( i - DIC_SIZE, 0 ); //0ã‚ˆã‚Šå‰ã«ã¯ãªã‚Œãªã„ã“ã¨ã«æ³¨æ„ã€‚ã ã‹ã‚‰max()ã‚’ä½¿ã†
+		//æœ€å¤§æ¤œç´¢é•·
+		int maxL = min( MAX_LENGTH, iSize - dicBegin ); //å…¥åŠ›ã®æœ€å¾Œã‚’è¶Šãˆã¦æ¤œç´¢ã¯ã§ããªã„ã€‚
+		//è¾æ›¸ã®å…ˆé ­ã‹ã‚‰æ¢ã—ã¦ã„ãã€‚ã“ã“ã§ä¸‹æ‰‹ãªå·¥å¤«ã‚’ã™ã‚‹ã¨ç‰¹è¨±ã«å¼•ã£ã‹ã‹ã‚‹ã®ã§ã‚„ã£ã¦ã„ãªã„ã€‚
+		int jEnd = i - 3; //æ¤œç´¢å…ˆé ­ã¯3æ–‡å­—ä»¥ä¸Šå‰ã‹ã‚‰å§‹ã‚ã‚‹ã€‚3æ–‡å­—ä»¥ä¸Šãƒãƒƒãƒã—ãªã„é™ã‚Šåœ§ç¸®ã—ãªã„ã‹ã‚‰ã ã€‚
+		//ã“ã“ã§ã¯å…ƒã®ã‚µãƒ³ãƒ—ãƒ«ã¨é•ã£ã¦ãƒ«ãƒ¼ãƒ—ã‚’ä¸€é‡ã«ã—ã¦ã„ã‚‹ã€‚ä¸ä¸€è‡´ã§jã‚’l-1ã ã‘æˆ»ã™ä½œã‚Šã ã€‚ã“ã¡ã‚‰ã®æ–¹ãŒã‚ã‹ã‚Šã«ãã„ãŒã€æœ€å¾Œã¾ã§ãƒãƒƒãƒã—ãŸæ™‚ã«ã™ãæŠœã‘ã¦ãã‚Œã‚‹ã®ã§ç‰¹å®šã®ç¨®é¡ã®ãƒ•ã‚¡ã‚¤ãƒ«(çœŸã£ç™½ãªç”»åƒã¨ã‹)ã§é€Ÿããªã‚‹ã€‚
 		int j = dicBegin;
 		int l = 0;
 		while ( ( j < jEnd ) && ( l < maxL ) ){
@@ -164,54 +164,54 @@ int iSize ){
 				++j;
 				++l;
 			}else{
-				//‘O‚æ‚è’·‚­ˆê’v‚µ‚½‚È‚ç‹L˜^B‚¢‚ë‚ñ‚Èƒ}ƒbƒ`‚Ìd•û‚ª‚ ‚é‚Í‚¸‚¾‚©‚çAÅ‘å‚Ì‚à‚Ì‚ğ‹L˜^‚·‚éB
+				//å‰ã‚ˆã‚Šé•·ãä¸€è‡´ã—ãŸãªã‚‰è¨˜éŒ²ã€‚ã„ã‚ã‚“ãªãƒãƒƒãƒã®ä»•æ–¹ãŒã‚ã‚‹ã¯ãšã ã‹ã‚‰ã€æœ€å¤§ã®ã‚‚ã®ã‚’è¨˜éŒ²ã™ã‚‹ã€‚
 				if ( matchLength < l ){
 					matchPos = j - l;
 					matchLength = l;
 				}
-				j -= l - 1; //l‚ª0‚Å‚à1•¶š‚Íi‚ŞBl‚ª‘‚¦‚é‚Æ‚½‚­‚³‚ñ–ß‚éB
+				j -= l - 1; //lãŒ0ã§ã‚‚1æ–‡å­—ã¯é€²ã‚€ã€‚lãŒå¢—ãˆã‚‹ã¨ãŸãã•ã‚“æˆ»ã‚‹ã€‚
 				l = 0;
 			}
 		}
-		if ( matchLength < l ){ //ÅŒã‚Ü‚Å—ˆ‚Ä‚µ‚Ü‚Á‚½ê‡‚É‘Îˆ
+		if ( matchLength < l ){ //æœ€å¾Œã¾ã§æ¥ã¦ã—ã¾ã£ãŸå ´åˆã«å¯¾å‡¦
 			matchPos = j - l;
 			matchLength = l;
 		}
-		//‚³‚ÄAˆê’v‚ª3•¶šˆÈã‚ ‚ê‚Îˆ³kƒ‚[ƒh‚Å‹L˜^‚·‚éB
+		//ã•ã¦ã€ä¸€è‡´ãŒ3æ–‡å­—ä»¥ä¸Šã‚ã‚Œã°åœ§ç¸®ãƒ¢ãƒ¼ãƒ‰ã§è¨˜éŒ²ã™ã‚‹ã€‚
 		if ( matchLength >= 3 ){
 			if ( unmatchBegin < i ){
-				if ( ( oPos + i - unmatchBegin + 1 ) > oBufferSize ){ //‘‚«‚İƒoƒbƒtƒ@•s‘«ƒGƒ‰[ŒŸo ÅŒã‚Ì+1‚Íƒwƒbƒ_•ª
-					return false; //¸”s
+				if ( ( oPos + i - unmatchBegin + 1 ) > oBufferSize ){ //æ›¸ãè¾¼ã¿ãƒãƒƒãƒ•ã‚¡ä¸è¶³ã‚¨ãƒ©ãƒ¼æ¤œå‡º æœ€å¾Œã®+1ã¯ãƒ˜ãƒƒãƒ€åˆ†
+					return false; //å¤±æ•—
 				}
-				//”ñˆ³kƒwƒbƒ_‘‚«‚İ
-				oData[ oPos ] = static_cast< unsigned char >( i - unmatchBegin - 1 ); //Å’á1‚È‚Ì‚Å1ˆø‚¢‚Ä•Û‘¶
+				//éåœ§ç¸®ãƒ˜ãƒƒãƒ€æ›¸ãè¾¼ã¿
+				oData[ oPos ] = static_cast< unsigned char >( i - unmatchBegin - 1 ); //æœ€ä½1ãªã®ã§1å¼•ã„ã¦ä¿å­˜
 				++oPos;
 				for ( int j = unmatchBegin; j < i; ++j ){
 					oData[ oPos ] = iData[ j ];
 					++oPos;
 				}
 			}
-			if ( ( oPos + 2 ) > oBufferSize ){ //‘‚«‚İƒoƒbƒtƒ@•s‘«ƒGƒ‰[ŒŸo
-				return false; //¸”s
+			if ( ( oPos + 2 ) > oBufferSize ){ //æ›¸ãè¾¼ã¿ãƒãƒƒãƒ•ã‚¡ä¸è¶³ã‚¨ãƒ©ãƒ¼æ¤œå‡º
+				return false; //å¤±æ•—
 			}
-			//ˆ³k•”•ª‚ğ‹L˜^
-			int wl = matchLength - 3; //3ˆø‚¢‚ÄŠi”[
-			int wp = i - matchPos - 3; //3ˆø‚¢‚ÄŠi”[
-			int tmp = 0x80 | wl; //’·‚³‚Éˆ³kƒtƒ‰ƒO‚ğ’Ç‰Á
-			tmp |= ( wp & DIC_MASK_HIGH ) >> ( 8 - LENGTH_BITS ); //mask‚Æ&‚µA‚±‚ê‚ğƒTƒCƒY‚Ég‚Á‚Ä‚¢‚éƒrƒbƒg‚Ì•ª‚¾‚¯‚¸‚ç‚·B
+			//åœ§ç¸®éƒ¨åˆ†ã‚’è¨˜éŒ²
+			int wl = matchLength - 3; //3å¼•ã„ã¦æ ¼ç´
+			int wp = i - matchPos - 3; //3å¼•ã„ã¦æ ¼ç´
+			int tmp = 0x80 | wl; //é•·ã•ã«åœ§ç¸®ãƒ•ãƒ©ã‚°ã‚’è¿½åŠ 
+			tmp |= ( wp & DIC_MASK_HIGH ) >> ( 8 - LENGTH_BITS ); //maskã¨&ã—ã€ã“ã‚Œã‚’ã‚µã‚¤ã‚ºã«ä½¿ã£ã¦ã„ã‚‹ãƒ“ãƒƒãƒˆã®åˆ†ã ã‘ãšã‚‰ã™ã€‚
 			oData[ oPos + 0 ] = static_cast< unsigned char >( tmp );
 			oData[ oPos + 1 ] = static_cast< unsigned char >( wp & 0xff );
 			oPos += 2;
 			i += matchLength;
-			unmatchBegin = i; //”ñˆê’vˆÊ’u‚ÍŸ‚©‚ç
-		}else{ //ƒ}ƒbƒ`‚µ‚È‚©‚Á‚½B‘‚«‚İ‚Í‚Ü‚Æ‚ß‚Ä‚â‚é‚Ì‚ÅA¡‚Íi‚ß‚éB
+			unmatchBegin = i; //éä¸€è‡´ä½ç½®ã¯æ¬¡ã‹ã‚‰
+		}else{ //ãƒãƒƒãƒã—ãªã‹ã£ãŸã€‚æ›¸ãè¾¼ã¿ã¯ã¾ã¨ã‚ã¦ã‚„ã‚‹ã®ã§ã€ä»Šã¯é€²ã‚ã‚‹ã€‚
 			++i;
-			if ( i - unmatchBegin == 128 ){ //ŒÀŠE”—­‚Ü‚Á‚Ä‚µ‚Ü‚Á‚½B‘‚«‚Ş
-				if ( ( oPos + i - unmatchBegin + 1 ) > oBufferSize ){ //‘‚«‚İƒoƒbƒtƒ@•s‘«ƒGƒ‰[ŒŸo ÅŒã‚Ì+1‚Íƒwƒbƒ_•ª
-					return false; //¸”s
+			if ( i - unmatchBegin == 128 ){ //é™ç•Œæ•°æºœã¾ã£ã¦ã—ã¾ã£ãŸã€‚æ›¸ãè¾¼ã‚€
+				if ( ( oPos + i - unmatchBegin + 1 ) > oBufferSize ){ //æ›¸ãè¾¼ã¿ãƒãƒƒãƒ•ã‚¡ä¸è¶³ã‚¨ãƒ©ãƒ¼æ¤œå‡º æœ€å¾Œã®+1ã¯ãƒ˜ãƒƒãƒ€åˆ†
+					return false; //å¤±æ•—
 				}
-				//”ñˆ³kƒwƒbƒ_‘‚«‚İ
-				oData[ oPos ] = static_cast< unsigned char >( i - unmatchBegin - 1 ); //Å’á1‚È‚Ì‚Å1ˆø‚¢‚Ä•Û‘¶
+				//éåœ§ç¸®ãƒ˜ãƒƒãƒ€æ›¸ãè¾¼ã¿
+				oData[ oPos ] = static_cast< unsigned char >( i - unmatchBegin - 1 ); //æœ€ä½1ãªã®ã§1å¼•ã„ã¦ä¿å­˜
 				++oPos;
 				for ( int j = unmatchBegin; j < i; ++j ){
 					oData[ oPos ] = iData[ j ];
@@ -220,17 +220,17 @@ int iSize ){
 				unmatchBegin = i;
 			}
 		}
-		//‘‚«‚İˆÊ’u‚ª’Ç‚¢”²‚¢‚½—Ê‚ğXV
+		//æ›¸ãè¾¼ã¿ä½ç½®ãŒè¿½ã„æŠœã„ãŸé‡ã‚’æ›´æ–°
 		maxPosDiff = max( maxPosDiff, i - oPos );
 	}
 
-	//”ñˆê’vˆÊ’u‚ªc‚Á‚Ä‚¢‚ê‚ÎÅŒã‚Ì‘‚«‚İ
+	//éä¸€è‡´ä½ç½®ãŒæ®‹ã£ã¦ã„ã‚Œã°æœ€å¾Œã®æ›¸ãè¾¼ã¿
 	if ( unmatchBegin < i ){
-		if ( ( oPos + i - unmatchBegin + 1 ) > oBufferSize ){ //‘‚«‚İƒoƒbƒtƒ@•s‘«ƒGƒ‰[ŒŸo ÅŒã‚Ì+1‚Íƒwƒbƒ_•ª
-			return false; //¸”s
+		if ( ( oPos + i - unmatchBegin + 1 ) > oBufferSize ){ //æ›¸ãè¾¼ã¿ãƒãƒƒãƒ•ã‚¡ä¸è¶³ã‚¨ãƒ©ãƒ¼æ¤œå‡º æœ€å¾Œã®+1ã¯ãƒ˜ãƒƒãƒ€åˆ†
+			return false; //å¤±æ•—
 		}
-		//”ñˆ³kƒwƒbƒ_‘‚«‚İ
-		oData[ oPos ] = static_cast< unsigned char >( i - unmatchBegin - 1 ); //Å’á1‚È‚Ì‚Å1ˆø‚¢‚Ä•Û‘¶
+		//éåœ§ç¸®ãƒ˜ãƒƒãƒ€æ›¸ãè¾¼ã¿
+		oData[ oPos ] = static_cast< unsigned char >( i - unmatchBegin - 1 ); //æœ€ä½1ãªã®ã§1å¼•ã„ã¦ä¿å­˜
 		++oPos;
 		for ( int j = unmatchBegin; j < i; ++j ){
 			oData[ oPos ] = iData[ j ];
@@ -243,7 +243,7 @@ int iSize ){
 	return true;
 }
 
-//“WŠJ‚Í‚Æ‚Á‚Ä‚àŠÈ’P‚Å‚·B‚Å‚àƒGƒ‰[ƒ`ƒFƒbƒN‚Å‚¿‚å‚Á‚Æ’·‚­‚È‚Á‚Ä‚¢‚éB
+//å±•é–‹ã¯ã¨ã£ã¦ã‚‚ç°¡å˜ã§ã™ã€‚ã§ã‚‚ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯ã§ã¡ã‚‡ã£ã¨é•·ããªã£ã¦ã„ã‚‹ã€‚
 bool DictionaryCompressor::decompress( 
 unsigned char* oData, 
 int* oSize,
@@ -253,27 +253,27 @@ int iSize ){
 	int oPos = 0;
 	for ( int i = 0; i < iSize; ++i ){
 		int length;
-		if ( iData[ i ] & 0x80 ){ //ˆ³kƒ‚[ƒh
+		if ( iData[ i ] & 0x80 ){ //åœ§ç¸®ãƒ¢ãƒ¼ãƒ‰
 			length = iData[ i ] & LENGTH_MASK;
-			length += 3; //3•¶š­‚È‚­‹L˜^‚³‚ê‚Ä‚¢‚éB
-			int position = ( ( iData[ i ] & DIC_MASK_SHIFTED ) << ( 8 - LENGTH_BITS ) ) | iData[ i + 1 ]; //•¡G‚È‚Ì‚Å‚æ‚­•ª‰ğ‚µ‚Äl‚¦‚æ‚¤
-			position += 3; //3•¶š­‚È‚­‹L˜^‚³‚ê‚Ä‚¢‚éB
-			if ( oPos + length > oBufferSize ){ //‘‚«‚İƒoƒbƒtƒ@ƒTƒCƒYƒ`ƒFƒbƒN
+			length += 3; //3æ–‡å­—å°‘ãªãè¨˜éŒ²ã•ã‚Œã¦ã„ã‚‹ã€‚
+			int position = ( ( iData[ i ] & DIC_MASK_SHIFTED ) << ( 8 - LENGTH_BITS ) ) | iData[ i + 1 ]; //è¤‡é›‘ãªã®ã§ã‚ˆãåˆ†è§£ã—ã¦è€ƒãˆã‚ˆã†
+			position += 3; //3æ–‡å­—å°‘ãªãè¨˜éŒ²ã•ã‚Œã¦ã„ã‚‹ã€‚
+			if ( oPos + length > oBufferSize ){ //æ›¸ãè¾¼ã¿ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚ºãƒã‚§ãƒƒã‚¯
 				return false;
 			}
 			for ( int j = 0; j < length; ++j ){
-				oData[ oPos + j ] = oData[ oPos - position + j ]; //out‚©‚çˆÚ‚·‚Ì‚ª‹C‚¿ˆ«‚¢‚©‚à‚µ‚ê‚È‚¢‚ªA‚·‚Å‚É‘‚¢‚½•”•ª‚Ìout‚Í«‘‚È‚Ì‚Å‚ ‚éB
+				oData[ oPos + j ] = oData[ oPos - position + j ]; //outã‹ã‚‰ç§»ã™ã®ãŒæ°—æŒã¡æ‚ªã„ã‹ã‚‚ã—ã‚Œãªã„ãŒã€ã™ã§ã«æ›¸ã„ãŸéƒ¨åˆ†ã®outã¯è¾æ›¸ãªã®ã§ã‚ã‚‹ã€‚
 			}
-			i += 1; //1ƒoƒCƒg—]•ª‚Éi‚ß‚Ä‚â‚éB
-		}else{ //”ñˆ³kƒ‚[ƒh
-			length = iData[ i ] + 1; //1•¶š­‚È‚­‹L˜^‚µ‚Ä‚ ‚é
-			if ( oPos + length > oBufferSize ){ //‘‚«‚İƒoƒbƒtƒ@ƒTƒCƒYƒ`ƒFƒbƒN
+			i += 1; //1ãƒã‚¤ãƒˆä½™åˆ†ã«é€²ã‚ã¦ã‚„ã‚‹ã€‚
+		}else{ //éåœ§ç¸®ãƒ¢ãƒ¼ãƒ‰
+			length = iData[ i ] + 1; //1æ–‡å­—å°‘ãªãè¨˜éŒ²ã—ã¦ã‚ã‚‹
+			if ( oPos + length > oBufferSize ){ //æ›¸ãè¾¼ã¿ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚ºãƒã‚§ãƒƒã‚¯
 				return false;
 			}
 			for ( int j = 0; j < length; ++j ){
 				oData[ oPos + j ] = iData[ i + 1 + j ];
 			}
-			i += length; //‚Ù‚¤‚Á‚Ä‚¨‚¢‚Ä‚à1‚Í‘«‚³‚ê‚éB¶ƒf[ƒ^length•ª‚¾‚¯i‚ßA‚»‚Ì‘O‚Ì1ƒoƒCƒg‚Í©‘R‚É‚Ü‚©‚¹‚æ‚¤
+			i += length; //ã»ã†ã£ã¦ãŠã„ã¦ã‚‚1ã¯è¶³ã•ã‚Œã‚‹ã€‚ç”Ÿãƒ‡ãƒ¼ã‚¿lengthåˆ†ã ã‘é€²ã‚ã€ãã®å‰ã®1ãƒã‚¤ãƒˆã¯è‡ªç„¶ã«ã¾ã‹ã›ã‚ˆã†
 		}
 		oPos += length;
 	}

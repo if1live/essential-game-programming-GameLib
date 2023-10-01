@@ -20,25 +20,25 @@ StageSelect::~StageSelect(){
 }
 
 void StageSelect::update( Parent* parent ){
-	//“ü—Íæ“¾
+	//å…¥åŠ›å–å¾—
 	Framework f = Framework::instance();
 	if ( f.isKeyTriggered( 'w' ) ){
 		--mCursorPosition;
-		if ( mCursorPosition < 1-1 ){ //ƒ}ƒCƒiƒX‚ÍÅ‘å’l‚Éƒ‹[ƒv
+		if ( mCursorPosition < 1-1 ){ //ãƒã‚¤ãƒŠã‚¹ã¯æœ€å¤§å€¤ã«ãƒ«ãƒ¼ãƒ—
  			mCursorPosition = 9-1;
 		}
 	}else if ( f.isKeyTriggered( 'z' ) ){
 		++mCursorPosition;
-		if ( mCursorPosition > 9-1 ){ //9–Ê‚ğ‰z‚¦‚½‚ç1–Ê‚Éƒ‹[ƒv
+		if ( mCursorPosition > 9-1 ){ //9é¢ã‚’è¶ŠãˆãŸã‚‰1é¢ã«ãƒ«ãƒ¼ãƒ—
 			mCursorPosition = 1-1;
 		}
 	}else if ( f.isKeyTriggered( ' ' ) ){
-		parent->setStageID( mCursorPosition + 1 ); //1‘«‚µ‚½‚Ì‚ªƒXƒe[ƒW”Ô†‚È
+		parent->setStageID( mCursorPosition + 1 ); //1è¶³ã—ãŸã®ãŒã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·ãª
 		parent->moveTo( Parent::SEQ_GAME );
 	}
-	//•`‰æ
+	//æç”»
 	mImage->draw();
-	//š‚ğ‘‚­
+	//å­—ã‚’æ›¸ã
 	StringRenderer* sr = StringRenderer::instance();
 	sr->draw( 0, 0, "STAGE SELECTION" );
 	ostringstream oss;
@@ -47,7 +47,7 @@ void StageSelect::update( Parent* parent ){
 		sr->draw( 1, i, oss.str().c_str() );
 		oss.str( "" );
 	}
-	//ƒJ[ƒ\ƒ‹‚ğ‘‚­
+	//ã‚«ãƒ¼ã‚½ãƒ«ã‚’æ›¸ã
 	sr->draw( 0, mCursorPosition + 1, ">" );
 }
 

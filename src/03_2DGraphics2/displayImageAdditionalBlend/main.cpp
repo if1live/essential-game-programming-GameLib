@@ -12,7 +12,7 @@ namespace GameLib{
 			gForeground = new Image( "forground.dds" );
 			gBackground = new Image( "background.dds" );
 		}
-		//‰æ–Ê‚ğ^‚Á•‚Å“h‚è‚Â‚Ô‚µ(‰ÁZ‚¾‚Æ‘O‚ÌƒtƒŒ[ƒ€‚É‚à‚Ç‚ñ‚Ç‚ñ‘«‚³‚ê‚Ä^‚Á”’‚É‚È‚é)
+		//ç”»é¢ã‚’çœŸã£é»’ã§å¡—ã‚Šã¤ã¶ã—(åŠ ç®—ã ã¨å‰ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã«ã‚‚ã©ã‚“ã©ã‚“è¶³ã•ã‚Œã¦çœŸã£ç™½ã«ãªã‚‹)
 		unsigned* vram = Framework::instance().videoMemory();
 		int ww = Framework::instance().width();
 		int wh = Framework::instance().height();

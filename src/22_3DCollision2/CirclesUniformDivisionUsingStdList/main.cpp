@@ -12,20 +12,20 @@ struct Circle{
 	Vector2 mVelocity;
 };
 Circle* gCircles = 0;
-const int N = 40; //‚±‚ê‚Ì“ñæŒÂ‚Å‚â‚é
-const double R = 2.0; //”¼Œa2‚Ë
-const double RSUM2 = ( R + R ) * ( R + R ); //”¼Œa˜a‚Ì“ñæ
+const int N = 40; //ã“ã‚Œã®äºŒä¹—å€‹ã§ã‚„ã‚‹
+const double R = 2.0; //åŠå¾„2ã­
+const double RSUM2 = ( R + R ) * ( R + R ); //åŠå¾„å’Œã®äºŒä¹—
 const Vector2 gMinimum( -160.0, -160.0 );
 const Vector2 gMaximum( 160.0, 160.0 );
 int gDivision = 10;
-bool testCircles( int index0, int index1 ); //1ŒÂ‚Ã‚Â‚Ì”»’èŠÖ”(’:’†‚Å—Í‚Í—^‚¦‚È‚¢)
-void addForce( int i0, int i1 ); //—Í‚ğ‘«‚·‚Ì‚Í‚±‚Á‚¿
+bool testCircles( int index0, int index1 ); //1å€‹ã¥ã¤ã®åˆ¤å®šé–¢æ•°(æ³¨:ä¸­ã§åŠ›ã¯ä¸ãˆãªã„)
+void addForce( int i0, int i1 ); //åŠ›ã‚’è¶³ã™ã®ã¯ã“ã£ã¡
 
-//----------------------‚±‚±‚ª‚±‚ÌÍ‚Ìƒ~ƒ\----------------------------------------
+//----------------------ã“ã“ãŒã“ã®ç« ã®ãƒŸã‚½----------------------------------------
 
-//“–‚½‚Á‚½ƒyƒA
+//å½“ãŸã£ãŸãƒšã‚¢
 struct HitPair{ 
-	bool operator<( const HitPair& a ) const { //ƒ\[ƒg‚É•K—v‚È•s“™†
+	bool operator<( const HitPair& a ) const { //ã‚½ãƒ¼ãƒˆã«å¿…è¦ãªä¸ç­‰å·
 		if ( mI0 < a.mI0 ){
 			return true;
 		}else if ( mI0 > a.mI0 ){
@@ -34,7 +34,7 @@ struct HitPair{
 			return ( mI1 < a.mI1 );
 		}
 	}
-	bool operator==( const HitPair& a ) const {//unique‚É•K—v‚È“‡
+	bool operator==( const HitPair& a ) const {//uniqueã«å¿…è¦ãªçµ±åˆ
 		return ( ( mI0 == a.mI0 ) && ( mI1 == a.mI1 ) );
 	}
 	int mI0;
@@ -45,12 +45,12 @@ void processCollision( int* test, int* hit ){
 	*test = 0;
 	*hit = 0;
 #if 1
-	int n = N*N; //ŒÂ”‚Ë
-	//” ‚ÌƒTƒCƒY‚ğŒvZ
-	Vector2 boxSize; //” ƒTƒCƒY
+	int n = N*N; //å€‹æ•°ã­
+	//ç®±ã®ã‚µã‚¤ã‚ºã‚’è¨ˆç®—
+	Vector2 boxSize; //ç®±ã‚µã‚¤ã‚º
 	boxSize.setSub( gMaximum, gMinimum );
 	boxSize *= 1.0 / static_cast< float >( gDivision );
-	//ƒŠƒXƒg—pˆÓ
+	//ãƒªã‚¹ãƒˆç”¨æ„
 	list< int >* boxList = new list< int >[ gDivision * gDivision ];
 	for ( int i = 0; i < n; ++i ){
 		Vector2 t;
@@ -59,7 +59,7 @@ void processCollision( int* test, int* hit ){
 		double maxX = t.x + R;
 		double minY = t.y - R;
 		double maxY = t.y + R;
-		//” ”Ô†‚É•ÏŠ·(œZ‚Í‚‘¬‰»‚Å‚«‚é‚ËH)
+		//ç®±ç•ªå·ã«å¤‰æ›(é™¤ç®—ã¯é«˜é€ŸåŒ–ã§ãã‚‹ã­ï¼Ÿ)
 		int minXBox = static_cast< int >( minX / boxSize.x );
 		int maxXBox = static_cast< int >( maxX / boxSize.x );
 		int minYBox = static_cast< int >( minY / boxSize.y );
@@ -67,24 +67,24 @@ void processCollision( int* test, int* hit ){
 		ASSERT( minXBox >= 0 && maxXBox < gDivision && minYBox >=0 && maxYBox < gDivision );
 		for ( int j = minXBox; j <= maxXBox; ++j ){
 			for ( int k = minYBox; k <= maxYBox; ++k ){
-				int boxIndex = k * gDivision + j; //” ”Ô†‚ÍuY * (•ªŠ„”) + Xv
+				int boxIndex = k * gDivision + j; //ç®±ç•ªå·ã¯ã€ŒY * (åˆ†å‰²æ•°) + Xã€
 				boxList[ boxIndex ].push_back( i );
 			}
 		}
 	}
-	//” ‚²‚Æ‚É‘“–‚è
-	typedef list< int >::iterator It; //’·‚¢‚Ì‚Å•Ê–¼
+	//ç®±ã”ã¨ã«ç·å½“ã‚Š
+	typedef list< int >::iterator It; //é•·ã„ã®ã§åˆ¥å
 	list< HitPair > hitList;
 	for ( int i = 0; i < gDivision * gDivision; ++i ){
 		for ( It j = boxList[ i ].begin(); j != boxList[ i ].end(); ++j ){
-			It k = j; //j‚ÌŸ‚©‚ç
+			It k = j; //jã®æ¬¡ã‹ã‚‰
 			++k;
 			for ( ; k != boxList[ i ].end(); ++k ){
 ++( *test );
 				if ( testCircles( *j, *k ) ){
 ++( *hit );
 					HitPair hit;
-					//“¯‚¶ƒyƒA‚Í“¯‚¶‚Å‚È‚¢‚Æ¢‚é‚Ì‚ÅA¬‚³‚¢•û‚ğ‘O‚É‚·‚é
+					//åŒã˜ãƒšã‚¢ã¯åŒã˜ã§ãªã„ã¨å›°ã‚‹ã®ã§ã€å°ã•ã„æ–¹ã‚’å‰ã«ã™ã‚‹
 					if ( *j < *k ){
 						hit.mI0 = *j;
 						hit.mI1 = *k;
@@ -97,24 +97,24 @@ void processCollision( int* test, int* hit ){
 			}
 		}
 	}
-	//‚ ‚½‚èƒyƒA‚ª‚»‚ë‚Á‚½‚Ì‚Å‚±‚¢‚Â‚ğ”z—ñ‚ÉƒRƒs[
+	//ã‚ãŸã‚Šãƒšã‚¢ãŒãã‚ã£ãŸã®ã§ã“ã„ã¤ã‚’é…åˆ—ã«ã‚³ãƒ”ãƒ¼
 	HitPair* hitArray = new HitPair[ hitList.size() ];
 	int j = 0;
 	for ( list< HitPair >::iterator i = hitList.begin(); i != hitList.end(); ++i ){
 		hitArray[ j ] = *i;
 		++j;
 	}
-	//ƒ\[ƒg
+	//ã‚½ãƒ¼ãƒˆ
 	sort( hitArray, hitArray + j );
-	//d•¡‚ğœ‚­
+	//é‡è¤‡ã‚’é™¤ã
 	size_t hitN = unique( hitArray, hitArray + j ) - hitArray;
-	//—Í‚ğ‚©‚¯‚é
+	//åŠ›ã‚’ã‹ã‘ã‚‹
 	for ( size_t i = 0; i < hitN; ++i ){
 		addForce( hitArray[ i ].mI0, hitArray[ i ].mI1 );
 	}
 	SAFE_DELETE_ARRAY( hitArray );
 	SAFE_DELETE_ARRAY( boxList );
-#else //ƒfƒoƒO—p‘“–‚è”Å
+#else //ãƒ‡ãƒã‚°ç”¨ç·å½“ã‚Šç‰ˆ
 	for ( int i = 0; i < N*N; ++i ){
 		for ( int j = i + 1; j < N*N; ++j ){
 			++( *test );
@@ -126,19 +126,19 @@ void processCollision( int* test, int* hit ){
 #endif
 }
 
-//----------------------‚±‚±‚©‚ç‰º‚Í‚±‚ÌÍ‚Ì–{‹Ø‚Å‚Í‚È‚¢ƒR[ƒh---------------------------
+//----------------------ã“ã“ã‹ã‚‰ä¸‹ã¯ã“ã®ç« ã®æœ¬ç­‹ã§ã¯ãªã„ã‚³ãƒ¼ãƒ‰---------------------------
 
-//2ŒÂ‚Ìcircle‚ğˆ—‚·‚é’†gB“–‚½‚é‚Ætrue
+//2å€‹ã®circleã‚’å‡¦ç†ã™ã‚‹ä¸­èº«ã€‚å½“ãŸã‚‹ã¨true
 bool testCircles( int i0, int i1 ){
 	Circle& c0 = gCircles[ i0 ];
 	const Vector2& p0 = c0.mPosition;
 	Circle& c1 = gCircles[ i1 ];
 	const Vector2& p1 = c1.mPosition;
-	//‹——£‚ÍH
+	//è·é›¢ã¯ï¼Ÿ
 	Vector2 t;
 	t.setSub( p1, p0 );
 	double sql = t.squareLength();
-	if ( sql < RSUM2 ){ //”¼Œa‚Í4‚Å‚¢‚¢‚¾‚ë
+	if ( sql < RSUM2 ){ //åŠå¾„ã¯4ã§ã„ã„ã ã‚
 		return true;
 	}else{
 		return false;
@@ -149,8 +149,8 @@ void addForce( int i0, int i1 ){
 	Vector2 t;
 	t.setSub( gCircles[ i0 ].mPosition, gCircles[ i1 ].mPosition );
 	double l = t.length();
-	t *= 0.25 / l; //“K“–‚É’·‚³‚ğ’²®
-	//‚Í‚¶‚«•Ô‚·Bt‚Íp0->p1‚ÌƒxƒNƒ^‚¾‚©‚çA‚±‚ê‚ğc1‚É‘«‚µAc0‚©‚çˆø‚­B
+	t *= 0.25 / l; //é©å½“ã«é•·ã•ã‚’èª¿æ•´
+	//ã¯ã˜ãè¿”ã™ã€‚tã¯p0->p1ã®ãƒ™ã‚¯ã‚¿ã ã‹ã‚‰ã€ã“ã‚Œã‚’c1ã«è¶³ã—ã€c0ã‹ã‚‰å¼•ãã€‚
 	gCircles[ i0 ].mVelocity += t;
 	gCircles[ i1 ].mVelocity -= t;
 }
@@ -159,27 +159,27 @@ namespace GameLib{
 	void Framework::update(){
 		if ( !gCircles ){
 			gCircles = new Circle[ N*N ];
-			//‰Šú”z’u
+			//åˆæœŸé…ç½®
 			for ( int i = 0; i < N*N; ++i ){
 				gCircles[ i ].mPosition.set( 
-					static_cast< double >( ( ( i % N ) - N/2 ) * 4 ) + 0.001 * i, //‚¿‚å‚Á‚Æ‚¸‚ç‚·
+					static_cast< double >( ( ( i % N ) - N/2 ) * 4 ) + 0.001 * i, //ã¡ã‚‡ã£ã¨ãšã‚‰ã™
 					static_cast< double >( ( ( i / N ) - N/2 ) * 4 ) );
 			}
 		}
-		//‘¬“x‰Šú‰»
+		//é€Ÿåº¦åˆæœŸåŒ–
 		for ( int i = 0;i < N*N; ++i ){
-			//‘¬“x‚ğŒ´“_‚Ö‚Ìˆø—Í‚Å‰Šú‰»
+			//é€Ÿåº¦ã‚’åŸç‚¹ã¸ã®å¼•åŠ›ã§åˆæœŸåŒ–
 			gCircles[ i ].mVelocity.setMul( gCircles[ i ].mPosition, -0.001 );
 		}
 		int test;
 		int hit;
-		processCollision( &test, &hit ); //Õ“ËŒŸoŠÖ”
+		processCollision( &test, &hit ); //è¡çªæ¤œå‡ºé–¢æ•°
 
-		//XV
+		//æ›´æ–°
 		for ( int i = 0;i < N*N; ++i ){
 			gCircles[ i ].mPosition += gCircles[ i ].mVelocity;
 
-			//•`‰æ
+			//æç”»
 			double p[ 4 ][ 2 ];
 			p[ 0 ][ 0 ] = p[ 1 ][ 0 ] = gCircles[ i ].mPosition.x - 0.5 + 160.0;
 			p[ 2 ][ 0 ] = p[ 3 ][ 0 ] = gCircles[ i ].mPosition.x + 0.5 + 160.0;

@@ -8,14 +8,14 @@ int gX;
 bool gWrite;
 bool gRead;
 
-//�X���b�h�Ŏ��s����֐������N���X
+//スレッドで実行する関数を持つクラス
 class MyThread : public Thread{
 public:
 	MyThread(){ start(); }
 	~MyThread(){ wait(); }
 	void operator()(){
 		for ( int i = 0; i < 100; ++i ){
-			while ( !gRead ){ //�ǂ܂��܂ő҂�
+			while ( !gRead ){ //読まれるまで待つ
 				;
 			}
 			gX += 2;
@@ -35,7 +35,7 @@ namespace GameLib{
 		gRead = true;
 		MyThread t;
 		for ( int i = 0; i < 100; ++i ){
-			while ( !gWrite ){ //�������܂ő҂�
+			while ( !gWrite ){ //書かれるまで待つ
 				;
 			}
 			o.str( "" );

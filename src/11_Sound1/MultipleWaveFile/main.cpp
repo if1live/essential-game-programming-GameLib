@@ -17,30 +17,30 @@ using namespace std;
 namespace GameLib{
 	void Framework::update(){
 		sleep( 16 );
-		//SEƒ[ƒh
+		//SEãƒ­ãƒ¼ãƒ‰
 		if ( !gWaveSE ){
 			gWaveSE = Sound::Wave::create( "dokaan.wav" );
 		}
-		//BGMƒ[ƒh
+		//BGMãƒ­ãƒ¼ãƒ‰
 		if ( !gWaveBGM ){
 			gWaveBGM = Sound::Wave::create( "charara.wav" );
 		}
-		//SEƒvƒŒƒCƒ„[ì¬
-		if ( !gPlayerSE0 && !gPlayerSE1 && gWaveSE.isReady() ){ //ƒvƒŒƒCƒ„[‚ª‹ó‚Åƒ[ƒh‚ªI‚í‚Á‚Ä‚¢‚é‚È‚ç
-			if ( !gWaveSE.isError() ){ //ƒGƒ‰[‚©ƒ`ƒFƒbƒN‚µ‚æ‚¤‚ËBƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‘¹‚Ë‚Ä‚à~‚Ü‚ç‚È‚¢‚Ì‚ÅB
-				//1Wave‚©‚ç2ŒÂƒvƒŒƒCƒ„[ì¬
+		//SEãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ä½œæˆ
+		if ( !gPlayerSE0 && !gPlayerSE1 && gWaveSE.isReady() ){ //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒç©ºã§ãƒ­ãƒ¼ãƒ‰ãŒçµ‚ã‚ã£ã¦ã„ã‚‹ãªã‚‰
+			if ( !gWaveSE.isError() ){ //ã‚¨ãƒ©ãƒ¼ã‹ãƒã‚§ãƒƒã‚¯ã—ã‚ˆã†ã­ã€‚ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿æã­ã¦ã‚‚æ­¢ã¾ã‚‰ãªã„ã®ã§ã€‚
+				//1Waveã‹ã‚‰2å€‹ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ä½œæˆ
 				gPlayerSE0 = Sound::Player::create( gWaveSE );
 				gPlayerSE1 = Sound::Player::create( gWaveSE );
 			}
 		}
-		//BGMƒvƒŒƒCƒ„[ì¬
-		if ( !gPlayerBGM && gWaveBGM.isReady() ){ //ƒvƒŒƒCƒ„[‚ª‹ó‚Åƒ[ƒh‚ªI‚í‚Á‚Ä‚¢‚é‚È‚ç
-			if ( !gWaveBGM.isError() ){ //ƒGƒ‰[‚©ƒ`ƒFƒbƒN‚µ‚æ‚¤‚ËBƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‘¹‚Ë‚Ä‚à~‚Ü‚ç‚È‚¢‚Ì‚ÅB
+		//BGMãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ä½œæˆ
+		if ( !gPlayerBGM && gWaveBGM.isReady() ){ //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒç©ºã§ãƒ­ãƒ¼ãƒ‰ãŒçµ‚ã‚ã£ã¦ã„ã‚‹ãªã‚‰
+			if ( !gWaveBGM.isError() ){ //ã‚¨ãƒ©ãƒ¼ã‹ãƒã‚§ãƒƒã‚¯ã—ã‚ˆã†ã­ã€‚ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿æã­ã¦ã‚‚æ­¢ã¾ã‚‰ãªã„ã®ã§ã€‚
 				gPlayerBGM = Sound::Player::create( gWaveBGM );
-				gPlayerBGM.play( true ); //ƒ‹[ƒvÄ¶B–³ŒÀ‚É–Â‚éB
+				gPlayerBGM.play( true ); //ãƒ«ãƒ¼ãƒ—å†ç”Ÿã€‚ç„¡é™ã«é³´ã‚‹ã€‚
 			}
 		}
-		//SE‚Í80*16ƒ~ƒŠ•b‚²‚Æ‚ÉŒğŒİ‚É–Â‚ç‚·B•Ğ•û‚Í¬‚³‚­B
+		//SEã¯80*16ãƒŸãƒªç§’ã”ã¨ã«äº¤äº’ã«é³´ã‚‰ã™ã€‚ç‰‡æ–¹ã¯å°ã•ãã€‚
 		if ( gPlayerSE0 && gPlayerSE1 ){
 			static int a;
 			if ( a % 80 == 0 ){

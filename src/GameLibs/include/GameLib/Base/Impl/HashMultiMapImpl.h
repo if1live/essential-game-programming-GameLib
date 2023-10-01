@@ -6,14 +6,14 @@
 #include "GameLib/Base/PrimeNumber.h"
 
 /*
-<’ˆÓ>
-“Y‚¦š‚ÅmCapacity + i (0<=i<mTableSize)‚ªg‚í‚ê‚Ä‚¢‚½‚çA‚»‚ê‚Íƒ_ƒ~[ƒm[ƒh‚Å‚ ‚éB
-mNodes[ mCapacity + i ].mNext‚ÍmNodes[ mCapacity + i + 1 ]‚ğ‚³‚µ‚Ä‚¢‚éB
+<æ³¨æ„>
+æ·»ãˆå­—ã§mCapacity + i (0<=i<mTableSize)ãŒä½¿ã‚ã‚Œã¦ã„ãŸã‚‰ã€ãã‚Œã¯ãƒ€ãƒŸãƒ¼ãƒãƒ¼ãƒ‰ã§ã‚ã‚‹ã€‚
+mNodes[ mCapacity + i ].mNextã¯mNodes[ mCapacity + i + 1 ]ã‚’ã•ã—ã¦ã„ã‚‹ã€‚
 */
 
 namespace GameLib{
 
-//æ“ª‚Æ––”ö‚ª“Á•Êˆµ‚¢‚³‚ê‚È‚¢‚æ‚¤‚É‚¿‚å‚Á‚ÆH•v‚ğ‚µ‚Ä‚¢‚éB
+//å…ˆé ­ã¨æœ«å°¾ãŒç‰¹åˆ¥æ‰±ã„ã•ã‚Œãªã„ã‚ˆã†ã«ã¡ã‚‡ã£ã¨å·¥å¤«ã‚’ã—ã¦ã„ã‚‹ã€‚
 template< class K, class V, class H > inline HashMultiMap< K, V, H >::HashMultiMap() : 
 mNexts( 0 ),
 mKeys( 0 ),
@@ -21,10 +21,10 @@ mValues( 0 ),
 mCapacity( 0 ),
 mSize( 0 ),
 mTableSize( 0 ){
-	ASSERT( sizeof( K ) != 0 ); //‚ ‚è‚¦‚È‚¢‚æ‚ËH
+	ASSERT( sizeof( K ) != 0 ); //ã‚ã‚Šãˆãªã„ã‚ˆã­ï¼Ÿ
 }
 
-//æ“ª‚Æ––”ö‚ª“Á•Êˆµ‚¢‚³‚ê‚È‚¢‚æ‚¤‚É‚¿‚å‚Á‚ÆH•v‚ğ‚µ‚Ä‚¢‚éB
+//å…ˆé ­ã¨æœ«å°¾ãŒç‰¹åˆ¥æ‰±ã„ã•ã‚Œãªã„ã‚ˆã†ã«ã¡ã‚‡ã£ã¨å·¥å¤«ã‚’ã—ã¦ã„ã‚‹ã€‚
 template< class K, class V, class H > inline HashMultiMap< K, V, H >::HashMultiMap( int capacity, int tableSize ) : 
 mNexts( 0 ),
 mKeys( 0 ),
@@ -32,60 +32,60 @@ mValues( 0 ),
 mCapacity( 0 ),
 mSize( 0 ),
 mTableSize( 0 ){
-	ASSERT( sizeof( K ) != 0 ); //‚ ‚è‚¦‚È‚¢‚æ‚ËH
+	ASSERT( sizeof( K ) != 0 ); //ã‚ã‚Šãˆãªã„ã‚ˆã­ï¼Ÿ
 	setCapacity( capacity, tableSize );
 }
 
 template< class K, class V, class H > inline HashMultiMap< K, V, H >::~HashMultiMap(){
 	if ( mNexts ){
 		int pos = mNexts[ mCapacity ];
-		while ( pos < mCapacity + mTableSize ){ //ƒm[ƒh‚ª‚ ‚ê‚Î
+		while ( pos < mCapacity + mTableSize ){ //ãƒãƒ¼ãƒ‰ãŒã‚ã‚Œã°
 			if ( pos < mCapacity ){
 				mKeys[ pos ].~K();
 				mValues[ pos ].~V();
 			}
 			pos = mNexts[ pos ];
 		}
-		OPERATOR_DELETE( mKeys ); //¶delete
-		OPERATOR_DELETE( mValues ); //¶delete
+		OPERATOR_DELETE( mKeys ); //ç”Ÿdelete
+		OPERATOR_DELETE( mValues ); //ç”Ÿdelete
 		SAFE_DELETE_ARRAY( mNexts );
 	}
 }
 
 template< class K, class V, class H > inline void HashMultiMap< K, V, H >::setCapacity( int capacity, int tableSize ){
 	ASSERT( mSize == 0 && "NOT EMPTY! call clear()." );
-	//‚Ü‚¸ƒNƒŠƒA
+	//ã¾ãšã‚¯ãƒªã‚¢
 	if ( mCapacity > 0 ){
 		mEmptyStack.clear();
 		clear();
-		OPERATOR_DELETE( mValues ); //¶delete
-		OPERATOR_DELETE( mKeys ); //¶delete
+		OPERATOR_DELETE( mValues ); //ç”Ÿdelete
+		OPERATOR_DELETE( mKeys ); //ç”Ÿdelete
 		SAFE_DELETE_ARRAY( mNexts );
 	}
-	//ÄŠm•Û
+	//å†ç¢ºä¿
 	mCapacity = capacity;
-	if ( capacity <= 0 ){ //0ƒTƒCƒY–³‹
+	if ( capacity <= 0 ){ //0ã‚µã‚¤ã‚ºç„¡è¦–
 		return;
 	}	
-	if ( tableSize == 0 ){ //©“®‚ÅcapacityˆÈã‚Ì‘f”‚ğİ’è
+	if ( tableSize == 0 ){ //è‡ªå‹•ã§capacityä»¥ä¸Šã®ç´ æ•°ã‚’è¨­å®š
 		tableSize = capacity;
 	}
 	tableSize = PrimeNumber::next( tableSize );
 	if ( tableSize < 3 ){
-		tableSize = 3; //Å’á‚Å3
+		tableSize = 3; //æœ€ä½ã§3
 	}
 	mTableSize = tableSize;
-	//Ÿ”z—ñ ƒe[ƒuƒ‹ƒTƒCƒY•ª‚¾‚¯ƒ_ƒ~[‚ğ‘«‚·‚±‚Æ‚É’ˆÓ
+	//æ¬¡é…åˆ— ãƒ†ãƒ¼ãƒ–ãƒ«ã‚µã‚¤ã‚ºåˆ†ã ã‘ãƒ€ãƒŸãƒ¼ã‚’è¶³ã™ã“ã¨ã«æ³¨æ„
 	mNexts = NEW int[ mCapacity + mTableSize ];
-	//’l”z—ñŠm•ÛBƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ª•s—v‚È‚Ì‚Å¶new
+	//å€¤é…åˆ—ç¢ºä¿ã€‚ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãŒä¸è¦ãªã®ã§ç”Ÿnew
 	mKeys = static_cast< K* >( OPERATOR_NEW( sizeof( K ) * mCapacity ) );
 	mValues = static_cast< V* >( OPERATOR_NEW( sizeof( V ) * mCapacity ) );
-	//‹ó‚«”Ô†ƒXƒ^ƒbƒN
+	//ç©ºãç•ªå·ã‚¹ã‚¿ãƒƒã‚¯
 	mEmptyStack.setCapacity( mCapacity );
 	for ( int i = 0; i < mCapacity; ++i ){
-		mEmptyStack.push( i ); //‹ó‚«”Ô†ƒŠƒXƒg‚É‹l‚ß‚Ä‚¢‚­
+		mEmptyStack.push( i ); //ç©ºãç•ªå·ãƒªã‚¹ãƒˆã«è©°ã‚ã¦ã„ã
 	}
-	//mCapacity+0‚©‚çmCapacity+mTableSize-1”Ô‚Íƒ_ƒ~[—v‘fBŠe—ñ‚Ìæ“ª‚Ì‘O‚ÉˆÊ’u‚·‚éB
+	//mCapacity+0ã‹ã‚‰mCapacity+mTableSize-1ç•ªã¯ãƒ€ãƒŸãƒ¼è¦ç´ ã€‚å„åˆ—ã®å…ˆé ­ã®å‰ã«ä½ç½®ã™ã‚‹ã€‚
 	for ( int i = 0; i < mTableSize; ++i ){
 		mNexts[ mCapacity + i ] = mCapacity + i + 1;
 	}
@@ -97,9 +97,9 @@ template< class K, class V, class H > inline int HashMultiMap< K, V, H >::capaci
 
 template< class K, class V, class H > inline int HashMultiMap< K, V, H >::add( const K& k, const V& v ){
 	ASSERT( mSize < mCapacity );
-	//ƒnƒbƒVƒ…ŠÖ”Zo
+	//ãƒãƒƒã‚·ãƒ¥é–¢æ•°ç®—å‡º
 	int h = H().value( k, mTableSize );
-	//ŒŸõ
+	//æ¤œç´¢
 	int p = mNexts[ mCapacity + h ];
 	while ( p < mCapacity ){
 		if ( H().isEqual( mKeys[ p ], k ) ){
@@ -109,16 +109,16 @@ template< class K, class V, class H > inline int HashMultiMap< K, V, H >::add( c
 	}
 	int newPos;
 	mEmptyStack.pop( &newPos );
-	new ( &mKeys[ newPos ] ) K( k ); //ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^ŒÄ‚Ño‚µ
-	new ( &mValues[ newPos ] ) V( v ); //ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^ŒÄ‚Ño‚µ
-	if ( p >= mCapacity ){ //‚È‚¢‚Íæ“ª‚É‘«‚·
-		//ƒe[ƒuƒ‹æ“ª‚É‘}“ü
+	new ( &mKeys[ newPos ] ) K( k ); //ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿å‘¼ã³å‡ºã—
+	new ( &mValues[ newPos ] ) V( v ); //ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿å‘¼ã³å‡ºã—
+	if ( p >= mCapacity ){ //ãªã„æ™‚ã¯å…ˆé ­ã«è¶³ã™
+		//ãƒ†ãƒ¼ãƒ–ãƒ«å…ˆé ­ã«æŒ¿å…¥
 		int head = mCapacity + h;
-		mNexts[ newPos ] = mNexts[ head ]; //“ªƒ_ƒ~[‚ÌŸ‚ğƒZƒbƒg
-		mNexts[ head ] = newPos; //‘O‚ÌƒŠƒ“ƒN‚ğVƒm[ƒh‚É‚Â‚È‚®
-	}else{ //‚ ‚é‚Í’¼Œã‚É‘«‚·
+		mNexts[ newPos ] = mNexts[ head ]; //é ­ãƒ€ãƒŸãƒ¼ã®æ¬¡ã‚’ã‚»ãƒƒãƒˆ
+		mNexts[ head ] = newPos; //å‰ã®ãƒªãƒ³ã‚¯ã‚’æ–°ãƒãƒ¼ãƒ‰ã«ã¤ãªã
+	}else{ //ã‚ã‚‹æ™‚ã¯ç›´å¾Œã«è¶³ã™
 		mNexts[ newPos ] = mNexts[ p ];
-		mNexts[ p ] = newPos; //‘O‚ÌƒŠƒ“ƒN‚ğVƒm[ƒh‚É‚Â‚È‚®
+		mNexts[ p ] = newPos; //å‰ã®ãƒªãƒ³ã‚¯ã‚’æ–°ãƒãƒ¼ãƒ‰ã«ã¤ãªã
 	}
 	++mSize;
 	return newPos;
@@ -126,9 +126,9 @@ template< class K, class V, class H > inline int HashMultiMap< K, V, H >::add( c
 
 template< class K, class V, class H > inline int HashMultiMap< K, V, H >::add( const K& k ){
 	ASSERT( mSize < mCapacity );
-	//ƒnƒbƒVƒ…ŠÖ”Zo
+	//ãƒãƒƒã‚·ãƒ¥é–¢æ•°ç®—å‡º
 	int h = H().value( k, mTableSize );
-	//ŒŸõ
+	//æ¤œç´¢
 	int p = mNexts[ mCapacity + h ];
 	while ( p < mCapacity ){
 		if ( H().isEqual( mKeys[ p ], k ) ){
@@ -138,16 +138,16 @@ template< class K, class V, class H > inline int HashMultiMap< K, V, H >::add( c
 	}
 	int newPos;
 	mEmptyStack.pop( &newPos );
-	new ( &mKeys[ newPos ] ) K( k ); //ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^ŒÄ‚Ño‚µ
+	new ( &mKeys[ newPos ] ) K( k ); //ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿å‘¼ã³å‡ºã—
 	new ( &mValues[ newPos ] ) V;
-	if ( p >= mCapacity ){ //‚È‚¢‚Íæ“ª‚É‘«‚·
-		//ƒe[ƒuƒ‹æ“ª‚É‘}“ü
+	if ( p >= mCapacity ){ //ãªã„æ™‚ã¯å…ˆé ­ã«è¶³ã™
+		//ãƒ†ãƒ¼ãƒ–ãƒ«å…ˆé ­ã«æŒ¿å…¥
 		int head = mCapacity + h;
-		mNexts[ newPos ] = mNexts[ head ]; //“ªƒ_ƒ~[‚ÌŸ‚ğƒZƒbƒg
-		mNexts[ head ] = newPos; //‘O‚ÌƒŠƒ“ƒN‚ğVƒm[ƒh‚É‚Â‚È‚®
-	}else{ //‚ ‚é‚Í’¼Œã‚É‘«‚·
+		mNexts[ newPos ] = mNexts[ head ]; //é ­ãƒ€ãƒŸãƒ¼ã®æ¬¡ã‚’ã‚»ãƒƒãƒˆ
+		mNexts[ head ] = newPos; //å‰ã®ãƒªãƒ³ã‚¯ã‚’æ–°ãƒãƒ¼ãƒ‰ã«ã¤ãªã
+	}else{ //ã‚ã‚‹æ™‚ã¯ç›´å¾Œã«è¶³ã™
 		mNexts[ newPos ] = mNexts[ p ];
-		mNexts[ p ] = newPos; //‘O‚ÌƒŠƒ“ƒN‚ğVƒm[ƒh‚É‚Â‚È‚®
+		mNexts[ p ] = newPos; //å‰ã®ãƒªãƒ³ã‚¯ã‚’æ–°ãƒãƒ¼ãƒ‰ã«ã¤ãªã
 	}
 	++mSize;
 	return newPos;
@@ -167,25 +167,25 @@ template< class K, class V, class H > inline int HashMultiMap< K, V, H >::find( 
 }
 
 template< class K, class V, class H > inline bool HashMultiMap< K, V, H >::remove( int position ){
-	//p‚ÌêŠ‚É‚ ‚é—v‘f‚ÌƒnƒbƒVƒ…’l‚ğƒnƒbƒVƒ…’l‚ğŒvZ‚µ‚È‚¢‚Å’m‚è‚½‚¢B
-	//‚»‚±‚ÅAˆê’Uƒwƒbƒhƒe[ƒuƒ‹‚Éo‚é‚Ü‚ÅƒCƒeƒŒ[ƒ^‚ği‚ß‚ÄŒ©‚éB
+	//pã®å ´æ‰€ã«ã‚ã‚‹è¦ç´ ã®ãƒãƒƒã‚·ãƒ¥å€¤ã‚’ãƒãƒƒã‚·ãƒ¥å€¤ã‚’è¨ˆç®—ã—ãªã„ã§çŸ¥ã‚ŠãŸã„ã€‚
+	//ãã“ã§ã€ä¸€æ—¦ãƒ˜ãƒƒãƒ‰ãƒ†ãƒ¼ãƒ–ãƒ«ã«å‡ºã‚‹ã¾ã§ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã‚’é€²ã‚ã¦è¦‹ã‚‹ã€‚
 	int h = position;
 	while ( h < mCapacity ){
 		h = mNexts[ h ];
 	}
-	//ˆê’U”ÍˆÍŠO‚Éo‚½B‚±‚±‚©‚çmCapacity‚ğˆø‚­‚ÆŸ‚ÌƒnƒbƒVƒ…’l‚ª‚í‚©‚éB
+	//ä¸€æ—¦ç¯„å›²å¤–ã«å‡ºãŸã€‚ã“ã“ã‹ã‚‰mCapacityã‚’å¼•ãã¨æ¬¡ã®ãƒãƒƒã‚·ãƒ¥å€¤ãŒã‚ã‹ã‚‹ã€‚
 	h -= mCapacity;
-	//-1‚·‚ê‚Î‚±‚¢‚Â‚ÌƒnƒbƒVƒ…’l‚¾
+	//-1ã™ã‚Œã°ã“ã„ã¤ã®ãƒãƒƒã‚·ãƒ¥å€¤ã 
 	h -= 1;
-	//ƒnƒbƒVƒ…’l‚ª‚í‚©‚Á‚½‚Ì‚ÅAƒe[ƒuƒ‹‚Ìæ“ª‚©‚ç’H‚Á‚Ä‚¢‚Á‚Äp‚ğŒ©‚Â‚¯‚éB
-	int prev = mCapacity + h; //ƒwƒbƒh
+	//ãƒãƒƒã‚·ãƒ¥å€¤ãŒã‚ã‹ã£ãŸã®ã§ã€ãƒ†ãƒ¼ãƒ–ãƒ«ã®å…ˆé ­ã‹ã‚‰è¾¿ã£ã¦ã„ã£ã¦pã‚’è¦‹ã¤ã‘ã‚‹ã€‚
+	int prev = mCapacity + h; //ãƒ˜ãƒƒãƒ‰
 	int p = mNexts[ prev ];
 	while ( p < mCapacity ){
-		if ( p == position ){ //”­Œ©B‚±‚¢‚Â‚ğÁ‚·B
-			mNexts[ prev ] = mNexts[ p ]; //‚Â‚È‚¬•Ï‚¦‚Ä
-			mKeys[ p ].~K(); //ƒfƒXƒgƒ‰ƒNƒg
-			mValues[ p ].~V(); //ƒfƒXƒgƒ‰ƒNƒg
-			mEmptyStack.push( p ); //‹ó‚«ƒXƒ^ƒbƒN‚ÉƒvƒbƒVƒ…
+		if ( p == position ){ //ç™ºè¦‹ã€‚ã“ã„ã¤ã‚’æ¶ˆã™ã€‚
+			mNexts[ prev ] = mNexts[ p ]; //ã¤ãªãå¤‰ãˆã¦
+			mKeys[ p ].~K(); //ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
+			mValues[ p ].~V(); //ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆ
+			mEmptyStack.push( p ); //ç©ºãã‚¹ã‚¿ãƒƒã‚¯ã«ãƒ—ãƒƒã‚·ãƒ¥
 			--mSize;
 			return true;
 		}
@@ -208,15 +208,15 @@ template< class K, class V, class H > inline const K* HashMultiMap< K, V, H >::k
 }
 
 template< class K, class V, class H > inline void HashMultiMap< K, V, H >::clear(){
-	//ƒfƒXƒgƒ‰ƒNƒg‚µ‚Ä‰ñ‚é
-	int prev = mCapacity; //ƒwƒbƒh
-	int p = mNexts[ mCapacity ]; //ƒ_ƒ~[ƒwƒbƒh
-	while ( p < mCapacity + mTableSize ){  //mCapacity + mTableSize‚Í‘¶İ‚µ‚È‚¢B‚»‚±‚Ü‚Å‚Íƒ_ƒ~[‚Æ‚µ‚Ä‘¶İ‚·‚éB
+	//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ãƒˆã—ã¦å›ã‚‹
+	int prev = mCapacity; //ãƒ˜ãƒƒãƒ‰
+	int p = mNexts[ mCapacity ]; //ãƒ€ãƒŸãƒ¼ãƒ˜ãƒƒãƒ‰
+	while ( p < mCapacity + mTableSize ){  //mCapacity + mTableSizeã¯å­˜åœ¨ã—ãªã„ã€‚ãã“ã¾ã§ã¯ãƒ€ãƒŸãƒ¼ã¨ã—ã¦å­˜åœ¨ã™ã‚‹ã€‚
 		if ( p < mCapacity ){
-			mNexts[ prev ] = mNexts[ p ]; //‚Â‚È‚¬•Ï‚¦‚Ä
+			mNexts[ prev ] = mNexts[ p ]; //ã¤ãªãå¤‰ãˆã¦
 			mKeys[ p ].~K();
 			mValues[ p ].~V();
-			mEmptyStack.push( p ); //‹ó‚«ƒXƒ^ƒbƒN‚ÉƒvƒbƒVƒ…
+			mEmptyStack.push( p ); //ç©ºãã‚¹ã‚¿ãƒƒã‚¯ã«ãƒ—ãƒƒã‚·ãƒ¥
 		}
 		prev = p;
 		p = mNexts[ p ];
@@ -228,7 +228,7 @@ template< class K, class V, class H > inline int HashMultiMap< K, V, H >::next( 
 	ASSERT( p >= 0 );
 	while ( p < mCapacity + mTableSize ){
 		p = mNexts[ p ];
-		if ( p < mCapacity ){ //ƒ_ƒ~[ƒm[ƒhˆÈŠO‚ğ•Ô‚·
+		if ( p < mCapacity ){ //ãƒ€ãƒŸãƒ¼ãƒãƒ¼ãƒ‰ä»¥å¤–ã‚’è¿”ã™
 			return p;
 		}
 	}
@@ -236,10 +236,10 @@ template< class K, class V, class H > inline int HashMultiMap< K, V, H >::next( 
 }
 
 template< class K, class V, class H > inline int HashMultiMap< K, V, H >::first() const {
-	int p = mCapacity; //Å‰‚Ìƒ_ƒ~[
+	int p = mCapacity; //æœ€åˆã®ãƒ€ãƒŸãƒ¼
 	while ( p < mCapacity + mTableSize ){
 		p = mNexts[ p ];
-		if ( p < mCapacity ){ //ƒ_ƒ~[ƒm[ƒhˆÈŠO‚ğ•Ô‚·
+		if ( p < mCapacity ){ //ãƒ€ãƒŸãƒ¼ãƒãƒ¼ãƒ‰ä»¥å¤–ã‚’è¿”ã™
 			return p;
 		}
 	}

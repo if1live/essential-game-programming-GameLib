@@ -10,14 +10,14 @@ struct Circle{
 	Vector2 mVelocity;
 };
 Circle* gCircles = 0;
-const int N = 40; //‚±‚ê‚Ì“ñæŒÂ‚Å‚â‚é
-const double R = 2.0; //”¼Œa2‚Ë
-const double RSUM2 = ( R + R ) * ( R + R ); //”¼Œa˜a‚Ì“ñæ
-bool testCircles( int index0, int index1 ); //1ŒÂ‚Ã‚Â‚Ì”»’èŠÖ”
+const int N = 40; //ã“ã‚Œã®äºŒä¹—å€‹ã§ã‚„ã‚‹
+const double R = 2.0; //åŠå¾„2ã­
+const double RSUM2 = ( R + R ) * ( R + R ); //åŠå¾„å’Œã®äºŒä¹—
+bool testCircles( int index0, int index1 ); //1å€‹ã¥ã¤ã®åˆ¤å®šé–¢æ•°
 
-//----------------------‚±‚±‚ª‚±‚ÌÍ‚Ìƒ~ƒ\----------------------------------------
+//----------------------ã“ã“ãŒã“ã®ç« ã®ãƒŸã‚½----------------------------------------
 
-//’P‚È‚é‘“–‚è
+//å˜ãªã‚‹ç·å½“ã‚Š
 void processCollision( int* test, int* hit ){
 	*test = 0;
 	*hit = 0;
@@ -31,22 +31,22 @@ void processCollision( int* test, int* hit ){
 	}
 }
 
-//----------------------‚±‚±‚©‚ç‰º‚Í‚±‚ÌÍ‚Ì–{‹Ø‚Å‚Í‚È‚¢ƒR[ƒh---------------------------
+//----------------------ã“ã“ã‹ã‚‰ä¸‹ã¯ã“ã®ç« ã®æœ¬ç­‹ã§ã¯ãªã„ã‚³ãƒ¼ãƒ‰---------------------------
 
-//2ŒÂ‚Ìcircle‚ğˆ—‚·‚é’†gB“–‚½‚é‚Ætrue
+//2å€‹ã®circleã‚’å‡¦ç†ã™ã‚‹ä¸­èº«ã€‚å½“ãŸã‚‹ã¨true
 bool testCircles( int i0, int i1 ){
 	Circle& c0 = gCircles[ i0 ];
 	const Vector2& p0 = c0.mPosition;
 	Circle& c1 = gCircles[ i1 ];
 	const Vector2& p1 = c1.mPosition;
-	//‹——£‚ÍH
+	//è·é›¢ã¯ï¼Ÿ
 	Vector2 t;
 	t.setSub( p1, p0 );
 	double sql = t.squareLength();
 	if ( sql < RSUM2 ){ 
-		double l = GameLib::sqrt( sql ) + 0.0000001; //0‚ÅŠ„‚ç‚È‚¢‚æ‚¤‚É•ÛŒ¯
-		t *= 0.25 / l; //“K“–‚É’·‚³‚ğ’²®
-		//‚Í‚¶‚«•Ô‚·Bt‚Íp0->p1‚ÌƒxƒNƒ^‚¾‚©‚çA‚±‚ê‚ğc1‚É‘«‚µAc0‚©‚çˆø‚­B
+		double l = GameLib::sqrt( sql ) + 0.0000001; //0ã§å‰²ã‚‰ãªã„ã‚ˆã†ã«ä¿é™º
+		t *= 0.25 / l; //é©å½“ã«é•·ã•ã‚’èª¿æ•´
+		//ã¯ã˜ãè¿”ã™ã€‚tã¯p0->p1ã®ãƒ™ã‚¯ã‚¿ã ã‹ã‚‰ã€ã“ã‚Œã‚’c1ã«è¶³ã—ã€c0ã‹ã‚‰å¼•ãã€‚
 		c1.mVelocity += t;
 		c0.mVelocity -= t;
 		return true;
@@ -59,27 +59,27 @@ namespace GameLib{
 	void Framework::update(){
 		if ( !gCircles ){
 			gCircles = new Circle[ N*N ];
-			//‰Šú”z’u
+			//åˆæœŸé…ç½®
 			for ( int i = 0; i < N*N; ++i ){
 				gCircles[ i ].mPosition.set( 
-					static_cast< double >( ( ( i % N ) - N/2 ) * 4 ) + 0.001 * i, //‚¿‚å‚Á‚Æ‚¸‚ç‚·
+					static_cast< double >( ( ( i % N ) - N/2 ) * 4 ) + 0.001 * i, //ã¡ã‚‡ã£ã¨ãšã‚‰ã™
 					static_cast< double >( ( ( i / N ) - N/2 ) * 4 ) );
 			}
 		}
-		//‰Á‘¬“x‰Šú‰»
+		//åŠ é€Ÿåº¦åˆæœŸåŒ–
 		for ( int i = 0;i < N*N; ++i ){
-			//‘¬“x‚ğŒ´“_‚Ö‚Ìˆø—Í‚Å‰Šú‰»
+			//é€Ÿåº¦ã‚’åŸç‚¹ã¸ã®å¼•åŠ›ã§åˆæœŸåŒ–
 			gCircles[ i ].mVelocity.setMul( gCircles[ i ].mPosition, -0.001 );
 		}
 		int test;
 		int hit;
-		processCollision( &test, &hit ); //Õ“ËŒŸoŠÖ”
+		processCollision( &test, &hit ); //è¡çªæ¤œå‡ºé–¢æ•°
 
-		//XV
+		//æ›´æ–°
 		for ( int i = 0;i < N*N; ++i ){
 			gCircles[ i ].mPosition += gCircles[ i ].mVelocity;
 
-			//•`‰æ
+			//æç”»
 			double p[ 4 ][ 2 ];
 			p[ 0 ][ 0 ] = p[ 1 ][ 0 ] = gCircles[ i ].mPosition.x - 0.5 + 160.0;
 			p[ 2 ][ 0 ] = p[ 3 ][ 0 ] = gCircles[ i ].mPosition.x + 0.5 + 160.0;

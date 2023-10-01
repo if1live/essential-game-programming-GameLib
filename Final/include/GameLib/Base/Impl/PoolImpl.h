@@ -42,8 +42,8 @@ template< class T > inline void Pool< T >::clear(){
 template< class T > inline T* Pool< T >::allocate( int n ){
 	T* r = 0;
 	Block* b = mLastBlock;
-	if ( b->mSize - b->mUsedNumber < n ){ //‘«‚è‚È‚¢ê‡Šm•ÛB
-		//•W€ƒuƒƒbƒNƒTƒCƒY‚Å‘«‚è‚È‚¢‚È‚ç•K—v”•ª‚¾‚¯ƒAƒƒP[ƒg
+	if ( b->mSize - b->mUsedNumber < n ){ //è¶³ã‚Šãªã„å ´åˆç¢ºä¿ã€‚
+		//æ¨™æº–ãƒ–ãƒ­ãƒƒã‚¯ã‚µã‚¤ã‚ºã§è¶³ã‚Šãªã„ãªã‚‰å¿…è¦æ•°åˆ†ã ã‘ã‚¢ãƒ­ã‚±ãƒ¼ãƒˆ
 		int allocateSize = ( n > mDefaultBlockSize ) ? n : mDefaultBlockSize;
 		b = NEW Block;
 		mLastBlock->mNext = b;
@@ -53,7 +53,7 @@ template< class T > inline T* Pool< T >::allocate( int n ){
 		b->mUsedNumber = 0;
 		mLastBlock = b;
 	}
-	//V—v‘f\’z
+	//æ–°è¦ç´ æ§‹ç¯‰
 	r = &b->mElements[ b->mUsedNumber ];
 	for ( int i = 0; i < n; ++i ){
 		new ( &b->mElements[ b->mUsedNumber + i ] ) T;
@@ -65,8 +65,8 @@ template< class T > inline T* Pool< T >::allocate( int n ){
 template< class T > inline T* Pool< T >::allocate( const T* a, int n ){
 	T* r = 0;
 	Block* b = mLastBlock;
-	if ( b->mSize - b->mUsedNumber < n ){ //‘«‚è‚È‚¢ê‡Šm•ÛB
-		//•W€ƒuƒƒbƒNƒTƒCƒY‚Å‘«‚è‚È‚¢‚È‚ç•K—v”•ª‚¾‚¯ƒAƒƒP[ƒg
+	if ( b->mSize - b->mUsedNumber < n ){ //è¶³ã‚Šãªã„å ´åˆç¢ºä¿ã€‚
+		//æ¨™æº–ãƒ–ãƒ­ãƒƒã‚¯ã‚µã‚¤ã‚ºã§è¶³ã‚Šãªã„ãªã‚‰å¿…è¦æ•°åˆ†ã ã‘ã‚¢ãƒ­ã‚±ãƒ¼ãƒˆ
 		int allocateSize = ( n > mDefaultBlockSize ) ? n : mDefaultBlockSize;
 		b = NEW Block;
 		mLastBlock->mNext = b;
@@ -76,7 +76,7 @@ template< class T > inline T* Pool< T >::allocate( const T* a, int n ){
 		b->mUsedNumber = 0;
 		mLastBlock = b;
 	}
-	//V—v‘f\’z
+	//æ–°è¦ç´ æ§‹ç¯‰
 	r = &b->mElements[ b->mUsedNumber ];
 	for ( int i = 0; i < n; ++i ){
 		new ( &b->mElements[ b->mUsedNumber + i ] ) T( a[ i ] );

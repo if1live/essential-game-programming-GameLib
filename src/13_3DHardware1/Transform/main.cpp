@@ -37,7 +37,7 @@ namespace GameLib{
 		double rotation = static_cast< double >( gCount );
 		Vector2 scale( sin( rotation ) + 0.5, cos( rotation ) + 0.5 );
 
-		//s—ñì‚é
+		//è¡Œåˆ—ä½œã‚‹
 		Matrix23 m;
 		m.setTranslation( Vector2( gImageWidth/2, gImageHeight/2 ) );
 		if ( gScaleFirst ){
@@ -57,24 +57,24 @@ namespace GameLib{
 		double t1[ 2 ] = { 1.0, 0.0 };
 		double t2[ 2 ] = { 0.0, 1.0 };
 		double t3[ 2 ] = { 1.0, 1.0 };
-		//s—ñæZ
+		//è¡Œåˆ—ä¹—ç®—
 		m.multiply( &p0, p0 );
 		m.multiply( &p1, p1 );
 		m.multiply( &p2, p2 );
 		m.multiply( &p3, p3 );
-		//•`‰æ
-		//Vector2‚Í‚»‚Ì‚Ü‚Ü‚Í“n‚¹‚Ü‚¹‚ñB
+		//æç”»
+		//Vector2ã¯ãã®ã¾ã¾ã¯æ¸¡ã›ã¾ã›ã‚“ã€‚
 		drawTriangle2D( &p0.x, &p1.x, &p2.x, t0, t1, t2 ); //012
 		drawTriangle2D( &p3.x, &p1.x, &p2.x, t3, t1, t2 ); //312
 
-		//ƒXƒy[ƒX‚ÅØ‚è‘Ö‚¦
+		//ã‚¹ãƒšãƒ¼ã‚¹ã§åˆ‡ã‚Šæ›¿ãˆ
 		if ( Input::Manager::instance().keyboard().isTriggered( ' ' ) ){
 			gScaleFirst = !gScaleFirst;
 		}
 		++gCount;
 
 		drawDebugString( 0, 0, "press SPACE to swap ROTATION and SCALING" );
-		//I—¹ˆ—‚µ‚Ä‚İ‚æ‚¤‚©
+		//çµ‚äº†å‡¦ç†ã—ã¦ã¿ã‚ˆã†ã‹
 		if ( isEndRequested() ){
 			destroyTexture( &gTexture );
 		}

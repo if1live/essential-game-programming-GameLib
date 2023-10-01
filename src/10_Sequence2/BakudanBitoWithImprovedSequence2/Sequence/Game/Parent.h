@@ -37,8 +37,8 @@ public:
 	PlayerID winner() const;
 	void setWinner( PlayerID );
 	State* state();
-	void drawState() const; //ƒQ[ƒ€•`‰æ
-	bool hasFinalStageCleared() const; //ÅI–ÊƒNƒŠƒA‚µ‚Ü‚µ‚½H
+	void drawState() const; //ã‚²ãƒ¼ãƒ æç”»
+	bool hasFinalStageCleared() const; //æœ€çµ‚é¢ã‚¯ãƒªã‚¢ã—ã¾ã—ãŸï¼Ÿ
 	int lifeNumber() const;
 	Mode mode() const;
 	void startLoading();
@@ -48,8 +48,8 @@ private:
 	State* mState;
 	int mStageID;
 	int mLife;
-	PlayerID mWinner; //Ÿ‚Á‚½‚ç‚±‚ê‚É“ü‚é
-	static const int FINAL_STAGE = 2; //¡‚Í2–Ê‚ªÅI–Ê
+	PlayerID mWinner; //å‹ã£ãŸã‚‰ã“ã‚Œã«å…¥ã‚‹
+	static const int FINAL_STAGE = 2; //ä»Šã¯2é¢ãŒæœ€çµ‚é¢
 	static const int INITIALI_LIFE_NUMBER = 2;
 
 	NextSequence mNextSequence;

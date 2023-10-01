@@ -11,38 +11,38 @@
 using namespace GameLib;
 using namespace GameLib::Scene;
 
-//–{“–‚Íƒtƒ@ƒCƒ‹‚Éo‚·‚ñ‚¾‚æH
-const int Robo::mJumpUpTime = 20; //ã¸‚µ‚Ä‚¢‚­ŠÔ
-const int Robo::mJumpStayTime = 60; //ã¸Œã‰º~‚Ü‚Å‚ÌŠÔ
-const int Robo::mJumpFallTime = 40; //‰º~‚É‚©‚©‚éŠÔ
-const int Robo::mMoveAccelEndCount = 30; //•à‚«n‚ß‚Ä‰Á‘¬‚ªI—¹‚·‚é‚Ü‚Å‚ÌŠÔ
-const float Robo::mMaxMoveSpeed = 0.5; //Å‘åˆÚ“®‘¬“x
-const float Robo::mJumpHeight = 20.0; //Å‘å‚“x
-const int Robo::mCameraDelayCount = 10; //ƒWƒƒƒ“ƒvŠJnŒã‰½ƒtƒŒ[ƒ€‚Å“G‚Ì•û‚ğŒü‚­‚©
-const float Robo::mCameraDistanceZ = 10.0; //‰½ƒ[ƒgƒ‹Œã‚ë‚©‚çÊ‚·H
-const float Robo::mCameraDistanceY = 4.0; //Œ©‰º‚ë‚µ‹ï‡
-const float Robo::mCameraTargetDistanceZ = 20.0; //’‹“_‚Í‰½ƒ[ƒgƒ‹æH
-const float Robo::mTurnSpeed = 1.0; //ù‰ñ‘¬“x
-const int Robo::mMaxHitPoint = 100; //Å‘åƒqƒbƒgƒbƒ|ƒCƒ“ƒg
-const int Robo::mMaxEnergy = 100; //Å‘å•Šíƒ|ƒCƒ“ƒg
-const int Robo::mEnergyPerBullet = 27; //•Ší‚ÌÁ”ïƒGƒlƒ‹ƒM[
-const int Robo::mEnergyCharge = 1; //–ˆƒtƒŒ[ƒ€—­‚Ü‚éƒGƒlƒ‹ƒM[‚Ì—Ê
-const float Robo::mLockOnAngleIn = 10.0; //ƒƒbƒNƒIƒ“‚·‚éŠp“x
-const float Robo::mLockOnAngleOut = 30.0; //ƒƒbƒNƒIƒ“‚ªŠO‚ê‚éŠp“x
+//æœ¬å½“ã¯ãƒ•ã‚¡ã‚¤ãƒ«ã«å‡ºã™ã‚“ã ã‚ˆï¼Ÿ
+const int Robo::mJumpUpTime = 20; //ä¸Šæ˜‡ã—ã¦ã„ãæ™‚é–“
+const int Robo::mJumpStayTime = 60; //ä¸Šæ˜‡å¾Œä¸‹é™ã¾ã§ã®æ™‚é–“
+const int Robo::mJumpFallTime = 40; //ä¸‹é™ã«ã‹ã‹ã‚‹æ™‚é–“
+const int Robo::mMoveAccelEndCount = 30; //æ­©ãå§‹ã‚ã¦åŠ é€ŸãŒçµ‚äº†ã™ã‚‹ã¾ã§ã®æ™‚é–“
+const float Robo::mMaxMoveSpeed = 0.5; //æœ€å¤§ç§»å‹•é€Ÿåº¦
+const float Robo::mJumpHeight = 20.0; //æœ€å¤§é«˜åº¦
+const int Robo::mCameraDelayCount = 10; //ã‚¸ãƒ£ãƒ³ãƒ—é–‹å§‹å¾Œä½•ãƒ•ãƒ¬ãƒ¼ãƒ ã§æ•µã®æ–¹ã‚’å‘ãã‹
+const float Robo::mCameraDistanceZ = 10.0; //ä½•ãƒ¡ãƒ¼ãƒˆãƒ«å¾Œã‚ã‹ã‚‰å†™ã™ï¼Ÿ
+const float Robo::mCameraDistanceY = 4.0; //è¦‹ä¸‹ã‚ã—å…·åˆ
+const float Robo::mCameraTargetDistanceZ = 20.0; //æ³¨è¦–ç‚¹ã¯ä½•ãƒ¡ãƒ¼ãƒˆãƒ«å…ˆï¼Ÿ
+const float Robo::mTurnSpeed = 1.0; //æ—‹å›é€Ÿåº¦
+const int Robo::mMaxHitPoint = 100; //æœ€å¤§ãƒ’ãƒƒãƒˆãƒƒãƒã‚¤ãƒ³ãƒˆ
+const int Robo::mMaxEnergy = 100; //æœ€å¤§æ­¦å™¨ãƒã‚¤ãƒ³ãƒˆ
+const int Robo::mEnergyPerBullet = 27; //æ­¦å™¨ã®æ¶ˆè²»ã‚¨ãƒãƒ«ã‚®ãƒ¼
+const int Robo::mEnergyCharge = 1; //æ¯ãƒ•ãƒ¬ãƒ¼ãƒ æºœã¾ã‚‹ã‚¨ãƒãƒ«ã‚®ãƒ¼ã®é‡
+const float Robo::mLockOnAngleIn = 10.0; //ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã™ã‚‹è§’åº¦
+const float Robo::mLockOnAngleOut = 30.0; //ãƒ­ãƒƒã‚¯ã‚ªãƒ³ãŒå¤–ã‚Œã‚‹è§’åº¦
 
 Robo::Robo( int id ) : 
 mPosition( 0.0, 0.0, 0.0 ),
 mAngleY( 0.0 ),
 mId( id ),
 mBullets( 0 ),
-mBulletNumber( 100 ), //‚«‚ß‚¤‚¿
+mBulletNumber( 100 ), //ãã‚ã†ã¡
 mCameraCount( 0 ),
 mCount( 0 ),
 mVelocity( 0.0, 0.0, 0.0 ),
 mMode( MODE_ON_LAND ),
 mHitPoint( mMaxHitPoint ),
 mEnergy( mMaxEnergy ),
-mLockOn( true ){ //Œü‚«‡‚Á‚Än‚Ü‚é‚Ì‚ÅÅ‰‚ÍƒƒbƒNƒIƒ“‚µ‚Ä‚Ä‚¢‚¢‚¾‚ë‚¤B
+mLockOn( true ){ //å‘ãåˆã£ã¦å§‹ã¾ã‚‹ã®ã§æœ€åˆã¯ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã¦ã„ã„ã ã‚ã†ã€‚
 	mSceneContainer = Container::create( "data/robo.txt" );
 	while ( !mSceneContainer.isReady() ){
 		;
@@ -72,11 +72,11 @@ const Vector3* Robo::getBulletPosition( int i ) const {
 }
 
 void Robo::update( Robo* enemy ){
-	//€‚ñ‚Å‚é
+	//æ­»ã‚“ã§ã‚‹
 	if ( mHitPoint <= 0 ){
 		return;
 	}
-	//AI‚ÌvlBƒvƒŒƒCƒ„[‚Ìê‡‚Í“ü—Í‚ğæ“¾‚µ‚Ä•Ô‚·‚¾‚¯
+	//AIã®æ€è€ƒã€‚ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å ´åˆã¯å…¥åŠ›ã‚’å–å¾—ã—ã¦è¿”ã™ã ã‘
 	bool iJump;
 	bool iFire;
 	bool iTurn;
@@ -85,57 +85,57 @@ void Robo::update( Robo* enemy ){
 	bool iUp;
 	bool iDown; 
 	think( &iJump, &iFire, &iTurn, &iLeft, &iRight, &iUp, &iDown );
-	//ˆÈ‰º‚à‚ç‚Á‚½“ü—Í‚ğg‚Á‚Äs“®
+	//ä»¥ä¸‹ã‚‚ã‚‰ã£ãŸå…¥åŠ›ã‚’ä½¿ã£ã¦è¡Œå‹•
 	const Vector3& enemyPos = *enemy->position();
 	++mCount;
-	//ƒWƒƒƒ“ƒv‰Ÿ‚³‚ê‚Ä‚éH
+	//ã‚¸ãƒ£ãƒ³ãƒ—æŠ¼ã•ã‚Œã¦ã‚‹ï¼Ÿ
 	float t;
-	//š‹å‰ğÍ‚É—‚½‘‚«•û‚ğ‚µ‚Ä‚İ‚æ‚¤BƒR[ƒh‚Ìd•¡‚ª‘‚¦‚é‚ªƒuƒƒbƒN’PˆÊ‚ÅŒ©‚ê‚ÎƒVƒ“ƒvƒ‹‚É‚È‚éB
-	//•’Ê‚Ì‘‚«•û‚Æ‚Ç‚¿‚ç‚ª—Ç‚¢‚©”ä‚×‚Ä‚İ‚æ‚¤B
+	//å­—å¥è§£æã«ä¼¼ãŸæ›¸ãæ–¹ã‚’ã—ã¦ã¿ã‚ˆã†ã€‚ã‚³ãƒ¼ãƒ‰ã®é‡è¤‡ãŒå¢—ãˆã‚‹ãŒãƒ–ãƒ­ãƒƒã‚¯å˜ä½ã§è¦‹ã‚Œã°ã‚·ãƒ³ãƒ—ãƒ«ã«ãªã‚‹ã€‚
+	//æ™®é€šã®æ›¸ãæ–¹ã¨ã©ã¡ã‚‰ãŒè‰¯ã„ã‹æ¯”ã¹ã¦ã¿ã‚ˆã†ã€‚
 	switch ( mMode ){
 		case MODE_JUMP_UP:
-			//ƒJƒƒ‰‚ª‰ñ‚è‚«‚Á‚Ä‚¢‚È‚¢‚È‚çƒJƒƒ‰‰ñ“]Œp‘±
+			//ã‚«ãƒ¡ãƒ©ãŒå›ã‚Šãã£ã¦ã„ãªã„ãªã‚‰ã‚«ãƒ¡ãƒ©å›è»¢ç¶™ç¶š
 			if ( mCameraCount < mCameraDelayCount ){
 				mAngleY += mAngleVelocityY;
 				++mCameraCount;
 			}
-			//ã¸
+			//ä¸Šæ˜‡
 			t = mJumpHeight / static_cast< float >( mJumpUpTime );
 			mVelocity.y = t;
-			if ( !iJump ){ //ƒWƒƒƒ“ƒv“ü—Í‚ª‚È‚¢‚Ì‚Å‰º~‚É•Ï‰»
+			if ( !iJump ){ //ã‚¸ãƒ£ãƒ³ãƒ—å…¥åŠ›ãŒãªã„ã®ã§ä¸‹é™ã«å¤‰åŒ–
 				mMode = MODE_JUMP_FALL;
 				mCount = 0;
-			}else if ( mCount >= mJumpUpTime ){ //ã¸I—¹
+			}else if ( mCount >= mJumpUpTime ){ //ä¸Šæ˜‡çµ‚äº†
 				mMode = MODE_JUMP_STAY; 
 				mCount = 0;
 			}
-			mVelocity.x = mVelocity.z = 0.0; //X,ZˆÚ“®‚ğ–•E
+			mVelocity.x = mVelocity.z = 0.0; //X,Zç§»å‹•ã‚’æŠ¹æ®º
 			break;
 		case MODE_JUMP_STAY:
-			//ƒJƒƒ‰‚ª‰ñ‚è‚«‚Á‚Ä‚¢‚È‚¢‚È‚çƒJƒƒ‰‰ñ“]Œp‘±
+			//ã‚«ãƒ¡ãƒ©ãŒå›ã‚Šãã£ã¦ã„ãªã„ãªã‚‰ã‚«ãƒ¡ãƒ©å›è»¢ç¶™ç¶š
 			if ( mCameraCount < mCameraDelayCount ){
 				mAngleY += mAngleVelocityY;
 				++mCameraCount;
 			}
 			mVelocity.y = 0.0;
-			if ( !iJump ){ //ƒWƒƒƒ“ƒv“ü—Í‚ª‚È‚¢‚Ì‚Å‰º~‚É•Ï‰»
+			if ( !iJump ){ //ã‚¸ãƒ£ãƒ³ãƒ—å…¥åŠ›ãŒãªã„ã®ã§ä¸‹é™ã«å¤‰åŒ–
 				mMode = MODE_JUMP_FALL;
 				mCount = 0;
-			}else if ( mCount >= mJumpStayTime ){ //‰º~‚Ö
+			}else if ( mCount >= mJumpStayTime ){ //ä¸‹é™ã¸
 				mMode = MODE_JUMP_FALL;
 				mCount = 0;
 			}
 			break;
 		case MODE_JUMP_FALL:
-			//ƒJƒƒ‰‚ª‰ñ‚è‚«‚Á‚Ä‚¢‚È‚¢‚È‚çƒJƒƒ‰‰ñ“]Œp‘±
+			//ã‚«ãƒ¡ãƒ©ãŒå›ã‚Šãã£ã¦ã„ãªã„ãªã‚‰ã‚«ãƒ¡ãƒ©å›è»¢ç¶™ç¶š
 			if ( mCameraCount < mCameraDelayCount ){
 				mAngleY += mAngleVelocityY;
 				++mCameraCount;
 			}
-			//‰º~
+			//ä¸‹é™
 			t = mJumpHeight / static_cast< float >( mJumpFallTime );
 			mVelocity.y = -t;
-			//Ú’n”»’è‚ÍÅI“I‚É‚ÍÕ“Ëˆ—‚Å‚â‚é‚Ì‚Å‚±‚±‚Å‚Í‚â‚ç‚È‚¢B
+			//æ¥åœ°åˆ¤å®šã¯æœ€çµ‚çš„ã«ã¯è¡çªå‡¦ç†ã§ã‚„ã‚‹ã®ã§ã“ã“ã§ã¯ã‚„ã‚‰ãªã„ã€‚
 			break;
 		case MODE_ON_LAND:
 			if ( iJump ){
@@ -143,12 +143,12 @@ void Robo::update( Robo* enemy ){
 				mCount = 0;
 				mCameraCount = 0;
 
-				//“G‚Ì•û‚ÉŒü‚¯‚éB
+				//æ•µã®æ–¹ã«å‘ã‘ã‚‹ã€‚
 				Vector3 dir;
-				dir.setSub( enemyPos, mPosition ); //©•ª‚©‚ç“G‚Ö
-				//Y²Šp“x‚Íatan2( x, z )B
+				dir.setSub( enemyPos, mPosition ); //è‡ªåˆ†ã‹ã‚‰æ•µã¸
+				//Yè»¸è§’åº¦ã¯atan2( x, z )ã€‚
 				t = Math::atan2( dir.x, dir.z );
-				//180“xˆÈã·‚ª‚ ‚ê‚Î+-360“x‚µ‚Ä‹t‰ñ‚µ
+				//180åº¦ä»¥ä¸Šå·®ãŒã‚ã‚Œã°+-360åº¦ã—ã¦é€†å›ã—
 				if ( t - mAngleY > 180.f ){
 					t -= 360.f;
 				}else if ( mAngleY - t > 180.f ){
@@ -156,26 +156,26 @@ void Robo::update( Robo* enemy ){
 				}
 				mAngleVelocityY = ( t - mAngleY ) / static_cast< float >( mCameraDelayCount );
 			}else if ( iTurn ){
-				turn( iLeft, iRight ); //ƒR[ƒh‚ª’·‚­‚È‚é‚Ì‚ÅŠÖ”‚É”ò‚Î‚·
+				turn( iLeft, iRight ); //ã‚³ãƒ¼ãƒ‰ãŒé•·ããªã‚‹ã®ã§é–¢æ•°ã«é£›ã°ã™
 			}else{
-				move( iLeft, iRight, iUp, iDown ); //ƒR[ƒh‚ª’·‚­‚È‚é‚Ì‚ÅŠÖ”‚É”ò‚Î‚·
+				move( iLeft, iRight, iUp, iDown ); //ã‚³ãƒ¼ãƒ‰ãŒé•·ããªã‚‹ã®ã§é–¢æ•°ã«é£›ã°ã™
 			}
 			mVelocity.y = 0.f;
 			break;
 	}
-	//‚±‚±‚©‚ç‰º‚ÍÕ“Ëˆ—‚ª“ü‚é‚Æ‚»‚ÌŒã‚É‚È‚éB
+	//ã“ã“ã‹ã‚‰ä¸‹ã¯è¡çªå‡¦ç†ãŒå…¥ã‚‹ã¨ãã®å¾Œã«ãªã‚‹ã€‚
 	mPosition += mVelocity;
 	if ( mPosition.y < 0.f ){
 		mPosition.y = 0.f;
 		mMode = MODE_ON_LAND;
 	}
-	//•Ší¶¬
+	//æ­¦å™¨ç”Ÿæˆ
 	if ( iFire ){
-		//ã¸A‰º~’†‚ÍŒ‚‚Ä‚È‚¢
+		//ä¸Šæ˜‡ã€ä¸‹é™ä¸­ã¯æ’ƒã¦ãªã„
 		if ( ( mMode != MODE_JUMP_FALL ) && ( mMode != MODE_JUMP_UP ) ){
-			//ƒGƒlƒ‹ƒM[‘«‚è‚Ä‚éH
+			//ã‚¨ãƒãƒ«ã‚®ãƒ¼è¶³ã‚Šã¦ã‚‹ï¼Ÿ
 			if ( mEnergy >= mEnergyPerBullet ){
-				//‹ó‚«•Ší‚ğ’T‚·
+				//ç©ºãæ­¦å™¨ã‚’æ¢ã™
 				for ( int i = 0; i < mBulletNumber; ++i ){
 					if ( mBullets[ i ].isEmpty() ){
 						const char* name = ( mId == 0 ) ? "bulletB" : "bulletR";
@@ -193,54 +193,54 @@ void Robo::update( Robo* enemy ){
 			}
 		}
 	}
-	//•ŠíXV
+	//æ­¦å™¨æ›´æ–°
 	for ( int i = 0; i < mBulletNumber; ++i ){
 		if ( !mBullets[ i ].isEmpty() ){
 			mBullets[ i ].update( enemyPos );
-			//Õ“Ëˆ—
+			//è¡çªå‡¦ç†
 			Vector3 t;
 			t.setSub( *mBullets[ i ].position(), enemyPos );
 			if ( t.squareLength() < 4.f ){
-				enemy->setDamage( 1 ); //1“_Œ¸‚ç‚µ‚Ä‚İ‚½B
-				mBullets[ i ].die(); //’eÁ‚¦‚Ü‚·B
+				enemy->setDamage( 1 ); //1ç‚¹æ¸›ã‚‰ã—ã¦ã¿ãŸã€‚
+				mBullets[ i ].die(); //å¼¾æ¶ˆãˆã¾ã™ã€‚
 			}
 		}
 	}
-	//•ŠíƒGƒlƒ‹ƒM[ƒ`ƒƒ[ƒW
+	//æ­¦å™¨ã‚¨ãƒãƒ«ã‚®ãƒ¼ãƒãƒ£ãƒ¼ã‚¸
 	mEnergy += mEnergyCharge;
 	if ( mEnergy > mMaxEnergy ){
 		mEnergy = mMaxEnergy;
 	}
-	//ƒƒbƒNƒIƒ“ˆ—
-	//‚Ü‚¸‚ÍŠp“x‚ğ‘ª‚Á‚Ä‚İ‚æ‚¤B
-	//Šp“x‚Í‰½‚Å‘ª‚é‚©H‚»‚¤A“àÏ‚¾B
+	//ãƒ­ãƒƒã‚¯ã‚ªãƒ³å‡¦ç†
+	//ã¾ãšã¯è§’åº¦ã‚’æ¸¬ã£ã¦ã¿ã‚ˆã†ã€‚
+	//è§’åº¦ã¯ä½•ã§æ¸¬ã‚‹ã‹ï¼Ÿãã†ã€å†…ç©ã ã€‚
 	Vector3 toEnemy;
 	toEnemy.setSub( enemyPos, mPosition );
 	Vector3 myDir( 0.f, 0.f, -1.f );
 	Matrix34 m;
 	m.setRotationY( mAngleY + 180.f );
 	m.mul( &myDir, myDir );
-	toEnemy *= 1.f / toEnemy.length(); //’·‚³‚ğ1‚É
+	toEnemy *= 1.f / toEnemy.length(); //é•·ã•ã‚’1ã«
 	float dotProduct = toEnemy.dot( myDir );
-	if ( dotProduct > 1.f ){ //Œë·‚Ì‚¹‚¢‚Å1‚ğ‰z‚¦‚é‚©‚à‚µ‚ê‚È‚¢B
+	if ( dotProduct > 1.f ){ //èª¤å·®ã®ã›ã„ã§1ã‚’è¶Šãˆã‚‹ã‹ã‚‚ã—ã‚Œãªã„ã€‚
 		dotProduct = 1.f;
 	}else if ( dotProduct < -1.f ){
 		dotProduct = -1.f;
 	}
-	//Šp“x‚É’¼‚·‚ÆA
+	//è§’åº¦ã«ç›´ã™ã¨ã€
 	float angle = Math::acos( dotProduct );
 	if ( mLockOn ){
-		//ƒƒbƒNƒIƒ“‚µ‚Ä‚é‚È‚çŠO‚ê‚é‚©‚Ç‚¤‚©’²‚×‚é
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ã‚‹ãªã‚‰å¤–ã‚Œã‚‹ã‹ã©ã†ã‹èª¿ã¹ã‚‹
 		if ( angle > mLockOnAngleOut ){
 			mLockOn = false;
 		}
 	}else{
-		//“ü‚é‚©‚Ç‚¤‚©’²‚×‚é
+		//å…¥ã‚‹ã‹ã©ã†ã‹èª¿ã¹ã‚‹
 		if ( angle < mLockOnAngleIn ){
 			mLockOn = true;
 		}
 	}
-	//ƒ‚ƒfƒ‹‚ÉˆÊ’uî•ñ‚ğƒZƒbƒg
+	//ãƒ¢ãƒ‡ãƒ«ã«ä½ç½®æƒ…å ±ã‚’ã‚»ãƒƒãƒˆ
 	mModel.setAngle( Vector3( 0.f, mAngleY, 0.f ) );
 	mModel.setPosition( mPosition );
 }
@@ -254,7 +254,7 @@ bool* right,
 bool* up,
 bool* down ) const {
 	Pad* pad = Pad::instance();
-	if ( mId == 0 ){ //ƒvƒŒƒCƒ„[
+	if ( mId == 0 ){ //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 		*jump = pad->isOn( Pad::JUMP, mId );
 		*fire = pad->isTriggered( Pad::FIRE, mId );
 		*turn = pad->isOn( Pad::TURN, mId );
@@ -263,14 +263,14 @@ bool* down ) const {
 		*up = pad->isOn( Pad::UP, mId );
 		*down = pad->isOn( Pad::DOWN, mId );
 	}else{ //AI
-		//’´”n­
-		//ƒƒbƒNƒIƒ“‚µ‚Ä‚È‚¯‚ê‚ÎƒWƒƒƒ“ƒv‚·‚é
+		//è¶…é¦¬é¹¿
+		//ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã—ã¦ãªã‘ã‚Œã°ã‚¸ãƒ£ãƒ³ãƒ—ã™ã‚‹
 		*jump = !mLockOn;
-		//’e‚ÍŒ‚‚Ä‚é‚¾‚¯Œ‚‚ÂB
+		//å¼¾ã¯æ’ƒã¦ã‚‹ã ã‘æ’ƒã¤ã€‚
 		*fire = true;
-		//ù‰ñ‚Í‚µ‚È‚¢
+		//æ—‹å›ã¯ã—ãªã„
 		*turn = false;
-		//ˆÚ“®‚Í•Ï”‚ğ‚Â‚Ì‚ª–Ê“|‚È‚Ì‚Å‚µ‚È‚¢B
+		//ç§»å‹•ã¯å¤‰æ•°ã‚’æŒã¤ã®ãŒé¢å€’ãªã®ã§ã—ãªã„ã€‚
 		*left = *right = *up = *down = false;
 	}
 }
@@ -278,20 +278,20 @@ bool* down ) const {
 void Robo::turn( bool left, bool right ){
 	if ( left ){
 		mAngleY += mTurnSpeed;
-		if ( mAngleY > 180.f ){ //-PI‚©‚çPI‚É‚¨‚³‚ß‚é
+		if ( mAngleY > 180.f ){ //-PIã‹ã‚‰PIã«ãŠã•ã‚ã‚‹
 			mAngleY -= 360.f;
 		}
 	}
 	if ( right ){
 		mAngleY -= mTurnSpeed;
-		if ( mAngleY < -180.f ){ //-PI‚©‚çPI‚É‚¨‚³‚ß‚é
+		if ( mAngleY < -180.f ){ //-PIã‹ã‚‰PIã«ãŠã•ã‚ã‚‹
 			mAngleY += 360.0;
 		}
 	}
 }
 
 void Robo::move( bool left, bool right, bool up, bool down ){
-	//ˆÚ“®ˆ—B‚Ü‚¸‹“_‚ğl—¶‚µ‚È‚¢‰Á‘¬“x‚ğo‚·
+	//ç§»å‹•å‡¦ç†ã€‚ã¾ãšè¦–ç‚¹ã‚’è€ƒæ…®ã—ãªã„åŠ é€Ÿåº¦ã‚’å‡ºã™
 	Vector3 move( 0.f, 0.f, 0.f );
 	if ( up ){
 		move.z = -1.f;
@@ -305,47 +305,47 @@ void Robo::move( bool left, bool right, bool up, bool down ){
 	if ( right ){
 		move.x = 1.f;
 	}
-	//‹ü•ûŒü‚ğ‰Á–¡‚µ‚Ä‰ñ“]
+	//è¦–ç·šæ–¹å‘ã‚’åŠ å‘³ã—ã¦å›è»¢
 	Matrix34 m;
 	m.setRotationY( mAngleY + 180.f );
 	m.mul( &move, move );
 
-	//¡~‚Ü‚Á‚Ä‚¢‚é‚È‚ç˜b‚Í‘‚¢B“K“–‚É‰Á‘¬‚µ‚Ä‚â‚é‚¾‚¯‚¾
+	//ä»Šæ­¢ã¾ã£ã¦ã„ã‚‹ãªã‚‰è©±ã¯æ—©ã„ã€‚é©å½“ã«åŠ é€Ÿã—ã¦ã‚„ã‚‹ã ã‘ã 
 	if ( mVelocity.x == 0.f && mVelocity.z == 0.f ){
-		//‰Á‘¬‚É‚©‚©‚éŠÔ‚ÅÅ‘å‘¬“x‚ğŠ„‚ê‚Î1ƒtƒŒ[ƒ€‚ ‚½‚è‚Ì‰Á‘¬“x‚ªo‚éB
+		//åŠ é€Ÿã«ã‹ã‹ã‚‹æ™‚é–“ã§æœ€å¤§é€Ÿåº¦ã‚’å‰²ã‚Œã°1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®åŠ é€Ÿåº¦ãŒå‡ºã‚‹ã€‚
 		float accel = mMaxMoveSpeed / static_cast< float >( mMoveAccelEndCount );
 		mVelocity.setMul( move, accel );
-	}else{ //‚·‚Å‚É“®‚¢‚Ä‚¢‚éê‡
-		if ( move.x == 0.f && move.z == 0.f ){ //ˆÚ“®‚ªƒ[ƒ
-			mVelocity.set( 0.f, 0.f, 0.f ); //ˆÚ“®‚Í‚Æ‚Ü‚éB
+	}else{ //ã™ã§ã«å‹•ã„ã¦ã„ã‚‹å ´åˆ
+		if ( move.x == 0.f && move.z == 0.f ){ //ç§»å‹•ãŒã‚¼ãƒ­
+			mVelocity.set( 0.f, 0.f, 0.f ); //ç§»å‹•ã¯ã¨ã¾ã‚‹ã€‚
 		}else{
-			//‚·‚Å‚É“®‚¢‚Ä‚¢‚éê‡‚©‚È‚è–Ê“|‚Å‚ ‚éB
-			//45“x‚¾‚¯•ûŒü“]Š·‚µ‚½‚Éƒ[ƒ‚©‚ç‰Á‘¬‚µ‚È‚¨‚µ‚Æ‚¢‚¤‚Ì‚ÍƒXƒgƒŒƒX‚¾B
-			//‚¾‚©‚çAu¡‚Ì‘¬“x‚Æ•ûŒü‚ª‡‚í‚È‚¢¬•ª‚¾‚¯‚ğƒ[ƒ‚©‚ç‚â‚è’¼‚µv‚É‚·‚éB
+			//ã™ã§ã«å‹•ã„ã¦ã„ã‚‹å ´åˆã‹ãªã‚Šé¢å€’ã§ã‚ã‚‹ã€‚
+			//45åº¦ã ã‘æ–¹å‘è»¢æ›ã—ãŸæ™‚ã«ã‚¼ãƒ­ã‹ã‚‰åŠ é€Ÿã—ãªãŠã—ã¨ã„ã†ã®ã¯ã‚¹ãƒˆãƒ¬ã‚¹ã ã€‚
+			//ã ã‹ã‚‰ã€ã€Œä»Šã®é€Ÿåº¦ã¨æ–¹å‘ãŒåˆã‚ãªã„æˆåˆ†ã ã‘ã‚’ã‚¼ãƒ­ã‹ã‚‰ã‚„ã‚Šç›´ã—ã€ã«ã™ã‚‹ã€‚
 
-			//90“xˆÈã‚Ìƒ^[ƒ“‚È‚çˆê’U‘¬“x‚ğ0‚É‚·‚éB
-			//Šµ«‚ª“­‚­•û‚ª‚¢‚¢ƒQ[ƒ€‚à‚ ‚é‚ªA‚«‚Ñ‚«‚Ñ“®‚©‚µ‚½‚¢‚È‚çŠµ«‚Í×–‚‚¾‚ë‚¤B
-			//90“xˆÈã‚Ìƒ^[ƒ“‚È‚çŒ»‘¬“x‚Æ‰Á‘¬‚Ì“àÏ‚ªƒ}ƒCƒiƒX‚Ì‚Í‚¸‚¾
+			//90åº¦ä»¥ä¸Šã®ã‚¿ãƒ¼ãƒ³ãªã‚‰ä¸€æ—¦é€Ÿåº¦ã‚’0ã«ã™ã‚‹ã€‚
+			//æ…£æ€§ãŒåƒãæ–¹ãŒã„ã„ã‚²ãƒ¼ãƒ ã‚‚ã‚ã‚‹ãŒã€ãã³ãã³å‹•ã‹ã—ãŸã„ãªã‚‰æ…£æ€§ã¯é‚ªé­”ã ã‚ã†ã€‚
+			//90åº¦ä»¥ä¸Šã®ã‚¿ãƒ¼ãƒ³ãªã‚‰ç¾é€Ÿåº¦ã¨åŠ é€Ÿã®å†…ç©ãŒãƒã‚¤ãƒŠã‚¹ã®ã¯ãšã 
 			float dp = mVelocity.dot( move );
 			if ( dp <= 0.f ){
 				mVelocity.set( 0.f, 0.f, 0.f );
-			}else{ //90“x–¢–
-				//Œ»İ‚ÌˆÚ“®‘¬“x‚Æ…•½‚È¬•ª‚Ì‚İæ‚èo‚·
-				//…•½¬•ª‚ÍAˆÚ“®•ûŒü’PˆÊƒxƒNƒ^‚Æ‚Ì“àÏ‚ğAˆÚ“®•ûŒü’PˆÊƒxƒNƒ^‚É‚©‚¯‚ê‚Î‚¢‚¢B
-				//ˆÚ“®’PˆÊƒxƒNƒ^EAŒ»‘¬“xƒxƒNƒ^V‚Æ‚µ‚ÄAV‚µ‚¢‘¬“xƒxƒNƒ^V'‚·‚È‚í‚¿•½s¬•ª‚Í
+			}else{ //90åº¦æœªæº€
+				//ç¾åœ¨ã®ç§»å‹•é€Ÿåº¦ã¨æ°´å¹³ãªæˆåˆ†ã®ã¿å–ã‚Šå‡ºã™
+				//æ°´å¹³æˆåˆ†ã¯ã€ç§»å‹•æ–¹å‘å˜ä½ãƒ™ã‚¯ã‚¿ã¨ã®å†…ç©ã‚’ã€ç§»å‹•æ–¹å‘å˜ä½ãƒ™ã‚¯ã‚¿ã«ã‹ã‘ã‚Œã°ã„ã„ã€‚
+				//ç§»å‹•å˜ä½ãƒ™ã‚¯ã‚¿Eã€ç¾é€Ÿåº¦ãƒ™ã‚¯ã‚¿Vã¨ã—ã¦ã€æ–°ã—ã„é€Ÿåº¦ãƒ™ã‚¯ã‚¿V'ã™ãªã‚ã¡å¹³è¡Œæˆåˆ†ã¯
 				//V' = dot(V,E) * E
-				//‚±‚ÌAE‚ÍˆÚ“®ƒxƒNƒ^M‚ğg‚Á‚ÄE=M/|M|‚Æ‘‚¯‚é‚©‚çA
+				//ã“ã®æ™‚ã€Eã¯ç§»å‹•ãƒ™ã‚¯ã‚¿Mã‚’ä½¿ã£ã¦E=M/|M|ã¨æ›¸ã‘ã‚‹ã‹ã‚‰ã€
 				//V' = dot(V,M) * M / ( |M|^2 )
-				//‘‚¯A’PˆÊƒxƒNƒ^‚ğì‚éÛ‚Ì•½•ûª‚ğœ‚¯‚éB|M|‚æ‚è|M|^2‚Ì•û‚ªŒvZ‚Í‘¬‚¢‚Ì‚¾B
+				//æ›¸ã‘ã€å˜ä½ãƒ™ã‚¯ã‚¿ã‚’ä½œã‚‹éš›ã®å¹³æ–¹æ ¹ã‚’é™¤ã‘ã‚‹ã€‚|M|ã‚ˆã‚Š|M|^2ã®æ–¹ãŒè¨ˆç®—ã¯é€Ÿã„ã®ã ã€‚
 				float moveSquareLength = move.x * move.x + move.z * move.z;
 				float dp = mVelocity.dot( move );
 				mVelocity.setMul( move, dp / moveSquareLength );
 			}
-			//‰Á‘¬‚ğ‰Á‚¦‚éB
-			//ˆÚ“®‘¬“x‚ÍÅ‘å‘¬“x/‰Á‘¬ŠÔ‚Å‚ ‚éB
+			//åŠ é€Ÿã‚’åŠ ãˆã‚‹ã€‚
+			//ç§»å‹•é€Ÿåº¦ã¯æœ€å¤§é€Ÿåº¦/åŠ é€Ÿæ™‚é–“ã§ã‚ã‚‹ã€‚
 			float accel = mMaxMoveSpeed / static_cast< float >( mMoveAccelEndCount );
 			mVelocity.madd( move, accel );
-			//Å‘å‘¬“x‚ÅƒXƒgƒbƒv
+			//æœ€å¤§é€Ÿåº¦ã§ã‚¹ãƒˆãƒƒãƒ—
 			float speed = mVelocity.length();
 			if ( speed > mMaxMoveSpeed ){
 				mVelocity *= mMaxMoveSpeed / speed;
@@ -355,9 +355,9 @@ void Robo::move( bool left, bool right, bool up, bool down ){
 }
 
 void Robo::draw() const {
-	//•`‰æ
+	//æç”»
 	mModel.draw();
-	//•Ší
+	//æ­¦å™¨
 	for ( int i = 0; i < mBulletNumber; ++i ){
 		if ( !mBullets[ i ].isEmpty() ){
 			mBullets[ i ].draw();
@@ -386,27 +386,27 @@ bool Robo::getLockOn() const {
 }
 
 void Robo::getView( Matrix34* vm, Vector3* pos ) const {
-	//‚Ü‚¸³–Ê•ûŒüƒxƒNƒ^‚ğì¬
+	//ã¾ãšæ­£é¢æ–¹å‘ãƒ™ã‚¯ã‚¿ã‚’ä½œæˆ
 	Vector3 d( 0.f, 0.f, 1.f );
 	Matrix34 m;
 	m.setRotationY( mAngleY );
 	m.mul( &d, d );
-	//‚±‚¢‚Â‚ğ‘O•û‚ÉmCameraTargetDistanceZ‚¾‚¯L‚Î‚·
+	//ã“ã„ã¤ã‚’å‰æ–¹ã«mCameraTargetDistanceZã ã‘ä¼¸ã°ã™
 	Vector3 t;
 	t.setMul( d, mCameraTargetDistanceZ );
-	//ƒƒ{‚ª‚‚¢‚Æ‚±‚ë‚É‚¢‚é‚È‚ç‚¿‚å‚Á‚Æ‰º‚ğŒ©‚Ä‚â‚éB‚±‚ê‚Íƒpƒ‰ƒ[ƒ^‚É‚È‚¢‚»‚ÌêH•vB
-	t.y -= mPosition.y * 0.12f; //‚±‚Ì‚Ö‚ñ‚Ì’²®‚à“K“–
-	//‚±‚¢‚Â‚ğŒã•û‚ÉmCameraDistacneZ‚¾‚¯L‚Î‚·
+	//ãƒ­ãƒœãŒé«˜ã„ã¨ã“ã‚ã«ã„ã‚‹ãªã‚‰ã¡ã‚‡ã£ã¨ä¸‹ã‚’è¦‹ã¦ã‚„ã‚‹ã€‚ã“ã‚Œã¯ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã«ãªã„ãã®å ´å·¥å¤«ã€‚
+	t.y -= mPosition.y * 0.12f; //ã“ã®ã¸ã‚“ã®èª¿æ•´ã‚‚é©å½“
+	//ã“ã„ã¤ã‚’å¾Œæ–¹ã«mCameraDistacneZã ã‘ä¼¸ã°ã™
 	Vector3 p;
 	p.setMul( d, -mCameraDistanceZ );
-	//Y‚ÉmCameraDistanceY‚ğƒvƒ‰ƒX
+	//Yã«mCameraDistanceYã‚’ãƒ—ãƒ©ã‚¹
 	p.y += mCameraDistanceY;
-	//ƒƒ{‚ª‚‚¢‚Æ‚±‚ë‚É‚¢‚é‚È‚ç‚¿‚å‚Á‚Æ‚–Ú‚É‚µ‚Ä‰º‚ğŒ©‚Ä‚â‚éB‚±‚ê‚Íƒpƒ‰ƒ[ƒ^‚É‚È‚¢‚»‚ÌêH•vB
-	p.y += mPosition.y * 0.12f; //‚±‚Ì‚Ö‚ñ‚Ì’²®‚à“K“–
-	//ƒƒ{Œ»İˆÊ’u‚ğƒvƒ‰ƒX
+	//ãƒ­ãƒœãŒé«˜ã„ã¨ã“ã‚ã«ã„ã‚‹ãªã‚‰ã¡ã‚‡ã£ã¨é«˜ç›®ã«ã—ã¦ä¸‹ã‚’è¦‹ã¦ã‚„ã‚‹ã€‚ã“ã‚Œã¯ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã«ãªã„ãã®å ´å·¥å¤«ã€‚
+	p.y += mPosition.y * 0.12f; //ã“ã®ã¸ã‚“ã®èª¿æ•´ã‚‚é©å½“
+	//ãƒ­ãƒœç¾åœ¨ä½ç½®ã‚’ãƒ—ãƒ©ã‚¹
 	t += mPosition;
 	p += mPosition;
-	//ƒrƒ…[s—ñì¬
+	//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ä½œæˆ
 	vm->setViewTransform( p, t, Vector3( 0.f, 1.f, 0.f ) );
 	*pos = p;
 }

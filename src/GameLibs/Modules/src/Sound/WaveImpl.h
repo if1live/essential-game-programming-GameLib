@@ -75,10 +75,10 @@ public:
 		STRONG_ASSERT( SUCCEEDED( hr ) );
 		buffer->Release();
 		buffer = 0;
-		mDirectSound = 0; //“ñ“x‚Íì‚ç‚È‚¢‚Ì‚Å‚±‚±‚Å‚¨–ğ‚²‚ß‚ñ
+		mDirectSound = 0; //äºŒåº¦ã¯ä½œã‚‰ãªã„ã®ã§ã“ã“ã§ãŠå½¹ã”ã‚ã‚“
 	}
 	void fillBuffer( const void* data, int size ){
-		//ƒf[ƒ^–„‚ß‚Ü‚·
+		//ãƒ‡ãƒ¼ã‚¿åŸ‹ã‚ã¾ã™
 		void* p0 = 0;
 		void* p1 = 0;
 		DWORD s0;
@@ -95,7 +95,7 @@ public:
 	bool isReady(){
 		if ( mFile ){
 			if ( mFile.isFinished() ){
-				if ( mFile.isError() ){ //ƒ[ƒhI—¹
+				if ( mFile.isError() ){ //ãƒ­ãƒ¼ãƒ‰çµ‚äº†
 					mIsError = true;
 				}else{
 					int channels = mFile.getShort( 22 );
@@ -106,17 +106,17 @@ public:
 					int waveStart = 0;
 					int pos = 36;
 					RefString dataStr( "data" );
-					while ( dataStr != RefString( data + pos, 4 ) ){ //‚¢‚ç‚È‚¢‚à‚Ì‚ª“ü‚Á‚Ä‚¢‚éŠÔ”ò‚Î‚·
+					while ( dataStr != RefString( data + pos, 4 ) ){ //ã„ã‚‰ãªã„ã‚‚ã®ãŒå…¥ã£ã¦ã„ã‚‹é–“é£›ã°ã™
 						if ( pos >= mFile.size() ){
 							mIsError = true;
 							break;
 						}
-						pos += mFile.getInt( pos+4 ); //‚¢‚ç‚È‚¢‚à‚Ì‚ÌƒTƒCƒY‚ª‚±‚±‚É“ü‚Á‚Ä‚¢‚é
+						pos += mFile.getInt( pos+4 ); //ã„ã‚‰ãªã„ã‚‚ã®ã®ã‚µã‚¤ã‚ºãŒã“ã“ã«å…¥ã£ã¦ã„ã‚‹
 					}
 					if ( !mIsError ){
 						waveSize = mFile.getInt( pos + 4 );
 						waveStart = pos + 8;
-						//ƒf[ƒ^ƒTƒCƒY‚ªƒtƒ@ƒCƒ‹ƒTƒCƒY‚æ‚è¬‚³‚¢–‚ª—Ç‚­‚ ‚éBƒGƒ‰[‚É‚Í‚µ‚È‚¢B
+						//ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºãŒãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºã‚ˆã‚Šå°ã•ã„äº‹ãŒè‰¯ãã‚ã‚‹ã€‚ã‚¨ãƒ©ãƒ¼ã«ã¯ã—ãªã„ã€‚
 						if ( waveSize + waveStart > mFile.size() ){
 							waveSize = mFile.size() - waveStart;
 						}
@@ -125,12 +125,12 @@ public:
 					}
 					mFile.release();
 				}
-				return true; //ƒGƒ‰[‚Å‚àI—¹
+				return true; //ã‚¨ãƒ©ãƒ¼ã§ã‚‚çµ‚äº†
 			}else{
-				return false; //ƒ[ƒhI‚í‚Á‚Ä‚Ü‚¹‚ñB
+				return false; //ãƒ­ãƒ¼ãƒ‰çµ‚ã‚ã£ã¦ã¾ã›ã‚“ã€‚
 			}
 		}else{
-			return true; //‚»‚à‚»‚àƒtƒ@ƒCƒ‹‚ª‚È‚¢‚È‚çAŠ®‘S‚ÉI‚í‚Á‚½‚©AÅ‰‚©‚çƒtƒ@ƒCƒ‹Œo—R‚Å‚È‚¢‚©B
+			return true; //ãã‚‚ãã‚‚ãƒ•ã‚¡ã‚¤ãƒ«ãŒãªã„ãªã‚‰ã€å®Œå…¨ã«çµ‚ã‚ã£ãŸã‹ã€æœ€åˆã‹ã‚‰ãƒ•ã‚¡ã‚¤ãƒ«çµŒç”±ã§ãªã„ã‹ã€‚
 		}
 	}
 	bool isError() const {

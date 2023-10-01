@@ -12,7 +12,7 @@ using namespace std;
 
 #include "Bullet.h"
 
-//�p�����[�^�Q
+//パラメータ群
 const int Bullet::mLife = 120;
 const float Bullet::mHomingX = 1.0;
 const float Bullet::mHomingY = 1.0;
@@ -39,9 +39,9 @@ const Vector3& p,
 float angleX,
 float angleY,
 bool homing ){
-	//���f��������Ȃ�����Ƃ�
+	//モデルがあるなら消しとく
 	if ( mModel ){
-		mModel = 0; //0����Ŏ蓮�ŏ�����B
+		mModel = 0; //0代入で手動で消せる。
 	}
 	mModel = db->createModel( batchName );
 	mModel->setPosition( p );
@@ -55,27 +55,27 @@ const Vector3* Bullet::getPosition() const {
 }
 
 void Bullet::update( const Vector3& enemyPos ){
-	//�G�̕��Ɍ�����B
+	//敵の方に向ける。
 	Vector3 dir;
 	Vector3 p = *mModel->getPosition();
 	Vector3 a = *mModel->getAngle();
 	if ( mHoming ){
-		dir.setSub( enemyPos, *mModel->getPosition() ); //��������G��
-		//Y���p�x��atan2( x, z )�B
+		dir.setSub( enemyPos, *mModel->getPosition() ); //自分から敵へ
+		//Y軸角度はatan2( x, z )。
 		float ty = atan2( dir.x, dir.z );
-		//180�x�ȏ㍷�������+-360�x���ċt��
+		//180度以上差があれば+-360度して逆回し
 		if ( ty - a.y > 180.f ){
 			ty -= 2.f * 180.f;
 		}else if ( a.y - ty > 180.f ){
 			ty += 2.f * 180.f;
 		}
-		//X���p�x��Y/(X,Z)�B
+		//X軸角度はY/(X,Z)。
 		float zxLength = sqrt( dir.x * dir.x + dir.z * dir.z );
 		float tx = atan2( dir.y, zxLength );
-		//X���p�x�͂��������͈͂�(-90,90)��180�x�ȏ㗣��邱�Ƃ͂Ȃ��B���̂܂܂ŗǂ��B
+		//X軸角度はそもそも範囲が(-90,90)で180度以上離れることはない。そのままで良い。
 		float hx = mHomingX;
 		float hy = mHomingY; 
-		//�z�[�~���O�͈͓��Ȃ炻�̂��̂�
+		//ホーミング範囲内ならそのものに
 		if ( tx - a.x < hx && a.x - tx < hx ){
 			a.x = tx;
 		}else if ( tx < a.x ){
@@ -91,11 +91,11 @@ void Bullet::update( const Vector3& enemyPos ){
 			a.y += hy;
 		}
 	}
-	//�����낢�̂�z��]���Ƃ���
+	//おもろいのでz回転つけとくか
 	a.z += 20.0;
-	//�p�x�X�V
+	//角度更新
 	mModel->setAngle( a );
-	//�ʒu�͂��̕����̉�]�s���(0,0,1)��ϊ����đ����Ă��
+	//位置はこの方向の回転行列で(0,0,1)を変換して足してやる
 	Vector3 v( 0.0, 0.0, mSpeed );
 	Matrix34 m;
 	m.setRotationY( a.y );

@@ -27,7 +27,7 @@ private:
 	int countNode( GameLib::PseudoXml::Element&, int n );
 	int build( GameLib::PseudoXml::Element&, const GraphicsDatabase& db, int nodePos );
 
-	NodeTemplate* mNodes; //0”Ô‚ªª‚ÆŒˆ‚Ü‚Á‚Ä‚¢‚é‚Ì‚Åª‚ğw‚·ƒ|ƒCƒ“ƒ^‚Í•s—v
+	NodeTemplate* mNodes; //0ç•ªãŒæ ¹ã¨æ±ºã¾ã£ã¦ã„ã‚‹ã®ã§æ ¹ã‚’æŒ‡ã™ãƒã‚¤ãƒ³ã‚¿ã¯ä¸è¦
 	int mNodeNumber;
 	string mName;
 };

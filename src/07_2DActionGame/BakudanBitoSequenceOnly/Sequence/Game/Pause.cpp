@@ -20,37 +20,37 @@ Pause::~Pause(){
 
 void Pause::update( Parent* parent ){
 	Framework f = Framework::instance();;
-	//0:‚â‚è‚È‚¨‚µ
-	//1:–ÊƒZƒŒ‚Ö
-	//2:ƒ^ƒCƒgƒ‹‰æ–Ê‚Ö
-	//3:–ß‚é
+	//0:ã‚„ã‚ŠãªãŠã—
+	//1:é¢ã‚»ãƒ¬ã¸
+	//2:ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ã¸
+	//3:æˆ»ã‚‹
 	if ( f.isKeyTriggered( 'w' ) ){
 		--mCursorPosistion;
-		if ( mCursorPosistion < 0 ){ //ƒ}ƒCƒiƒX‚ÍÅ‘å’l‚Éƒ‹[ƒv
+		if ( mCursorPosistion < 0 ){ //ãƒã‚¤ãƒŠã‚¹ã¯æœ€å¤§å€¤ã«ãƒ«ãƒ¼ãƒ—
  			mCursorPosistion = 1;
 		}
 	}else if ( f.isKeyTriggered( 'z' ) ){
 		++mCursorPosistion;
-		if ( mCursorPosistion > 1 ){ //1‚ğ‰z‚¦‚½‚ç0‚Éƒ‹[ƒv
+		if ( mCursorPosistion > 1 ){ //1ã‚’è¶ŠãˆãŸã‚‰0ã«ãƒ«ãƒ¼ãƒ—
 			mCursorPosistion = 0;
 		}
 	}else if ( f.isKeyTriggered( ' ' ) ){
-		if ( mCursorPosistion == 0 ){ //ƒQ[ƒ€‚É–ß‚é
+		if ( mCursorPosistion == 0 ){ //ã‚²ãƒ¼ãƒ ã«æˆ»ã‚‹
 			parent->moveTo( Parent::NEXT_PLAY );
-		}else if ( mCursorPosistion == 1 ){ //ƒ^ƒCƒgƒ‹‚Ö–ß‚é
+		}else if ( mCursorPosistion == 1 ){ //ã‚¿ã‚¤ãƒˆãƒ«ã¸æˆ»ã‚‹
 			parent->moveTo( Parent::NEXT_TITLE );
 		}
 	}
-	//•`‰æ
-	//‚Ü‚¸ƒQ[ƒ€‰æ–Ê
+	//æç”»
+	//ã¾ãšã‚²ãƒ¼ãƒ ç”»é¢
 	parent->state()->draw();
-	//ã‚Éd‚Ë‚é
+	//ä¸Šã«é‡ã­ã‚‹
 	mImage->draw();
-	//š‚ğ•`‚­
-	f.drawDebugString( 0, 0, "[Îß°½Ş]" );
-	f.drawDebugString( 1, 2, "¹Ş°Ñ¦ÂÂŞ¹Ù" );
-	f.drawDebugString( 1, 3, "À²ÄÙÆÓÄŞÙ" );
-	//ƒJ[ƒ\ƒ‹‚ğ‘‚­
+	//å­—ã‚’æã
+	f.drawDebugString( 0, 0, "[ï¾ï¾Ÿï½°ï½½ï¾]" );
+	f.drawDebugString( 1, 2, "ï½¹ï¾ï½°ï¾‘ï½¦ï¾‚ï¾‚ï¾ï½¹ï¾™" );
+	f.drawDebugString( 1, 3, "ï¾€ï½²ï¾„ï¾™ï¾†ï¾“ï¾„ï¾ï¾™" );
+	//ã‚«ãƒ¼ã‚½ãƒ«ã‚’æ›¸ã
 	f.drawDebugString( 0, mCursorPosistion + 2, ">" );
 }
 

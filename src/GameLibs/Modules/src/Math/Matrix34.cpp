@@ -92,78 +92,78 @@ void Matrix34::setScaling( const Vector3& a ){
 }
 
 /*
-3����]�r���[�s��̍�肩���B
+3軸回転ビュー行列の作りかた。
 
-��]������3x3�s��ł���B����āA����9����B
-����9�{����΂�������߂���킯���B
+回転部分は3x3行列である。よって、数が9個ある。
+式が9本あればこれを求められるわけだ。
 
-���āA���̎����ǂ������邩���B
-����x�N�^s��s'�Ɉڂ�Ƃ킩���Ă���Ƃ��悤�B
-���߂�����]�s���A�Ƃ���΁A
+さて、その式をどこから作るかだ。
+あるベクタsがs'に移るとわかっているとしよう。
+求めたい回転行列をAとすれば、
 
 s'=As
 
-�ł���B������΂点�΁A
+である。これをばらせば、
 
 s'x = a00*sx+a01*sy+a02*sz
 s'y = a10*sx+a11*sy+a12*sz
 s'z = a20*sx+a21*sy+a22*sz
 
-�Ǝ���3�{�ł���Bs�ȊO��t��r�ɂ��Ă��A
+と式が3本できる。s以外にtとrについても、
 t'=At
 r'=Ar
-�Ƃ킩���Ă���΁A����Ɏ���6�{������̂ŁA
-9�{�̎������B
+とわかっていれば、さらに式が6本増えるので、
+9本の式が立つ。
 
-�����ŁA�v�Z��P�������邽�߂ɁA
+ここで、計算を単純化するために、
 s=(1,0,0)
 t=(0,1,0)
 r=(0,0,1)
-�Ƃ��Ă݂悤�B��̎��̓A�z�݂����ɊȒP�ɂȂ��āA
+としてみよう。上の式はアホみたいに簡単になって、
 
 s'x = a00
 s'y = a10
 s'z = a20
 
-�ƂȂ�Bt,r�ɂ��Ă������悤�Ȃ��ƂɂȂ�A����A��
+となる。t,rについても同じようなことになり、結局Aは
     | s'x t'x r'x |
 A = | s'y t'y r'y |
     | s'z t'z r'z |
 
-�Ə����Ă��܂��킯�ł���B���Ƃ́A
-s'�At'�Ar'���킩��΂����B
+と書けてしまうわけである。あとは、
+s'、t'、r'がわかればいい。
 
-��z�v���X�����͒����_���王�_�֌������x�N�^�ŁA
+今zプラス方向は注視点から視点へ向かうベクタで、
 r' = ( p - t ) / | p - t |
-�ƂȂ�B������1�ɂ��Ă��邱�Ƃɒ��ӂ��悤�B
+となる。長さを1にしていることに注意しよう。
 
-�����Ă�����A�オ�ǂ��炩��u���^�����邱�Ƃł킩���Ă���B
-���̂܂�Y���Ƃ��邱�Ƃ͂ł��Ȃ����A
-u��r'�̊O�ς�����X�����o�Ă���B���ꂪs'���B
-�����āAs'��r'�̊O�ς�����߂�Y�����o���B���ꂪt'�ƂȂ�B
-���̃R�[�h�ɂ����āAx,y,z�͂��ꂼ��s',t',r'�ł���B
+そしてもう一つ、上がどちらかがuが与えられることでわかっている。
+このままY軸とすることはできないが、
+uとr'の外積を取るとX軸が出てくる。これがs'だ。
+そして、s'とr'の外積から改めてY軸を出す。これがt'となる。
+下のコードにおいて、x,y,zはそれぞれs',t',r'である。
 
-��]�s�񂳂��ł��Ă��܂��΁A��͈ړ������v�Z���邾�����B
-V=RT�ŁAR�͍�������BT��p�����_�ɗ���悤�Ȉړ��s��ł���B
-���̃R�[�h�ł͍s��̏�Z���ہX���v�Z�ʂ�����邽�߂ɁA
-RT�̊|���Z�̕K�v�ȕ������������̏�ōs���āAm03,m13,m23���v�Z���Ă���B
+回転行列さえできてしまえば、後は移動分を計算するだけだ。
+V=RTで、Rは今作った。Tはpが原点に来るような移動行列である。
+下のコードでは行列の乗算を丸々やる計算量を避けるために、
+RTの掛け算の必要な部分だけをその場で行って、m03,m13,m23を計算している。
 */
 void Matrix34::setViewTransform(
-const Vector3& p, //���_
-const Vector3& t, //�����_
-const Vector3& u ){ //���\���x�N�^
+const Vector3& p, //視点
+const Vector3& t, //注視点
+const Vector3& u ){ //上を表すベクタ
 	Vector3 x, y, z;
-	z.setSub( p, t ); //�����_����J�����ʒu�ւ̃x�N�^��Z����
+	z.setSub( p, t ); //注視点からカメラ位置へのベクタをZ軸に
 	z.normalize();
-	x.setCross( u, z ); //��x�N�^��Z���̊O�ς�X���ɁB��x�N�^��������Ȃ獶������X���v���X�B
+	x.setCross( u, z ); //上ベクタとZ軸の外積をX軸に。上ベクタが上向きなら左向きがX軸プラス。
 	x.normalize();
-	y.setCross( z, x ); //Z,X�̊O�ς�Y
+	y.setCross( z, x ); //Z,Xの外積がY
 
-	//��������3�{�s�����œ����Ώo���オ��B
+	//直交基底を3本行方向で入れれば出来上がり。
 	m00 = x.x; m01 = x.y; m02 = x.z;
 	m10 = y.x; m11 = y.y; m12 = y.z;
 	m20 = z.x; m21 = z.y; m22 = z.z;
-	//�ړ����͍��������]�s��ɃJ�������W����Z���ă}�C�i�X�ɂ���΂����B
+	//移動分は今作った回転行列にカメラ座標を乗算してマイナスにすればいい。
 	m03 = -( m00 * p.x + m01 * p.y + m02 * p.z );
 	m13 = -( m10 * p.x + m11 * p.y + m12 * p.z );
 	m23 = -( m20 * p.x + m21 * p.y + m22 * p.z );
@@ -322,7 +322,7 @@ void Matrix34::operator*=( const Matrix33& a ){
 }
 
 void Matrix34::setMul( const Matrix34& a, const Matrix34& b ){
-	//a==*this, b==*this�������l���Ȃ��Ƃ����Ȃ�
+	//a==*this, b==*this両方を考えないといけない
 	float t00, t01, t02, t03;
 	t00 = a.m00 * b.m00 + a.m01 * b.m10 + a.m02 * b.m20;
 	t01 = a.m00 * b.m01 + a.m01 * b.m11 + a.m02 * b.m21;
@@ -400,15 +400,15 @@ void Matrix34::setTransposed33( const Matrix34& a ){
 	m03 = m13 = m23 = 0.f;
 }
 
-//�N���[�����@�ł̋t�s��
+//クラーメル法での逆行列
 /*
-33�̂����ɁA23�ɏ������l������K�p����ƁA�������������B
-Matrix33.cpp��Matrix23.cpp�����悤�B
+33のやり方に、23に書いた考え方を適用すると、あっさり解ける。
+Matrix33.cppとMatrix23.cppを見よう。
 */
 void Matrix34::setInverse( const Matrix34& a ){
-	//�܂�3x3�����̋t�s������
-//--3x3���炱�҂�
-	//�񍀐ς��܂Ƃ߂č��(�Y���������������ɕ��ׂĂ݂��̂ŊԈႢ�����Ȃ����Ǝv��)
+	//まず3x3部分の逆行列を作る
+//--3x3からこぴぺ
+	//二項積をまとめて作る(添え字が小さい順に並べてみたので間違いが少ないかと思う)
 	float m0011 = a.m00 * a.m11;
 	float m0012 = a.m00 * a.m12;
 	float m0021 = a.m00 * a.m21;
@@ -431,30 +431,30 @@ void Matrix34::setInverse( const Matrix34& a ){
 	float m1122 = a.m11 * a.m22;
 
 	float m1220 = a.m12 * a.m20;
-	float m1221 = a.m12 * a.m21; //18��
+	float m1221 = a.m12 * a.m21; //18個
 
-	//2���ς̍����O�B�s�񎮗p�����A��Ŏg���܂킹��B
+	//2項積の差を三つ。行列式用だが、後で使いまわせる。
 	float m1122_m1221 = m1122 - m1221;
-	float m1220_m1022 = m1220 - m1022; //�}�C�i�X
+	float m1220_m1022 = m1220 - m1022; //マイナス
 	float m1021_m1120 = m1021 - m1120;
 
-	//�s��
+	//行列式
 	//00*( 11*22 - 12*21 ) - 01*( 10*22 - 12*20 ) + 02*( 10*21 - 11*20 )
 	float delta = a.m00*( m1122_m1221 ) + a.m01*( m1220_m1022 ) + a.m02*( m1021_m1120 );
-	float rcpDelta = 1.f / delta; //0������\���͂��邪�A�����ł͂͂����Ȃ��B
+	float rcpDelta = 1.f / delta; //0割する可能性はあるが、ここでははじかない。
 
-	//�v�f�𖄂߂�B�]�u�ɒ��ӁI���ӂ͓Y�������Ђ�����Ԃ��Ă���I
+	//要素を埋める。転置に注意！左辺は添え字がひっくり返っている！
 	m00 = ( m1122_m1221 ) * rcpDelta;
-	m10 = ( m1220_m1022 ) * rcpDelta; //�}�C�i�X
+	m10 = ( m1220_m1022 ) * rcpDelta; //マイナス
 	m20 = ( m1021_m1120 ) * rcpDelta;
-	m01 = ( m0221-m0122 ) * rcpDelta; //�}�C�i�X
+	m01 = ( m0221-m0122 ) * rcpDelta; //マイナス
 	m11 = ( m0022-m0220 ) * rcpDelta;
-	m21 = ( m0120-m0021 ) * rcpDelta; //�}�C�i�X
+	m21 = ( m0120-m0021 ) * rcpDelta; //マイナス
 	m02 = ( m0112-m0211 ) * rcpDelta;
-	m12 = ( m0210-m0012 ) * rcpDelta; //�}�C�i�X
+	m12 = ( m0210-m0012 ) * rcpDelta; //マイナス
 	m22 = ( m0011-m0110 ) * rcpDelta;
-//----�����܂ł��҂�
-	float t03 = a.m03; //�o�b�N�A�b�v
+//----ここまでこぴぺ
+	float t03 = a.m03; //バックアップ
 	float t13 = a.m13;
 	m03 = -( m00 * t03 + m01 * t13 + m02 * a.m23 );
 	m13 = -( m10 * t03 + m11 * t13 + m12 * a.m23 );
@@ -462,7 +462,7 @@ void Matrix34::setInverse( const Matrix34& a ){
 }
 
 void Matrix34::invert(){
-	setInverse( *this ); //setInverse()�������ł����v�ȍ��Ȃ̂ł��̂܂ܓn���B
+	setInverse( *this ); //setInverse()が自分でも大丈夫な作りなのでそのまま渡す。
 }
 
 bool Matrix34::operator==( const Matrix34& a ) const {

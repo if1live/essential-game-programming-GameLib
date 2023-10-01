@@ -8,7 +8,7 @@
 #include "GameLib/PseudoXml/Element.h"
 #include "GameLib/PseudoXml/Attribute.h"
 #include "GameLib/PseudoXml/Document.h"
-using namespace GameLib::PseudoXml; //‚©‚Ô‚Á‚Ä‚È‚¢‚µusing‚µ‚¿‚á‚¦
+using namespace GameLib::PseudoXml; //ã‹ã¶ã£ã¦ãªã„ã—usingã—ã¡ã‚ƒãˆ
 
 GraphicsDatabase::GraphicsDatabase( Element& e ){
 	createFromElement( e );
@@ -17,14 +17,14 @@ GraphicsDatabase::GraphicsDatabase( Element& e ){
 GraphicsDatabase::GraphicsDatabase( const char* filename ){
 	Document document = Document::create( filename );
 	while ( !document.isReady() ){
-		; //ƒ[ƒh‘Ò‚¿
+		; //ãƒ­ãƒ¼ãƒ‰å¾…ã¡
 	}
 	Element root = document.root();
 	createFromElement( root );
 }
 
 GraphicsDatabase::~GraphicsDatabase(){
-	//‰½‚à‚¢‚ç‚È‚¢B
+	//ä½•ã‚‚ã„ã‚‰ãªã„ã€‚
 }
 
 Model* GraphicsDatabase::createModel( const char* name ) const {
@@ -74,7 +74,7 @@ ConstSharedPtr< Batch > GraphicsDatabase::getBatch( const char* name ) const {
 
 void GraphicsDatabase::createFromElement( Element& e ){
 	int n = e.childNumber();
-	//‚Ü‚¸”‚ğ”‚¦‚é
+	//ã¾ãšæ•°ã‚’æ•°ãˆã‚‹
 	int vertexBufferNumber = 0;
 	int indexBufferNumber = 0;
 	int textureNumber = 0;
@@ -92,18 +92,18 @@ void GraphicsDatabase::createFromElement( Element& e ){
 			++batchNumber;
 		}
 	}
-	//”z—ñŠm•Û
+	//é…åˆ—ç¢ºä¿
 	mVertexBuffers.setSize( vertexBufferNumber );
 	mIndexBuffers.setSize( indexBufferNumber );
 	mTextures.setSize( textureNumber );
 	mBatches.setSize( batchNumber );
-	//¡‰½ŒÂ–Ú‚É‘‚«‚ñ‚Å‚¢‚é‚©
+	//ä»Šä½•å€‹ç›®ã«æ›¸ãè¾¼ã‚“ã§ã„ã‚‹ã‹
 	int vertexBufferPos = 0;
 	int indexBufferPos = 0;
 	int texturePos = 0;
 	int batchPos = 0;
 
-	//‰½‚É‚àˆË‘¶‚µ‚Ä‚¢‚È‚¢O‚Â‚ğì‚é
+	//ä½•ã«ã‚‚ä¾å­˜ã—ã¦ã„ãªã„ä¸‰ã¤ã‚’ä½œã‚‹
 	for ( int i = 0; i < n; ++i ){
 		Element child = e.child( i );
 		string name = child.name();
@@ -118,7 +118,7 @@ void GraphicsDatabase::createFromElement( Element& e ){
 			++texturePos;
 		}
 	}
-	//Batch‚Í‘¼‚ÉˆË‘¶‚µ‚Ä‚¢‚é‚Ì‚ÅŒã‚Å‚â‚é
+	//Batchã¯ä»–ã«ä¾å­˜ã—ã¦ã„ã‚‹ã®ã§å¾Œã§ã‚„ã‚‹
 	for ( int i = 0; i < n; ++i ){
 		Element child = e.child( i );
 		string name = child.name();

@@ -33,67 +33,67 @@ public:
 	void setBlendMode( BlendMode );
 	void setCullMode( CullMode );
 	void setTextureFilter( TextureFilter );
-	///“§‹•ÏŠ·ƒrƒ…[•ÏŠ·s—ñƒZƒbƒgB
+	///é€è¦–å¤‰æ›ãƒ“ãƒ¥ãƒ¼å¤‰æ›è¡Œåˆ—ã‚»ãƒƒãƒˆã€‚
 	void setProjectionViewMatrix( const Matrix44& );
-	///ƒ[ƒ‹ƒh•ÏŠ·s—ñƒZƒbƒg
+	///ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—ã‚»ãƒƒãƒˆ
 	void setWorldMatrix( const Matrix34& );
-	///ƒrƒ…[ƒ|[ƒgİ’è
+	///ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆè¨­å®š
 	void setViewport( int x, int y, int width, int height );
-	///ƒrƒ…[ƒ|[ƒgæ“¾(0‚Å‚È‚¢‚à‚Ì‚É‚¾‚¯“ü‚ê‚é‚Ì‚Å—~‚µ‚¢‚à‚Ì‚¾‚¯ƒ|ƒCƒ“ƒ^‚ğƒZƒbƒg)
+	///ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆå–å¾—(0ã§ãªã„ã‚‚ã®ã«ã ã‘å…¥ã‚Œã‚‹ã®ã§æ¬²ã—ã„ã‚‚ã®ã ã‘ãƒã‚¤ãƒ³ã‚¿ã‚’ã‚»ãƒƒãƒˆ)
 	void getViewport( int* xOut, int* yOut, int* widthOut, int* heightOut );
 
-	///İ’è‚µ‚½ƒeƒNƒXƒ`ƒƒA’¸“_ƒoƒbƒtƒ@AƒCƒ“ƒfƒNƒXƒoƒbƒtƒ@‚Å•`‰æ
+	///è¨­å®šã—ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã€ã‚¤ãƒ³ãƒ‡ã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã§æç”»
 	void drawIndexed(
 		int offset, 
 		int primitiveNumber, 
 		PrimitiveType = PRIMITIVE_TRIANGLE );
-	///İ’è‚µ‚½ƒeƒNƒXƒ`ƒƒA’¸“_ƒoƒbƒtƒ@‚Å•`‰æ
+	///è¨­å®šã—ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã§æç”»
 	void draw( 
 		int offset, 
 		int primitiveNumber, 
 		PrimitiveType = PRIMITIVE_TRIANGLE );
-	///‘S‰æ–Ê‚ÉƒeƒNƒXƒ`ƒƒ‚ğ“\‚è•t‚¯
+	///å…¨ç”»é¢ã«ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’è²¼ã‚Šä»˜ã‘
 	void blendToScreen( Texture );
-	///ƒtƒ‹ƒXƒNƒŠ[ƒ“‰»
+	///ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åŒ–
 	void enableFullScreen( bool );
-	///•`‰æƒoƒbƒtƒ@•‚ğ•Ô‚·
+	///æç”»ãƒãƒƒãƒ•ã‚¡å¹…ã‚’è¿”ã™
 	int width() const;
-	///•`‰æƒoƒbƒtƒ@‚‚³‚ğ•Ô‚·
+	///æç”»ãƒãƒƒãƒ•ã‚¡é«˜ã•ã‚’è¿”ã™
 	int height() const;
-	///ƒtƒ‹ƒXƒNƒŠ[ƒ“‚ÌƒEƒBƒ“ƒhƒE•‚ğ•Ô‚·
+	///ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³æ™‚ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å¹…ã‚’è¿”ã™
 	int fullScreenWindowWidth() const;
-	///ƒtƒ‹ƒXƒNƒŠ[ƒ“‚ÌƒEƒBƒ“ƒhƒE‚‚³‚ğ•Ô‚·
+	///ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³æ™‚ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦é«˜ã•ã‚’è¿”ã™
 	int fullScreenWindowHeight() const;
-	///ƒtƒŒ[ƒ€”Ô†‚ğ•Ô‚·
+	///ãƒ•ãƒ¬ãƒ¼ãƒ ç•ªå·ã‚’è¿”ã™
 	unsigned frameId() const;
-	///ƒXƒNƒŠ[ƒ“ƒVƒ‡ƒbƒg‚ğæ‚é(Šg’£q‚ÅDDS,TGA©“®”»•Ê)B•Û‘¶ƒ^ƒCƒ~ƒ“ƒO‚Í•`‰æI—¹ŒãB
+	///ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã‚·ãƒ§ãƒƒãƒˆã‚’å–ã‚‹(æ‹¡å¼µå­ã§DDS,TGAè‡ªå‹•åˆ¤åˆ¥)ã€‚ä¿å­˜ã‚¿ã‚¤ãƒŸãƒ³ã‚°ã¯æç”»çµ‚äº†å¾Œã€‚
 	void captureScreen( const char* filename );
 
-	//ƒ‰ƒCƒeƒBƒ“ƒOŠÖŒW
-	///ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚ğ—LŒø‰»‚·‚é
+	//ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°é–¢ä¿‚
+	///ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚’æœ‰åŠ¹åŒ–ã™ã‚‹
 	void setLightingMode( LightingMode );
-	///ƒ‰ƒCƒgˆÊ’u
+	///ãƒ©ã‚¤ãƒˆä½ç½®
 	void setLightPosition( int index, const Vector3& position );
-	///ƒ‰ƒCƒg‹­“x(100‚È‚ç100m‚Ì‹——£‚Å1‚Ì–¾‚é‚³‚É‚È‚éB‹­“xI‚Æ‚µ‚ÄA–¾‚é‚³‚ÍuI/‹——£v‚ÅŒˆ‚Ü‚é)
+	///ãƒ©ã‚¤ãƒˆå¼·åº¦(100ãªã‚‰100mã®è·é›¢ã§1ã®æ˜ã‚‹ã•ã«ãªã‚‹ã€‚å¼·åº¦Iã¨ã—ã¦ã€æ˜ã‚‹ã•ã¯ã€ŒI/è·é›¢ã€ã§æ±ºã¾ã‚‹)
 	void setLightIntensity( int index, float intensity );
-	///ƒ‰ƒCƒgF
+	///ãƒ©ã‚¤ãƒˆè‰²
 	void setLightColor( int index, const Vector3& );
-	///‹“_ˆÊ’u
+	///è¦–ç‚¹ä½ç½®
 	void setEyePosition( const Vector3& position );
-	///ƒfƒBƒtƒ…[ƒYƒJƒ‰[
+	///ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºã‚«ãƒ©ãƒ¼
 	void setDiffuseColor( const Vector3& );
-	///ƒXƒyƒLƒ…ƒ‰F
+	///ã‚¹ãƒšã‚­ãƒ¥ãƒ©è‰²
 	void setSpecularColor( const Vector3& );
-	///”­ŒõF
+	///ç™ºå…‰è‰²
 	void setEmissionColor( const Vector3& );
-	///ƒAƒ“ƒrƒGƒ“ƒgF
+	///ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆè‰²
 	void setAmbientColor( const Vector3& );
-	///“§–¾“xİ’è
+	///é€æ˜åº¦è¨­å®š
 	void setTransparency( float );
-	///ƒXƒyƒLƒ…ƒ‰‚Ì‰s‚³(‘å‚«‚¢‚Ù‚Ç‰s‚¢B”š‚ÌˆÓ–¡‚Í•Ê‚Ì–{‚ğ“Ç‚à‚¤)
+	///ã‚¹ãƒšã‚­ãƒ¥ãƒ©ã®é‹­ã•(å¤§ãã„ã»ã©é‹­ã„ã€‚æ•°å­—ã®æ„å‘³ã¯åˆ¥ã®æœ¬ã‚’èª­ã‚‚ã†)
 	void setSpecularSharpness( float );
 
-	//ˆÈ‰º’m‚ç‚È‚­‚Ä‚¢‚¢‰½‚©
+	//ä»¥ä¸‹çŸ¥ã‚‰ãªãã¦ã„ã„ä½•ã‹
 	static void create( 
 		void* windowHandle,
 		int width,
@@ -104,8 +104,8 @@ public:
 	static void destroy();
 	void beginDraw();
 	void endDraw();
-	bool canRender() const; //ƒfƒoƒCƒXƒƒXƒg‚µ‚Ä‚¢‚ê‚Îfalse‚ª•Ô‚éB
-	void restore(); //ƒfƒoƒCƒXƒƒXƒg‚©‚ç•œ‹A‚·‚é
+	bool canRender() const; //ãƒ‡ãƒã‚¤ã‚¹ãƒ­ã‚¹ãƒˆã—ã¦ã„ã‚Œã°falseãŒè¿”ã‚‹ã€‚
+	void restore(); //ãƒ‡ãƒã‚¤ã‚¹ãƒ­ã‚¹ãƒˆã‹ã‚‰å¾©å¸°ã™ã‚‹
 	void getPointerModifier( float* scale, Vector2* offset ) const;
 };
 
